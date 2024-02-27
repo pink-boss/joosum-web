@@ -11,5 +11,5 @@
     "packages/website/**",
     "packages/eslint-plugin/types/**"
   ],
-  "words": []
+  "words": ["joosum"]
 }
