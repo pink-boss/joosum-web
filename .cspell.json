@@ -1,0 +1,15 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "ignorePaths": [
+    ".cspell.json",
+    ".github/workflows/**",
+    ".vscode/*.json",
+    "**/*.{json,snap}",
+    "**/dist/**",
+    "**/node_modules/**",
+    "packages/website/**",
+    "packages/eslint-plugin/types/**"
+  ],
+  "words": []
+}
