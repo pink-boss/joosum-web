@@ -17,11 +17,13 @@ jobs:
           node-version: 18.16.1
       - name: Install
         run: yarn install --immutable
-      - name: Build
-        run: yarn build
       - name: Check Spells
         run: yarn ci:spell
       - name: Check Format
         run: yarn ci:format
       - name: Check Types
         run: yarn ci:ts
+      - name: Tests
+        run: yarn test
+      - name: Build
+        run: yarn build
