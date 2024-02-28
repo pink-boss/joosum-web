@@ -9,6 +9,7 @@
     "lint": "eslint . --ext ts,tsx,html --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --write .",
+    "test": "jest --silent",
     "ci:ts": "tsc --noEmit",
     "ci:format": "prettier --check .",
     "ci:spell": "cspell --config .cspell.json \"**/*.{js,ts,tsx,md,html}\" --quiet"
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@html-eslint/eslint-plugin": "^0.23.1",
     "@html-eslint/parser": "^0.23.0",
+    "@types/jest": "^29.5.12",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
@@ -30,7 +32,9 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "jest": "^29.7.0",
     "prettier": "^3.2.5",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
     "vite-tsconfig-paths": "^4.3.1"
