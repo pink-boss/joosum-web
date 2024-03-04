@@ -1622,6 +1622,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.24.8":
+  version: 5.24.8
+  resolution: "@tanstack/query-core@npm:5.24.8"
+  checksum: 3c3d51f1c6e049ac9f6f7c36cefc640b3266d9a91307cbfc02e4ce6b4e1cf68de1b8f0243fca20c86d8cf616e334579dc123424aed9daedc32a92e5c9e97ca64
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.24.8":
+  version: 5.24.8
+  resolution: "@tanstack/react-query@npm:5.24.8"
+  dependencies:
+    "@tanstack/query-core": "npm:5.24.8"
+  peerDependencies:
+    react: ^18.0.0
+  checksum: f2d7d3ba93e5cd7ff5d21e91e2670bdcfd864741c13e7cca93c996f8b61738cb16796e3702d0aa5b9ba36c5c15ffdc068466662c0de40baf9c45c053559b3fdd
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.1.14, @types/babel__core@npm:^7.20.5":
   version: 7.20.5
   resolution: "@types/babel__core@npm:7.20.5"
@@ -4242,6 +4260,7 @@ __metadata:
   dependencies:
     "@html-eslint/eslint-plugin": "npm:^0.23.1"
     "@html-eslint/parser": "npm:^0.23.0"
+    "@tanstack/react-query": "npm:^5.24.8"
     "@types/jest": "npm:^29.5.12"
     "@types/react": "npm:^18.2.56"
     "@types/react-dom": "npm:^18.2.19"
