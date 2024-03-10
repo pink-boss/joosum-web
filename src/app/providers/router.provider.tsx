@@ -16,6 +16,4 @@ const router = createBrowserRouter([
   },
 ]);
 
-const RouterProvider = () => <ReactRouterProvider router={router} />;
-
-export default RouterProvider;
+export const RouterProvider = () => <ReactRouterProvider router={router} />;
