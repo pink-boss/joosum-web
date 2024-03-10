@@ -1,5 +1,3 @@
-const RootPage = () => {
-  return <></>;
-};
+import { Page } from "./ui/page";
 
-export default RootPage;
+export default Page;
