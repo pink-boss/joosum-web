@@ -2,7 +2,7 @@ import { Button } from "@/shared/ui/button";
 import { Header } from "./header";
 import { Section } from "./section";
 import { UsageSection } from "./usage-section";
-import NotionIconImage from "@/assets/images/icon-inotion.svg";
+import NotionIconImage from "@/assets/images/icon-notion.svg";
 import InstagramIconImage from "@/assets/images/icon-instagram.svg";
 
 export const Page = () => {
