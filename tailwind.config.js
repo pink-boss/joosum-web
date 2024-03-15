@@ -9,7 +9,16 @@ export default {
           400: "#685fde",
           200: "#DFD9FF",
         },
+        gray: {
+          200: "#F3F4F5",
+          400: "#D9D9D9",
+          700: "#6C6C6C",
+          800: "#2F2F2F",
+        },
       },
+    },
+    fontFamily: {
+      body: ["PretendardRegular"],
     },
   },
   plugins: [],
