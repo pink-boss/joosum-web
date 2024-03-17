@@ -14,7 +14,15 @@ export const UsageItem = ({ active, children, onClick }: UsageItemProps) => {
         "rounded-[50px] py-2 px-3 font-semibold inline-block mr-3 mb-3 leading-[19px]",
       )}
     >
-      <button onClick={onClick}>{children}</button>
+      <button
+        onClick={onClick}
+        className={classnames(
+          active ? "font-bold" : "font-semibold",
+          "text-[16px]",
+        )}
+      >
+        {children}
+      </button>
     </li>
   );
 };

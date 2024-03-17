@@ -17,11 +17,11 @@ export const UsageSection = () => {
             한 눈에 살펴보는
           </span>
           <br />
-          <span className="font-bold text-[28px] text-primary-500">
+          <span className="font-bold text-[28px] text-primary-500 leading-[33px]">
             주섬 사용법
           </span>
         </h2>
-        <ul className="w-full">
+        <ul className="w-full mt-4 mb-2">
           {[
             "쉬운 확인",
             "어디서든 확인",

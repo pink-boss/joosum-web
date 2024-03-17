@@ -4,7 +4,7 @@ interface UsageCardProps extends PropsWithChildren {}
 
 export const UsageCard = ({ children }: UsageCardProps) => {
   return (
-    <div className="bg-gray-200 w-[283px] h-[477px] rounded-[24px] pt-6 px-5 flex flex-col">
+    <div className="bg-gray-200 w-[283px] h-[420px] rounded-[24px] pt-6 px-5 flex flex-col">
       {children}
     </div>
   );
@@ -13,13 +13,21 @@ export const UsageCard = ({ children }: UsageCardProps) => {
 interface UsageCardTitleProps extends PropsWithChildren {}
 
 UsageCard.Title = ({ children }: UsageCardTitleProps) => {
-  return <h3 className="text-[20px] text-primary-500 font-bold">{children}</h3>;
+  return (
+    <h3 className="text-[20px] text-primary-500 font-bold leading-[24px] mb-1">
+      {children}
+    </h3>
+  );
 };
 
 interface UsageCardDescriptionProps extends PropsWithChildren {}
 
 UsageCard.Description = ({ children }: UsageCardDescriptionProps) => {
-  return <p className="text-[#555] text-[15px] font-normal">{children}</p>;
+  return (
+    <p className="text-[#555] text-[15px] font-normal leading-[18px]">
+      {children}
+    </p>
+  );
 };
 
 UsageCard.Image = () => {

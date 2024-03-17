@@ -4,13 +4,15 @@ import { Section } from "./section";
 import { UsageSection } from "./usage-section";
 import NotionIconImage from "@/assets/images/icon-notion.svg";
 import InstagramIconImage from "@/assets/images/icon-instagram.svg";
+import DownloadIosImage from "@/assets/images/download-ios.svg";
+import DownloadAosImage from "@/assets/images/download-aos.svg";
 
 export const Page = () => {
   return (
     <div className="flex flex-col">
       <Header />
-      <Section color="primary" className="items-center">
-        <h2 className="text-primary-500 text-center font-extrabold">
+      <Section color="primary-500" className="items-center">
+        <h2 className="text-center font-extrabold">
           <span className="text-[24px] leading-[28px]">
             간단한 링크 아카이빙
           </span>
@@ -19,21 +21,21 @@ export const Page = () => {
             지금 바로 경험하세요!
           </span>
         </h2>
-        <Button color="primary" className="my-[12px]">
+        <Button color="white" className="my-[12px]">
           주섬 시작하기
         </Button>
-        <div className="w-[163px] h-[300px] bg-white rounded-[20px] my-[32px] flex items-center justify-center">
+        <div className="w-[163px] h-[300px] bg-white rounded-[20px] m-[20px] flex items-center justify-center">
           모바일 화면
         </div>
       </Section>
       <UsageSection />
-      <Section color="primary" className="items-left">
+      <Section color="primary-100" className="items-left pb-[48px]">
         <h2 className="mb-4 ml-6">
           <span className="font-medium text-[20px] leading-[23px]">
             흩어진 정보들 모두
           </span>
           <br />
-          <span className="font-bold text-[28px] text-primary-500">
+          <span className="font-bold text-[28px] text-primary-500 leading-[33px]">
             한 곳에서 봐요
           </span>
         </h2>
@@ -48,7 +50,7 @@ export const Page = () => {
           ].map((keyword) => (
             <span
               key={keyword}
-              className="bg-white text-[#555555] rounded-[50px] px-5 py-3 inline-block mr-4 mb-3 text-[16px] font-bold"
+              className="bg-white text-[#555555] rounded-[50px] px-5 py-3 inline-block mr-4 mb-3 text-[16px] font-bold leading-[19px]"
             >
               {keyword}
             </span>
@@ -61,11 +63,11 @@ export const Page = () => {
             솔직하고 생생한
           </span>
           <br />
-          <span className="font-bold text-[28px] text-primary-500">
+          <span className="font-bold text-[28px] text-primary-500 leading-[33px]">
             사용자 리뷰
           </span>
         </h2>
-        <div className="w-full px-6 text-[#555555]">
+        <div className="w-full px-6 text-[#555555] mt-5">
           <div className="rounded-[20px] bg-[#F8F9FA] w-full px-5 pt-6 pb-[26px]">
             <span className="text-[#333333] text-[20px] font-semibold">
               매번 뭐든 저장해놓고
@@ -88,17 +90,21 @@ export const Page = () => {
           </div>
         </div>
       </Section>
-      <Section color="primary" className="items-center">
-        <h2 className="font-bold text-[28px] text-primary-500 px-6">
+      <Section color="primary-100" className="items-center">
+        <h2 className="font-bold text-[28px] text-primary-500 px-6 leading-[28px]">
           어디서든 링크를 저장하고 확인해보세요.
         </h2>
-        <p className="px-6">
+        <p className="px-6 mt-2">
           PC, 태블릿, 모바일 기기 등 하나의 계정으로 연동해서 링크를
           관리해보세요.
         </p>
-        <div className="flex w-full px-6 gap-5">
-          <button className="bg-white w-full">아이폰</button>
-          <button className="bg-white w-full">구글</button>
+        <div className="flex w-full px-6 gap-5 mt-5">
+          <button className="w-full">
+            <img src={DownloadIosImage} className="w-full" />
+          </button>
+          <button className="w-full">
+            <img src={DownloadAosImage} className="w-full" />
+          </button>
         </div>
       </Section>
       <footer className="w-full">
