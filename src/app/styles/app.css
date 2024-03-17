@@ -5,7 +5,6 @@
 @layer base {
   :root {
     --color-primary: rgb(57, 42, 149);
-    overflow-x: hidden;
   }
   @font-face {
     font-family: "PTSansCaption";
@@ -17,5 +16,8 @@
       format("woff");
     font-weight: 400;
     font-style: normal;
+  }
+  #root {
+    overflow-x: hidden;
   }
 }
