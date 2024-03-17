@@ -5,6 +5,7 @@
 @layer base {
   :root {
     --color-primary: rgb(57, 42, 149);
+    overflow-x: hidden;
   }
   @font-face {
     font-family: "PTSansCaption";
