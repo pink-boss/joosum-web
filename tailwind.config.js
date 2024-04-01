@@ -25,6 +25,9 @@ export default {
     fontFamily: {
       body: ["PretendardRegular"],
     },
+    screens: {
+      sm: "822px",
+    },
   },
   plugins: [],
 };

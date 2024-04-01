@@ -10,7 +10,7 @@ export const UsageSwiper = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   return (
     <>
-      <ul className="w-full mt-4 mb-2 ml-6">
+      <ul className="mb-2 ml-6 mt-4 sm:mx-20 sm:mt-[22px]">
         {[
           "쉬운 확인",
           "어디서든 확인",
@@ -128,14 +128,14 @@ const UsageItem = ({
     <li
       className={classnames(
         active ? "bg-primary-500 text-white" : "bg-gray-200 text-gray-700",
-        "rounded-[50px] py-2 px-3 font-semibold inline-block mr-3 mb-3 leading-[19px]",
+        "mb-3 mr-3 inline-block rounded-[50px] px-3 py-2 font-semibold leading-[19px] sm:px-4 sm:py-3 sm:leading-[24px]",
       )}
     >
       <button
         onClick={onClick}
         className={classnames(
           active ? "font-bold" : "font-semibold",
-          "text-[16px]",
+          "text-[16px] sm:text-[24px]",
         )}
       >
         {children}

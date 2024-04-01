@@ -11,7 +11,7 @@ export const Card = ({
     <div
       className={classnames(
         className,
-        "bg-gray-200 m-auto w-[283px] h-[420px] rounded-[24px] pt-6 px-5 flex flex-col",
+        "m-auto flex h-[420px] w-[283px] flex-col rounded-[24px] bg-gray-200 px-5 pt-6 sm:w-[400px] sm:p-[30px]",
       )}
     >
       {children}
@@ -27,7 +27,7 @@ Card.Title = ({
     <h3
       className={classnames(
         className,
-        "text-[20px] font-bold leading-[24px] mb-1",
+        "mb-1 text-[20px] font-bold leading-[24px] sm:text-[24px] sm:leading-[34px]",
       )}
     >
       {children}
@@ -43,7 +43,7 @@ Card.Description = ({
     <p
       className={classnames(
         className,
-        "text-[#555] text-[15px] font-normal leading-[18px]",
+        "text-[15px] font-normal leading-[18px] text-[#555] sm:text-[16px] sm:leading-[26px]",
       )}
     >
       {children}
@@ -53,8 +53,8 @@ Card.Description = ({
 
 Card.Image = () => {
   return (
-    <div className="flex w-full justify-center mb-0 mt-auto">
-      <div className="bg-white rounded-t-[20px] w-[181px] h-[274px]"></div>
+    <div className="mb-0 mt-auto flex w-full justify-center sm:mt-[22px] sm:h-full">
+      <div className="h-[274px] w-[181px] rounded-t-[20px] bg-white sm:size-full sm:rounded-b-[20px]"></div>
     </div>
   );
 };

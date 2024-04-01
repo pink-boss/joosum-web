@@ -4,10 +4,12 @@ import InstagramIconImage from "@/assets/images/icon-instagram.svg";
 export const Footer = () => {
   return (
     <footer className="w-full">
-      <nav className="py-3 border-b border-b-[#EBEBEB]">
-        <ul className="flex flex-row w-full justify-between items-center">
-          <span className="border-r border-r-[#EBEBEB] basis-1/4 px-4 text-center">
-            개인정보 처리방침
+      <nav className="border-b border-b-[#EBEBEB] py-3">
+        <ul className="flex w-full flex-row items-center justify-between text-[12px]">
+          <span className="basis-1/4 border-r border-r-[#EBEBEB] px-4 text-center">
+            개인정보
+            <br />
+            처리방침
           </span>
           <span className="border-r border-r-[#EBEBEB] basis-1/4  px-4 text-center">
             서비스

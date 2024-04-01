@@ -11,33 +11,40 @@ export const Page = () => {
   return (
     <div className="flex flex-col">
       <Header />
-      <Section color="primary-500" className="items-center">
-        <Section.Title className="text-center font-extrabold">
-          <Section.TitleSub className="text-[24px] leading-[28px] text-white">
-            한 눈에 살펴보는
-          </Section.TitleSub>
-          <Section.TitleMain className="text-[32px] leading-[38px] text-white">
+      <Section color="primary-500" className="items-center sm:px-20">
+        <h1 className="text-white font-extrabold text-[24px] leading-[28px] text-center">
+          <span>간편한 링크 아카이빙</span>
+          <br />
+          <span className="text-[32px] leading-[38px]">
             지금 바로 경험하세요!
-          </Section.TitleMain>
-        </Section.Title>
+          </span>
+        </h1>
         <Button color="white" className="my-[12px]">
           주섬 시작하기
         </Button>
-        <div className="w-[163px] h-[300px] bg-white rounded-[20px] m-[20px] flex items-center justify-center">
+        <div className="mt-[20px] flex h-[300px] w-[163px] items-center justify-center rounded-[20px] bg-white sm:w-full sm:max-w-[582px]">
           모바일 화면
         </div>
       </Section>
       <Section color="white" className="items-start">
-        <Section.Title className="ml-6">
+        <Section.Title className="ml-6 sm:ml-20">
           <Section.TitleSub>한 눈에 살펴보는</Section.TitleSub>
-          <Section.TitleMain>주섬 사용법</Section.TitleMain>
+          <br className="sm:hidden" />
+          <Section.TitleMain className="sm:text-[32px]">
+            주섬 사용법
+          </Section.TitleMain>
         </Section.Title>
         <UsageSwiper />
       </Section>
       <Section color="primary-100" className="items-left pb-[48px]">
         <Section.Title className="mb-4 ml-6">
-          <Section.TitleSub>흩어진 정보들 모두</Section.TitleSub>
-          <Section.TitleMain>한 곳에서 봐요</Section.TitleMain>
+          <Section.TitleSub className="sm:text-primary-500  sm:font-bold sm:text-[36px] sm:leading-[42px]">
+            흩어진 정보들 모두
+          </Section.TitleSub>
+          <br />
+          <Section.TitleMain className="sm:text-[36px] sm:leading-[42px] sm:font-bold">
+            한 곳에서 봐요
+          </Section.TitleMain>
         </Section.Title>
         <div className="pl-6">
           {[
@@ -59,8 +66,13 @@ export const Page = () => {
       </Section>
       <Section color="white" className="items-center">
         <Section.Title className="mb-5">
-          <Section.TitleSub>솔직하고 생생한</Section.TitleSub>
-          <Section.TitleMain>사용자 리뷰</Section.TitleMain>
+          <Section.TitleSub className="sm:mr-[10px] sm:text-[36px] sm:font-bold sm:leading-[43px] sm:text-primary-500">
+            솔직하고 생생한
+          </Section.TitleSub>
+          <br />
+          <Section.TitleMain className="sm:text-[36px] sm:font-bold sm:leading-[43px]">
+            사용자 리뷰
+          </Section.TitleMain>
         </Section.Title>
         <ReviewSwiper />
       </Section>

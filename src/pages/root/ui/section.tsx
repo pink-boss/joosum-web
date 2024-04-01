@@ -29,7 +29,14 @@ Section.Title = ({
   children,
 }: { className?: string } & PropsWithChildren) => {
   return (
-    <h2 className={classnames("text-primary-500", "font-bold ", className)}>
+    <h2
+      className={classnames(
+        "text-primary-500",
+        "font-bold",
+
+        className,
+      )}
+    >
       {children}
     </h2>
   );
@@ -43,11 +50,11 @@ Section.TitleSub = ({
     <>
       <span
         className={classnames(
-          "font-medium text-[20px] leading-[23px] text-black",
+          "text-[20px] font-medium leading-[23px] text-black sm:text-[36px] sm:leading-[42px]",
           className,
         )}
       >
-        {children} <br />
+        {children}
       </span>
     </>
   );
@@ -60,7 +67,7 @@ Section.TitleMain = ({
   return (
     <span
       className={classnames(
-        "text-primary-500 leading-[33px] text-[28px]",
+        "text-[28px] leading-[33px] text-primary-500 sm:text-[48px] sm:leading-[57px]",
         className,
       )}
     >
