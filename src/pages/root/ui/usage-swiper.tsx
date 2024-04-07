@@ -128,7 +128,7 @@ const UsageItem = ({
     <li
       className={classnames(
         active ? "bg-primary-500 text-white" : "bg-gray-200 text-gray-700",
-        "mb-3 mr-3 inline-block rounded-[50px] px-3 py-2 font-semibold leading-[19px] sm:px-4 sm:py-3 sm:leading-[24px]",
+        "mb-3 mr-3 inline-block rounded-[50px] px-3 py-2 font-semibold leading-[19px] sm:px-5 sm:py-3 sm:leading-[24px] sm:mr-6 sm:mb-6",
       )}
     >
       <button
