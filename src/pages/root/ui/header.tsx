@@ -1,16 +1,24 @@
 import { Logo } from "@/shared/ui/logo";
 import classnames from "classnames";
 import { PropsWithChildren } from "react";
+import styles from "./header.module.css";
+import { useDisclosure } from "@/shared/hook/useDisclosure";
 
 export const Header = () => {
+  const { isOpen, toggle } = useDisclosure();
   return (
     <header className="flex w-full flex-row items-center px-5 py-2 sm:py-3">
       <Logo />
       <h1 className="text-[24px] font-['PT_Sans_Caption'] font-bold text-primary-500 ml-[8px] leading-[31px]">
         Joosum
       </h1>
-      <button className="flex flex-col h-[24px] gap-[3px] w-[24px] mr-0 ml-auto items-center justify-center">
-        <span className="sr-only">버튼</span>
+      <button
+        className={classnames(
+          `${styles.menu} flex flex-col h-[24px] gap-[3px] w-[24px] mr-0 ml-auto items-center justify-center sm:hidden`,
+          isOpen && styles.open,
+        )}
+        onClick={toggle}
+      >
         <div className="bg-gray-800 w-[18px] h-[2px]" />
         <div className="bg-gray-800 w-[18px] h-[2px]" />
         <div className="bg-gray-800 w-[18px] h-[2px]" />
