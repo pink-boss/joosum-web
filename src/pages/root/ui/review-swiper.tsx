@@ -3,12 +3,23 @@ import "swiper/css";
 
 import { Card } from "./card";
 import { PropsWithChildren } from "react";
+import { Breakpoint, useBreakpoint } from "@/shared/hook/useBreakpoint";
 
 export const ReviewSwiper = () => {
+  const breakpoint = useBreakpoint();
   return (
     <>
       <div className="w-full">
-        <Swiper spaceBetween={0} slidesPerView={1.1} centeredSlides>
+        <Swiper
+          spaceBetween={0}
+          slidesPerView={
+            {
+              [Breakpoint.BASE]: 1.2,
+              [Breakpoint.SM]: 1.9,
+            }[breakpoint]
+          }
+          centeredSlides
+        >
           <SwiperSlide>
             <ReviewCard>
               <ReviewCardTitle>
@@ -120,7 +131,11 @@ export const ReviewSwiper = () => {
 };
 
 const ReviewCard = ({ children }: PropsWithChildren) => {
-  return <Card className="!w-[327px] !h-[350px]">{children}</Card>;
+  return (
+    <Card className="w-[327px] h-[350px] sm:w-[380px] sm:h-[350px]">
+      {children}
+    </Card>
+  );
 };
 
 const ReviewCardTitle = ({ children }: PropsWithChildren) => (

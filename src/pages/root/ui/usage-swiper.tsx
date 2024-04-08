@@ -4,10 +4,12 @@ import "swiper/css";
 
 import { Card } from "./card";
 import { useState, PropsWithChildren } from "react";
+import { Breakpoint, useBreakpoint } from "@/shared/hook/useBreakpoint";
 
 export const UsageSwiper = () => {
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const breakpoint = useBreakpoint();
   return (
     <>
       <ul className="mb-2 ml-6 mt-4 sm:mx-20 sm:mt-[22px]">
@@ -33,7 +35,12 @@ export const UsageSwiper = () => {
       <div className="w-full">
         <Swiper
           spaceBetween={0}
-          slidesPerView={1.2}
+          slidesPerView={
+            {
+              [Breakpoint.BASE]: 1.2,
+              [Breakpoint.SM]: 1.9,
+            }[breakpoint]
+          }
           centeredSlides
           onSwiper={setSwiper}
           onSlideChangeTransitionStart={(swiper) => {

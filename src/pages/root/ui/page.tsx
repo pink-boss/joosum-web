@@ -11,7 +11,10 @@ export const Page = () => {
   return (
     <div className="flex flex-col">
       <Header />
-      <Section color="primary-500" className="items-center sm:px-20">
+      <Section
+        color="primary-500"
+        className="items-center pt-[107px] sm:px-20 sm:pt-[155px]"
+      >
         <h1 className="text-white font-extrabold text-[24px] leading-[28px] text-center sm:text-[36px] sm:leading-[42px]">
           <span>간편한 링크 아카이빙</span>
           <br />
@@ -36,7 +39,7 @@ export const Page = () => {
         </Section.Title>
         <UsageSwiper />
       </Section>
-      <Section color="primary-100" className="items-left pb-[48px]">
+      <Section color="primary-100" className="items-left pb-[48px] sm:px-20">
         <Section.Title className="mb-4 ml-6">
           <Section.TitleSub className="sm:text-primary-500  sm:font-bold sm:text-[36px] sm:leading-[42px]">
             흩어진 정보들 모두
@@ -46,7 +49,7 @@ export const Page = () => {
             한 곳에서 봐요
           </Section.TitleMain>
         </Section.Title>
-        <div className="pl-6">
+        <div className="pl-6 sm:max-w-[582px]">
           {[
             "🍜 오사카 맛집",
             "👟 홈트 영상",
@@ -64,12 +67,12 @@ export const Page = () => {
           ))}
         </div>
       </Section>
-      <Section color="white" className="items-center">
-        <Section.Title className="mb-5">
+      <Section color="white" className="items-center sm:items-start">
+        <Section.Title className="mb-5 sm:ml-20">
           <Section.TitleSub className="sm:mr-[10px] sm:text-[36px] sm:font-bold sm:leading-[43px] sm:text-primary-500">
             솔직하고 생생한
           </Section.TitleSub>
-          <br />
+          <br className="sm:hidden" />
           <Section.TitleMain className="sm:text-[36px] sm:font-bold sm:leading-[43px]">
             사용자 리뷰
           </Section.TitleMain>
@@ -77,20 +80,23 @@ export const Page = () => {
         <ReviewSwiper />
       </Section>
       <Section color="primary-100">
-        <Section.Title className="leading-[28px] text-[24px] pl-6">
-          어디서든 링크를 저장하고 <br /> 확인해보세요.
+        <Section.Title className="leading-[28px] text-[24px] ml-6 sm:ml-20 sm:text-[36px] sm:leading-[43px]">
+          어디서든 링크를 저장하고 <br className="sm:hidden" /> 확인해보세요.
         </Section.Title>
-        <p className="px-6 mt-2">
+        <p className="mx-6 mt-2 sm:mx-20">
           PC, 태블릿, 모바일 기기 등 하나의 계정으로 연동해서 링크를
           관리해보세요.
         </p>
-        <div className="flex w-full px-6 gap-5 mt-5">
-          <button className="w-full">
+        <div className="flex w-full px-6 gap-5 mt-5 justify-center sm:hidden">
+          <button className="w-[150px] sm:w-[125px]">
             <img src={DownloadIosImage} className="w-full" />
           </button>
-          <button className="w-full">
+          <button className="w-[150px] sm:w-[125px]">
             <img src={DownloadAosImage} className="w-full" />
           </button>
+        </div>
+        <div>
+          <div className="hidden w-[284px] h-[171px] bg-white rounded-[16px] sm:block"></div>
         </div>
       </Section>
       <Footer />
