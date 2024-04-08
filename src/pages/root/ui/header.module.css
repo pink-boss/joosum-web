@@ -1,0 +1,15 @@
+.menu > div {
+  height: 2px;
+  transition: 0.3s ease-out;
+  z-index: 999;
+}
+
+.menu.open > div:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+.menu.open > div:nth-child(2) {
+  opacity: 0;
+}
+.menu.open > div:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
+}

@@ -12,7 +12,7 @@ export const Section = ({
   return (
     <section
       className={classnames(
-        "flex flex-col py-[60px]",
+        "flex flex-col py-[60px] sm:py-[100px]",
         color === "primary-500" && "bg-primary-500 text-white",
         color === "primary-100" && "bg-primary-100",
         color === "white" && "bg-white",
@@ -67,7 +67,7 @@ Section.TitleMain = ({
   return (
     <span
       className={classnames(
-        "text-[28px] leading-[33px] text-primary-500 sm:text-[48px] sm:leading-[57px]",
+        "text-[28px] leading-[33px] text-primary-500 sm:text-[36px] sm:leading-[57px]",
         className,
       )}
     >

@@ -12,10 +12,10 @@ export const Page = () => {
     <div className="flex flex-col">
       <Header />
       <Section color="primary-500" className="items-center sm:px-20">
-        <h1 className="text-white font-extrabold text-[24px] leading-[28px] text-center">
+        <h1 className="text-white font-extrabold text-[24px] leading-[28px] text-center sm:text-[36px] sm:leading-[42px]">
           <span>간편한 링크 아카이빙</span>
           <br />
-          <span className="text-[32px] leading-[38px]">
+          <span className="text-[32px] leading-[38px] sm:text-[48px] sm:leading-[57px]">
             지금 바로 경험하세요!
           </span>
         </h1>
@@ -28,7 +28,7 @@ export const Page = () => {
       </Section>
       <Section color="white" className="items-start">
         <Section.Title className="ml-6 sm:ml-20">
-          <Section.TitleSub>한 눈에 살펴보는</Section.TitleSub>
+          <Section.TitleSub>한 눈에 살펴보는 </Section.TitleSub>
           <br className="sm:hidden" />
           <Section.TitleMain className="sm:text-[32px]">
             주섬 사용법
