@@ -7,13 +7,11 @@ export const Footer = () => {
       <nav className="border-b border-b-[#EBEBEB] py-3">
         <ul className="flex w-full flex-row items-center justify-between text-[12px]">
           <span className="basis-1/4 border-r border-r-[#EBEBEB] px-4 text-center">
-            개인정보
-            <br />
+            개인정보 <br className="md:hidden" />
             처리방침
           </span>
           <span className="border-r border-r-[#EBEBEB] basis-1/4  px-4 text-center">
-            서비스
-            <br />
+            서비스 <br className="md:hidden" />
             이용약관
           </span>
           <span className="border-r border-r-[#EBEBEB] basis-1/4  px-4 text-center">

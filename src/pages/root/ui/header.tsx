@@ -23,9 +23,9 @@ export const Header = () => {
 
   return (
     <div>
-      <header className="flex w-full flex-row items-center px-5 py-2 sm:py-3 fixed bg-white z-10">
+      <header className="flex w-full flex-row items-center px-5 py-2 sm:py-3 fixed bg-white z-10 md:py-5 md:px-20">
         <Logo />
-        <h1 className="text-[24px] font-['PT_Sans_Caption'] font-bold text-primary-500 ml-[8px] leading-[31px]">
+        <h1 className="text-[24px] font-['PT_Sans_Caption'] font-bold text-primary-500 ml-[8px] leading-[31px] md:text-[32px]">
           Joosum
         </h1>
         <button
@@ -40,7 +40,7 @@ export const Header = () => {
           <div className="bg-gray-800 w-[18px] h-[2px]" />
         </button>
         <nav className="ml-auto hidden sm:flex">
-          <ul className="flex h-full items-center gap-4 text-[18px]">
+          <ul className="flex h-full items-center gap-4 text-[18px] md:gap-[30px]">
             <li>
               <NavLink className="font-normal text-[#5D5C5D]">문의하기</NavLink>
             </li>
@@ -82,7 +82,7 @@ const NavLink = ({ className, children, href }: NavLinkProps) => {
   return (
     <a
       className={cn(
-        "rounded-[8px] p-[12px]  leading-[18px] sm:p-2 sm:text-[16px]",
+        "rounded-[8px] p-[12px] leading-[18px] sm:p-2 sm:text-[16px] md:text-[18px] md:p-[12px]",
         className,
       )}
       href={href}

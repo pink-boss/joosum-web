@@ -12,7 +12,10 @@ export const Logo = ({ classNames }: LogoProps) => {
       width={24}
       height={24}
       alt=""
-      className={classnames("w-[24px] h-[24px]", classNames)}
+      className={classnames(
+        "w-[24px] h-[24px] md:w-[32px] md:h-[32px]",
+        classNames,
+      )}
     />
   );
 };

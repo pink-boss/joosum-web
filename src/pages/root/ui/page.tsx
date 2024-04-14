@@ -13,19 +13,21 @@ export const Page = () => {
       <Header />
       <Section
         color="primary-500"
-        className="items-center pt-[107px] sm:px-20 sm:pt-[155px]"
+        className="items-center pt-[107px] sm:px-20 sm:pt-[155px] md:items-start"
       >
-        <h1 className="text-white font-extrabold text-[24px] leading-[28px] text-center sm:text-[36px] sm:leading-[42px]">
-          <span>간편한 링크 아카이빙</span>
+        <h1 className="text-white font-extrabold text-[24px] leading-[28px] text-center sm:text-[36px] sm:leading-[42px] md:text-start md:text-[40px] md:leading-[47px]">
+          <span className="md:mb-[12px] md:inline-block">
+            간편한 링크 아카이빙
+          </span>
           <br />
-          <span className="text-[32px] leading-[38px] sm:text-[48px] sm:leading-[57px]">
+          <span className="text-[32px] leading-[38px] sm:text-[48px] sm:leading-[57px] md:text-[52px] md:leading-[62px]">
             지금 바로 경험하세요!
           </span>
         </h1>
         <Button color="white" className="my-[12px]">
           주섬 시작하기
         </Button>
-        <div className="mt-[20px] flex h-[300px] w-[163px] items-center justify-center rounded-[20px] bg-white sm:w-full sm:max-w-[582px]">
+        <div className="mt-[20px] flex h-[300px] w-[163px] items-center justify-center rounded-[20px] bg-white sm:w-full sm:max-w-[582px] md:hidden">
           모바일 화면
         </div>
       </Section>
@@ -39,7 +41,10 @@ export const Page = () => {
         </Section.Title>
         <UsageSwiper />
       </Section>
-      <Section color="primary-100" className="items-left pb-[48px] sm:px-20">
+      <Section
+        color="primary-100"
+        className="items-left pb-[48px] sm:px-20 md:flex-row"
+      >
         <Section.Title className="mb-4 ml-6">
           <Section.TitleSub className="sm:text-primary-500  sm:font-bold sm:text-[36px] sm:leading-[42px]">
             흩어진 정보들 모두
@@ -49,7 +54,7 @@ export const Page = () => {
             한 곳에서 봐요
           </Section.TitleMain>
         </Section.Title>
-        <div className="pl-6 sm:max-w-[582px]">
+        <div className="pl-6 sm:max-w-[582px] md:max-w-[774px]">
           {[
             "🍜 오사카 맛집",
             "👟 홈트 영상",
@@ -60,7 +65,7 @@ export const Page = () => {
           ].map((keyword) => (
             <span
               key={keyword}
-              className="bg-white text-[#555555] rounded-[50px] px-5 py-3 inline-block mr-4 mb-3 text-[16px] font-bold leading-[19px]"
+              className="bg-white text-[#555555] rounded-[50px] px-5 py-3 inline-block mr-4 mb-3 text-[16px] font-bold leading-[19px] md:text-[28px] md:py-5 md:px-[27px]"
             >
               {keyword}
             </span>
