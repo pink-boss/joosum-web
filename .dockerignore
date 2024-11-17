@@ -1,0 +1,19 @@
+# Node modules (이미 설치되므로 제외)
+node_modules
+
+# 환경 설정 및 개발 도구 설정 파일
+.eslintrc.json
+.gitignore
+.prettierrc
+jest.config.ts
+tailwind.config.ts
+tsconfig.json
+postcss.config.mjs
+
+# 문서 파일
+LICENSE
+README.md
+
+# 로컬 환경 변수 파일
+.env
+.env.*.local
