@@ -1,0 +1,75 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_push_docker_image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Generate Date
+      id: date
+      run: echo "date=$(date +'%y%m%d')" >> $GITHUB_OUTPUT
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Create .env
+      run: |
+        echo "${{ secrets.ENV }}" > ./.env
+
+    - name: Setup Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to Docker Registry
+      uses: docker/login-action@v1
+      with:
+        registry: joosum.kr.ncr.ntruss.com
+        username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+        password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: ./Dockerfile
+        platforms: linux/amd64
+        tags: joosum.kr.ncr.ntruss.com/joosum-frontend:${{ steps.date.outputs.date }}
+        push: true
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build_and_push_docker_image
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Generate Date
+      id: date
+      run: echo "date=$(date +'%y%m%d')" >> $GITHUB_OUTPUT
+
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.VM_HOST_IP }}
+        username: root
+        password: ${{ secrets.VM_PASSWORD }}
+        script: |
+          docker pull joosum.kr.ncr.ntruss.com/joosum-frontend:${{ steps.date.outputs.date }}
+          docker stop frontend || true
+          docker run --rm -d -p 3000:3000 \
+            --log-opt max-size=10k --log-opt max-file=3 \
+            --name frontend joosum.kr.ncr.ntruss.com/joosum-frontend:${{ steps.date.outputs.date }}
