@@ -1,4 +1,5 @@
 # 문서 파일
 LICENSE
 README.md
-
+.prettierrc
+jest.config.ts
