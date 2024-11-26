@@ -12,10 +12,13 @@ type InputProps = {
 
 export default function LinkCardList({ links }: InputProps) {
   const [isAllLinks, setIsAllLinks] = useState(false);
-  const [filter, setFilter] = useState("latest");
+  const [filter, setFilter] = useState<"latest" | "unread">("latest");
   const handleFilter = (e: any) => {
     setFilter(e.target.value);
   };
+  const filteredLinks =
+    filter === "unread" ? links.filter(({ readCount }) => !readCount) : links;
+
   return (
     <div className="flex flex-1 flex-col gap-8">
       <div className="flex items-center justify-between">
@@ -55,22 +58,26 @@ export default function LinkCardList({ links }: InputProps) {
           </div>
         </Link>
       </div>
-      {links.length ? (
+      {filteredLinks.length ? (
         <div className="flex flex-col items-center gap-8">
           <div className="grid grid-cols-4 gap-8 overflow-auto">
-            {links.slice(0, isAllLinks ? undefined : 29).map((link, index) => (
-              <LinkCard key={index} link={link} />
-            ))}
+            {filteredLinks
+              .slice(0, isAllLinks ? undefined : 29)
+              .map((link, index) => (
+                <LinkCard key={index} link={link} />
+              ))}
           </div>
-          {links.length > 30 && (
+          {filteredLinks.length > 30 && (
             <div
               className="flex cursor-pointer rounded-lg py-4"
               onClick={() => setIsAllLinks(true)}
             >
               <span className="text-lg font-bold text-text-secondary">
                 {filter === "latest" ? "저장한" : "읽지 않은"} 링크{" "}
-                {links.length - 30 > 999 ? "999+" : links.length - 30}개 모두
-                보기
+                {filteredLinks.length - 30 > 999
+                  ? "999+"
+                  : filteredLinks.length - 30}
+                개 모두 보기
               </span>
               <Image
                 src="/icons/icon-right.png"

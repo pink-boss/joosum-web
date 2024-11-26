@@ -15,7 +15,23 @@ export const mockLink: Link = {
   userId: "user-1",
 };
 
-export const mockLinks: Link[] = new Array(100).fill(mockLink);
+export const mockLinks: Link[] = [
+  {
+    createdAt: "2024-03-22T09:00:00Z",
+    lastReadAt: "",
+    linkBookId: "book-1",
+    linkBookName: "개발 문서",
+    linkId: "link-1",
+    readCount: 0,
+    tags: ["Python", "Django", "Backend"],
+    thumbnailURL: "https://picsum.photos/374/185",
+    title: "Python 공식 문서",
+    updatedAt: "2024-03-22T15:30:00Z",
+    url: "https://python.org",
+    userId: "user-1",
+  },
+  ...new Array(100).fill(mockLink),
+];
 
 export const mockBanners: Banner[] = [
   {
