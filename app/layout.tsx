@@ -2,8 +2,11 @@
 import "./globals.css";
 import localFont from "next/font/local";
 import clsx from "clsx";
-import Logout from "@/components/auth/logout";
-import Withdraw from "@/components/auth/withdraw";
+import Sidebar from "@/components/layout/sidebar";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
+import { publicOnlyPaths } from "@/utils/path";
+import Topbar from "@/components/layout/topbar";
 
 const pretendard = localFont({
   src: "../public/fonts/PretendardVariable.woff2",
@@ -17,6 +20,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const queryClient = new QueryClient();
+  const pathname = usePathname();
+  const isPublicOnlyPath = publicOnlyPaths.includes(pathname);
+
   return (
     <html lang="ko">
       <head>
@@ -28,9 +35,18 @@ export default function RootLayout({
         <script src="https://accounts.google.com/gsi/client" async></script>
       </head>
       <body className={clsx(pretendard.variable, "bg-white font-pretendard")}>
-        <Logout />
-        <Withdraw />
-        <Component>{children}</Component>
+        {isPublicOnlyPath ? (
+          <Component>{children}</Component>
+        ) : (
+          <QueryClientProvider client={queryClient}>
+            <Sidebar>
+              <Component>
+                <Topbar />
+                {children}
+              </Component>
+            </Sidebar>
+          </QueryClientProvider>
+        )}
       </body>
     </html>
   );
@@ -42,7 +58,7 @@ function Component({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center">
       {children}
     </main>
   );

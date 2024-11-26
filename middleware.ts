@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { defaultPath, protectedPaths, publicOnlyPaths } from "./utils/path";
 
 export function middleware(request: NextRequest) {
-  console.log(request.method);
   const accessToken = request.cookies.get("accessToken"); // TODO: 서버에도 로그인되어 있는지 확인
   const { pathname } = request.nextUrl;
 
@@ -14,12 +14,8 @@ export function middleware(request: NextRequest) {
 
   // 기본 경로는 home
   if (pathname === "/") {
-    return NextResponse.redirect(new URL("/home", request.url));
+    return NextResponse.redirect(new URL(defaultPath, request.url));
   }
-
-  const protectedPaths = ["/home", "/my-folder"];
-  // const publicOnlyPaths = ["/login", "/onboarding"];
-  const publicOnlyPaths = ["/login"];
 
   const isProtectedPath = protectedPaths.some((path) =>
     pathname.startsWith(path),
@@ -30,7 +26,7 @@ export function middleware(request: NextRequest) {
   if (accessToken) {
     // 로그인한 사용자가 공개 경로 접근 시도
     if (isPublicOnlyPath) {
-      return NextResponse.redirect(new URL("/home", request.url));
+      return NextResponse.redirect(new URL(defaultPath, request.url));
     }
   } else {
     // 로그인하지 않은 사용자가 보호된 경로 접근 시도

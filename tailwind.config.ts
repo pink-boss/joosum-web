@@ -17,6 +17,7 @@ const config: Config = {
         secondary: "#6B5FDE",
         "background-primary": "#EFECFF",
         "background-secondary": "#F3F4F5",
+        "background-menu": "#EBECED",
         "text-primary": "#000000",
         "text-secondary": "#6C6C6C",
         "text-tertiary": "#555555",
