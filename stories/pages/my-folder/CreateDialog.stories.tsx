@@ -10,11 +10,11 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { userEvent, within, expect } from "@storybook/test";
 
-// TODO: 사이드바와 함께 렌더링 됐을 때, 사이드바는 백드롭에서 제외되어야 함.
 function ComposeComonent() {
   return (
     <div>
       <CreateButton />
+      <div id="modal-root" />
       <CreateDialog />
     </div>
   );
@@ -40,7 +40,7 @@ export const OpenCloseDialog: Story = {
 
     await userEvent.click(canvas.getByRole("button", { name: "닫기" }));
 
-    await expect(dialog).toHaveProperty("open", false);
+    await expect(dialog).not.toBeInTheDocument();
   },
 };
 

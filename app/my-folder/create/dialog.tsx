@@ -40,6 +40,7 @@ export default function CreateDialog() {
           isOpen && "flex flex-col items-center gap-5",
         )}
         aria-modal
+        aria-labelledby="dialog-title"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="text-2xl font-bold">폴더 생성</div>
