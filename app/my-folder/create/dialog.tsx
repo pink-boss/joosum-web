@@ -1,7 +1,7 @@
 "use client";
 import { useOpenDialogStore } from "@/store/useDialog";
 import clsx from "clsx";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback } from "react";
 import FolderSettingEditor from "./folder-setting-editor";
 import { CreateFormState } from "../type";
 import { createPortal, useFormState } from "react-dom";
@@ -22,21 +22,6 @@ export default function CreateDialog() {
   });
 
   const onClose = useCallback(() => open(false), [open]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handleGlobalClick = () => {
-      onClose();
-    };
-
-    // 사이드바 클릭시 닫기
-    document.addEventListener("click", handleGlobalClick);
-
-    return () => {
-      document.removeEventListener("click", handleGlobalClick);
-    };
-  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -68,8 +53,10 @@ export default function CreateDialog() {
           </button>
           <button
             className="h-[56px] w-[220.5px] rounded-lg bg-background-menu font-bold text-white"
-            onClick={() => {}}
-            disabled
+            onClick={() => {
+              // TODO: 이미 있는 타이틀인 경우 토스트 팝업으로 안내
+            }}
+            disabled // TODO: 타이틀 적으면 해제
           >
             생성
           </button>

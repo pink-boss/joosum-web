@@ -21,11 +21,17 @@ interface LinkBook {
 
 type LinkBookMenuProps = {
   linkBook: LinkBook;
+  closeDialog: () => void;
 };
 
-function LinkBookMenu({ linkBook }: LinkBookMenuProps) {
+function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
   return (
-    <Link href={`/my-folder/${linkBook.linkBookId}`}>
+    <Link
+      href={`/my-folder/${linkBook.linkBookId}`}
+      onClick={() => {
+        closeDialog();
+      }}
+    >
       <div className={clsx("h-[48px] w-[282px] py-3 pl-12 pr-5")}>
         <div className="flex gap-2">
           <div
@@ -60,9 +66,18 @@ export default function Menu() {
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
       );
+
+  const closeDialog = () => {
+    openCreateFolderDialog(false);
+  };
   return (
     <div>
-      <Link href="/home">
+      <Link
+        href="/home"
+        onClick={() => {
+          closeDialog();
+        }}
+      >
         <div className="flex items-center gap-4 px-10 py-3">
           <Image src="/icons/home.png" width={24} height={24} alt="home" />
           <div className="text-lg font-bold">홈</div>
@@ -91,7 +106,11 @@ export default function Menu() {
         <Loading />
       ) : (
         linkBooks?.map((linkBook, index) => (
-          <LinkBookMenu linkBook={linkBook} key={index} />
+          <LinkBookMenu
+            linkBook={linkBook}
+            key={index}
+            closeDialog={closeDialog}
+          />
         ))
       )}
       <div
