@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { publicOnlyPaths } from "@/utils/path";
 import Topbar from "@/components/layout/topbar";
+import CreateFolderDialog from "./my-folder/create/dialog";
 
 const pretendard = localFont({
   src: "../public/fonts/PretendardVariable.woff2",
@@ -43,6 +44,7 @@ export default function RootLayout({
               <Component>
                 <Topbar />
                 {children}
+                <CreateFolderDialog />
               </Component>
             </Sidebar>
           </QueryClientProvider>
@@ -58,7 +60,7 @@ function Component({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex min-h-screen w-full flex-col items-center justify-center">
+    <main className="relative flex min-h-screen w-full flex-col items-center justify-center">
       {children}
     </main>
   );

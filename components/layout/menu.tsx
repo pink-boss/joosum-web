@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import Loading from "../loading";
 import Link from "next/link";
+import { useOpenDialogStore } from "@/store/useDialog";
 
 interface LinkBook {
   linkBookId: string;
@@ -25,19 +26,12 @@ type LinkBookMenuProps = {
 function LinkBookMenu({ linkBook }: LinkBookMenuProps) {
   return (
     <Link href={`/my-folder/${linkBook.linkBookId}`}>
-      <div
-        className={clsx(
-          "h-[48px] w-[282px] py-3 pl-12 pr-5",
-          `bg-[${linkBook.backgroundColor}]`,
-        )}
-      >
+      <div className={clsx("h-[48px] w-[282px] py-3 pl-12 pr-5")}>
         <div className="flex gap-2">
           <div
-            className={clsx(
-              "h-5 w-5 rounded-full border border-white",
-              `bg-${linkBook.backgroundColor}`,
-            )}
-          ></div>
+            className={clsx("h-5 w-5 rounded-full border border-white")}
+            style={{ backgroundColor: linkBook.backgroundColor }}
+          />
           <div className="font-semibold text-[#444444]">{linkBook.title}</div>
         </div>
       </div>
@@ -59,6 +53,7 @@ export default function Menu() {
         method: "GET",
       }).then((res) => res.json()),
   });
+  const { openCreateFolderDialog } = useOpenDialogStore();
   const linkBooks = error
     ? []
     : data?.linkBooks.sort(
@@ -100,8 +95,8 @@ export default function Menu() {
         ))
       )}
       <div
-        className="flex cursor-not-allowed items-center justify-center gap-1 bg-white py-3"
-        onClick={() => {}}
+        className="flex cursor-pointer items-center justify-center gap-1 bg-white py-3"
+        onClick={() => openCreateFolderDialog(true)}
       >
         <Image src="/icons/icon-plus.png" width={28} height={28} alt="plus" />
         <div className="font-semibold text-[#444444]">폴더 만들기</div>
