@@ -44,9 +44,10 @@ export default function RootLayout({
               <Component>
                 <Topbar />
                 {children}
-                <CreateFolderDialog />
+                <div id="modal-root" />
               </Component>
             </Sidebar>
+            <CreateFolderDialog />
           </QueryClientProvider>
         )}
       </body>
