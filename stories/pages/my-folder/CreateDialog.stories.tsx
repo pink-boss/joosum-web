@@ -9,14 +9,16 @@ import { hexToRgb } from "@/utils/color";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { userEvent, within, expect } from "@storybook/test";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function ComposeComonent() {
+  const queryClient = new QueryClient();
   return (
-    <div>
+    <QueryClientProvider client={queryClient}>
       <CreateButton />
       <div id="modal-root" />
       <CreateDialog />
-    </div>
+    </QueryClientProvider>
   );
 }
 
@@ -108,7 +110,7 @@ export const PickIllustration: Story = {
     await expect(previewImg).toHaveAttribute(
       "src",
       expect.stringContaining(
-        `/link-book/illustration/${pickIllustrations[colorIndex]}.png`,
+        `/link-book/${pickIllustrations[colorIndex]}.png`,
       ),
     );
   },

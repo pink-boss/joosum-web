@@ -53,8 +53,8 @@ export function FolderBook({
           )}
         >
           <Image
-            src={`/link-book/illustration/${illustration}.png`}
-            alt={`${title}-illustration`}
+            src={`/link-book/${illustration}.png`}
+            alt={illustration}
             width={isPreview ? 80 : 118.8}
             height={isPreview ? 80 : 118.8}
           />

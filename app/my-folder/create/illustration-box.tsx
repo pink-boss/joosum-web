@@ -35,8 +35,8 @@ export default function IllustrationBox({
       >
         {illustration ? (
           <Image
-            src={`/link-book/illustration/${illustration}.png`}
-            alt="check"
+            src={`/link-book/${illustration}.png`}
+            alt={illustration}
             width={54.34}
             height={54.34}
           />
