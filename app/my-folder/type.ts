@@ -2,7 +2,7 @@ export interface LinkBook {
   backgroundColor: string;
   createdAt: string;
   illustration: string;
-  isDefault: string;
+  isDefault: "y" | "n";
   lastSavedAt: string;
   linkBookId: string;
   linkCount: number;

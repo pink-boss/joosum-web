@@ -37,7 +37,7 @@ export function FolderBook({
       <div
         data-testid="folder-book-title"
         className={clsx(
-          "line-clamp-2 font-bold",
+          "line-clamp-2 break-words font-bold",
           isPreview
             ? "ml-[22px] mt-4 w-[94px] text-base"
             : "ml-[33px] mt-[19.8px] w-[121px] text-lg",

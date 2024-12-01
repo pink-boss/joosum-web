@@ -28,15 +28,16 @@ export default function useEditorTabs(
   localState: CreateFormState,
   setLocalState: Dispatch<SetStateAction<CreateFormState>>,
 ) {
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    handleStateChange(name, value);
-  };
   const handleStateChange = (name: string, value: string) => {
     setLocalState((prev) => ({
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    handleStateChange(name, value);
   };
 
   const tabs: Tab[] = [
@@ -52,6 +53,7 @@ export default function useEditorTabs(
             onChange={handleInputChange}
             value={localState.title}
             autoFocus
+            maxLength={15}
           />
         </FormItem>
       ),

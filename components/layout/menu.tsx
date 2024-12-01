@@ -45,7 +45,7 @@ function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
   );
 }
 
-interface TQueryLinkBooks {
+export interface TQueryLinkBooks {
   linkBooks: LinkBook[];
   totalLinkCount: number;
 }
@@ -60,6 +60,7 @@ export default function Menu() {
       }).then((res) => res.json()),
   });
   const { openCreateFolderDialog } = useOpenDialogStore();
+
   const linkBooks = error
     ? []
     : data?.linkBooks.sort(
