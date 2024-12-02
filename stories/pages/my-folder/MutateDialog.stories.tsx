@@ -1,35 +1,36 @@
-import CreateButton from "@/app/my-folder/create/button";
+import CreateButton from "@/app/my-folder/mutate/button";
 import {
   pickBackgroundColors,
   pickIllustrations,
   pickTitleColors,
-} from "@/app/my-folder/create/data";
-import CreateDialog from "@/app/my-folder/create/dialog";
+} from "@/app/my-folder/mutate/data";
+import MutateDialog from "@/app/my-folder/mutate/dialog";
 import { hexToRgb } from "@/utils/color";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { userEvent, within, expect } from "@storybook/test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-function ComposeComonent() {
-  const queryClient = new QueryClient();
+const queryClient = new QueryClient();
+
+function ComposeComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <CreateButton />
       <div id="modal-root" />
-      <CreateDialog />
+      <MutateDialog />
     </QueryClientProvider>
   );
 }
 
 const meta = {
-  title: "Page/My-Folder/Dialog/Create",
-  component: ComposeComonent,
+  title: "Page/My-Folder/Dialog/Mutate",
+  component: ComposeComponent,
   tags: ["autodocs"],
-} satisfies Meta<typeof ComposeComonent>;
+} satisfies Meta<typeof ComposeComponent>;
 
 export default meta;
-type Story = StoryObj<typeof ComposeComonent>;
+type Story = StoryObj<typeof ComposeComponent>;
 
 export const OpenCloseDialog: Story = {
   play: async ({ canvasElement }) => {
@@ -114,4 +115,24 @@ export const PickIllustration: Story = {
       ),
     );
   },
+};
+
+// TODO: 폼 데이터 주입 확인
+export const RenderFormData: Story = {
+  play: async ({ canvasElement }) => {
+    // const canvas = within(canvasElement);
+    // await userEvent.click(canvas.getByTestId("create-dialog-button"));
+    // await userEvent.click(canvas.getByText("일러스트"));
+    // await userEvent.click(canvas.getByTestId(`illustration-${colorIndex}`));
+    // const previewImg = within(canvas.getByTestId("folder-book")).getByRole(
+    //   "img",
+    // );
+    // await expect(previewImg).toHaveAttribute(
+    //   "src",
+    //   expect.stringContaining(
+    //     `/link-book/${pickIllustrations[colorIndex]}.png`,
+    //   ),
+    // );
+  },
+  args: {},
 };

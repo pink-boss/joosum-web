@@ -9,10 +9,10 @@ type InputProps = {
 };
 
 export default function Sidebar({ children }: InputProps) {
-  const { openCreateFolderDialog } = useOpenDialogStore();
+  const { openMutateFolder } = useOpenDialogStore();
 
   const closeDialog = () => {
-    openCreateFolderDialog(false);
+    openMutateFolder(false);
   };
   return (
     <div className="flex">

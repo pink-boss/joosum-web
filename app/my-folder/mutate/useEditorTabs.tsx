@@ -28,7 +28,10 @@ export default function useEditorTabs(
   localState: CreateFormState,
   setLocalState: Dispatch<SetStateAction<CreateFormState>>,
 ) {
-  const handleStateChange = (name: string, value: string) => {
+  const handleStateChange = (
+    name: string,
+    value: string | undefined | null,
+  ) => {
     setLocalState((prev) => ({
       ...prev,
       [name]: value,

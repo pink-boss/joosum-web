@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import Loading from "../loading";
 import Link from "next/link";
+import { useSelectLinkBookStore } from "@/store/useLinkBook";
 import { useOpenDialogStore } from "@/store/useDialog";
 
 interface LinkBook {
@@ -45,11 +46,6 @@ function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
   );
 }
 
-export interface TQueryLinkBooks {
-  linkBooks: LinkBook[];
-  totalLinkCount: number;
-}
-
 export default function Menu() {
   const router = useRouter();
   const { isPending, error, data } = useQuery<TQueryLinkBooks>({
@@ -59,26 +55,23 @@ export default function Menu() {
         method: "GET",
       }).then((res) => res.json()),
   });
-  const { openCreateFolderDialog } = useOpenDialogStore();
-
-  const linkBooks = error
-    ? []
-    : data?.linkBooks.sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
-      );
+  const { openMutateFolder } = useOpenDialogStore();
+  const { selectLinkBook } = useSelectLinkBookStore();
 
   const closeDialog = () => {
-    openCreateFolderDialog(false);
+    openMutateFolder(false);
   };
+
+  const handleCreateFolder = () => {
+    selectLinkBook(undefined);
+    openMutateFolder(true);
+  };
+
+  const linkBooks = error ? [] : data?.linkBooks;
+
   return (
     <div>
-      <Link
-        href="/home"
-        onClick={() => {
-          closeDialog();
-        }}
-      >
+      <Link href="/home" onClick={closeDialog}>
         <div className="flex items-center gap-4 px-10 py-3">
           <Image src="/icons/home.png" width={24} height={24} alt="home" />
           <div className="text-lg font-bold">홈</div>
@@ -106,17 +99,23 @@ export default function Menu() {
       {isPending ? (
         <Loading />
       ) : (
-        linkBooks?.map((linkBook, index) => (
-          <LinkBookMenu
-            linkBook={linkBook}
-            key={index}
-            closeDialog={closeDialog}
-          />
-        ))
+        <div
+          className={
+            "sidebar-menu-scroll max-h-[50vh] overflow-y-auto overflow-x-hidden"
+          }
+        >
+          {linkBooks?.map((linkBook, index) => (
+            <LinkBookMenu
+              linkBook={linkBook}
+              key={index}
+              closeDialog={closeDialog}
+            />
+          ))}
+        </div>
       )}
       <div
         className="flex cursor-pointer items-center justify-center gap-1 bg-white py-3"
-        onClick={() => openCreateFolderDialog(true)}
+        onClick={handleCreateFolder}
       >
         <Image src="/icons/icon-plus.png" width={28} height={28} alt="plus" />
         <div className="font-semibold text-[#444444]">폴더 만들기</div>

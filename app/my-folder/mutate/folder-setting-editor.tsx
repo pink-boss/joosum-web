@@ -30,7 +30,6 @@ function EditorTab({ tab, selectedTab, setSelectedTab }: EditorTabInputProps) {
   );
 }
 
-// TODO: rest api 통신, fetch, update, delete
 type InputProps = CreateFormState & {
   setFormState: Dispatch<SetStateAction<CreateFormState>>;
 };

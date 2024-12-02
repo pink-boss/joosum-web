@@ -2,9 +2,12 @@ import clsx from "clsx";
 import Image from "next/image";
 
 type InputProps = {
-  illustration: string;
-  previewIllustration?: string;
-  setPreviewIllustration: (name: string, value: string) => void;
+  illustration?: string | null;
+  previewIllustration?: string | null;
+  setPreviewIllustration: (
+    name: string,
+    value: string | undefined | null,
+  ) => void;
   stateName: string;
   illustrationIndex: number;
 };
@@ -16,7 +19,9 @@ export default function IllustrationBox({
   stateName,
   illustrationIndex,
 }: InputProps) {
-  const isSelected = previewIllustration == illustration;
+  const isSelected =
+    previewIllustration == illustration ||
+    (isEmpty(previewIllustration) && isEmpty(illustration));
   return (
     <button
       data-testid={`${stateName}-${illustrationIndex}`}
@@ -47,3 +52,9 @@ export default function IllustrationBox({
     </button>
   );
 }
+
+const isEmpty = (illustration: string | undefined | null) => {
+  return (
+    illustration === "" || illustration === undefined || illustration === null
+  );
+};

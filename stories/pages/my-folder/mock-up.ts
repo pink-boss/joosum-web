@@ -1,10 +1,23 @@
 import { LinkBook } from "@/app/my-folder/type";
 
+export const defaultLinkBook: LinkBook = {
+  backgroundColor: "#8A8A9A",
+  createdAt: "2024-11-22T09:30:00.000Z",
+  illustration: null,
+  isDefault: "y",
+  lastSavedAt: "2024-11-26T09:30:00.000Z",
+  linkBookId: "lb_000",
+  linkCount: 130,
+  title: "기본",
+  titleColor: "#FFFFFF",
+  userId: "user_123",
+};
+
 export const longTitleLinkBook: LinkBook = {
   backgroundColor: "#F8F9FA",
   createdAt: "2024-11-26T09:30:00.000Z",
   illustration: "illust1",
-  isDefault: "y",
+  isDefault: "n",
   lastSavedAt: "2024-11-26T09:30:00.000Z",
   linkBookId: "lb_001",
   linkCount: 12,
@@ -27,6 +40,7 @@ export const shortTitleLinkBook: LinkBook = {
 };
 
 export const mockLinkBooks: LinkBook[] = [
+  defaultLinkBook,
   longTitleLinkBook,
   shortTitleLinkBook,
   {
@@ -58,7 +72,7 @@ export const mockLinkBooks: LinkBook[] = [
     createdAt: "2024-11-22T10:05:00.000Z",
     illustration: "illust5",
     isDefault: "n",
-    lastSavedAt: "2024-11-24T19:55:00.000Z",
+    lastSavedAt: "2024-11-27T19:55:00.000Z",
     linkBookId: "lb_005",
     linkCount: 10,
     title: "여행 계획",

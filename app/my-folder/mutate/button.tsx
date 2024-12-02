@@ -1,14 +1,21 @@
 "use client";
 import { useOpenDialogStore } from "@/store/useDialog";
+import { useSelectLinkBookStore } from "@/store/useLinkBook";
 import Image from "next/image";
 
 export default function CreateButton() {
-  const { openCreateFolderDialog } = useOpenDialogStore();
+  const { openMutateFolder } = useOpenDialogStore();
+  const { selectLinkBook } = useSelectLinkBookStore();
+
+  const handleClick = () => {
+    selectLinkBook(undefined);
+    openMutateFolder(true);
+  };
   return (
     <button
       data-testid="create-dialog-button"
       className="flex rounded bg-primary py-[6px] pl-2 pr-3 font-semibold text-white"
-      onClick={() => openCreateFolderDialog(true)}
+      onClick={handleClick}
     >
       <Image
         src="/icons/icon-plus-white.png"

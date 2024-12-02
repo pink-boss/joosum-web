@@ -1,7 +1,7 @@
 export interface LinkBook {
   backgroundColor: string;
   createdAt: string;
-  illustration: string;
+  illustration: string | null;
   isDefault: "y" | "n";
   lastSavedAt: string;
   linkBookId: string;
@@ -22,3 +22,19 @@ export type CreateLinkBook = Pick<
 >;
 
 export type CreateFormState = Partial<CreateLinkBook>;
+
+// 전체 폴더북에 필요한 속성
+export type RequiredFolderProps = Pick<
+  LinkBook,
+  "backgroundColor" | "linkCount" | "title" | "titleColor"
+>;
+
+// 전체 폴더북에 필요 없는 속성
+export type OptionalFolderProps = Partial<
+  Omit<LinkBook, keyof RequiredFolderProps>
+>;
+
+export type DefaultFolderProps = RequiredFolderProps &
+  Required<OptionalFolderProps>;
+
+export type EntireFolderProps = RequiredFolderProps & OptionalFolderProps;

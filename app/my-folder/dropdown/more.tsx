@@ -1,12 +1,16 @@
+import { useClearDropdown } from "@/hooks/clear-dropdown";
+import { useOpenDialogStore } from "@/store/useDialog";
 import Image from "next/image";
 import { useState } from "react";
+import { LinkBook } from "../type";
+import { useSelectLinkBookStore } from "@/store/useLinkBook";
 
-type DropdownMoreMenuProps = {
+type DropdownItemProps = {
   title: string;
   handleClick: () => void;
 };
 
-const DropdownMoreMenu = ({ title, handleClick }: DropdownMoreMenuProps) => {
+const DropdownItem = ({ title, handleClick }: DropdownItemProps) => {
   return (
     <button
       onClick={handleClick}
@@ -17,17 +21,34 @@ const DropdownMoreMenu = ({ title, handleClick }: DropdownMoreMenuProps) => {
   );
 };
 
-const DropdownMore = () => {
+type InputProps = {
+  linkBook: LinkBook;
+};
+
+const DropdownMore = ({ linkBook }: InputProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // TODO: modal 띄우기
-  const handleModify = () => {};
-  const handleDelete = () => {};
+  const onClose = () => setIsOpen(false);
+
+  const ref = useClearDropdown(onClose);
+
+  const { openMutateFolder, openDeleteFolder } = useOpenDialogStore();
+  const { selectLinkBook } = useSelectLinkBookStore();
+
+  const handleModify = () => {
+    selectLinkBook(linkBook);
+    openMutateFolder(true);
+    onClose();
+  };
+  const handleDelete = () => {
+    openDeleteFolder(true);
+    onClose();
+  };
 
   return (
-    <div className="relative">
+    <div className="relative" data-testid="link-book-more" ref={ref}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen(true)}
         className="flex h-12 w-12 items-center justify-center rounded-full bg-black"
       >
         <Image
@@ -40,8 +61,8 @@ const DropdownMore = () => {
 
       {isOpen && (
         <div className="absolute z-10 mt-1 flex w-[110px] flex-col rounded-lg border border-background-secondary bg-white py-4 shadow-lg">
-          <DropdownMoreMenu title="폴더 수정" handleClick={handleModify} />
-          <DropdownMoreMenu title="폴더 삭제" handleClick={handleDelete} />
+          <DropdownItem title="폴더 수정" handleClick={handleModify} />
+          <DropdownItem title="폴더 삭제" handleClick={handleDelete} />
         </div>
       )}
     </div>

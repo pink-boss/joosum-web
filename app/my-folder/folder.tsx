@@ -1,8 +1,15 @@
 import clsx from "clsx";
-import { CreateLinkBook, LinkBook } from "./type";
+import {
+  CreateLinkBook,
+  DefaultFolderProps,
+  EntireFolderProps,
+  OptionalFolderProps,
+} from "./type";
 import Image from "next/image";
-import Dropdown from "./dropdown/more";
+import DropdownMore from "./dropdown/more";
 import { ReactNode } from "react";
+import { useSelectLinkBookStore } from "@/store/useLinkBook";
+import { useRouter } from "next/navigation";
 
 type FolderBookInputProps = Partial<CreateLinkBook> & {
   children?: ReactNode;
@@ -65,29 +72,48 @@ export function FolderBook({
   );
 }
 
-function MoreOptions() {
-  return (
-    <div className="absolute bottom-[13.3px] right-[13.53px]">
-      <Dropdown />
-    </div>
-  );
-}
-
-type InputProps = {
-  linkBook: LinkBook;
-};
+type InputProps = { linkBook: EntireFolderProps };
 
 export default function Folder({ linkBook }: InputProps) {
+  const { selectLinkBook } = useSelectLinkBookStore();
+  const router = useRouter();
+
+  const handleClick = () => {
+    let path = "/my-folder";
+    if (isNormalLinkBook(linkBook)) {
+      selectLinkBook(linkBook);
+      path += `/${linkBook.linkBookId}`;
+    }
+    router.push(path);
+  };
   return (
     <div
       className={clsx(
-        "flex h-[275.9px] w-[174.9px] flex-col items-center gap-[17.6px]",
+        "flex h-[275.9px] w-[174.9px] cursor-pointer flex-col items-center gap-[17.6px]",
       )}
+      onClick={handleClick}
     >
       <FolderBook {...linkBook}>
-        <MoreOptions />
+        {isNormalLinkBook(linkBook) && linkBook.isDefault !== "y" && (
+          <div
+            className="absolute bottom-[13.3px] right-[13.53px] p-px"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <DropdownMore linkBook={linkBook} />
+          </div>
+        )}
       </FolderBook>
       <div className="text-text-secondary">{linkBook.linkCount}개</div>
     </div>
   );
+}
+
+function isNormalLinkBook(
+  linkBook: EntireFolderProps,
+): linkBook is DefaultFolderProps {
+  const requiredFields = [] as Array<
+    keyof Omit<OptionalFolderProps, "illustration">
+  >;
+
+  return requiredFields.every((field) => linkBook[field] !== undefined);
 }

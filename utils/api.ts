@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 interface FetchParams {
   path: string;
   method?: "GET" | "POST" | "PUT" | "DELETE";
-  queryString?: string;
+  queryString?: string | null;
   body?: Pick<RequestInit, "body">;
 }
 

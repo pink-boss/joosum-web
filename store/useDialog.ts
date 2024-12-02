@@ -1,11 +1,15 @@
 import { create } from "zustand";
 
 interface OpenDialogState {
-  createFolderDialog: boolean;
-  openCreateFolderDialog: (value: boolean) => void;
+  mutateFolder: boolean;
+  deleteFolder: boolean;
+  openMutateFolder: (open: boolean) => void;
+  openDeleteFolder: (open: boolean) => void;
 }
 
 export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
-  createFolderDialog: false,
-  openCreateFolderDialog: (value) => set({ createFolderDialog: value }),
+  mutateFolder: false,
+  deleteFolder: false,
+  openMutateFolder: (mutateFolder) => set({ mutateFolder }),
+  openDeleteFolder: (deleteFolder) => set({ deleteFolder }),
 }));
