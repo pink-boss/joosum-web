@@ -8,9 +8,14 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 
 export default function DeleteFolderDialog() {
   const { deleteFolder: isOpen, openDeleteFolder: open } = useOpenDialogStore();
-  const { linkBook } = useSelectLinkBookStore();
+  const { linkBook, selectLinkBook } = useSelectLinkBookStore();
 
-  const onClose = useCallback(() => open(false), [open]);
+  const onClose = useCallback(() => {
+    if (linkBook) {
+      selectLinkBook(undefined);
+    }
+    open(false);
+  }, [open, linkBook, selectLinkBook]);
 
   const queryClient = useQueryClient();
   const remove = useMutation<{ deletedLinks: number }, Error>({
@@ -51,7 +56,7 @@ export default function DeleteFolderDialog() {
   }
 
   return (
-    <Dialog open={isOpen} className="w-[421.78px]">
+    <Dialog open={isOpen} onCloseCallback={onClose} className="w-[421.78px]">
       <div className="flex flex-col items-center gap-5">
         <div className="text-center text-[#2F2F2F]">
           <p>폴더 내의 모든 링크가 삭제됩니다.</p>

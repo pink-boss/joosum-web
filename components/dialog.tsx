@@ -8,16 +8,29 @@ type InputProps = {
   open: boolean;
   children: ReactNode;
   className?: string;
+  onCloseCallback: () => void;
 };
 
-export default function Dialog({ open, children, className }: InputProps) {
+export default function Dialog({
+  open,
+  children,
+  className,
+  onCloseCallback,
+}: InputProps) {
   const { mutateFolder, deleteFolder, openMutateFolder, openDeleteFolder } =
     useOpenDialogStore();
 
   const onClose = useCallback(() => {
+    onCloseCallback();
     if (mutateFolder) openMutateFolder(false);
     if (deleteFolder) openDeleteFolder(false);
-  }, [deleteFolder, mutateFolder, openDeleteFolder, openMutateFolder]);
+  }, [
+    deleteFolder,
+    mutateFolder,
+    openDeleteFolder,
+    openMutateFolder,
+    onCloseCallback,
+  ]);
 
   if (!open) return null;
 

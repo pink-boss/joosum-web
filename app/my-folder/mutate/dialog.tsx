@@ -83,15 +83,13 @@ export default function MutateDialog() {
   }
 
   useEffect(() => {
-    if (linkBook) {
-      setFormState(linkBook);
-    }
+    setFormState(linkBook ?? defaultValues);
   }, [setFormState, linkBook]);
 
   if (!isOpen) return null;
 
   return (
-    <Dialog open={isOpen} className="w-[792px]">
+    <Dialog open={isOpen} onCloseCallback={onClose} className="w-[792px]">
       <div className="my-5 text-center text-2xl font-bold">
         폴더 {linkBook ? "수정" : "생성"}
       </div>

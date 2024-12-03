@@ -41,6 +41,7 @@ const DropdownMore = ({ linkBook }: InputProps) => {
     onClose();
   };
   const handleDelete = () => {
+    selectLinkBook(linkBook);
     openDeleteFolder(true);
     onClose();
   };
