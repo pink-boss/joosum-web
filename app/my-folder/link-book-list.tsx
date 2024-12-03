@@ -8,7 +8,7 @@ export default function LinkBookList({
   totalLinkCount,
 }: LinkBookListInputProps) {
   return (
-    <div className="flex flex-wrap gap-x-6 gap-y-8" role="list">
+    <div className="flex flex-wrap gap-x-6 gap-y-8 overflow-auto" role="list">
       <Folder
         linkBook={{
           backgroundColor: "#6D6D6F",

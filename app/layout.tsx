@@ -64,7 +64,7 @@ function Component({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="relative flex min-h-screen w-full flex-col items-center justify-center">
+    <main className="relative flex h-screen w-full flex-col items-center">
       {children}
     </main>
   );

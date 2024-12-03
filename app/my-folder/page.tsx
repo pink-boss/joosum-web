@@ -17,11 +17,12 @@ export default function MyFolder() {
       }).then((res) => res.json()),
   });
   return (
-    <div className="flex w-full flex-1 flex-col gap-8 px-10">
+    <div className="flex w-full flex-1 flex-col gap-8 overflow-hidden px-10">
       <div className="flex items-center justify-end gap-3">
         <DropdownSort selected={sortOption} setSelected={setSortOption} />
         <CreateButton />
       </div>
+
       {isPending ? (
         <Loading />
       ) : (
