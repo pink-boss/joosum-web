@@ -1,6 +1,6 @@
 "use client";
-import { useOpenDialogStore } from "@/store/useDialog";
-import { useSelectLinkBookStore } from "@/store/useLinkBook";
+import { useOpenDialogStore } from "@/store/useDialogStore";
+import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
 import Image from "next/image";
 
 export default function CreateButton() {

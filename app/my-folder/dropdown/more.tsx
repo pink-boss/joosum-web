@@ -1,9 +1,9 @@
 import { useClearDropdown } from "@/hooks/clear-dropdown";
-import { useOpenDialogStore } from "@/store/useDialog";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 import Image from "next/image";
 import { useState } from "react";
 import { LinkBook } from "../type";
-import { useSelectLinkBookStore } from "@/store/useLinkBook";
+import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
 
 type DropdownItemProps = {
   title: string;

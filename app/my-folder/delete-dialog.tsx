@@ -1,10 +1,10 @@
 "use client";
-import { useSelectLinkBookStore } from "@/store/useLinkBook";
+import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
 import clsx from "clsx";
 import { useCallback } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Dialog from "@/components/dialog";
-import { useOpenDialogStore } from "@/store/useDialog";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 export default function DeleteFolderDialog() {
   const { deleteFolder: isOpen, openDeleteFolder: open } = useOpenDialogStore();

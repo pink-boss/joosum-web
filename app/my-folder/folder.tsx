@@ -8,7 +8,7 @@ import {
 import Image from "next/image";
 import DropdownMore from "./dropdown/more";
 import { ReactNode } from "react";
-import { useSelectLinkBookStore } from "@/store/useLinkBook";
+import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
 import { useRouter } from "next/navigation";
 
 type FolderBookInputProps = Partial<CreateLinkBook> & {

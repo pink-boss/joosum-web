@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import Loading from "../loading";
 import Link from "next/link";
-import { useSelectLinkBookStore } from "@/store/useLinkBook";
-import { useOpenDialogStore } from "@/store/useDialog";
+import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
+import { useOpenDialogStore } from "@/store/useDialogStore";
+import { useLayoutStore } from "@/store/useLayoutStore";
+import { MouseEvent } from "react";
 
 interface LinkBook {
   linkBookId: string;
@@ -33,7 +34,7 @@ function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
         closeDialog();
       }}
     >
-      <div className={clsx("h-[48px] w-[282px] py-3 pl-12 pr-5")}>
+      <div className={clsx("h-[48px] py-3 pl-12 pr-5")}>
         <div className="flex gap-2">
           <div
             className={clsx("h-5 w-5 rounded-full border border-white")}
@@ -47,7 +48,6 @@ function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
 }
 
 export default function Menu() {
-  const router = useRouter();
   const { isPending, error, data } = useQuery<TQueryLinkBooks>({
     queryKey: ["linkBooks"],
     queryFn: () =>
@@ -57,6 +57,7 @@ export default function Menu() {
   });
   const { openMutateFolder } = useOpenDialogStore();
   const { selectLinkBook } = useSelectLinkBookStore();
+  const { openSideMenu, setOpenSideMenu } = useLayoutStore();
 
   const closeDialog = () => {
     openMutateFolder(false);
@@ -67,10 +68,15 @@ export default function Menu() {
     openMutateFolder(true);
   };
 
+  const handleOpenMenu = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setOpenSideMenu(!openSideMenu);
+  };
+
   const linkBooks = error ? [] : data?.linkBooks;
 
   return (
-    <div>
+    <div className="w-[282px]">
       <Link href="/home" onClick={closeDialog}>
         <div className="flex items-center gap-4 px-10 py-3">
           <Image src="/icons/home.png" width={24} height={24} alt="home" />
@@ -86,23 +92,29 @@ export default function Menu() {
             alt="folder"
           />
           <div className="text-lg font-bold">내 폴더</div>
-          <div className="ml-auto" onClick={(e) => e.stopPropagation()}>
+          <div className="ml-auto" onClick={handleOpenMenu}>
             <Image
-              src="/icons/icon-down.png"
+              src={`/icons/icon-down.png`}
               width={24}
               height={24}
-              alt="down"
+              alt="icon-direction"
+              className={clsx(
+                "transition-transform duration-300",
+                !openSideMenu && "rotate-180",
+              )}
             />
           </div>
         </div>
       </Link>
-      {isPending ? (
+      {isPending && openSideMenu ? (
         <Loading />
       ) : (
         <div
-          className={
-            "sidebar-menu-scroll max-h-[50vh] overflow-y-auto overflow-x-hidden"
-          }
+          className={clsx(
+            openSideMenu
+              ? "sidebar-menu-scroll max-h-[50vh] overflow-y-auto overflow-x-hidden"
+              : "h-0 overflow-hidden",
+          )}
         >
           {linkBooks?.map((linkBook, index) => (
             <LinkBookMenu

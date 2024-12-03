@@ -1,5 +1,5 @@
 "use client";
-import { useSelectLinkBookStore } from "@/store/useLinkBook";
+import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import FolderSettingEditor from "./folder-setting-editor";
@@ -7,7 +7,7 @@ import { CreateFormState, LinkBook } from "../type";
 import { pickBackgroundColors, pickTitleColors } from "./data";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Dialog from "@/components/dialog";
-import { useOpenDialogStore } from "@/store/useDialog";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 const defaultValues: CreateFormState = {
   title: "",

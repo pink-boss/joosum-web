@@ -5,7 +5,7 @@ import { expect, userEvent, within } from "@storybook/test";
 import MutateDialog from "@/app/my-folder/mutate/dialog";
 import { mockLinkBooks } from "./mock-up";
 import DeleteDialog from "@/app/my-folder/delete-dialog";
-import { useOpenDialogStore } from "@/store/useDialog";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 const queryClient = new QueryClient();
 

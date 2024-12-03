@@ -29,7 +29,7 @@ const DropdownSort = ({ selected, setSelected }: InputProps) => {
         className="flex h-[24px] items-center p-1 font-semibold text-text-secondary"
       >
         <div>{selectedOption?.label}</div>
-        <Image src="/icons/icon-up.png" alt="up" width={24} height={24} />
+        <Image src="/icons/icon-down2.png" alt="down" width={24} height={24} />
       </button>
 
       {isOpen && (

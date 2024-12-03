@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 import Menu from "./menu";
 import Link from "next/link";
-import { useOpenDialogStore } from "@/store/useDialog";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 type InputProps = {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ export default function Sidebar({ children }: InputProps) {
   };
   return (
     <div className="flex">
-      <div className="flex w-[282px] flex-col justify-between bg-background-menu py-11">
+      <div className="flex flex-col justify-between bg-background-menu py-11">
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between px-10 py-1">
             <Link

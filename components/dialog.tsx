@@ -1,5 +1,5 @@
 "use client";
-import { useOpenDialogStore } from "@/store/useDialog";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 import clsx from "clsx";
 import { ReactNode, useCallback } from "react";
 import { createPortal } from "react-dom";
