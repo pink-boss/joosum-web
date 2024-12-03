@@ -1,7 +1,7 @@
-import { fetchToServer } from "@/utils/api";
+import { serverApi } from "@/utils/api";
 
 export async function GET() {
-  return fetchToServer({
+  return serverApi({
     path: "api/banners",
   });
 }

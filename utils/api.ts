@@ -4,13 +4,15 @@ import { NextResponse } from "next/server";
 interface FetchParams {
   path: string;
   method?: "GET" | "POST" | "PUT" | "DELETE";
-  queryString?: string;
+  queryString?: string | null;
+  body?: Pick<RequestInit, "body">;
 }
 
-export async function fetchToServer({
+export async function serverApi({
   path,
   method,
   queryString,
+  body,
 }: FetchParams) {
   const token = cookies().get("accessToken");
 
@@ -19,15 +21,20 @@ export async function fetchToServer({
   }
 
   try {
+    const requestInit: RequestInit = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token.value,
+      },
+      method: method ?? "GET",
+    };
+    if (body) {
+      requestInit.body = JSON.stringify(body);
+    }
+
     const response = await fetch(
       `${process.env.JOOSUM_SERVER_URI}/${path}${queryString ? `?${queryString}` : ""}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token.value,
-        },
-        method: method ?? "GET",
-      },
+      requestInit,
     );
 
     const data = await response.json();
