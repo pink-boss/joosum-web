@@ -2,27 +2,22 @@
 import { useClearDropdown } from "@/hooks/clear-dropdown";
 import clsx from "clsx";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-
-export const sortOptions = [
-  { label: "생성순", value: "created_at" },
-  { label: "제목순", value: "title" },
-  { label: "업데이트순", value: "last_saved_at" },
-];
+import { useState } from "react";
 
 type InputProps = {
-  selected: string;
-  setSelected: (option: string) => void;
+  selected: Value;
+  setSelected: (option: Value) => void;
+  options: OptionItem[];
 };
 
-const DropdownSort = ({ selected, setSelected }: InputProps) => {
+const Dropdown = ({ selected, setSelected, options }: InputProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const ref = useClearDropdown(() => setIsOpen(false));
 
-  const selectedOption = sortOptions.find(({ value }) => selected === value);
+  const selectedOption = options.find(({ value }) => selected === value);
   return (
-    <div className="relative" data-testid="link-book-list-sort" ref={ref}>
+    <div className="relative" data-testid="sort-dropdown" ref={ref}>
       <button
         data-testid="open-button"
         onClick={() => setIsOpen(!isOpen)}
@@ -34,7 +29,7 @@ const DropdownSort = ({ selected, setSelected }: InputProps) => {
 
       {isOpen && (
         <div className="absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border border-background-secondary bg-white py-4 shadow-lg">
-          {sortOptions.map((item) => (
+          {options.map((item) => (
             <button
               data-testid={`dropdown-${item.label}`}
               key={item.value}
@@ -58,4 +53,4 @@ const DropdownSort = ({ selected, setSelected }: InputProps) => {
   );
 };
 
-export default DropdownSort;
+export default Dropdown;

@@ -3,7 +3,9 @@ interface TQueryLinkBooks {
   totalLinkCount: number;
 }
 
+type Value = OptionItem["value"];
+
 type OptionItem = {
   label: string;
-  value: string | number;
+  value: Value;
 };

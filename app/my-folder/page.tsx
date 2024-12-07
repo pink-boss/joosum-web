@@ -1,11 +1,17 @@
 "use client";
 
-import DropdownSort, { sortOptions } from "./dropdown/sort";
 import CreateButton from "./mutate/button";
 import LinkBookList from "./link-book-list";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Loading from "@/components/loading";
+import Dropdown from "@/components/dropdown";
+
+const sortOptions = [
+  { label: "생성순", value: "created_at" },
+  { label: "제목순", value: "title" },
+  { label: "업데이트순", value: "last_saved_at" },
+];
 
 export default function MyFolder() {
   const [sortOption, setSortOption] = useState(sortOptions[0].value);
@@ -19,7 +25,11 @@ export default function MyFolder() {
   return (
     <div className="flex w-full flex-1 flex-col gap-8 overflow-hidden px-10">
       <div className="flex items-center justify-end gap-3">
-        <DropdownSort selected={sortOption} setSelected={setSortOption} />
+        <Dropdown
+          selected={sortOption}
+          setSelected={setSortOption}
+          options={sortOptions}
+        />
         <CreateButton />
       </div>
 
