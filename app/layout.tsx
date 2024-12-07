@@ -39,7 +39,7 @@ export default function RootLayout({
       </head>
       <body className={clsx(pretendard.variable, "bg-white font-pretendard")}>
         {isPublicOnlyPath ? (
-          <Component>{children}</Component>
+          <Component className="justify-center">{children}</Component>
         ) : (
           <QueryClientProvider client={queryClient}>
             <Sidebar>
@@ -60,11 +60,18 @@ export default function RootLayout({
 
 function Component({
   children,
+  className,
 }: Readonly<{
   children: React.ReactNode;
+  className?: string;
 }>) {
   return (
-    <main className="relative flex h-screen w-full flex-col items-center">
+    <main
+      className={clsx(
+        "relative flex h-screen w-full flex-col items-center",
+        className && className,
+      )}
+    >
       {children}
     </main>
   );
