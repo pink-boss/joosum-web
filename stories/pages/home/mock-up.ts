@@ -9,7 +9,8 @@ export const mockLink: Link = {
   readCount: 5,
   tags: ["React", "TypeScript", "Frontend", "Storybook", "TailwindCSS"],
   thumbnailURL: "https://picsum.photos/374/184",
-  title: "React 공식 문서",
+  title:
+    "React 공식 문서 - 가나다라마바사아자차카타파하 아야어요우유 테스트 자료",
   updatedAt: "2024-03-21T15:30:00Z",
   url: "https://react.dev",
   userId: "user-1",
