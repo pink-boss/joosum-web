@@ -31,8 +31,14 @@ export const mockLinks: Link[] = [
     url: "https://python.org",
     userId: "user-1",
   },
-  ...new Array(100).fill(mockLink),
-];
+  ...new Array(20).fill(mockLink),
+].map((link, index) => ({
+  ...link,
+  linkBookId: `book-${index + 1}`,
+  linkId: `link-${index + 1}`,
+  userId: `user-${index + 1}`,
+  thumbnailURL: `https://picsum.photos/374/${(index % 10) + 1}`,
+}));
 
 export const mockBanners: Banner[] = [
   {

@@ -13,6 +13,7 @@ const sortOptions = [
   { label: "업데이트순", value: "last_saved_at" },
 ];
 
+// TODO: 고도화 적용
 export default function MyFolder() {
   const [sortOption, setSortOption] = useState(sortOptions[0].value);
   const { isPending, error, data } = useQuery<TQueryLinkBooks>({

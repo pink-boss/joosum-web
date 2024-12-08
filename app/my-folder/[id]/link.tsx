@@ -5,6 +5,7 @@ import Link from "next/link";
 
 type InputProps = { link: LinkType };
 
+// TODO: 링크안에 링크 x
 export default function LinkComponent({ link }: InputProps) {
   const handleOpenLink = () => {
     // TODO: 조회수 1 증가
@@ -14,7 +15,7 @@ export default function LinkComponent({ link }: InputProps) {
       data-testid="url-link"
       target="_blank"
       href={link.url}
-      className="flex h-[124px] flex-1 justify-between gap-5 py-5"
+      className="flex h-[84px] flex-1 justify-between gap-5"
       onClick={handleOpenLink}
     >
       <div className="relative h-[84px] w-[160px] flex-none">
