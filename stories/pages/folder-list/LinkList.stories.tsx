@@ -29,7 +29,6 @@ export const EditMode: Story = {
 };
 
 export const TestCheckStatement: Story = {
-  args: { defaultEditMode: true },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 

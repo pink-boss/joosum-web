@@ -33,7 +33,10 @@ export default function LinkComponent({ link }: InputProps) {
         </div>
         <div className="mt-auto flex gap-1 text-text-secondary">
           <div className="flex-none">{link.url}</div>|
-          <div className="flex-none">{dateFormatter(link.createdAt)}</div>|
+          <div className="flex-none">
+            {dateFormatter(link.createdAt, "2-digit")}
+          </div>
+          |
           <div className="flex-none">
             {link.readCount ? `${link.readCount}회 읽음` : `읽지 않음`}
           </div>

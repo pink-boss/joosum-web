@@ -38,3 +38,7 @@ export type DefaultFolderProps = RequiredFolderProps &
   Required<OptionalFolderProps>;
 
 export type EntireFolderProps = RequiredFolderProps & OptionalFolderProps;
+
+export type DateValue = Date | string;
+
+export type DateRange = [] | [DateValue] | [DateValue, DateValue];

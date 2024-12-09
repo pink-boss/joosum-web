@@ -33,6 +33,7 @@ export default function LinkCardList({ links }: InputProps) {
               id="filter-latest"
               value="latest"
               defaultChecked
+              className="h-6 w-6 accent-primary"
             />
             <label htmlFor="filter-latest">최근 저장</label>
           </div>
@@ -42,6 +43,7 @@ export default function LinkCardList({ links }: InputProps) {
               name="filter"
               id="filter-unread"
               value="unread"
+              className="h-6 w-6 accent-primary"
             />
             <label htmlFor="filter-unread">읽지 않음</label>
           </div>

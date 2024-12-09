@@ -9,13 +9,6 @@ const meta = {
     link: mockLink,
   },
   tags: ["autodocs"],
-  decorators: [
-    (Story) => (
-      <div className="flex flex-col">
-        <Story />
-      </div>
-    ),
-  ],
 } satisfies Meta<typeof Link>;
 
 export default meta;
