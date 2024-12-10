@@ -112,7 +112,7 @@ export default function Menu() {
         <div
           className={clsx(
             openSideMenu
-              ? "sidebar-menu-scroll max-h-[50vh] overflow-y-auto overflow-x-hidden"
+              ? "mini-scroll max-h-[50vh] overflow-y-auto overflow-x-hidden"
               : "h-0 overflow-hidden",
           )}
         >

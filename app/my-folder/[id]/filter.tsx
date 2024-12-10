@@ -1,4 +1,5 @@
-import DatePicker from "./date-picker/date-picker";
+import DatePicker from "./date-picker";
+import TagSelector from "./tag-selector";
 
 export default function Filter() {
   return (
@@ -10,7 +11,7 @@ export default function Filter() {
         </div>
       </div>
       <DatePicker />
-      <div>tags</div>
+      <TagSelector totalTags={[]} />
       <div>reset</div>
     </div>
   );

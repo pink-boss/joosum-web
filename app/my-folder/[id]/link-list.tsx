@@ -3,6 +3,7 @@ import LinkComponent from "./link";
 import { ChangeEvent, ReactNode, useState } from "react";
 import clsx from "clsx";
 import Dropdown from "@/components/dropdown";
+import Checkbox from "@/components/checkbox";
 
 export const sortOptions = [
   { label: "최신순", value: "created_at-asc" },
@@ -97,9 +98,8 @@ export default function LinkList({
           <>
             <div className="flex items-center gap-3 text-lg text-[#2F2F2F]">
               <div className="flex items-center gap-2 font-semibold">
-                <input
-                  type="checkbox"
-                  className="relative h-[20px] w-[20px] rounded accent-primary"
+                <Checkbox
+                  className="relative"
                   onChange={handleAllCheckLinks}
                   checked={hasAllChecked}
                   id="allCheckbox"
@@ -127,9 +127,8 @@ export default function LinkList({
             role="listitem"
             className="flex items-start gap-2 py-5"
           >
-            <input
-              type="checkbox"
-              className="relative h-[20px] w-[20px] rounded accent-primary"
+            <Checkbox
+              className="relative"
               onChange={handleCheckLink}
               value={link.linkId}
               checked={checkedLink.has(link.linkId)}

@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 interface LinkFilterState {
   unread: boolean;
   dateRange: DateRange;
-  tags: string[] | undefined;
+  tags: string[];
   setUnread: (unread: boolean) => void;
   setDateRange: (dateRange: DateRange) => void;
   setTags: (tags: string[] | undefined) => void;
@@ -16,10 +16,14 @@ export const useLinkFilterStore = create<LinkFilterState>()(
     (set) => ({
       unread: false,
       dateRange: [],
-      tags: undefined,
+      tags: [],
       setUnread: (unread) => set({ unread }),
       setDateRange: (dateRange) => set({ dateRange }),
-      setTags: (tags) => set({ tags }),
+      setTags: (tags = []) => {
+        if (tags.length < 11) {
+          set({ tags });
+        }
+      },
     }),
     {
       name: "search-params",
