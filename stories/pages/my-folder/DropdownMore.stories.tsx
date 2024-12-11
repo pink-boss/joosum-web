@@ -21,7 +21,7 @@ function ComposeComponent() {
 }
 
 const meta = {
-  title: "Page/My-Folder/Dropdown/More",
+  title: "Page/MyFolder/Dropdown/More",
   component: ComposeComponent,
   tags: ["autodocs"],
   beforeEach: () => {

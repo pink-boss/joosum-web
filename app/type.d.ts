@@ -1,3 +1,18 @@
+interface Link {
+  createdAt: string;
+  lastReadAt: string;
+  linkBookId: string;
+  linkBookName: string;
+  linkId: string;
+  readCount: number;
+  tags: string[];
+  thumbnailURL: string;
+  title: string;
+  updatedAt: string;
+  url: string;
+  userId: string;
+}
+
 interface TQueryLinkBooks {
   linkBooks: LinkBook[];
   totalLinkCount: number;
@@ -5,7 +20,11 @@ interface TQueryLinkBooks {
 
 type Value = OptionItem["value"];
 
-type OptionItem = {
+type OptionItem<T = Value> = {
   label: string;
-  value: Value;
+  value: T;
 };
+
+interface ApiError {
+  error: "string";
+}

@@ -13,7 +13,7 @@ const sortOptions = [
   { label: "업데이트순", value: "last_saved_at" },
 ];
 
-// TODO: 고도화 적용
+// TODO: 고도화 적용 - 폴더 컬러, 타이틀 글자 수
 export default function MyFolder() {
   const [sortOption, setSortOption] = useState(sortOptions[0].value);
   const { isPending, error, data } = useQuery<TQueryLinkBooks>({

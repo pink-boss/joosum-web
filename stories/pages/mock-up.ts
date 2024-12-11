@@ -1,4 +1,4 @@
-import { Banner, Link } from "@/app/home/type";
+import { Banner } from "@/app/home/type";
 
 export const mockLink: Link = {
   createdAt: "2024-03-21T09:00:00Z",
@@ -7,7 +7,7 @@ export const mockLink: Link = {
   linkBookName: "개발 문서",
   linkId: "link-1",
   readCount: 5,
-  tags: ["React", "TypeScript", "Frontend", "Storybook", "TailwindCSS"],
+  tags: ["여행", "패션", "쇼핑"],
   thumbnailURL: "https://picsum.photos/374/184",
   title:
     "React 공식 문서 - 가나다라마바사아자차카타파하 아야어요우유 테스트 자료",
@@ -18,15 +18,43 @@ export const mockLink: Link = {
 
 export const mockLinks: Link[] = [
   {
-    createdAt: "2024-03-22T09:00:00Z",
+    createdAt: "2024-08-22T09:00:00Z",
     lastReadAt: "",
     linkBookId: "book-1",
     linkBookName: "개발 문서",
     linkId: "link-1",
-    readCount: 0,
+    readCount: 10,
     tags: ["Python", "Django", "Backend"],
     thumbnailURL: "https://picsum.photos/374/185",
     title: "Python 공식 문서",
+    updatedAt: "2024-03-22T15:30:00Z",
+    url: "https://python.org",
+    userId: "user-1",
+  },
+  {
+    createdAt: "2024-03-22T09:00:00Z",
+    lastReadAt: "",
+    linkBookId: "book-1",
+    linkBookName: "테스트 문서",
+    linkId: "link-1",
+    readCount: 0,
+    tags: ["Python", "Django", "Backend"],
+    thumbnailURL: "https://picsum.photos/374/185",
+    title: "읽은 횟수 최저",
+    updatedAt: "2024-03-22T15:30:00Z",
+    url: "https://python.org",
+    userId: "user-1",
+  },
+  {
+    createdAt: "2024-03-24T09:00:00Z",
+    lastReadAt: "",
+    linkBookId: "book-1",
+    linkBookName: "테스트 문서",
+    linkId: "link-1",
+    readCount: 1000,
+    tags: ["Python", "Django", "Backend"],
+    thumbnailURL: "https://picsum.photos/374/185",
+    title: "읽은 횟수 최다",
     updatedAt: "2024-03-22T15:30:00Z",
     url: "https://python.org",
     userId: "user-1",

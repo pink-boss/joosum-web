@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Link from "@/app/my-folder/[id]/link";
-import { mockLink } from "../home/mock-up";
+import Link from "@/app/my-folder/[linkBookId]/link";
+import { mockLink } from "../mock-up";
 
 const meta = {
-  title: "Page/Folder-List/Link",
+  title: "Page/FolderList/Link",
   component: Link,
   args: {
     link: mockLink,

@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import BannerCard from "@/app/home/banner";
-import { mockBanners } from "./mock-up";
+import { mockBanners } from "../mock-up";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {

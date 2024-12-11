@@ -16,7 +16,7 @@ function ComposeComponent() {
 }
 
 const meta = {
-  title: "Page/My-Folder/LinkBookList",
+  title: "Page/MyFolder/LinkBookList",
   component: ComposeComponent,
   tags: ["autodocs"],
 } satisfies Meta<typeof ComposeComponent>;

@@ -1,7 +1,6 @@
 import LinkCard from "@/app/home/link-card";
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
-import { mockLink } from "./mock-up";
+import { mockLink } from "../mock-up";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {

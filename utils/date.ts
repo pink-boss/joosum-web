@@ -73,12 +73,12 @@ export const isSameDate = (date1: Date, date2: Date) => {
 
 export const isAfter = (date: Date, baseDate: Date, isIncluded?: boolean) =>
   isIncluded
-    ? date.getTime() >= baseDate.getTime()
+    ? date.getTime() > baseDate.getTime() || isSameDate(date, baseDate)
     : date.getTime() > baseDate.getTime();
 
 export const isBefore = (date: Date, baseDate: Date, isIncluded?: boolean) =>
   isIncluded
-    ? date.getTime() <= baseDate.getTime()
+    ? date.getTime() < baseDate.getTime() || isSameDate(date, baseDate)
     : date.getTime() < baseDate.getTime();
 
 export const isBetween = (

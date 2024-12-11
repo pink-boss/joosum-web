@@ -1,6 +1,10 @@
 import { useLinkFilterStore } from "@/store/useLinkFilterStore";
 
-export default function ClickLastPeriod() {
+type InputProps = {
+  setTmpSelectedDate: (tmpSelectedDate: Date | null) => void;
+};
+
+export default function ClickLastPeriod({ setTmpSelectedDate }: InputProps) {
   const { setDateRange } = useLinkFilterStore();
   const today = new Date(new Date().toDateString());
 
@@ -11,6 +15,7 @@ export default function ClickLastPeriod() {
     } else {
       startDate.setMonth(today.getMonth() - 3);
     }
+    setTmpSelectedDate(null);
     setDateRange([startDate, today]);
   };
   return (

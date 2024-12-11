@@ -3,7 +3,7 @@ import Folder from "@/app/my-folder/folder";
 import { longTitleLinkBook, shortTitleLinkBook } from "./mock-up";
 
 const meta = {
-  title: "Page/My-Folder/Folder",
+  title: "Page/MyFolder/Folder",
   component: Folder,
   parameters: {},
   tags: ["autodocs"],

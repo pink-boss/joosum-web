@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import TagSelector from "@/app/my-folder/[id]/tag-selector";
+import TagSelector from "@/app/my-folder/[linkBookId]/tag-selector";
 import { totalTags } from "./mock-up";
 import { expect, userEvent, within } from "@storybook/test";
 import { useLinkFilterStore } from "@/store/useLinkFilterStore";
 
 const meta = {
-  title: "Page/Folder-List/Tag",
+  title: "Page/FolderList/Filter/Tag",
   component: TagSelector,
   tags: ["autodocs"],
   parameters: {

@@ -1,17 +1,16 @@
-import { Link as LinkType } from "@/app/home/type";
 import { dateFormatter } from "@/utils/date";
 import Image from "next/image";
-import Link from "next/link";
+import NextLink from "next/link";
 
-type InputProps = { link: LinkType };
+type InputProps = { link: Link };
 
-// TODO: 링크안에 링크 x
+// TODO: 링크안에 링크 x - 부모 링크 변경. window.open(link.url, '_blank');
 export default function LinkComponent({ link }: InputProps) {
   const handleOpenLink = () => {
     // TODO: 조회수 1 증가
   };
   return (
-    <Link
+    <NextLink
       data-testid="url-link"
       target="_blank"
       href={link.url}
@@ -40,7 +39,7 @@ export default function LinkComponent({ link }: InputProps) {
           <div className="flex-none">
             {link.readCount ? `${link.readCount}회 읽음` : `읽지 않음`}
           </div>
-          <Link
+          <NextLink
             data-testid="folder-link"
             href={`/my-folder/${link.linkBookId}`}
             className="ml-5 flex flex-none items-center gap-1 text-sm"
@@ -53,7 +52,7 @@ export default function LinkComponent({ link }: InputProps) {
               height={16}
             />
             {link.linkBookName}
-          </Link>
+          </NextLink>
         </div>
       </div>
       <div
@@ -78,6 +77,6 @@ export default function LinkComponent({ link }: InputProps) {
           />
         </button>
       </div>
-    </Link>
+    </NextLink>
   );
 }

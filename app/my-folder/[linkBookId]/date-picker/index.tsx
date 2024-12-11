@@ -1,7 +1,6 @@
 "use client";
 import { useClearDropdown } from "@/hooks/clear-dropdown";
 import clsx from "clsx";
-import Image from "next/image";
 import { useState } from "react";
 import { SelectBox } from "./select-box";
 import { useLinkFilterStore } from "@/store/useLinkFilterStore";
@@ -9,6 +8,7 @@ import { getCalendarDate } from "@/utils/date";
 import RenderDate from "./date";
 import ChangeMonth from "./change-month";
 import ClickLastPeriod from "./last-period";
+import ResetButton from "../tag-selector/reset-button";
 
 const WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
@@ -28,15 +28,16 @@ export type InputProps = {
   open?: boolean;
 };
 
-// TODO: dateRange는 두 개 다 있을 때, 서버에 요청 보내기
 const DatePicker = ({ open }: InputProps) => {
   const ref = useClearDropdown(() => setIsOpen(false));
   const [isOpen, setIsOpen] = useState(open);
   const { dateRange, setDateRange } = useLinkFilterStore();
+  const [tmpSelectedDate, setTmpSelectedDate] = useState<Date | null>(null);
   const today = new Date(new Date().toDateString());
   const [renderMonth, setRenderMonth] = useState(today);
 
   const handleResetDateRange = () => {
+    setTmpSelectedDate(null);
     setDateRange([]);
   };
   return (
@@ -51,7 +52,7 @@ const DatePicker = ({ open }: InputProps) => {
           )}
         >
           <div className="flex flex-col gap-[20px]">
-            <ClickLastPeriod />
+            <ClickLastPeriod setTmpSelectedDate={setTmpSelectedDate} />
             <ChangeMonth
               renderMonth={renderMonth}
               setRenderMonth={setRenderMonth}
@@ -66,24 +67,15 @@ const DatePicker = ({ open }: InputProps) => {
                     date={date}
                     monthType={monthType}
                     dateObj={dateObj}
+                    tmpSelectedDate={tmpSelectedDate}
+                    setTmpSelectedDate={setTmpSelectedDate}
                   />
                 ),
               )}
             </div>
           </div>
           <div className="flex gap-4">
-            <button
-              className="flex w-16 items-center gap-1 text-sm font-semibold text-text-secondary"
-              onClick={handleResetDateRange}
-            >
-              <Image
-                src="/icons/reset.png"
-                alt="reset"
-                width={16}
-                height={16}
-              />
-              초기화
-            </button>
+            <ResetButton handleClick={handleResetDateRange} />
             <button className="h-[40px] flex-1 rounded-lg bg-primary text-sm font-bold text-white">
               확인
             </button>

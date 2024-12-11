@@ -19,7 +19,7 @@ function ComposeComponent() {
 }
 
 const meta = {
-  title: "Page/My-Folder",
+  title: "Page/MyFolder",
   component: ComposeComponent,
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout

@@ -1,10 +1,13 @@
-export interface LinkBook {
+export type LinkBookIdParam = {
+  linkBookId: string;
+};
+
+export interface LinkBook extends LinkBookIdParam {
   backgroundColor: string;
   createdAt: string;
   illustration: string | null;
   isDefault: "y" | "n";
   lastSavedAt: string;
-  linkBookId: string;
   linkCount: number;
   title: string;
   titleColor: string;

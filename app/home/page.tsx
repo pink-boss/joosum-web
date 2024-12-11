@@ -2,7 +2,7 @@
 
 import LinkCardList from "./link-card-list";
 import { useQuery } from "@tanstack/react-query";
-import { Banner, Link } from "./type";
+import { Banner } from "./type";
 import BannerCard from "./banner";
 import { useSearchLinkStore } from "@/store/useSearchLinkStore";
 

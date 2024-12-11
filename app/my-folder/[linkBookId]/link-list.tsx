@@ -1,15 +1,21 @@
-import { Link as LinkType } from "@/app/home/type";
 import LinkComponent from "./link";
-import { ChangeEvent, ReactNode, useState } from "react";
+import { ChangeEvent, ReactNode, useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
 import Dropdown from "@/components/dropdown";
 import Checkbox from "@/components/checkbox";
+import { useParams } from "next/navigation";
+import { LinkBookIdParam } from "../type";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "@/components/loading";
+import { Field, useLinkSortStore } from "@/store/useLinkSortStore";
+import { useLinkFilterStore } from "@/store/useLinkFilterStore";
+import { isBetween } from "@/utils/date";
 
-export const sortOptions = [
-  { label: "최신순", value: "created_at-asc" },
-  { label: "오래된순", value: "created_at-desc" },
+export const sortOptions: OptionItem<Field>[] = [
+  { label: "최신순", value: "lastest" },
+  { label: "오래된순", value: "oldest" },
   { label: "제목순", value: "title" },
-  { label: "많이본순", value: "" }, // TODO: api에 있는지 확인/요청
+  { label: "많이본순", value: "mostViewd" },
 ];
 
 type ButtonInputProps = {
@@ -36,16 +42,64 @@ function Button({
   );
 }
 
-type InputProps = { linkList: LinkType[]; defaultEditMode?: boolean };
+type InputProps = { defaultEditMode?: boolean };
 
-export default function LinkList({
-  linkList,
-  defaultEditMode = false,
-}: InputProps) {
+export default function LinkList({ defaultEditMode = false }: InputProps) {
+  const { linkBookId } = useParams<LinkBookIdParam>();
+  const linkSort = useLinkSortStore();
+  const { unread, dateRange, tags } = useLinkFilterStore();
+
+  const {
+    isPending,
+    error,
+    data = [],
+    refetch,
+  } = useQuery<Link[], ApiError>({
+    queryKey: ["links", linkBookId],
+    queryFn: () =>
+      fetch(
+        `/api/links/${linkBookId}?sort=${linkSort.sort}&order=${linkSort.orderBy}`,
+        {
+          method: "GET",
+        },
+      )
+        .then((res) => res.json())
+        .then((data: Link[]) => {
+          if (linkSort.field === "mostViewd") {
+            return [...data].sort(
+              (prev, next) => next.readCount - prev.readCount,
+            );
+          }
+          return data;
+        }),
+  });
+
+  const linkList = useMemo(() => {
+    return data.filter(({ readCount, createdAt, tags: linkTags }) => {
+      const unreadFlag = unread ? !readCount : true;
+      const datePickerFlag = dateRange.length
+        ? dateRange.length == 2 &&
+          isBetween(
+            new Date(createdAt),
+            new Date(dateRange[0]),
+            new Date(dateRange[1]),
+            true,
+          )
+        : true;
+      const tagFlag = tags.length
+        ? tags.some((tag) => linkTags.includes(tag))
+        : true;
+      return unreadFlag && datePickerFlag && tagFlag;
+    });
+  }, [data, dateRange, unread, tags]);
+
+  useEffect(() => {
+    if (linkSort.field) {
+      refetch();
+    }
+  }, [refetch, linkSort.field]);
+
   const [editMode, setEditMode] = useState(defaultEditMode);
-  const [selectedSortOption, setSelectedSortOption] = useState<Value>(
-    sortOptions[0].value,
-  );
   const [checkedLink, setCheckedLink] = useState<Set<string>>(new Set());
   const totalCount = linkList.length;
   const hasAllChecked = totalCount === checkedLink.size;
@@ -75,6 +129,7 @@ export default function LinkList({
 
   const handleDeleteLinks = () => {};
   const handleChangeFolder = () => {};
+
   return (
     <div className="flex flex-col gap-1">
       <div className="flex">
@@ -86,8 +141,8 @@ export default function LinkList({
             <div className="ml-auto flex gap-2">
               <Dropdown
                 options={sortOptions}
-                selected={selectedSortOption}
-                setSelected={setSelectedSortOption}
+                selected={linkSort.field}
+                setSelected={linkSort.setField}
               />
               <Button isPrimary handleClick={handleChangeEditMode}>
                 편집
@@ -120,23 +175,29 @@ export default function LinkList({
           </>
         )}
       </div>
-      <div role="list">
-        {linkList.map((link, index) => (
-          <div
-            key={`link-${index}`}
-            role="listitem"
-            className="flex items-start gap-2 py-5"
-          >
-            <Checkbox
-              className="relative"
-              onChange={handleCheckLink}
-              value={link.linkId}
-              checked={checkedLink.has(link.linkId)}
-            />
-            <LinkComponent link={link} />
-          </div>
-        ))}
-      </div>
+      {isPending ? (
+        <Loading />
+      ) : (
+        <div role="list">
+          {linkList.map((link, index) => (
+            <div
+              key={`link-${index}`}
+              role="listitem"
+              className="flex items-start gap-2 py-5"
+            >
+              {editMode && (
+                <Checkbox
+                  className="relative"
+                  onChange={handleCheckLink}
+                  value={link.linkId}
+                  checked={checkedLink.has(link.linkId)}
+                />
+              )}
+              <LinkComponent link={link} />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

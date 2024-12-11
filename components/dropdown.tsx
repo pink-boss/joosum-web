@@ -28,7 +28,10 @@ const Dropdown = ({ selected, setSelected, options }: InputProps) => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border border-background-secondary bg-white py-4 shadow-lg">
+        <div
+          className="absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border border-background-secondary bg-white py-4 shadow-lg"
+          data-testid="dropdown-content"
+        >
           {options.map((item) => (
             <button
               data-testid={`dropdown-${item.label}`}

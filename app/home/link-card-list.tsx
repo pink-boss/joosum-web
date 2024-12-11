@@ -1,13 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { Link as LinkType } from "./type";
 import LinkCard from "./link-card";
 import { useState } from "react";
-import Link from "next/link";
+import NextLink from "next/link";
 
 type InputProps = {
-  links: LinkType[];
+  links: Link[];
 };
 
 export default function LinkCardList({ links }: InputProps) {
@@ -48,7 +47,7 @@ export default function LinkCardList({ links }: InputProps) {
             <label htmlFor="filter-unread">읽지 않음</label>
           </div>
         </form>
-        <Link href="/my-folder">
+        <NextLink href="/my-folder">
           <div className="flex gap-1 pl-5">
             <span className="text-lg font-semibold">전체보기</span>
             <Image
@@ -58,7 +57,7 @@ export default function LinkCardList({ links }: InputProps) {
               height={24}
             />
           </div>
-        </Link>
+        </NextLink>
       </div>
       {filteredLinks.length ? (
         <div className="flex flex-col items-center gap-8">

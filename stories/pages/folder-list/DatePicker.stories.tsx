@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
-import DatePicker from "@/app/my-folder/[id]/date-picker";
+import DatePicker from "@/app/my-folder/[linkBookId]/date-picker";
 import { dateFormatter } from "@/utils/date";
 
 const meta = {
-  title: "Page/Folder-List/DatePicker",
+  title: "Page/FolderList/Filter/DatePicker",
   component: DatePicker,
   tags: ["autodocs"],
   parameters: {

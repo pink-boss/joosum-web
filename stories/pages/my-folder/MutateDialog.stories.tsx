@@ -24,7 +24,7 @@ function ComposeComponent() {
 }
 
 const meta = {
-  title: "Page/My-Folder/Dialog/Mutate",
+  title: "Page/MyFolder/Dialog/Mutate",
   component: ComposeComponent,
   tags: ["autodocs"],
 } satisfies Meta<typeof ComposeComponent>;

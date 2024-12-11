@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Link } from "./type";
 import { krDateFormatter } from "@/utils/date";
 import { useEffect, useState } from "react";
 

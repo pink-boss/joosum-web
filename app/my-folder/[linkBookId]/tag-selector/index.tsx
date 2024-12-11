@@ -1,20 +1,19 @@
 "use client";
 import { useClearDropdown } from "@/hooks/clear-dropdown";
 import clsx from "clsx";
-import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import { useLinkFilterStore } from "@/store/useLinkFilterStore";
 import { SelectBox } from "./select-box";
 import Checkbox from "@/components/checkbox";
 import SelectedTags from "./selected-tags";
 import { removeItem } from "@/utils/array";
+import ResetButton from "./reset-button";
 
 export type InputProps = {
   open?: boolean;
   totalTags: string[];
 };
 
-// TODO: 태그는 서버에서 받아오기
 const TagSelector = ({ open, totalTags }: InputProps) => {
   const ref = useClearDropdown(() => setIsOpen(false));
   const [isOpen, setIsOpen] = useState(open);
@@ -29,11 +28,11 @@ const TagSelector = ({ open, totalTags }: InputProps) => {
     }
   };
 
-  const handleResetDateRange = () => {
+  const handleResetTags = () => {
     setTags([]);
   };
   return (
-    <div className="relative" data-testid="date-picker" ref={ref}>
+    <div className="relative" data-testid="tag-selector" ref={ref}>
       <SelectBox isOpen={isOpen} setIsOpen={setIsOpen} selected={tags} />
 
       {isOpen && (
@@ -62,18 +61,7 @@ const TagSelector = ({ open, totalTags }: InputProps) => {
             </div>
           </div>
           <div className="flex gap-4">
-            <button
-              className="flex w-16 items-center gap-1 text-sm font-semibold text-text-secondary"
-              onClick={handleResetDateRange}
-            >
-              <Image
-                src="/icons/reset.png"
-                alt="reset"
-                width={16}
-                height={16}
-              />
-              초기화
-            </button>
+            <ResetButton handleClick={handleResetTags} />
             <button className="h-[40px] flex-1 rounded-lg bg-primary text-sm font-bold text-white">
               확인
             </button>

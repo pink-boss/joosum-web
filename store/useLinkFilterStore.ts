@@ -8,15 +8,22 @@ interface LinkFilterState {
   tags: string[];
   setUnread: (unread: boolean) => void;
   setDateRange: (dateRange: DateRange) => void;
-  setTags: (tags: string[] | undefined) => void;
+  setTags: (tags: string[]) => void;
 }
+
+export const defaultValues: Pick<
+  LinkFilterState,
+  "unread" | "dateRange" | "tags"
+> = {
+  unread: false,
+  dateRange: [],
+  tags: [],
+};
 
 export const useLinkFilterStore = create<LinkFilterState>()(
   persist(
     (set) => ({
-      unread: false,
-      dateRange: [],
-      tags: [],
+      ...defaultValues,
       setUnread: (unread) => set({ unread }),
       setDateRange: (dateRange) => set({ dateRange }),
       setTags: (tags = []) => {
@@ -26,7 +33,7 @@ export const useLinkFilterStore = create<LinkFilterState>()(
       },
     }),
     {
-      name: "search-params",
+      name: "link-filter-params",
       partialize: (state) => ({
         unread: state.unread,
         dateRange: state.dateRange,
