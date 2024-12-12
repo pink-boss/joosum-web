@@ -9,6 +9,7 @@ import { useLayoutStore } from "@/store/useLayoutStore";
 import { MouseEvent } from "react";
 import LinkToPage from "../link-book/LinkToPage";
 import { TQueryLinkBooks } from "@/types/linkBook.types";
+import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 
 interface LinkBook {
   linkBookId: string;
@@ -45,13 +46,7 @@ function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
 }
 
 export default function Menu() {
-  const { isPending, error, data } = useQuery<TQueryLinkBooks>({
-    queryKey: ["linkBooks"],
-    queryFn: () =>
-      fetch(`/my-folder/api`, {
-        method: "GET",
-      }).then((res) => res.json()),
-  });
+  const { isPending, error, data } = useQueryLinkBooks("menu");
   const { openMutateFolder } = useOpenDialogStore();
   const { selectLinkBook } = useSelectLinkBookStore();
   const { openSideMenu, setOpenSideMenu } = useLayoutStore();
@@ -69,8 +64,6 @@ export default function Menu() {
     e.stopPropagation();
     setOpenSideMenu(!openSideMenu);
   };
-
-  const linkBooks = error ? [] : data?.linkBooks;
 
   return (
     <div className="w-[282px]">
@@ -113,7 +106,7 @@ export default function Menu() {
               : "h-0 overflow-hidden",
           )}
         >
-          {linkBooks?.map((linkBook, index) => (
+          {data?.linkBooks.map((linkBook, index) => (
             <LinkBookMenu
               linkBook={linkBook}
               key={index}
