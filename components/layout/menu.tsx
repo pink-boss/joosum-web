@@ -7,6 +7,7 @@ import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useLayoutStore } from "@/store/useLayoutStore";
 import { MouseEvent } from "react";
+import LinkToPage from "../link-book/LinkToPage";
 
 interface LinkBook {
   linkBookId: string;
@@ -28,12 +29,7 @@ type LinkBookMenuProps = {
 
 function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
   return (
-    <Link
-      href={`/my-folder/${linkBook.linkBookId}`}
-      onClick={() => {
-        closeDialog();
-      }}
-    >
+    <LinkToPage linkBook={linkBook} onClickCallback={closeDialog}>
       <div className={clsx("h-[48px] py-3 pl-12 pr-5")}>
         <div className="flex gap-2">
           <div
@@ -43,7 +39,7 @@ function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
           <div className="font-semibold text-[#444444]">{linkBook.title}</div>
         </div>
       </div>
-    </Link>
+    </LinkToPage>
   );
 }
 

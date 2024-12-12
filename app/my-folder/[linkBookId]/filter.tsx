@@ -42,6 +42,7 @@ export default function Filter() {
           id="unread-radio"
           className="h-6 w-6 accent-primary"
           onClick={handleClickUnread}
+          readOnly
           checked={unread}
         />
         <label

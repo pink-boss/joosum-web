@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 let capturedRequest: Request | null = null;
 
 const meta = {
-  title: "Page/FolderList/Link-List",
+  title: "Page/FolderList/LinkList",
   component: LinkList,
   tags: ["autodocs"],
   parameters: {

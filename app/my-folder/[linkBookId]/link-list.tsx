@@ -1,15 +1,13 @@
 import LinkComponent from "./link";
-import { ChangeEvent, ReactNode, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, ReactNode, useState } from "react";
 import clsx from "clsx";
 import Dropdown from "@/components/dropdown";
 import Checkbox from "@/components/checkbox";
-import { useParams } from "next/navigation";
-import { LinkBookIdParam } from "../type";
-import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/loading";
 import { Field, useLinkSortStore } from "@/store/useLinkSortStore";
 import { useLinkFilterStore } from "@/store/useLinkFilterStore";
-import { isBetween } from "@/utils/date";
+import EmptyLinks from "@/components/EmptyLinks";
+import { useQueryLinks } from "@/hooks/query-links";
 
 export const sortOptions: OptionItem<Field>[] = [
   { label: "최신순", value: "lastest" },
@@ -45,63 +43,13 @@ function Button({
 type InputProps = { defaultEditMode?: boolean };
 
 export default function LinkList({ defaultEditMode = false }: InputProps) {
-  const { linkBookId } = useParams<LinkBookIdParam>();
   const linkSort = useLinkSortStore();
-  const { unread, dateRange, tags } = useLinkFilterStore();
-
-  const {
-    isPending,
-    error,
-    data = [],
-    refetch,
-  } = useQuery<Link[], ApiError>({
-    queryKey: ["links", linkBookId],
-    queryFn: () =>
-      fetch(
-        `/api/links/${linkBookId}?sort=${linkSort.sort}&order=${linkSort.orderBy}`,
-        {
-          method: "GET",
-        },
-      )
-        .then((res) => res.json())
-        .then((data: Link[]) => {
-          if (linkSort.field === "mostViewd") {
-            return [...data].sort(
-              (prev, next) => next.readCount - prev.readCount,
-            );
-          }
-          return data;
-        }),
-  });
-
-  const linkList = useMemo(() => {
-    return data.filter(({ readCount, createdAt, tags: linkTags }) => {
-      const unreadFlag = unread ? !readCount : true;
-      const datePickerFlag = dateRange.length
-        ? dateRange.length == 2 &&
-          isBetween(
-            new Date(createdAt),
-            new Date(dateRange[0]),
-            new Date(dateRange[1]),
-            true,
-          )
-        : true;
-      const tagFlag = tags.length
-        ? tags.some((tag) => linkTags.includes(tag))
-        : true;
-      return unreadFlag && datePickerFlag && tagFlag;
-    });
-  }, [data, dateRange, unread, tags]);
-
-  useEffect(() => {
-    if (linkSort.field) {
-      refetch();
-    }
-  }, [refetch, linkSort.field]);
+  const { unread } = useLinkFilterStore();
 
   const [editMode, setEditMode] = useState(defaultEditMode);
   const [checkedLink, setCheckedLink] = useState<Set<string>>(new Set());
-  const totalCount = linkList.length;
+  const { data, isPending } = useQueryLinks();
+  const totalCount = data.length;
   const hasAllChecked = totalCount === checkedLink.size;
 
   const handleChangeEditMode = () => {
@@ -110,7 +58,7 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
 
   const handleAllCheckLinks = () => {
     setCheckedLink(
-      new Set(hasAllChecked ? null : linkList.map((link) => link.linkId)),
+      new Set(hasAllChecked ? null : data.map((link) => link.linkId)),
     );
   };
 
@@ -131,14 +79,14 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
   const handleChangeFolder = () => {};
 
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex">
+    <div className="flex flex-1 flex-col gap-1 overflow-hidden">
+      <div className="flex items-center">
         {!editMode ? (
           <>
             <div className="text-lg font-semibold text-[#2F2F2F]">
               {totalCount}개 주섬
             </div>
-            <div className="ml-auto flex gap-2">
+            <div className="ml-auto flex items-center gap-2">
               <Dropdown
                 options={sortOptions}
                 selected={linkSort.field}
@@ -177,9 +125,9 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
       </div>
       {isPending ? (
         <Loading />
-      ) : (
+      ) : data.length ? (
         <div role="list">
-          {linkList.map((link, index) => (
+          {data.map((link, index) => (
             <div
               key={`link-${index}`}
               role="listitem"
@@ -197,6 +145,8 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
             </div>
           ))}
         </div>
+      ) : (
+        <EmptyLinks unread={unread} />
       )}
     </div>
   );

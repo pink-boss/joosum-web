@@ -17,7 +17,7 @@ const Dropdown = ({ selected, setSelected, options }: InputProps) => {
 
   const selectedOption = options.find(({ value }) => selected === value);
   return (
-    <div className="relative" data-testid="sort-dropdown" ref={ref}>
+    <div className="relative h-fit" data-testid="sort-dropdown" ref={ref}>
       <button
         data-testid="open-button"
         onClick={() => setIsOpen(!isOpen)}
@@ -41,7 +41,7 @@ const Dropdown = ({ selected, setSelected, options }: InputProps) => {
                 setIsOpen(false);
               }}
               className={clsx(
-                "w-full px-5 py-1 text-start",
+                "w-full px-5 py-1 leading-5",
                 selected === item.value
                   ? "font-bold text-[#1D1D1D]"
                   : "text-text-secondary",

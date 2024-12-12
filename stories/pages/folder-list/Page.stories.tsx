@@ -54,7 +54,19 @@ type Story = StoryObj<typeof meta>;
 
 export const DefaultPage: Story = {};
 
-// TODO: data fetch empty data test
+export const EmptyData: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get("/api/links/:linkBookId", ({ request }) => {
+          capturedRequest = request;
+          return HttpResponse.json([]);
+        }),
+        http.get("/api/tags", () => HttpResponse.json([])),
+      ],
+    },
+  },
+};
 
 // TODO: data fetch loading test
 

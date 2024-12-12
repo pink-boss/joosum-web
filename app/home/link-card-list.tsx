@@ -4,6 +4,7 @@ import Image from "next/image";
 import LinkCard from "./link-card";
 import { useState } from "react";
 import NextLink from "next/link";
+import EmptyLinks from "@/components/EmptyLinks";
 
 type InputProps = {
   links: Link[];
@@ -90,34 +91,7 @@ export default function LinkCardList({ links }: InputProps) {
           )}
         </div>
       ) : (
-        <div className="flex flex-1 flex-col items-center justify-center gap-[14.4px] text-center">
-          {filter === "latest" ? (
-            <>
-              <Image
-                src="/empty-links.svg"
-                alt="empty-links"
-                width={188.4}
-                height={141.6}
-              />
-              <div className="text-lg text-text-secondary">
-                <p>저장된 링크가 없어요.</p>
-                <p>링크를 주섬주섬 담아보세요.</p>
-              </div>
-            </>
-          ) : (
-            <>
-              <Image
-                src="/read-links.png"
-                alt="read-links"
-                width={139.2}
-                height={142.8}
-              />
-              <div className="text-lg text-text-secondary">
-                <p>저장된 링크를 모두 다 읽었어요!</p>
-              </div>
-            </>
-          )}
-        </div>
+        <EmptyLinks unread={filter === "unread"} />
       )}
     </div>
   );
