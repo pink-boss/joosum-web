@@ -1,8 +1,8 @@
-import LinkBookList from "@/app/my-folder/link-book-list";
+import LinkBookList from "@/app/my-folder/LinkBookList";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { within, expect } from "@storybook/test";
-import { mockLinkBooks } from "./mock-up";
+import { mockLinkBooks } from "../mocks/linkBook.mocks";
 
 function ComposeComponent() {
   return (

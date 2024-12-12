@@ -1,3 +1,5 @@
+import { MonthType } from "@/types/date.types";
+
 export const krDateFormatter = (date: Date | string) =>
   new Intl.DateTimeFormat("ko-KR", {
     year: "numeric",
@@ -20,7 +22,6 @@ export const dateFormatter = (
 
 const WEEK = 7;
 const MONTH = 12;
-type MonthType = "prev" | "this" | "next";
 
 export const getCalendarDate = (date: Date) => {
   const prevLastDate = new Date(date.getFullYear(), date.getMonth(), 0);

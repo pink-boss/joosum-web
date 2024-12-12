@@ -2,13 +2,13 @@
 import "./globals.css";
 import localFont from "next/font/local";
 import clsx from "clsx";
-import Sidebar from "@/components/layout/sidebar";
+import Sidebar from "@/components/layout/Sidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { publicOnlyPaths } from "@/utils/path";
-import Topbar from "@/components/layout/topbar";
-import MutateFolderDialog from "./my-folder/mutate/dialog";
-import DeleteFolderDialog from "./my-folder/delete-dialog";
+import Topbar from "@/components/layout/Topbar";
+import MutateFolderDialog from "./my-folder/mutate/MutateDialog";
+import DeleteFolderDialog from "./my-folder/DeleteDialog";
 
 const queryClient = new QueryClient();
 

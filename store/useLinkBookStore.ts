@@ -1,4 +1,4 @@
-import { LinkBook } from "@/app/my-folder/type";
+import { LinkBook } from "@/types/linkBook.types";
 import { create } from "zustand";
 
 interface SelectLinkBookState {

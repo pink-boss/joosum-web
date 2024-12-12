@@ -1,4 +1,4 @@
-import { DateRange } from "@/app/my-folder/type";
+import { DateRange } from "@/types/date.types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

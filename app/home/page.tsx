@@ -1,9 +1,9 @@
 "use client";
 
-import LinkCardList from "./link-card-list";
+import LinkCardList from "./LinkCardList";
 import { useQuery } from "@tanstack/react-query";
-import { Banner } from "./type";
-import BannerCard from "./banner";
+import { Banner } from "../../types/banner.types";
+import BannerCard from "./Banner";
 import { useSearchLinkStore } from "@/store/useSearchLinkStore";
 
 type TQueryLinks = Link[];

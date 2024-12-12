@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import DropdownMore from "@/app/my-folder/dropdown/more";
+import DropdownMore from "@/app/my-folder/DropdownMore";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { expect, userEvent, within } from "@storybook/test";
-import MutateDialog from "@/app/my-folder/mutate/dialog";
-import { mockLinkBooks } from "./mock-up";
-import DeleteDialog from "@/app/my-folder/delete-dialog";
+import MutateDialog from "@/app/my-folder/mutate/MutateDialog";
+import { mockLinkBooks } from "../mocks/linkBook.mocks";
+import DeleteDialog from "@/app/my-folder/DeleteDialog";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
 const queryClient = new QueryClient();

@@ -2,7 +2,7 @@ import {
   DefaultFolderProps,
   EntireFolderProps,
   OptionalFolderProps,
-} from "@/app/my-folder/type";
+} from "@/types/linkBook.types";
 import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -29,7 +29,7 @@ export default function LinkToPage({
   onClickCallback,
 }: InputProps) {
   const { selectLinkBook } = useSelectLinkBookStore();
-  let path = "/my-folder";
+  let path = "/link-book";
   if (isNormalLinkBook(linkBook) && linkBook.linkBookId) {
     path += `/${linkBook.linkBookId}`;
   }
@@ -42,7 +42,7 @@ export default function LinkToPage({
       onClickCallback();
     }
   };
-  console.log(path);
+
   return (
     <Link href={path} onClick={handleClick}>
       {children}

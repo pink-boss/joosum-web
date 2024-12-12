@@ -1,10 +1,10 @@
-import CreateButton from "@/app/my-folder/mutate/button";
+import CreateButton from "@/app/my-folder/CreateDialogButton";
 import {
   pickBackgroundColors,
   pickIllustrations,
   pickTitleColors,
-} from "@/app/my-folder/mutate/data";
-import MutateDialog from "@/app/my-folder/mutate/dialog";
+} from "@/app/my-folder/constants";
+import MutateDialog from "@/app/my-folder/mutate/MutateDialog";
 import { hexToRgb } from "@/utils/color";
 import type { Meta, StoryObj } from "@storybook/react";
 

@@ -1,15 +1,8 @@
 import clsx from "clsx";
-import {
-  CreateLinkBook,
-  DefaultFolderProps,
-  EntireFolderProps,
-  OptionalFolderProps,
-} from "./type";
+import { CreateLinkBook, EntireFolderProps } from "@/types/linkBook.types";
 import Image from "next/image";
-import DropdownMore from "./dropdown/more";
+import DropdownMore from "./DropdownMore";
 import { ReactNode } from "react";
-import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
-import { useRouter } from "next/navigation";
 import LinkToPage, {
   isNormalLinkBook,
 } from "@/components/link-book/LinkToPage";

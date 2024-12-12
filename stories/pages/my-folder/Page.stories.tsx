@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import Page from "@/app/my-folder/page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import MutateDialog from "@/app/my-folder/mutate/dialog";
-import DeleteFolderDialog from "@/app/my-folder/delete-dialog";
+import MutateDialog from "@/app/my-folder/mutate/MutateDialog";
+import DeleteFolderDialog from "@/app/my-folder/DeleteDialog";
 
 const queryClient = new QueryClient();
 

@@ -1,11 +1,12 @@
 "use client";
 
-import CreateButton from "./mutate/button";
-import LinkBookList from "./link-book-list";
+import CreateButton from "./CreateDialogButton";
+import LinkBookList from "./LinkBookList";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import Loading from "@/components/loading";
-import Dropdown from "@/components/dropdown";
+import Loading from "@/components/Loading";
+import Dropdown from "@/components/Dropdown";
+import { TQueryLinkBooks } from "@/types/linkBook.types";
 
 const sortOptions = [
   { label: "생성순", value: "created_at" },
@@ -13,6 +14,8 @@ const sortOptions = [
   { label: "업데이트순", value: "last_saved_at" },
 ];
 
+// TODO: api 이동
+// TODO: 테스트
 // TODO: 고도화 적용 - 폴더 컬러, 타이틀 글자 수
 export default function MyFolder() {
   const [sortOption, setSortOption] = useState(sortOptions[0].value);
