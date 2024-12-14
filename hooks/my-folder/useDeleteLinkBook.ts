@@ -1,9 +1,9 @@
-import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
 import { TQueryLinkBooks } from "@/types/linkBook.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import useSelectLinkBook from "./useSelectLinkBook";
 
 export default function useDeleteLinkBook(onSuccessCallback: () => void) {
-  const { linkBook } = useSelectLinkBookStore();
+  const { linkBook } = useSelectLinkBook();
 
   const queryClient = useQueryClient();
   return useMutation<{ deletedLinks: number }, Error>({
@@ -15,7 +15,7 @@ export default function useDeleteLinkBook(onSuccessCallback: () => void) {
       ).json(),
     onSuccess: () => {
       queryClient.setQueriesData<TQueryLinkBooks>(
-        { queryKey: ["linkBooks"] },
+        { queryKey: ["linkBookList"] },
         (prevLinkBooks) => {
           const index = prevLinkBooks!.linkBooks.findIndex(
             (prev) => prev.linkBookId === linkBook?.linkBookId,

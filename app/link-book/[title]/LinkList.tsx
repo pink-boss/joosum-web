@@ -43,6 +43,7 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
   const [editMode, setEditMode] = useState(defaultEditMode);
   const [checkedLink, setCheckedLink] = useState<Set<string>>(new Set());
   const { data, isPending } = useQueryLinks();
+  console.log(data);
   const totalCount = data.length;
   const hasAllChecked = totalCount === checkedLink.size;
 

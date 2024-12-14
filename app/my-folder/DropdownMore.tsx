@@ -1,9 +1,9 @@
 import { useClearDropdown } from "@/hooks/useClearDropdown";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import Image from "next/image";
-import { useState } from "react";
-import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
+import { useCallback, useState } from "react";
 import { LinkBook } from "@/types/linkBook.types";
+import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 
 type DropdownItemProps = {
   title: string;
@@ -32,19 +32,21 @@ const DropdownMore = ({ linkBook }: InputProps) => {
 
   const ref = useClearDropdown(onClose);
 
-  const { openMutateFolder, openDeleteFolder } = useOpenDialogStore();
-  const { selectLinkBook } = useSelectLinkBookStore();
+  const { openMutateLinkBook, openDeleteLinkBook } = useOpenDialogStore();
+  useSelectLinkBook(linkBook.title);
 
   const handleModify = () => {
-    selectLinkBook(linkBook);
-    openMutateFolder(true);
+    openMutateLinkBook(true, linkBook.title);
     onClose();
   };
   const handleDelete = () => {
-    selectLinkBook(linkBook);
-    openDeleteFolder(true);
+    openDeleteLinkBook(true, linkBook.title);
     onClose();
   };
+
+  const onOpen = useCallback(() => {
+    setIsOpen(true);
+  }, []);
 
   return (
     <div
@@ -57,9 +59,7 @@ const DropdownMore = ({ linkBook }: InputProps) => {
       }}
     >
       <button
-        onClick={() => {
-          setIsOpen(true);
-        }}
+        onClick={onOpen}
         className="flex h-12 w-12 items-center justify-center rounded-full bg-black"
       >
         <Image
@@ -71,7 +71,7 @@ const DropdownMore = ({ linkBook }: InputProps) => {
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 mt-1 flex w-[110px] flex-col rounded-lg border border-background-secondary bg-white py-4 shadow-lg">
+        <div className="absolute z-20 mt-1 flex w-[110px] flex-col rounded-lg border border-background-secondary bg-white py-4 shadow-lg">
           <DropdownItem title="폴더 수정" handleClick={handleModify} />
           <DropdownItem title="폴더 삭제" handleClick={handleDelete} />
         </div>

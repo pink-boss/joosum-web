@@ -1,33 +1,28 @@
 "use client";
-import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
+
 import clsx from "clsx";
-import { useCallback } from "react";
 import Dialog from "@/components/Dialog";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import useDeleteLinkBook from "@/hooks/my-folder/useDeleteLinkBook";
+import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 
 export default function DeleteDialog() {
-  const { deleteFolder: isOpen, openDeleteFolder: open } = useOpenDialogStore();
-  const { linkBook, selectLinkBook } = useSelectLinkBookStore();
+  const {
+    isDeleteLinkBookOpen: isOpen,
+    openDeleteLinkBook: open,
+    key,
+  } = useOpenDialogStore();
+  const { linkBook, clearLinkBook } = useSelectLinkBook(key);
 
-  const onClose = useCallback(() => {
-    if (linkBook) {
-      selectLinkBook(undefined);
-    }
+  const onClose = () => {
+    clearLinkBook();
     open(false);
-  }, [open, linkBook, selectLinkBook]);
+  };
 
   const mutation = useDeleteLinkBook(onClose);
 
   async function handleSubmit() {
     mutation.mutate();
-  }
-
-  if (!isOpen) return null;
-
-  if (!linkBook?.linkBookId) {
-    alert("해당 폴더를 찾을 수 없습니다.");
-    return null;
   }
 
   return (

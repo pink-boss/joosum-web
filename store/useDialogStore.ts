@@ -1,15 +1,23 @@
 import { create } from "zustand";
 
 interface OpenDialogState {
-  mutateFolder: boolean;
-  deleteFolder: boolean;
-  openMutateFolder: (open: boolean) => void;
-  openDeleteFolder: (open: boolean) => void;
+  isMutateLinkBookOpen: boolean;
+  isDeleteLinkBookOpen: boolean;
+  openMutateLinkBook: (isOpen: boolean, key?: string) => void;
+  openDeleteLinkBook: (isOpen: boolean, key?: string) => void;
+
+  key: string | undefined;
 }
 
 export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
-  mutateFolder: false,
-  deleteFolder: false,
-  openMutateFolder: (mutateFolder) => set({ mutateFolder }),
-  openDeleteFolder: (deleteFolder) => set({ deleteFolder }),
+  isMutateLinkBookOpen: false,
+  isDeleteLinkBookOpen: false,
+  openMutateLinkBook: (isOpen, newKey) => {
+    set({ isMutateLinkBookOpen: isOpen, key: isOpen ? newKey : undefined });
+  },
+  openDeleteLinkBook: (isOpen, newKey) => {
+    set({ isDeleteLinkBookOpen: isOpen, key: isOpen ? newKey : undefined });
+  },
+
+  key: undefined,
 }));

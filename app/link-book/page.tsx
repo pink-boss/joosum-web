@@ -1,3 +1,3 @@
-import FolderDetail from "./[linkBookId]/page";
+import FolderDetail from "./[title]/page";
 
 export default FolderDetail;

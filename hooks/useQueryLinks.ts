@@ -1,5 +1,4 @@
 import { LinkBookIdParam } from "@/types/linkBook.types";
-import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
 import { useLinkFilterStore } from "@/store/useLinkFilterStore";
 import { useLinkSortStore } from "@/store/useLinkSortStore";
 import { isBetween } from "@/utils/date";
@@ -11,7 +10,6 @@ import { Link } from "@/types/link.types";
 
 export function useQueryLinks() {
   const { linkBookId } = useParams<LinkBookIdParam>();
-  const { linkBook } = useSelectLinkBookStore();
 
   const linkSort = useLinkSortStore();
   const { unread, dateRange, tags } = useLinkFilterStore();
@@ -39,6 +37,7 @@ export function useQueryLinks() {
           return data;
         }),
   });
+  console.log(dateRange, unread, tags);
 
   const linkList = useMemo(() => {
     return data.filter(({ readCount, createdAt, tags: linkTags }) => {

@@ -11,9 +11,11 @@ import { sortOptions } from "./constants";
 // TODO: api 이동
 // TODO: 테스트
 // TODO: 고도화 적용 - 폴더 컬러, 타이틀 글자 수
+// TODO: more dropdown이 overflow hidden 됨
 export default function MyFolder() {
-  const { isPending, error, data } = useQueryLinkBooks("linkBook");
   const { sort, setSort } = useLinkBookSortStore();
+
+  const { isPending, error, data } = useQueryLinkBooks(sort);
   return (
     <div className="flex w-full flex-1 flex-col gap-8 overflow-hidden px-10">
       <div className="flex items-center justify-end gap-3">

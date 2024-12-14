@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { mockLinks } from "../mocks/link.mocks";
-import LinkList from "@/app/link-book/[linkBookId]/LinkList";
+import LinkList from "@/app/link-book/[title]/LinkList";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { http, HttpResponse } from "msw";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as navigationHooks from "next/navigation";
 import { jest } from "@storybook/jest";
 import { LinkSortState } from "@/store/useLinkSortStore";
+import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
 
 const queryClient = new QueryClient();
 let capturedRequest: Request | null = null;
@@ -37,6 +38,9 @@ const meta = {
         <Story />
       </QueryClientProvider>
     );
+  },
+  beforeEach: () => {
+    useLinkFilterStore.setState(defaultValues);
   },
 } satisfies Meta<typeof LinkList>;
 

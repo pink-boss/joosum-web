@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
-import DatePicker from "@/app/link-book/[linkBookId]/date-picker";
+import DatePicker from "@/app/link-book/[title]/date-picker";
 import { dateFormatter } from "@/utils/date";
 
 const meta = {

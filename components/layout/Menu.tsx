@@ -1,15 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import clsx from "clsx";
 import Loading from "../Loading";
 import Link from "next/link";
-import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useLayoutStore } from "@/store/useLayoutStore";
 import { MouseEvent } from "react";
 import LinkToPage from "../link-book/LinkToPage";
-import { TQueryLinkBooks } from "@/types/linkBook.types";
 import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
+import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 
 interface LinkBook {
   linkBookId: string;
@@ -46,18 +44,18 @@ function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
 }
 
 export default function Menu() {
-  const { isPending, error, data } = useQueryLinkBooks("menu");
-  const { openMutateFolder } = useOpenDialogStore();
-  const { selectLinkBook } = useSelectLinkBookStore();
+  const { isPending, error, data } = useQueryLinkBooks("created_at");
+  const { openMutateLinkBook } = useOpenDialogStore();
+  const { clearLinkBook } = useSelectLinkBook();
   const { openSideMenu, setOpenSideMenu } = useLayoutStore();
 
   const closeDialog = () => {
-    openMutateFolder(false);
+    openMutateLinkBook(false);
   };
 
   const handleCreateFolder = () => {
-    selectLinkBook(undefined);
-    openMutateFolder(true);
+    clearLinkBook();
+    openMutateLinkBook(true);
   };
 
   const handleOpenMenu = (e: MouseEvent<HTMLDivElement>) => {

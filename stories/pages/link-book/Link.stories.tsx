@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Link from "@/app/link-book/[linkBookId]/LinkCard";
+import Link from "@/app/link-book/[title]/LinkCard";
 import { mockLink } from "../mocks/link.mocks";
 
 const meta = {

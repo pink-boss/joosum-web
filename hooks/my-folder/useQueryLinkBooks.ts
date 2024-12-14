@@ -1,14 +1,12 @@
-import { useLinkBookSortStore } from "@/store/useLinkBookSortStore";
+import { Sort } from "@/store/useLinkBookSortStore";
 import { TQueryLinkBooks } from "@/types/linkBook.types";
 import { useQuery } from "@tanstack/react-query";
 
-export default function useQueryLinkBooks(position: "menu" | "linkBook") {
-  const { sort } = useLinkBookSortStore();
-
+export default function useQueryLinkBooks(sort: Sort) {
   return useQuery<TQueryLinkBooks>({
-    queryKey: position === "linkBook" ? ["linkBooks", sort] : ["linkBooks"],
+    queryKey: ["linkBookList", sort],
     queryFn: () =>
-      fetch(`/my-folder/api${position === "linkBook" ? `?sort=${sort}` : ""}`, {
+      fetch(`/api/my-folder?sort=${sort}`, {
         method: "GET",
       }).then((res) => res.json()),
   });

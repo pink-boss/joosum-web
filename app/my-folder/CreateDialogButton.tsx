@@ -1,15 +1,16 @@
 "use client";
+
+import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import { useOpenDialogStore } from "@/store/useDialogStore";
-import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
 import Image from "next/image";
 
 export default function CreateDialogButton() {
-  const { openMutateFolder } = useOpenDialogStore();
-  const { selectLinkBook } = useSelectLinkBookStore();
+  const { openMutateLinkBook } = useOpenDialogStore();
+  const { clearLinkBook } = useSelectLinkBook();
 
   const handleClick = () => {
-    selectLinkBook(undefined);
-    openMutateFolder(true);
+    clearLinkBook();
+    openMutateLinkBook(true);
   };
   return (
     <button

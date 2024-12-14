@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { http, HttpResponse } from "msw";
 
-import Page from "@/app/link-book/[linkBookId]/page";
+import Page from "@/app/link-book/[title]/page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as navigationHooks from "next/navigation";
 import { totalTags } from "../mocks/tag.mocks";

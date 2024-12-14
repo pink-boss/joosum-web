@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import TagSelector from "@/app/link-book/[linkBookId]/tag-selector";
+import TagSelector from "@/app/link-book/[title]/tag-selector";
 import { totalTags } from "../mocks/tag.mocks";
 import { expect, userEvent, within } from "@storybook/test";
 import { useLinkFilterStore } from "@/store/useLinkFilterStore";

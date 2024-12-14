@@ -3,7 +3,7 @@ import {
   EntireFolderProps,
   OptionalFolderProps,
 } from "@/types/linkBook.types";
-import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
+import { replaceSpacesWithDash } from "@/utils/urlEncoder";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -28,26 +28,20 @@ export default function LinkToPage({
   linkBook,
   onClickCallback,
 }: InputProps) {
-  const { selectLinkBook } = useSelectLinkBookStore();
   let path = "/link-book";
   if (isNormalLinkBook(linkBook) && linkBook.linkBookId) {
-    path += `/${linkBook.linkBookId}`;
+    path += `/${linkBook.title}`;
   }
 
   const handleClick = () => {
-    if (isNormalLinkBook(linkBook)) {
-      selectLinkBook(linkBook);
-    }
     if (onClickCallback) {
       onClickCallback();
     }
   };
 
   return (
-    <Link href={path} onClick={handleClick}>
+    <Link href={replaceSpacesWithDash(path)} onClick={handleClick}>
       {children}
     </Link>
   );
 }
-
-//TODO: 캐시에서 linkBook 찾아오는 훅 필요

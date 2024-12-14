@@ -1,5 +1,5 @@
 "use client";
-import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
+
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import FolderSettingEditor from "./FolderSettingEditor";
@@ -8,6 +8,7 @@ import Dialog from "@/components/Dialog";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import useMutateLinkBook from "@/hooks/my-folder/useMutateLinkBook";
 import { CreateFormState } from "@/types/linkBook.types";
+import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 
 const defaultValues: CreateFormState = {
   title: "",
@@ -17,30 +18,29 @@ const defaultValues: CreateFormState = {
 };
 
 export default function MutateDialog() {
-  const { mutateFolder: isOpen, openMutateFolder: open } = useOpenDialogStore();
-  const { linkBook, selectLinkBook } = useSelectLinkBookStore();
+  const {
+    isMutateLinkBookOpen: isOpen,
+    openMutateLinkBook: open,
+    key,
+  } = useOpenDialogStore();
+  const { linkBook, clearLinkBook } = useSelectLinkBook(key);
 
   const [formState, setFormState] = useState<CreateFormState>(defaultValues);
 
   const onClose = useCallback(() => {
-    if (linkBook) {
-      selectLinkBook(undefined);
-    }
+    clearLinkBook();
     setFormState(defaultValues);
     open(false);
-  }, [open, linkBook, selectLinkBook]);
+  }, [clearLinkBook, open]);
 
   const mutation = useMutateLinkBook(onClose);
   async function handleSubmit() {
-    // TODO: 같은 이름으로 생성시 막기
     mutation.mutate(formState);
   }
 
   useEffect(() => {
     setFormState(linkBook ?? defaultValues);
   }, [setFormState, linkBook]);
-
-  if (!isOpen) return null;
 
   return (
     <Dialog open={isOpen} onCloseCallback={onClose} className="w-[792px]">

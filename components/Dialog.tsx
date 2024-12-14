@@ -17,19 +17,23 @@ export default function Dialog({
   className,
   onCloseCallback,
 }: InputProps) {
-  const { mutateFolder, deleteFolder, openMutateFolder, openDeleteFolder } =
-    useOpenDialogStore();
+  const {
+    isMutateLinkBookOpen,
+    isDeleteLinkBookOpen,
+    openMutateLinkBook,
+    openDeleteLinkBook,
+  } = useOpenDialogStore();
 
   const onClose = useCallback(() => {
     onCloseCallback();
-    if (mutateFolder) openMutateFolder(false);
-    if (deleteFolder) openDeleteFolder(false);
+    if (isMutateLinkBookOpen) openMutateLinkBook(false);
+    if (isDeleteLinkBookOpen) openDeleteLinkBook(false);
   }, [
-    deleteFolder,
-    mutateFolder,
-    openDeleteFolder,
-    openMutateFolder,
+    isDeleteLinkBookOpen,
+    isMutateLinkBookOpen,
     onCloseCallback,
+    openDeleteLinkBook,
+    openMutateLinkBook,
   ]);
 
   if (!open) return null;
