@@ -1,4 +1,5 @@
 "use client";
+
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import clsx from "clsx";
 import { ReactNode, useCallback } from "react";
@@ -18,20 +19,28 @@ export default function Dialog({
   onCloseCallback,
 }: InputProps) {
   const {
+    // linkBook
     isMutateLinkBookOpen,
     isDeleteLinkBookOpen,
     openMutateLinkBook,
     openDeleteLinkBook,
+
+    // link
+    isDeleteLinkOpen,
+    openDeleteLink,
   } = useOpenDialogStore();
 
   const onClose = useCallback(() => {
     onCloseCallback();
     if (isMutateLinkBookOpen) openMutateLinkBook(false);
     if (isDeleteLinkBookOpen) openDeleteLinkBook(false);
+    if (isDeleteLinkOpen) openDeleteLink(false);
   }, [
     isDeleteLinkBookOpen,
+    isDeleteLinkOpen,
     isMutateLinkBookOpen,
     onCloseCallback,
+    openDeleteLink,
     openDeleteLinkBook,
     openMutateLinkBook,
   ]);
@@ -41,6 +50,7 @@ export default function Dialog({
   const modal = (
     <>
       <div
+        role="dialog"
         className="absolute inset-0 bg-black/50"
         onClick={onClose}
         aria-hidden="true"

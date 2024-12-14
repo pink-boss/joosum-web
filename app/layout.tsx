@@ -8,8 +8,12 @@ import { usePathname } from "next/navigation";
 import { publicOnlyPaths } from "@/utils/path";
 import Topbar from "@/components/layout/Topbar";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import dynamic from "next/dynamic";
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import {
+  DeleteLinkBookDialog,
+  DeleteLinkDialog,
+  MutateLinkBookDialog,
+} from "@/components/dialog/dynamic";
 
 const queryClient = new QueryClient();
 
@@ -20,18 +24,6 @@ const pretendard = localFont({
   variable: "--font-pretendard",
 });
 
-const MutateLinkBookDialog = dynamic(
-  () => import("./my-folder/mutate/MutateDialog"),
-  {
-    loading: () => null,
-    ssr: false,
-  },
-);
-const DeleteLinkBookDialog = dynamic(() => import("./my-folder/DeleteDialog"), {
-  loading: () => null,
-  ssr: false,
-});
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -39,7 +31,8 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const isPublicOnlyPath = publicOnlyPaths.includes(pathname);
-  const { isMutateLinkBookOpen, isDeleteLinkBookOpen } = useOpenDialogStore();
+  const { isMutateLinkBookOpen, isDeleteLinkBookOpen, isDeleteLinkOpen } =
+    useOpenDialogStore();
 
   return (
     <html lang="ko">
@@ -63,6 +56,7 @@ export default function RootLayout({
                 <div id="modal-root" />
                 {isMutateLinkBookOpen && <MutateLinkBookDialog />}
                 {isDeleteLinkBookOpen && <DeleteLinkBookDialog />}
+                {isDeleteLinkOpen && <DeleteLinkDialog />}
               </Component>
             </Sidebar>
             <ReactQueryDevtools initialIsOpen={false} />

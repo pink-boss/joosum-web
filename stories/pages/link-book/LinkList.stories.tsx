@@ -8,6 +8,7 @@ import * as navigationHooks from "next/navigation";
 import { jest } from "@storybook/jest";
 import { LinkSortState } from "@/store/useLinkSortStore";
 import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
+import { DeleteLinkDialog } from "@/components/dialog/dynamic";
 
 const queryClient = new QueryClient();
 let capturedRequest: Request | null = null;
@@ -25,6 +26,10 @@ const meta = {
         http.get("/api/links/:linkBookId", ({ request }) => {
           capturedRequest = request;
           return HttpResponse.json(mockLinks);
+        }),
+        http.delete("/api/links", ({ request }) => {
+          capturedRequest = request;
+          return HttpResponse.json({ status: 200 });
         }),
       ],
     },
@@ -157,24 +162,66 @@ export const TestSortRequestURI_MostViewd: Story = {
     const dropdown = canvas.getByTestId("sort-dropdown");
 
     // server api 지원 x
-    await step("많이본순", async () => {
-      await userEvent.click(within(dropdown).getByTestId("open-button"));
+    await userEvent.click(within(dropdown).getByTestId("open-button"));
 
-      await waitFor(async () => {
-        await userEvent.click(within(dropdown).getByText("많이본순"));
+    await userEvent.click(within(dropdown).getByText("많이본순"));
 
-        const linkList = canvas.getAllByRole("listitem");
-        expect(
-          within(linkList[0]).getByText("읽은 횟수 최다"),
-        ).toBeInTheDocument();
-        expect(
-          within(linkList[linkList.length - 1]).getByText("읽은 횟수 최저"),
-        ).toBeInTheDocument();
-      });
+    await waitFor(async () => {
+      const linkList = canvas.getAllByRole("listitem");
+      expect(
+        within(linkList[0]).getByText("읽은 횟수 최다"),
+      ).toBeInTheDocument();
+      expect(
+        within(linkList[linkList.length - 1]).getByText("읽은 횟수 최저"),
+      ).toBeInTheDocument();
     });
   },
 };
 
-// TODO: 링크 삭제
+export const TestDeleteLinks: Story = {
+  args: { defaultEditMode: true },
+  decorators: (Story) => {
+    return (
+      <>
+        <Story />
+        <div id="modal-root" />
+        <DeleteLinkDialog />
+      </>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const checkboxList = canvas.getAllByRole("listitem");
+
+    await userEvent.click(within(checkboxList[0]).getByRole("checkbox"));
+    await userEvent.click(within(checkboxList[2]).getByRole("checkbox"));
+    await userEvent.click(within(checkboxList[4]).getByRole("checkbox"));
+
+    // 삭제 버튼 클릭
+    await userEvent.click(canvas.getByRole("button", { name: "삭제" }));
+
+    // 확인 다이얼로그 확인
+    const dialog = within(canvas.getByRole("dialog"));
+    await waitFor(async () => {
+      await userEvent.click(dialog.getByRole("button", { name: "삭제" }));
+    });
+
+    // 삭제 확인
+    await waitFor(async () => {
+      expect(
+        canvas.queryByText(`0/${mockLinks.length - 3}개`),
+      ).toBeInTheDocument();
+      expect(
+        canvas.queryByRole("checkbox", { name: mockLinks[0].title }),
+      ).not.toBeInTheDocument();
+      expect(
+        canvas.queryByRole("checkbox", { name: mockLinks[2].title }),
+      ).not.toBeInTheDocument();
+      expect(
+        canvas.queryByRole("checkbox", { name: mockLinks[4].title }),
+      ).not.toBeInTheDocument();
+    });
+  },
+};
 
 // TODO: 폴더 이동

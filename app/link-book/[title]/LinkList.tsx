@@ -7,8 +7,10 @@ import Loading from "@/components/Loading";
 import { useLinkSortStore } from "@/store/useLinkSortStore";
 import { useLinkFilterStore } from "@/store/useLinkFilterStore";
 import EmptyLinks from "@/components/EmptyLinks";
-import { useQueryLinks } from "@/hooks/useQueryLinks";
+import { useQueryLinks } from "@/hooks/link/useQueryLinks";
 import { sortOptions } from "../constants";
+import useCheckLink from "@/hooks/link/useCheckLink";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 type ButtonInputProps = {
   children: ReactNode;
@@ -40,36 +42,30 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
   const linkSort = useLinkSortStore();
   const { unread } = useLinkFilterStore();
 
+  const { openDeleteLink } = useOpenDialogStore();
   const [editMode, setEditMode] = useState(defaultEditMode);
-  const [checkedLink, setCheckedLink] = useState<Set<string>>(new Set());
+  const { cachedLinks, setCachedLink, setAllLinks } = useCheckLink();
   const { data, isPending } = useQueryLinks();
   const totalCount = data.length;
-  const hasAllChecked = totalCount === checkedLink.size;
+  const hasAllChecked = totalCount === cachedLinks.size;
 
   const handleChangeEditMode = () => {
     setEditMode((prev) => !prev);
   };
 
   const handleAllCheckLinks = () => {
-    setCheckedLink(
-      new Set(hasAllChecked ? null : data.map((link) => link.linkId)),
-    );
+    setAllLinks(hasAllChecked);
   };
 
   const handleCheckLink = (e: ChangeEvent<HTMLInputElement>) => {
-    const linkId = e.target.value;
-    setCheckedLink((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(linkId)) {
-        newSet.delete(linkId);
-      } else {
-        newSet.add(linkId);
-      }
-      return newSet;
-    });
+    setCachedLink(e.target.value);
   };
 
-  const handleDeleteLinks = () => {};
+  const handleDeleteLinks = () => {
+    if (cachedLinks.size) {
+      openDeleteLink(true);
+    }
+  };
   const handleChangeFolder = () => {};
 
   return (
@@ -104,7 +100,7 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
                 <label htmlFor="allCheckbox">모두 선택</label>
               </div>
               <div>
-                {checkedLink.size}/{totalCount}개
+                {cachedLinks.size}/{totalCount}개
               </div>
             </div>
             <div className="ml-auto flex gap-2">
@@ -132,7 +128,7 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
                   className="relative"
                   onChange={handleCheckLink}
                   value={link.linkId}
-                  checked={checkedLink.has(link.linkId)}
+                  checked={cachedLinks.has(link.linkId)}
                 />
               )}
               <LinkComponent link={link} />

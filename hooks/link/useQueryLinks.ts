@@ -19,7 +19,7 @@ export function useQueryLinks() {
     refetch,
     ...others
   } = useQuery<Link[], ApiError>({
-    queryKey: ["links", linkBookId],
+    queryKey: ["linkList", linkBookId],
     queryFn: () =>
       fetch(
         `/api/links/${linkBookId}?sort=${linkSort.sort}&order=${linkSort.orderBy}`,

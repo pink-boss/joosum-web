@@ -4,13 +4,12 @@ export const mockLink: Link = {
   createdAt: "2024-03-21T09:00:00Z",
   lastReadAt: "2024-03-21T15:30:00Z",
   linkBookId: "book-1",
-  linkBookName: "개발 문서",
+  linkBookName: "일반 문서",
   linkId: "link-1",
   readCount: 5,
   tags: ["여행", "패션", "쇼핑"],
   thumbnailURL: "https://picsum.photos/374/184",
-  title:
-    "React 공식 문서 - 가나다라마바사아자차카타파하 아야어요우유 테스트 자료",
+  title: "일반 링크",
   updatedAt: "2024-03-21T15:30:00Z",
   url: "https://react.dev",
   userId: "user-1",
@@ -29,6 +28,21 @@ export const mockLinks: Link[] = [
     title: "Python 공식 문서",
     updatedAt: "2024-03-22T15:30:00Z",
     url: "https://python.org",
+    userId: "user-1",
+  },
+  {
+    createdAt: "2024-03-21T09:00:00Z",
+    lastReadAt: "2024-03-21T15:30:00Z",
+    linkBookId: "book-1",
+    linkBookName: "개발 문서",
+    linkId: "link-1",
+    readCount: 5,
+    tags: ["여행", "패션", "쇼핑"],
+    thumbnailURL: "https://picsum.photos/374/184",
+    title:
+      "React 공식 문서 - 가나다라마바사아자차카타파하 아야어요우유 테스트 자료",
+    updatedAt: "2024-03-21T15:30:00Z",
+    url: "https://react.dev",
     userId: "user-1",
   },
   {
@@ -59,7 +73,9 @@ export const mockLinks: Link[] = [
     url: "https://python.org",
     userId: "user-1",
   },
-  ...new Array(20).fill(mockLink),
+  ...new Array(20)
+    .fill(mockLink)
+    .map((link, index) => ({ ...link, title: `${link.title}-${index + 1}` })),
 ].map((link, index) => ({
   ...link,
   linkBookId: `book-${index + 1}`,

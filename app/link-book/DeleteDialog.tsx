@@ -3,23 +3,20 @@
 import clsx from "clsx";
 import Dialog from "@/components/dialog/Dialog";
 import { useOpenDialogStore } from "@/store/useDialogStore";
-import useDeleteLinkBook from "@/hooks/my-folder/useDeleteLinkBook";
-import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
+import useDeleteLink from "@/hooks/link/useDeleteLink";
+import useCheckLink from "@/hooks/link/useCheckLink";
 
 export default function DeleteDialog() {
-  const {
-    isDeleteLinkBookOpen: isOpen,
-    openDeleteLinkBook: open,
-    key,
-  } = useOpenDialogStore();
-  const { clearLinkBook } = useSelectLinkBook(key);
+  const { isDeleteLinkOpen: isOpen, openDeleteLink: open } =
+    useOpenDialogStore();
+  const { cachedLinks, clearLinks } = useCheckLink();
 
   const onClose = () => {
-    clearLinkBook();
+    clearLinks();
     open(false);
   };
 
-  const mutation = useDeleteLinkBook(onClose);
+  const mutation = useDeleteLink(onClose);
 
   async function handleSubmit() {
     mutation.mutate();
@@ -28,9 +25,12 @@ export default function DeleteDialog() {
   return (
     <Dialog open={isOpen} onCloseCallback={onClose} className="w-[421.78px]">
       <div className="flex flex-col items-center gap-5">
-        <div className="text-center text-[#2F2F2F]">
-          <p>폴더 내의 모든 링크가 삭제됩니다.</p>
-          <p>폴더를 삭제하시겠습니까?</p>
+        <div className="flex flex-col gap-4 text-center">
+          <div className="text-center text-[#2F2F2F]">
+            <p>{cachedLinks.size} 개의 링크를</p>
+            <p>삭제하겠습니까?</p>
+          </div>
+          <div>삭제된 링크는 복구되지 않습니다.</div>
         </div>
         <div className="mt-3 flex justify-center gap-1">
           <button

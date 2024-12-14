@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import FolderSettingEditor from "./FolderSettingEditor";
 import { pickBackgroundColors, pickTitleColors } from "../constants";
-import Dialog from "@/components/Dialog";
+import Dialog from "@/components/dialog/Dialog";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import useMutateLinkBook from "@/hooks/my-folder/useMutateLinkBook";
 import { CreateFormState } from "@/types/linkBook.types";

@@ -1,15 +1,23 @@
 import { create } from "zustand";
 
 interface OpenDialogState {
+  key: string | undefined;
+
+  // linkBook
   isMutateLinkBookOpen: boolean;
   isDeleteLinkBookOpen: boolean;
   openMutateLinkBook: (isOpen: boolean, key?: string) => void;
   openDeleteLinkBook: (isOpen: boolean, key?: string) => void;
 
-  key: string | undefined;
+  // link
+  isDeleteLinkOpen: boolean;
+  openDeleteLink: (isOpen: boolean) => void;
 }
 
 export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
+  key: undefined,
+
+  // linkBook
   isMutateLinkBookOpen: false,
   isDeleteLinkBookOpen: false,
   openMutateLinkBook: (isOpen, newKey) => {
@@ -19,5 +27,7 @@ export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
     set({ isDeleteLinkBookOpen: isOpen, key: isOpen ? newKey : undefined });
   },
 
-  key: undefined,
+  // link
+  isDeleteLinkOpen: false,
+  openDeleteLink: (isOpen) => set({ isDeleteLinkOpen: isOpen }),
 }));
