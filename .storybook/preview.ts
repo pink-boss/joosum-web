@@ -2,6 +2,7 @@ import type { Preview } from "@storybook/react";
 import "../app/globals.css";
 
 import { initialize, mswLoader } from "msw-storybook-addon";
+import { http, HttpResponse } from "msw";
 
 initialize({
   serviceWorker: {
@@ -19,6 +20,13 @@ const preview: Preview = {
     },
     nextjs: {
       appDirectory: true,
+    },
+    msw: {
+      handlers: [
+        http.get("/icons/:imageName", () => {
+          return new HttpResponse(null, { status: 200 });
+        }),
+      ],
     },
   },
   loaders: [mswLoader],

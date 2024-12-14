@@ -1,21 +1,45 @@
 import { Link } from "@/types/link.types";
 import { dateFormatter } from "@/utils/date";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import NextLink from "next/link";
 
 type InputProps = { link: Link };
 
-// TODO: 링크안에 링크 x - 부모 링크 변경. window.open(link.url, '_blank');
 export default function LinkCard({ link }: InputProps) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async () => (
+      await fetch(`/api/links/${link.linkId}/read-count`), { method: "PUT" }
+    ),
+    onSuccess: (result) => {
+      if ("error" in result) {
+        alert(result.error);
+      } else {
+        queryClient.setQueryData<Link>(
+          ["link", "title", link.title],
+          (prevLink) => {
+            if (prevLink) {
+              return {
+                ...prevLink,
+                readCount: prevLink.readCount + 1,
+              };
+            }
+            return prevLink;
+          },
+        );
+        window.open(link.url, "_blank");
+      }
+    },
+  });
+
   const handleOpenLink = () => {
-    // TODO: 조회수 1 증가
+    mutation.mutate();
   };
   return (
-    <NextLink
-      data-testid="url-link"
-      target="_blank"
-      href={link.url}
-      className="flex h-[84px] flex-1 justify-between gap-5"
+    <div
+      className="flex h-[84px] flex-1 cursor-pointer justify-between gap-5"
       onClick={handleOpenLink}
     >
       <div className="relative h-[84px] w-[160px] flex-none">
@@ -78,6 +102,6 @@ export default function LinkCard({ link }: InputProps) {
           />
         </button>
       </div>
-    </NextLink>
+    </div>
   );
 }

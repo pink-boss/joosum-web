@@ -37,7 +37,6 @@ export function useQueryLinks() {
           return data;
         }),
   });
-  console.log(dateRange, unread, tags);
 
   const linkList = useMemo(() => {
     return data.filter(({ readCount, createdAt, tags: linkTags }) => {
