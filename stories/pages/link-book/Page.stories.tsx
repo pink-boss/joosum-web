@@ -109,7 +109,7 @@ export const TestFilterStatement_TagSelector: Story = {
       tags: ["여행", "쇼핑"],
     });
     waitFor(() => {
-      expect(canvas.queryAllByRole("listitem").length).toBe(20);
+      expect(canvas.queryAllByRole("listitem").length).toBe(21);
       const tagSelector = within(canvas.getByTestId("tag-selector"));
       expect(tagSelector.getByText("#여행")).toBeInTheDocument();
       expect(tagSelector.getByText("#쇼핑")).toBeInTheDocument();

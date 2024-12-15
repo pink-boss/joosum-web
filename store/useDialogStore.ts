@@ -11,7 +11,9 @@ interface OpenDialogState {
 
   // link
   isDeleteLinkOpen: boolean;
+  isReassignLinkBookOpen: boolean;
   openDeleteLink: (isOpen: boolean) => void;
+  openReassignLinkBook: (isOpen: boolean) => void;
 }
 
 export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
@@ -29,5 +31,7 @@ export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
 
   // link
   isDeleteLinkOpen: false,
+  isReassignLinkBookOpen: false,
   openDeleteLink: (isOpen) => set({ isDeleteLinkOpen: isOpen }),
+  openReassignLinkBook: (isOpen) => set({ isReassignLinkBookOpen: isOpen }),
 }));

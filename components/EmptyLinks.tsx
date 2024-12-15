@@ -4,13 +4,6 @@ type InputProps = {
   unread: boolean;
 };
 
-/**
- * TODO: 디렉토리, 파일 네이밍 변경
- * 디렉토리 - kebab-case
- * 페이지, 레이아웃 - lower-case
- * 컴포넌트 - PascalCase
- * 유틸, 훅 - camelCase
- */
 export default function EmptyLinks({ unread }: InputProps) {
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-[14.4px] text-center">

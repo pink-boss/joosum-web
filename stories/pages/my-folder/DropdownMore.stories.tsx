@@ -71,12 +71,16 @@ export const OpenEditDialog: Story = {
 
     const linkBookMore = within(canvas.getByTestId("link-book-more"));
 
-    await userEvent.click(linkBookMore.getByAltText("more"));
-    await userEvent.click(linkBookMore.getByText("폴더 수정"));
+    await waitFor(async () => {
+      await userEvent.click(linkBookMore.getByAltText("more"));
+      await userEvent.click(linkBookMore.getByText("폴더 수정"));
+    });
 
-    const dialog = canvas.getByRole("dialog");
-    await expect(dialog).toBeInTheDocument();
-    await expect(within(dialog).getByText("폴더 수정")).toBeInTheDocument();
+    await waitFor(async () => {
+      const dialog = canvas.getByRole("dialog");
+      await expect(dialog).toBeInTheDocument();
+      await expect(within(dialog).getByText("폴더 수정")).toBeInTheDocument();
+    });
   },
 };
 

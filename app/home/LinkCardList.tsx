@@ -5,6 +5,7 @@ import LinkCard from "./LinkCard";
 import { useState } from "react";
 import NextLink from "next/link";
 import EmptyLinks from "@/components/EmptyLinks";
+import { Link } from "@/types/link.types";
 
 type InputProps = {
   links: Link[];

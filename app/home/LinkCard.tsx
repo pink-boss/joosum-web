@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { krDateFormatter } from "@/utils/date";
 import { useEffect, useState } from "react";
+import { Link } from "@/types/link.types";
 
 const WIDTH = 374;
 

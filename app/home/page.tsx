@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Banner } from "../../types/banner.types";
 import BannerCard from "./Banner";
 import { useSearchLinkStore } from "@/store/useSearchLinkStore";
+import { Link } from "@/types/link.types";
 
 type TQueryLinks = Link[];
 type TQueryBanners = Banner[];

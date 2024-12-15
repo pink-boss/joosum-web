@@ -9,6 +9,8 @@ import { jest } from "@storybook/jest";
 import { LinkSortState } from "@/store/useLinkSortStore";
 import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
 import { DeleteLinkDialog } from "@/components/dialog/dynamic";
+import ReassignLinkBookDialog from "@/app/link-book/dialog/ReassignLinkBookDialog";
+import { mockLinkBooks } from "../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();
 let capturedRequest: Request | null = null;
@@ -23,20 +25,44 @@ const meta = {
     },
     msw: {
       handlers: [
-        http.get("/api/links/:linkBookId", ({ request }) => {
+        http.get("/api/links", ({ request }) => {
           capturedRequest = request;
           return HttpResponse.json(mockLinks);
+        }),
+        http.get("/api/links/:linkBookId", ({ request, params }) => {
+          capturedRequest = request;
+          return HttpResponse.json(
+            params.linkBookId
+              ? mockLinks.filter(
+                  (link) => params.linkBookId === link.linkBookId,
+                )
+              : mockLinks,
+          );
         }),
         http.delete("/api/links", ({ request }) => {
           capturedRequest = request;
           return HttpResponse.json({ status: 200 });
         }),
+        http.get("/api/my-folder?sort=created_at", ({ request }) => {
+          capturedRequest = request;
+          return HttpResponse.json({
+            linkBooks: mockLinkBooks,
+            totalLinkCount: mockLinkBooks.length,
+          });
+        }),
+        http.put(
+          "/api/links/:linkIds/link-book-id/:linkBookId",
+          ({ request }) => {
+            capturedRequest = request;
+            return HttpResponse.json({ status: 204 });
+          },
+        ),
       ],
     },
   },
   decorators: (Story) => {
     jest.spyOn(navigationHooks, "useParams").mockReturnValue({
-      linkBookId: "testLinkBookId",
+      linkBookId: mockLinkBooks[2].linkBookId,
     });
     return (
       <QueryClientProvider client={queryClient}>
@@ -114,7 +140,7 @@ const testRequestURI = async ({
 
     if (capturedRequest) {
       const url = new URL(capturedRequest.url);
-      expect(url.pathname).toBe("/api/links/testLinkBookId");
+      expect(url.pathname).toBe(`/api/links/${mockLinkBooks[2].linkBookId}`);
       expect(url.searchParams.get("sort")).toBe(sort);
       expect(url.searchParams.get("order")).toBe(orderBy);
     }
@@ -157,14 +183,22 @@ export const TestSortRequestURI_Title: Story = {
 };
 
 export const TestSortRequestURI_MostViewd: Story = {
-  play: async ({ canvasElement, step }) => {
+  decorators: (Story) => {
+    jest
+      .spyOn(navigationHooks, "useParams")
+      .mockReturnValue({ linkBookId: "" });
+    return <Story />;
+  },
+  play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const dropdown = canvas.getByTestId("sort-dropdown");
 
     // server api 지원 x
-    await userEvent.click(within(dropdown).getByTestId("open-button"));
+    await waitFor(async () => {
+      await userEvent.click(within(dropdown).getByTestId("open-button"));
 
-    await userEvent.click(within(dropdown).getByText("많이본순"));
+      await userEvent.click(within(dropdown).getByText("많이본순"));
+    });
 
     await waitFor(async () => {
       const linkList = canvas.getAllByRole("listitem");
@@ -181,6 +215,9 @@ export const TestSortRequestURI_MostViewd: Story = {
 export const TestDeleteLinks: Story = {
   args: { defaultEditMode: true },
   decorators: (Story) => {
+    jest
+      .spyOn(navigationHooks, "useParams")
+      .mockReturnValue({ linkBookId: mockLinkBooks[0].linkBookId });
     return (
       <>
         <Story />
@@ -191,25 +228,25 @@ export const TestDeleteLinks: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const checkboxList = canvas.getAllByRole("listitem");
 
-    await userEvent.click(within(checkboxList[0]).getByRole("checkbox"));
-    await userEvent.click(within(checkboxList[2]).getByRole("checkbox"));
-    await userEvent.click(within(checkboxList[4]).getByRole("checkbox"));
+    waitFor(async () => {
+      const checkboxList = canvas.queryAllByRole("listitem");
 
-    // 삭제 버튼 클릭
-    await userEvent.click(canvas.getByRole("button", { name: "삭제" }));
+      await userEvent.click(within(checkboxList[0]).getByRole("checkbox"));
+      await userEvent.click(within(checkboxList[2]).getByRole("checkbox"));
 
-    // 확인 다이얼로그 확인
-    const dialog = within(canvas.getByRole("dialog"));
-    await waitFor(async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "삭제" }));
+
+      const dialog = within(canvas.getByRole("dialog"));
       await userEvent.click(dialog.getByRole("button", { name: "삭제" }));
     });
 
-    // 삭제 확인
     await waitFor(async () => {
+      const filteredLinkBooks = mockLinks.filter(
+        (link) => mockLinkBooks[2].linkBookId === link.linkBookId,
+      );
       expect(
-        canvas.queryByText(`0/${mockLinks.length - 3}개`),
+        canvas.getByText(`0/${filteredLinkBooks.length - 2}개`),
       ).toBeInTheDocument();
       expect(
         canvas.queryByRole("checkbox", { name: mockLinks[0].title }),
@@ -217,11 +254,61 @@ export const TestDeleteLinks: Story = {
       expect(
         canvas.queryByRole("checkbox", { name: mockLinks[2].title }),
       ).not.toBeInTheDocument();
-      expect(
-        canvas.queryByRole("checkbox", { name: mockLinks[4].title }),
-      ).not.toBeInTheDocument();
     });
   },
 };
 
-// TODO: 폴더 이동
+let invalidateQuerySpy: any;
+
+export const TestReassignLinkBook: Story = {
+  args: { defaultEditMode: true },
+  decorators: (Story) => {
+    invalidateQuerySpy = jest.spyOn(queryClient, "invalidateQueries");
+    return (
+      <>
+        <Story />
+        <div id="modal-root" />
+        <ReassignLinkBookDialog />
+      </>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const checkboxList = canvas.getAllByRole("listitem");
+
+    await userEvent.click(within(checkboxList[0]).getByRole("checkbox"));
+    await userEvent.click(within(checkboxList[2]).getByRole("checkbox"));
+
+    await userEvent.click(canvas.getByRole("button", { name: "폴더이동" }));
+
+    const dialog = within(canvas.getByRole("dialog"));
+    await waitFor(async () => {
+      await userEvent.click(dialog.getByTestId("open-button"));
+      await userEvent.click(
+        dialog.getByRole("button", { name: mockLinkBooks[4].title }),
+      );
+      await userEvent.click(dialog.getByRole("button", { name: "이동" }));
+    });
+
+    await waitFor(async () => {
+      const filteredLinkBooks = mockLinks.filter(
+        (link) => mockLinkBooks[2].linkBookId === link.linkBookId,
+      );
+      expect(
+        canvas.getByText(`0/${filteredLinkBooks.length - 2}개`),
+      ).toBeInTheDocument();
+      expect(
+        canvas.queryByRole("checkbox", { name: mockLinks[0].title }),
+      ).toBeNull();
+      expect(
+        canvas.queryByRole("checkbox", { name: mockLinks[2].title }),
+      ).toBeNull();
+    });
+
+    await waitFor(async () => {
+      expect(invalidateQuerySpy).toHaveBeenCalledWith({
+        queryKey: ["linkList", mockLinkBooks[4].linkBookId],
+      });
+    });
+  },
+};

@@ -42,7 +42,7 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
   const linkSort = useLinkSortStore();
   const { unread } = useLinkFilterStore();
 
-  const { openDeleteLink } = useOpenDialogStore();
+  const { openDeleteLink, openReassignLinkBook } = useOpenDialogStore();
   const [editMode, setEditMode] = useState(defaultEditMode);
   const { cachedLinks, setCachedLink, setAllLinks } = useCheckLink();
   const { data, isPending } = useQueryLinks();
@@ -66,7 +66,11 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
       openDeleteLink(true);
     }
   };
-  const handleChangeFolder = () => {};
+  const handleChangeFolder = () => {
+    if (cachedLinks.size) {
+      openReassignLinkBook(true);
+    }
+  };
 
   return (
     <div className="flex flex-1 flex-col gap-1 overflow-hidden">
