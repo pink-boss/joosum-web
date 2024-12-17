@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { ReactNode, useCallback } from "react";
 import { createPortal } from "react-dom";
 
-type InputProps = {
+export type InputProps = {
   open: boolean;
   children: ReactNode;
   className?: string;
