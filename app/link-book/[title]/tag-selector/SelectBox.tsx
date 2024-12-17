@@ -6,19 +6,31 @@ type SelectBoxProps = {
   selected: string[];
   isOpen: boolean | undefined;
   setIsOpen: (isOpen: boolean) => void;
+  className?: string;
 };
 
-export function SelectBox({ selected, isOpen, setIsOpen }: SelectBoxProps) {
+export function SelectBox({
+  selected,
+  isOpen,
+  setIsOpen,
+  className,
+}: SelectBoxProps) {
   const tagsRef = useRef<HTMLDivElement>(null);
+  const previewRef = useRef<HTMLDivElement | null>(null);
   const [visibleTags, setVisibleTags] = useState<string[]>([]);
-
   const [hiddenCount, setHiddenCount] = useState(0);
 
   useEffect(() => {
     const maxWidth = tagsRef.current?.clientWidth;
 
     if (maxWidth) {
+      if (previewRef.current) {
+        document.body.removeChild(previewRef.current);
+      }
+
       const preview = document.createElement("div");
+      previewRef.current = preview;
+
       preview.style.display = "flex";
       preview.style.gap = "0.25rem";
       preview.style.visibility = "hidden";
@@ -39,23 +51,28 @@ export function SelectBox({ selected, isOpen, setIsOpen }: SelectBoxProps) {
       }
 
       setVisibleTags(newTags);
-
-      return () => {
-        document.body.removeChild(preview);
-      };
     }
+
+    return () => {
+      if (previewRef.current && document.body.contains(previewRef.current)) {
+        document.body.removeChild(previewRef.current);
+        previewRef.current = null;
+      }
+    };
   }, [selected]);
 
   useEffect(() => {
     setHiddenCount(selected.length - visibleTags.length);
   }, [selected.length, visibleTags.length]);
+
   return (
     <button
       data-testid="open-button"
       onClick={() => setIsOpen(!isOpen)}
       className={clsx(
         "flex items-center justify-between gap-0.5 px-3 text-sm text-text-secondary",
-        "h-[46px] w-[305px] rounded-lg border border-[#BBBBBB]",
+        "h-[46px] w-full rounded-lg border border-[#BBBBBB]",
+        className && className,
       )}
     >
       <div className="flex flex-1 items-center justify-between">

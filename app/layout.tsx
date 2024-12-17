@@ -53,6 +53,7 @@ export default function RootLayout({
               <Component>
                 <Topbar />
                 {children}
+                <div id="drawer-root" />
                 <div id="modal-root" />
                 {isMutateLinkBookOpen && <MutateLinkBookDialog />}
                 {isDeleteLinkBookOpen && <DeleteLinkBookDialog />}

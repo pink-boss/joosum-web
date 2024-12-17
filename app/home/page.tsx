@@ -27,16 +27,16 @@ export default function Home() {
       ).then((res) => res.json()),
   });
 
-  const bannerData = useQuery<TQueryBanners>({
-    queryKey: ["banners"],
-    queryFn: () =>
-      fetch(`/api/banners`, {
-        method: "GET",
-      }).then((res) => res.json()),
-  });
+  // const bannerData = useQuery<TQueryBanners>({
+  //   queryKey: ["banners"],
+  //   queryFn: () =>
+  //     fetch(`/api/banners`, {
+  //       method: "GET",
+  //     }).then((res) => res.json()),
+  // });
   return (
     <div className="flex w-full flex-1 flex-col gap-12 px-10">
-      <BannerCard data={bannerData.data ?? []} />
+      <BannerCard data={[]} />
       <LinkCardList links={data} />
     </div>
   );

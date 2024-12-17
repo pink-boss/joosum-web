@@ -3,14 +3,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useCheckLink from "./useCheckLink";
 import { Link } from "@/types/link.types";
 import { useParams } from "next/navigation";
+import useLinkBookFromTitle from "./useLinkBookFromTitle";
 
 interface ReassignParams {
-  toLinkBook: LinkBook;
+  toLinkBookId: LinkBook["linkBookId"];
   linkIds: string[];
 }
 
 interface ReassignResponse {
-  toLinkBook: LinkBook;
+  toLinkBookId: LinkBook["linkBookId"];
 }
 
 interface BatchResult {
@@ -21,11 +22,11 @@ interface BatchResult {
 
 export default function useReassignLinkBook(onSuccessCallback: () => void) {
   const { cachedLinks } = useCheckLink();
-  const { linkBookId: fromLinkBookId } = useParams<LinkBookIdParam>();
+  const fromLinkBook = useLinkBookFromTitle();
   const queryClient = useQueryClient();
 
   return useMutation<ReassignResponse, Error, ReassignParams>({
-    mutationFn: async ({ toLinkBook, linkIds }) => {
+    mutationFn: async ({ toLinkBookId, linkIds }) => {
       const results: BatchResult[] = [];
       const batchSize = 3;
 
@@ -35,11 +36,11 @@ export default function useReassignLinkBook(onSuccessCallback: () => void) {
           batch.map(async (linkId) => {
             try {
               const response = await fetch(
-                `/api/links/${linkIds}/link-book-id/${toLinkBook.linkBookId}`,
+                `/api/links/${linkIds}/link-book-id/${toLinkBookId}`,
                 {
                   method: "PUT",
                   body: JSON.stringify({
-                    linkBookId: toLinkBook.linkBookId,
+                    linkBookId: toLinkBookId,
                     linkIds,
                   }),
                 },
@@ -65,16 +66,16 @@ export default function useReassignLinkBook(onSuccessCallback: () => void) {
         );
       }
 
-      return { toLinkBook };
+      return { toLinkBookId };
     },
-    onSuccess: ({ toLinkBook }) => {
+    onSuccess: ({ toLinkBookId }) => {
       queryClient.setQueriesData<Link[]>(
-        { queryKey: ["linkList", fromLinkBookId] },
+        { queryKey: ["linkList", fromLinkBook?.linkBookId] },
         (prevLinks) =>
           prevLinks?.filter((link) => !cachedLinks.has(link.linkId)),
       );
       queryClient.invalidateQueries({
-        queryKey: ["linkList", toLinkBook.linkBookId],
+        queryKey: ["linkList", toLinkBookId],
       });
 
       onSuccessCallback();

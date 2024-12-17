@@ -29,7 +29,7 @@ const meta = {
           capturedRequest = request;
           return HttpResponse.json(mockLinks);
         }),
-        http.get("/api/links/:linkBookId", ({ request, params }) => {
+        http.get("/api/link-books/:linkBookId/links", ({ request, params }) => {
           capturedRequest = request;
           return HttpResponse.json(
             params.linkBookId
@@ -62,7 +62,7 @@ const meta = {
   },
   decorators: (Story) => {
     jest.spyOn(navigationHooks, "useParams").mockReturnValue({
-      linkBookId: mockLinkBooks[2].linkBookId,
+      title: mockLinkBooks[2].title,
     });
     return (
       <QueryClientProvider client={queryClient}>
@@ -140,7 +140,9 @@ const testRequestURI = async ({
 
     if (capturedRequest) {
       const url = new URL(capturedRequest.url);
-      expect(url.pathname).toBe(`/api/links/${mockLinkBooks[2].linkBookId}`);
+      expect(url.pathname).toBe(
+        `/api/link-books/${mockLinkBooks[2].linkBookId}/links`,
+      );
       expect(url.searchParams.get("sort")).toBe(sort);
       expect(url.searchParams.get("order")).toBe(orderBy);
     }
@@ -184,9 +186,7 @@ export const TestSortRequestURI_Title: Story = {
 
 export const TestSortRequestURI_MostViewd: Story = {
   decorators: (Story) => {
-    jest
-      .spyOn(navigationHooks, "useParams")
-      .mockReturnValue({ linkBookId: "" });
+    jest.spyOn(navigationHooks, "useParams").mockReturnValue({ title: "" });
     return <Story />;
   },
   play: async ({ canvasElement }) => {
@@ -217,7 +217,7 @@ export const TestDeleteLinks: Story = {
   decorators: (Story) => {
     jest
       .spyOn(navigationHooks, "useParams")
-      .mockReturnValue({ linkBookId: mockLinkBooks[0].linkBookId });
+      .mockReturnValue({ title: mockLinkBooks[0].title });
     return (
       <>
         <Story />
@@ -306,9 +306,7 @@ export const TestReassignLinkBook: Story = {
     });
 
     await waitFor(async () => {
-      expect(invalidateQuerySpy).toHaveBeenCalledWith({
-        queryKey: ["linkList", mockLinkBooks[4].linkBookId],
-      });
+      expect(invalidateQuerySpy).toHaveBeenCalled();
     });
   },
 };

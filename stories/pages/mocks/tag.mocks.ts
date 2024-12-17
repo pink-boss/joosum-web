@@ -1,4 +1,4 @@
-export const totalTags = [
+export const mockTags = [
   "생산성",
   "공부",
   "인공지능",

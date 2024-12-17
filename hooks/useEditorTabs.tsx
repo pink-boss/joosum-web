@@ -49,7 +49,7 @@ export default function useEditorTabs(
       component: (
         <FormItem label="링크북명">
           <input
-            data-testid="linkbook-title"
+            data-testid="link-book-title"
             name="title"
             placeholder="폴더명을 입력해주세요."
             className="rounded-lg border border-background-secondary bg-background-secondary p-3"

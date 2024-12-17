@@ -4,7 +4,7 @@ import { http, HttpResponse } from "msw";
 import Page from "@/app/link-book/[title]/page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as navigationHooks from "next/navigation";
-import { totalTags } from "../mocks/tag.mocks";
+import { mockTags } from "../mocks/tag.mocks";
 import { mockLinks } from "../mocks/link.mocks";
 import { expect, waitFor, within } from "@storybook/test";
 import { jest } from "@storybook/jest";
@@ -30,13 +30,13 @@ const meta = {
           capturedRequest = request;
           return HttpResponse.json(mockLinks);
         }),
-        http.get("/api/tags", () => HttpResponse.json(totalTags)),
+        http.get("/api/tags", () => HttpResponse.json(mockTags)),
       ],
     },
   },
   decorators: (Story) => {
     jest.spyOn(navigationHooks, "useParams").mockReturnValue({
-      linkBookId: "testLinkBookId",
+      title: "",
     });
     return (
       <QueryClientProvider client={queryClient}>

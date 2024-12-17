@@ -4,8 +4,8 @@ import { mockLinkBooks } from "./linkBook.mocks";
 export const mockLink: Link = {
   createdAt: "2024-03-21T09:00:00Z",
   lastReadAt: "2024-03-21T15:30:00Z",
-  linkBookId: "book-1",
-  linkBookName: "일반 문서",
+  linkBookId: mockLinkBooks[3].linkBookId,
+  linkBookName: mockLinkBooks[3].title,
   linkId: "link-1",
   readCount: 5,
   tags: ["여행", "패션", "쇼핑"],

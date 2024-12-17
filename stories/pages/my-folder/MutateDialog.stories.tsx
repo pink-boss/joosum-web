@@ -36,7 +36,7 @@ export const OpenCloseDialog: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(canvas.getByTestId("create-dialog-button"));
+    await userEvent.click(canvas.getByTestId("create-folder-dialog-button"));
 
     const dialog = canvas.getByRole("dialog");
     await expect(dialog).toBeInTheDocument();
@@ -51,9 +51,9 @@ export const TypeTitle: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(canvas.getByTestId("create-dialog-button"));
+    await userEvent.click(canvas.getByTestId("create-folder-dialog-button"));
 
-    await userEvent.type(canvas.getByTestId("linkbook-title"), "가나다라마사");
+    await userEvent.type(canvas.getByTestId("link-book-title"), "가나다라마사");
 
     await expect(canvas.getByText("가나다라마사")).toBeInTheDocument();
   },
@@ -65,7 +65,7 @@ export const PickBackgroundColor: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(canvas.getByTestId("create-dialog-button"));
+    await userEvent.click(canvas.getByTestId("create-folder-dialog-button"));
 
     await userEvent.click(canvas.getByText("색상"));
     await userEvent.click(canvas.getByTestId(`backgroundColor-${colorIndex}`));
@@ -82,7 +82,7 @@ export const PickTitleColor: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(canvas.getByTestId("create-dialog-button"));
+    await userEvent.click(canvas.getByTestId("create-folder-dialog-button"));
 
     await userEvent.click(canvas.getByText("색상"));
 
@@ -99,7 +99,7 @@ export const PickIllustration: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(canvas.getByTestId("create-dialog-button"));
+    await userEvent.click(canvas.getByTestId("create-folder-dialog-button"));
 
     await userEvent.click(canvas.getByText("일러스트"));
     await userEvent.click(canvas.getByTestId(`illustration-${colorIndex}`));
@@ -121,7 +121,7 @@ export const PickIllustration: Story = {
 export const RenderFormData: Story = {
   play: async ({ canvasElement }) => {
     // const canvas = within(canvasElement);
-    // await userEvent.click(canvas.getByTestId("create-dialog-button"));
+    // await userEvent.click(canvas.getByTestId("create-folder-dialog-button"));
     // await userEvent.click(canvas.getByText("일러스트"));
     // await userEvent.click(canvas.getByTestId(`illustration-${colorIndex}`));
     // const previewImg = within(canvas.getByTestId("folder-book")).getByRole(

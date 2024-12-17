@@ -1,32 +1,33 @@
-import { LinkBookIdParam } from "@/types/linkBook.types";
 import { useLinkFilterStore } from "@/store/useLinkFilterStore";
 import { useLinkSortStore } from "@/store/useLinkSortStore";
 import { isBetween } from "@/utils/date";
 import { useQuery } from "@tanstack/react-query";
 import { ApiError } from "next/dist/server/api-utils";
-import { useParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { Link } from "@/types/link.types";
+import useLinkBookFromTitle from "./useLinkBookFromTitle";
 
 export function useQueryLinks() {
-  const { linkBookId } = useParams<LinkBookIdParam>();
+  const linkBook = useLinkBookFromTitle();
 
   const linkSort = useLinkSortStore();
   const { unread, dateRange, tags } = useLinkFilterStore();
+
+  const pathname = linkBook
+    ? `link-books/${linkBook.linkBookId}/links`
+    : `links`;
+  const queryString = `sort=${linkSort.sort}&order=${linkSort.orderBy}`;
 
   const {
     data = [],
     refetch,
     ...others
   } = useQuery<Link[], ApiError>({
-    queryKey: ["linkList", linkBookId],
+    queryKey: ["linkList", linkBook?.linkBookId],
     queryFn: () =>
-      fetch(
-        `/api/links/${linkBookId}?sort=${linkSort.sort}&order=${linkSort.orderBy}`,
-        {
-          method: "GET",
-        },
-      )
+      fetch(`/api/${pathname}?${queryString}`, {
+        method: "GET",
+      })
         .then((res) => res.json())
         .then((data: Link[]) => {
           if (linkSort.field === "mostViewd") {

@@ -10,6 +10,7 @@ type InputProps = {
   children: ReactNode;
   className?: string;
   onCloseCallback: () => void;
+  testId?: string;
 };
 
 export default function Dialog({
@@ -17,6 +18,7 @@ export default function Dialog({
   children,
   className,
   onCloseCallback,
+  testId,
 }: InputProps) {
   const {
     // linkBook
@@ -50,7 +52,7 @@ export default function Dialog({
   const modal = (
     <>
       <div
-        role="dialog"
+        role="presentation"
         className="absolute inset-0 bg-black/50"
         onClick={onClose}
         aria-hidden="true"
@@ -63,8 +65,9 @@ export default function Dialog({
           className && className,
         )}
         aria-modal
-        aria-labelledby="dialog-title"
+        aria-labelledby="dialog"
         onClick={(e) => e.stopPropagation()}
+        data-testid={testId}
       >
         {children}
       </div>

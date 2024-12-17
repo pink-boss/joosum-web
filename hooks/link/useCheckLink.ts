@@ -1,18 +1,18 @@
 import { Link } from "@/types/link.types";
-import { LinkBookIdParam } from "@/types/linkBook.types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
+import useLinkBookFromTitle from "./useLinkBookFromTitle";
 
 const queryKey = ["link", "checkedId"];
 
 export default function useCheckLink() {
   const queryClient = useQueryClient();
-  const { linkBookId } = useParams<LinkBookIdParam>();
+  const linkBook = useLinkBookFromTitle();
 
   const { data } = useQuery({
     queryKey,
     enabled:
-      queryClient.getQueryState(["linkList", linkBookId])?.status === "success",
+      queryClient.getQueryState(["linkList", linkBook?.linkBookId])?.status ===
+      "success",
     queryFn: () => queryClient.getQueryData<string[]>(queryKey),
     staleTime: Infinity,
   });
@@ -28,7 +28,10 @@ export default function useCheckLink() {
   };
 
   const setAllLinks = (isAllChecked: boolean) => {
-    const allLinks = queryClient.getQueryData<Link[]>(["linkList", linkBookId]);
+    const allLinks = queryClient.getQueryData<Link[]>([
+      "linkList",
+      linkBook?.linkBookId,
+    ]);
     queryClient.setQueryData(
       queryKey,
       isAllChecked ? null : allLinks?.map((link) => link.linkId),

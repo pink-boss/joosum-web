@@ -2,9 +2,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@/types/link.types";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
 
-export default function useDeleteLink(
+export default function useDeleteDrawerLink(
   onSuccessCallback: () => void,
-  linkIds: string[],
+  linkId: string,
 ) {
   const linkBook = useLinkBookFromTitle();
 
@@ -12,16 +12,15 @@ export default function useDeleteLink(
   return useMutation<unknown, Error>({
     mutationFn: async () =>
       (
-        await fetch(`/api/links`, {
+        await fetch(`/api/links/${linkId}`, {
           method: "DELETE",
-          body: JSON.stringify({ linkIds }),
         })
       ).json(),
     onSuccess: () => {
       queryClient.setQueriesData<Link[]>(
         { queryKey: ["linkList", linkBook?.linkBookId] },
         (prevLinks) =>
-          prevLinks?.filter((link) => ![...linkIds].includes(link.linkId)),
+          prevLinks?.filter((link) => ![linkId].includes(link.linkId)),
       );
       onSuccessCallback();
     },

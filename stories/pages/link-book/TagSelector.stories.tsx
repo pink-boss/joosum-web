@@ -1,8 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import TagSelector from "@/app/link-book/[title]/tag-selector";
-import { totalTags } from "../mocks/tag.mocks";
-import { expect, userEvent, within } from "@storybook/test";
-import { useLinkFilterStore } from "@/store/useLinkFilterStore";
+import { mockTags } from "../mocks/tag.mocks";
+import { expect, userEvent, waitFor, within } from "@storybook/test";
+import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
+import { http, HttpResponse } from "msw";
+import { jest } from "@storybook/jest";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const meta = {
   title: "Page/FolderList/Filter/Tag",
@@ -12,9 +17,21 @@ const meta = {
     backgrounds: {
       default: "light",
     },
+    msw: {
+      handlers: [http.get("/api/tags", () => HttpResponse.json(mockTags))],
+    },
   },
-  args: {
-    totalTags,
+  args: { tags: defaultValues.tags, setTags: jest.fn() },
+  decorators: (Story) => {
+    const { tags, setTags } = useLinkFilterStore();
+    return (
+      <QueryClientProvider client={queryClient}>
+        <Story args={{ tags, setTags }} />
+      </QueryClientProvider>
+    );
+  },
+  beforeEach: () => {
+    useLinkFilterStore.setState({ tags: defaultValues.tags });
   },
 } satisfies Meta<typeof TagSelector>;
 
@@ -41,7 +58,7 @@ export const TestCheckTags: Story = {
     for (const [index, num] of [0, 2, 4].entries()) {
       await userEvent.click(checkboxes[num]);
       const selectedTags = within(canvas.getByTestId("selected-tags"));
-      expect(selectedTags.getByText(totalTags[num])).toBeInTheDocument();
+      expect(selectedTags.getByText(mockTags[num])).toBeInTheDocument();
       expect(canvas.getByText(`${index + 1}/10`));
     }
 
@@ -56,7 +73,7 @@ export const TestCheckTags: Story = {
 export const TestUncheckTags: Story = {
   play: async ({ canvasElement }) => {
     useLinkFilterStore.setState({
-      tags: [totalTags[0], totalTags[2], totalTags[4]],
+      tags: [mockTags[0], mockTags[2], mockTags[4]],
     });
 
     const canvas = within(canvasElement);
@@ -66,13 +83,13 @@ export const TestUncheckTags: Story = {
     // 체크박스 1개 해제
     await userEvent.click(checkboxes[2]);
     const selectedTags = within(canvas.getByTestId("selected-tags"));
-    expect(selectedTags.queryByText(totalTags[2])).toBeNull();
+    expect(selectedTags.queryByText(mockTags[2])).toBeNull();
     expect(canvas.getByText("2/10"));
 
     // 선택된 태그 1개 제거
-    const tag_5 = selectedTags.getByText(totalTags[4]);
-    await userEvent.click(within(tag_5).getByRole("button"));
-    expect(tag_5).not.toBeInTheDocument();
+    const tag_5 = selectedTags.getByText(mockTags[4]);
+    await userEvent.click(checkboxes[4]);
+    expect(selectedTags.queryByText(mockTags[4])).toBeNull();
     expect(canvas.getByText("1/10"));
   },
 };
@@ -89,25 +106,27 @@ export const TestVisibleTags: Story = {
     const checkboxes = canvas.getAllByRole("checkbox");
     await userEvent.click(checkboxes[0]);
     await userEvent.click(checkboxes[3]);
-    expect(
-      within(selectbox).queryByText(`#${totalTags[0]}`),
-    ).toBeInTheDocument();
-    expect(
-      within(selectbox).queryByText(`#${totalTags[3]}`),
-    ).toBeInTheDocument();
-    expect(
-      within(selectbox).queryByTestId("hidden-count"),
-    ).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        within(selectbox).queryByText(`#${mockTags[0]}`),
+      ).toBeInTheDocument();
+      expect(
+        within(selectbox).queryByText(`#${mockTags[3]}`),
+      ).toBeInTheDocument();
+      expect(
+        within(selectbox).queryByTestId("hidden-count"),
+      ).not.toBeInTheDocument();
+    });
 
     // 체크박스 3개 더 체크
     await userEvent.click(checkboxes[5]);
     await userEvent.click(checkboxes[6]);
     await userEvent.click(checkboxes[4]);
     expect(
-      within(selectbox).queryByText(`#${totalTags[5]}`),
+      within(selectbox).queryByText(`#${mockTags[5]}`),
     ).toBeInTheDocument();
     expect(
-      within(selectbox).queryByText(`#${totalTags[6]}`),
+      within(selectbox).queryByText(`#${mockTags[6]}`),
     ).toBeInTheDocument();
 
     // TODO: 전체 스토리북 테스트시 hidden-count를 못 찾는 에러

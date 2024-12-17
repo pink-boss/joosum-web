@@ -2,7 +2,7 @@ import type { Preview } from "@storybook/react";
 import "../app/globals.css";
 
 import { initialize, mswLoader } from "msw-storybook-addon";
-import { http, HttpResponse } from "msw";
+import { http, passthrough } from "msw";
 
 initialize({
   serviceWorker: {
@@ -24,7 +24,7 @@ const preview: Preview = {
     msw: {
       handlers: [
         http.get("/icons/:imageName", () => {
-          return new HttpResponse(null, { status: 200 });
+          return passthrough();
         }),
       ],
     },

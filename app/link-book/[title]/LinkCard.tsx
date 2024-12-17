@@ -1,8 +1,10 @@
+import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { Link } from "@/types/link.types";
 import { dateFormatter } from "@/utils/date";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import NextLink from "next/link";
+import DrawerButton from "./DrawerButton";
 
 type InputProps = { link: Link };
 
@@ -86,6 +88,7 @@ export default function LinkCard({ link }: InputProps) {
           e.preventDefault();
         }}
       >
+        {/* TODO: 공유하기 */}
         <Image
           src="/icons/icon-download.png"
           alt="download"
@@ -93,14 +96,7 @@ export default function LinkCard({ link }: InputProps) {
           height={24}
           className="cursor-pointer"
         />
-        <button>
-          <Image
-            src="/icons/icon-more-vertical-gray.png"
-            alt="more-vertical"
-            width={24}
-            height={24}
-          />
-        </button>
+        <DrawerButton link={link} />
       </div>
     </div>
   );

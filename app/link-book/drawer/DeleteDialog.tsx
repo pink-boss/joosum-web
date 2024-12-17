@@ -3,31 +3,37 @@
 import clsx from "clsx";
 import Dialog from "@/components/dialog/Dialog";
 import { useOpenDialogStore } from "@/store/useDialogStore";
-import useDeleteLink from "@/hooks/link/useDeleteLink";
-import useCheckLink from "@/hooks/link/useCheckLink";
+import { useOpenDrawerStore } from "@/store/useDrawerStore";
+import useDeleteDrawerLink from "@/hooks/link/useDeleteDrawerLink";
 
 export default function DeleteDialog() {
-  const { isDeleteLinkOpen: isOpen, openDeleteLink: open } =
+  const { isDeleteDrawerLinkOpen: isOpen, openDeleteDrawerLink: open } =
     useOpenDialogStore();
-  const { cachedLinks, clearLinks } = useCheckLink();
+  const { link, openLinkDrawer } = useOpenDrawerStore();
 
   const onClose = () => {
-    clearLinks();
     open(false);
+    openLinkDrawer(false);
   };
 
-  const mutation = useDeleteLink(onClose, [...cachedLinks]);
+  const mutation = useDeleteDrawerLink(onClose, link?.linkId!);
 
   async function handleSubmit() {
     mutation.mutate();
   }
 
+  if (!link) return null;
+
   return (
-    <Dialog open={isOpen} onCloseCallback={onClose} className="w-[421.78px]">
+    <Dialog
+      open={isOpen}
+      onCloseCallback={onClose}
+      className="w-[421.78px]"
+      testId="delete-dialog"
+    >
       <div className="flex flex-col items-center gap-5">
         <div className="flex flex-col gap-4 text-center">
           <div className="text-center text-[#2F2F2F]">
-            <p>{cachedLinks.size} 개의 링크를</p>
             <p>삭제하겠습니까?</p>
           </div>
           <div>삭제된 링크는 복구되지 않습니다.</div>

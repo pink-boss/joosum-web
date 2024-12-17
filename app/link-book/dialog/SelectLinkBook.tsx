@@ -2,34 +2,53 @@
 
 import { useClearDropdown } from "@/hooks/useClearDropdown";
 import clsx from "clsx";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import Image from "next/image";
-import { LinkBook, LinkBookIdParam } from "@/types/linkBook.types";
-import { useParams } from "next/navigation";
+import { LinkBook } from "@/types/linkBook.types";
 
 export type InputProps = {
   open?: boolean;
-  selected: LinkBook | null;
-  setSelected: (linkBook: LinkBook) => void;
+  linkBookId?: LinkBook["linkBookId"];
+  setLinkBookId: (
+    linkBookName: LinkBook["title"],
+    linkBookId: LinkBook["linkBookId"],
+  ) => void;
+  fromLinkBookId?: string;
+  className?: string;
 };
 
 export default function SelectLinkBook({
   open,
-  selected,
-  setSelected,
+  linkBookId,
+  setLinkBookId,
+  fromLinkBookId,
+  className,
 }: InputProps) {
   const ref = useClearDropdown(() => setIsOpen(false));
   const [isOpen, setIsOpen] = useState(open);
-  const { linkBookId: fromLinkBookId } = useParams<LinkBookIdParam>();
   const { data } = useQueryLinkBooks("created_at");
 
-  const linkBooks = data?.linkBooks.filter(
-    (linkBook) => linkBook.linkBookId !== fromLinkBookId,
-  );
+  const linkBookOptions: OptionItem<string>[] = useMemo(() => {
+    const linkBooks = fromLinkBookId
+      ? data?.linkBooks.filter(
+          (linkBook) => linkBook.linkBookId !== fromLinkBookId,
+        )
+      : data?.linkBooks;
 
-  const handleClick = (newLinkBook: LinkBook) => {
-    setSelected(newLinkBook);
+    return linkBooks
+      ? linkBooks.map((linkBook) => ({
+          label: linkBook.title,
+          value: linkBook.linkBookId,
+        }))
+      : [];
+  }, [data?.linkBooks, fromLinkBookId]);
+
+  const handleClick = (
+    newLinkBookName: LinkBook["title"],
+    newLinkBookId: LinkBook["linkBookId"],
+  ) => {
+    setLinkBookId(newLinkBookName, newLinkBookId);
     setIsOpen(false);
   };
 
@@ -39,11 +58,14 @@ export default function SelectLinkBook({
         data-testid="open-button"
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
-          "flex items-center justify-between gap-0.5 px-3 text-sm text-text-secondary",
-          "h-[46px] w-[305px] rounded-lg border border-[#BBBBBB]",
+          "flex items-center justify-between gap-0.5 px-3 text-start text-sm text-text-secondary",
+          "h-[46px] w-full rounded-lg border border-[#BBBBBB]",
+          className && className,
         )}
       >
-        <span className="text-single-line w-64">{selected?.title}</span>
+        <span className="text-single-line w-64">
+          {linkBookOptions?.find(({ value }) => value === linkBookId)?.label}
+        </span>
         <Image src="/icons/icon-down3.png" alt="down" width={20} height={20} />
       </button>
 
@@ -55,13 +77,13 @@ export default function SelectLinkBook({
           )}
         >
           <div className="mini-scroll flex h-[222px] w-[258px] flex-col gap-1 overflow-auto border border-background-secondary p-3">
-            {linkBooks?.map((linkBook) => (
+            {linkBookOptions?.map(({ label, value }) => (
               <button
-                key={`reassign-to-${linkBook.title}`}
+                key={`reassign-to-${label}`}
                 className="text-single-line py-2 text-start text-sm"
-                onClick={() => handleClick(linkBook)}
+                onClick={() => handleClick(label, value)}
               >
-                {linkBook.title}
+                {label}
               </button>
             ))}
           </div>

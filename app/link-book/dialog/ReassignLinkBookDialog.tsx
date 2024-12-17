@@ -7,14 +7,19 @@ import useCheckLink from "@/hooks/link/useCheckLink";
 import useReassignLinkBook from "@/hooks/link/useReassignLinkBook";
 import SelectLinkBook from "./SelectLinkBook";
 import { useState } from "react";
-import { LinkBook } from "@/types/linkBook.types";
+import { LinkBook, LinkBookIdParam } from "@/types/linkBook.types";
+import { useParams } from "next/navigation";
+import useLinkBookFromTitle from "@/hooks/link/useLinkBookFromTitle";
 
 // TODO: confirm dialog
 export default function ReassignLinkBookDialog() {
   const { isReassignLinkBookOpen: isOpen, openReassignLinkBook: open } =
     useOpenDialogStore();
-  const [linkBook, setLinkBook] = useState<LinkBook | null>(null);
+  const [toLinkBookId, setToLinkBookId] = useState<
+    LinkBook["linkBookId"] | undefined
+  >(undefined);
   const { cachedLinks, clearLinks } = useCheckLink();
+  const fromLinkBook = useLinkBookFromTitle();
 
   const onClose = () => {
     clearLinks();
@@ -24,9 +29,9 @@ export default function ReassignLinkBookDialog() {
   const mutation = useReassignLinkBook(onClose);
 
   async function handleSubmit() {
-    if (linkBook && cachedLinks.size) {
+    if (toLinkBookId && cachedLinks.size) {
       mutation.mutate({
-        toLinkBook: linkBook,
+        toLinkBookId,
         linkIds: [...cachedLinks],
       });
     }
@@ -40,7 +45,12 @@ export default function ReassignLinkBookDialog() {
             <p>{cachedLinks.size} 개의 링크가</p>
             <p>이동할 폴더를 선택해주세요.</p>
           </div>
-          <SelectLinkBook selected={linkBook} setSelected={setLinkBook} />
+          <SelectLinkBook
+            linkBookId={toLinkBookId}
+            setLinkBookId={setToLinkBookId}
+            fromLinkBookId={fromLinkBook?.linkBookId}
+            className="w-[305px]"
+          />
         </div>
         <div className="mt-3 flex justify-center gap-1">
           <button
@@ -55,7 +65,7 @@ export default function ReassignLinkBookDialog() {
               "bg-primary",
             )}
             onClick={handleSubmit}
-            disabled={!linkBook}
+            disabled={!toLinkBookId}
           >
             이동
           </button>

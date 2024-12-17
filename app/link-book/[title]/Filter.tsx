@@ -3,23 +3,10 @@ import DatePicker from "./date-picker";
 import TagSelector from "./tag-selector";
 import { useMemo } from "react";
 import ResetButton from "./ResetButton";
-import { useQuery } from "@tanstack/react-query";
 
 export default function Filter() {
   const { unread, dateRange, tags, setUnread, setDateRange, setTags } =
     useLinkFilterStore();
-
-  const {
-    isPending,
-    error,
-    data = [],
-  } = useQuery<string[]>({
-    queryKey: ["tags"],
-    queryFn: () =>
-      fetch(`/api/tags`, {
-        method: "GET",
-      }).then((res) => res.json()),
-  });
 
   const visibleReset = useMemo(() => {
     return unread || dateRange.length || tags.length;
@@ -53,7 +40,7 @@ export default function Filter() {
         </label>
       </div>
       <DatePicker />
-      <TagSelector totalTags={data} />
+      <TagSelector className="w-[305px]" tags={tags} setTags={setTags} />
       {visibleReset ? (
         <ResetButton handleClick={handleResetParams} />
       ) : undefined}

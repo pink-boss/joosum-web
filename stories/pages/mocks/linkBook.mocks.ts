@@ -1,4 +1,4 @@
-import { LinkBook } from "@/types/linkBook.types";
+import { LinkBook, TQueryLinkBooks } from "@/types/linkBook.types";
 
 export const defaultLinkBook: LinkBook = {
   backgroundColor: "#8A8A9A",
@@ -80,3 +80,8 @@ export const mockLinkBooks: LinkBook[] = [
     userId: "user_123",
   },
 ];
+
+export const mockRespone: TQueryLinkBooks = {
+  linkBooks: mockLinkBooks,
+  totalLinkCount: mockLinkBooks.length,
+};
