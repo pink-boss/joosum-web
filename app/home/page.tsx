@@ -1,10 +1,11 @@
 "use client";
 
-import LinkCardList from "./link-card-list";
+import LinkCardList from "./LinkCardList";
 import { useQuery } from "@tanstack/react-query";
-import { Banner, Link } from "./type";
-import BannerCard from "./banner";
+import { Banner } from "../../types/banner.types";
+import BannerCard from "./Banner";
 import { useSearchLinkStore } from "@/store/useSearchLinkStore";
+import { Link } from "@/types/link.types";
 
 type TQueryLinks = Link[];
 type TQueryBanners = Banner[];
@@ -26,16 +27,16 @@ export default function Home() {
       ).then((res) => res.json()),
   });
 
-  const bannerData = useQuery<TQueryBanners>({
-    queryKey: ["banners"],
-    queryFn: () =>
-      fetch(`/api/banners`, {
-        method: "GET",
-      }).then((res) => res.json()),
-  });
+  // const bannerData = useQuery<TQueryBanners>({
+  //   queryKey: ["banners"],
+  //   queryFn: () =>
+  //     fetch(`/api/banners`, {
+  //       method: "GET",
+  //     }).then((res) => res.json()),
+  // });
   return (
     <div className="flex w-full flex-1 flex-col gap-12 px-10">
-      <BannerCard data={bannerData.data ?? []} />
+      <BannerCard data={[]} />
       <LinkCardList links={data} />
     </div>
   );

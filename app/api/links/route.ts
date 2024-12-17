@@ -10,3 +10,9 @@ export async function GET(request: NextRequest) {
     queryString,
   });
 }
+
+export async function DELETE(request: NextRequest) {
+  const body = await request.json();
+
+  return serverApi({ path: "api/links", method: "DELETE", body });
+}

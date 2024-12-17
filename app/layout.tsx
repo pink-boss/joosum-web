@@ -2,13 +2,18 @@
 import "./globals.css";
 import localFont from "next/font/local";
 import clsx from "clsx";
-import Sidebar from "@/components/layout/sidebar";
+import Sidebar from "@/components/layout/Sidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { publicOnlyPaths } from "@/utils/path";
-import Topbar from "@/components/layout/topbar";
-import MutateFolderDialog from "./my-folder/mutate/dialog";
-import DeleteFolderDialog from "./my-folder/delete-dialog";
+import Topbar from "@/components/layout/Topbar";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { useOpenDialogStore } from "@/store/useDialogStore";
+import {
+  DeleteLinkBookDialog,
+  DeleteLinkDialog,
+  MutateLinkBookDialog,
+} from "@/components/dialog/dynamic";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +31,8 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const isPublicOnlyPath = publicOnlyPaths.includes(pathname);
+  const { isMutateLinkBookOpen, isDeleteLinkBookOpen, isDeleteLinkOpen } =
+    useOpenDialogStore();
 
   return (
     <html lang="ko">
@@ -39,18 +46,21 @@ export default function RootLayout({
       </head>
       <body className={clsx(pretendard.variable, "bg-white font-pretendard")}>
         {isPublicOnlyPath ? (
-          <Component>{children}</Component>
+          <Component className="justify-center">{children}</Component>
         ) : (
           <QueryClientProvider client={queryClient}>
             <Sidebar>
               <Component>
                 <Topbar />
                 {children}
+                <div id="drawer-root" />
                 <div id="modal-root" />
-                <MutateFolderDialog />
-                <DeleteFolderDialog />
+                {isMutateLinkBookOpen && <MutateLinkBookDialog />}
+                {isDeleteLinkBookOpen && <DeleteLinkBookDialog />}
+                {isDeleteLinkOpen && <DeleteLinkDialog />}
               </Component>
             </Sidebar>
+            <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         )}
       </body>
@@ -60,11 +70,18 @@ export default function RootLayout({
 
 function Component({
   children,
+  className,
 }: Readonly<{
   children: React.ReactNode;
+  className?: string;
 }>) {
   return (
-    <main className="relative flex h-screen w-full flex-col items-center">
+    <main
+      className={clsx(
+        "relative flex h-screen w-full flex-col items-center",
+        className && className,
+      )}
+    >
       {children}
     </main>
   );

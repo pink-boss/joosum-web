@@ -1,35 +1,47 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import DropdownMore from "@/app/my-folder/dropdown/more";
+import DropdownMore from "@/app/my-folder/DropdownMore";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { expect, userEvent, within } from "@storybook/test";
-import MutateDialog from "@/app/my-folder/mutate/dialog";
-import { mockLinkBooks } from "./mock-up";
-import DeleteDialog from "@/app/my-folder/delete-dialog";
+import { expect, userEvent, waitFor, within } from "@storybook/test";
+import MutateDialog from "@/app/my-folder/mutate/MutateDialog";
+import { mockLinkBooks, mockRespone } from "../mocks/linkBook.mocks";
+import DeleteDialog from "@/app/my-folder/DeleteDialog";
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import { http, HttpResponse } from "msw";
+import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 
 const queryClient = new QueryClient();
 
-function ComposeComponent() {
-  return (
+const CallLinkBookList = () => {
+  useQueryLinkBooks("created_at");
+  return <DropdownMore linkBook={mockLinkBooks[1]} />;
+};
+
+const meta = {
+  title: "Page/MyFolder/Dropdown/More",
+  component: CallLinkBookList,
+  tags: ["autodocs"],
+  beforeEach: () => {
+    useOpenDialogStore.getState().openMutateLinkBook(false);
+    useOpenDialogStore.getState().openDeleteLinkBook(false);
+  },
+  parameters: {
+    msw: {
+      handlers: [
+        http.get("/api/my-folder?sort=created_at", () => {
+          return HttpResponse.json(mockRespone);
+        }),
+      ],
+    },
+  },
+  decorators: (Story) => (
     <QueryClientProvider client={queryClient}>
-      <DropdownMore linkBook={mockLinkBooks[0]} />
+      <Story />
       <div id="modal-root" />
       <MutateDialog />
       <DeleteDialog />
     </QueryClientProvider>
-  );
-}
-
-const meta = {
-  title: "Page/My-Folder/Dropdown/More",
-  component: ComposeComponent,
-  tags: ["autodocs"],
-  beforeEach: () => {
-    // zustand 상태 초기화
-    useOpenDialogStore.getState().openMutateFolder(false);
-    useOpenDialogStore.getState().openDeleteFolder(false);
-  },
-} satisfies Meta<typeof ComposeComponent>;
+  ),
+} satisfies Meta<typeof CallLinkBookList>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -53,12 +65,16 @@ export const OpenEditDialog: Story = {
 
     const linkBookMore = within(canvas.getByTestId("link-book-more"));
 
-    await userEvent.click(linkBookMore.getByAltText("more"));
-    await userEvent.click(linkBookMore.getByText("폴더 수정"));
+    await waitFor(async () => {
+      await userEvent.click(linkBookMore.getByAltText("more"));
+      await userEvent.click(linkBookMore.getByText("폴더 수정"));
+    });
 
-    const dialog = canvas.getByRole("dialog");
-    await expect(dialog).toBeInTheDocument();
-    await expect(within(dialog).getByText("폴더 수정")).toBeInTheDocument();
+    await waitFor(async () => {
+      const dialog = canvas.getByRole("dialog");
+      await expect(dialog).toBeInTheDocument();
+      await expect(within(dialog).getByText("폴더 수정")).toBeInTheDocument();
+    });
   },
 };
 
@@ -71,10 +87,12 @@ export const OpenDeleteDialog: Story = {
     await userEvent.click(linkBookMore.getByAltText("more"));
     await userEvent.click(linkBookMore.getByText("폴더 삭제"));
 
-    const dialog = canvas.getByRole("dialog");
-    await expect(dialog).toBeInTheDocument();
-    await expect(
-      within(dialog).getByRole("button", { name: "삭제" }),
-    ).toBeInTheDocument();
+    waitFor(async () => {
+      const dialog = canvas.getByRole("dialog");
+      await expect(dialog).toBeInTheDocument();
+      await expect(
+        within(dialog).getByRole("button", { name: "삭제" }),
+      ).toBeInTheDocument();
+    });
   },
 };

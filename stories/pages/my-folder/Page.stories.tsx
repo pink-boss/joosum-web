@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import Page from "@/app/my-folder/page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import MutateDialog from "@/app/my-folder/mutate/dialog";
-import DeleteFolderDialog from "@/app/my-folder/delete-dialog";
+import MutateDialog from "@/app/my-folder/mutate/MutateDialog";
+import DeleteFolderDialog from "@/app/my-folder/DeleteDialog";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +19,7 @@ function ComposeComponent() {
 }
 
 const meta = {
-  title: "Page/My-Folder",
+  title: "Page/MyFolder",
   component: ComposeComponent,
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout

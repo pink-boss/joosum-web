@@ -31,8 +31,13 @@ body {
     text-wrap: balance;
   }
 }
+
 @layer components {
-  .sidebar-menu-scroll {
-    @apply scrollbar-thin scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-400 overflow-auto [&::-webkit-scrollbar-thumb]:rounded-full;
+  .mini-scroll {
+    @apply overflow-auto scrollbar-thin scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full;
+  }
+
+  .text-single-line {
+    @apply overflow-hidden text-ellipsis whitespace-nowrap;
   }
 }

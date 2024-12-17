@@ -1,15 +1,11 @@
 import clsx from "clsx";
-import {
-  CreateLinkBook,
-  DefaultFolderProps,
-  EntireFolderProps,
-  OptionalFolderProps,
-} from "./type";
+import { CreateLinkBook, EntireFolderProps } from "@/types/linkBook.types";
 import Image from "next/image";
-import DropdownMore from "./dropdown/more";
+import DropdownMore from "./DropdownMore";
 import { ReactNode } from "react";
-import { useSelectLinkBookStore } from "@/store/useLinkBookStore";
-import { useRouter } from "next/navigation";
+import LinkToPage, {
+  isNormalLinkBook,
+} from "@/components/link-book/LinkToPage";
 
 type FolderBookInputProps = Partial<CreateLinkBook> & {
   children?: ReactNode;
@@ -44,7 +40,7 @@ export function FolderBook({
       <div
         data-testid="folder-book-title"
         className={clsx(
-          "line-clamp-2 break-words font-bold",
+          "truncate font-bold",
           isPreview
             ? "ml-[22px] mt-4 w-[94px] text-base"
             : "ml-[33px] mt-[19.8px] w-[121px] text-lg",
@@ -75,45 +71,25 @@ export function FolderBook({
 type InputProps = { linkBook: EntireFolderProps };
 
 export default function Folder({ linkBook }: InputProps) {
-  const { selectLinkBook } = useSelectLinkBookStore();
-  const router = useRouter();
-
-  const handleClick = () => {
-    let path = "/my-folder";
-    if (isNormalLinkBook(linkBook)) {
-      selectLinkBook(linkBook);
-      path += `/${linkBook.linkBookId}`;
-    }
-    router.push(path);
-  };
   return (
-    <div
-      className={clsx(
-        "flex h-[275.9px] w-[174.9px] cursor-pointer flex-col items-center gap-[17.6px]",
-      )}
-      onClick={handleClick}
-    >
-      <FolderBook {...linkBook}>
-        {isNormalLinkBook(linkBook) && linkBook.isDefault !== "y" && (
-          <div
-            className="absolute bottom-[13.3px] right-[13.53px] p-px"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <DropdownMore linkBook={linkBook} />
-          </div>
+    <LinkToPage linkBook={linkBook}>
+      <div
+        className={clsx(
+          "flex h-[275.9px] w-[174.9px] cursor-pointer flex-col items-center gap-[17.6px]",
         )}
-      </FolderBook>
-      <div className="text-text-secondary">{linkBook.linkCount}개</div>
-    </div>
+      >
+        <FolderBook {...linkBook}>
+          {isNormalLinkBook(linkBook) && linkBook.isDefault !== "y" && (
+            <div
+              className="absolute bottom-[13.3px] right-[13.53px] p-px"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <DropdownMore linkBook={linkBook} />
+            </div>
+          )}
+        </FolderBook>
+        <div className="text-text-secondary">{linkBook.linkCount}개</div>
+      </div>
+    </LinkToPage>
   );
-}
-
-function isNormalLinkBook(
-  linkBook: EntireFolderProps,
-): linkBook is DefaultFolderProps {
-  const requiredFields = [] as Array<
-    keyof Omit<OptionalFolderProps, "illustration">
-  >;
-
-  return requiredFields.every((field) => linkBook[field] !== undefined);
 }

@@ -22,7 +22,7 @@ const AppleOAuthHandler = () => {
   return (
     <button
       onClick={loginWithApple}
-      className="items-zcenter flex h-[56px] items-center justify-center gap-2 rounded-lg bg-black px-4 py-3 text-white hover:bg-gray-800 active:bg-black"
+      className="flex h-[56px] items-center justify-center gap-2 rounded-lg bg-black px-4 py-3 text-white hover:bg-gray-800 active:bg-black"
     >
       <svg
         width="24"
