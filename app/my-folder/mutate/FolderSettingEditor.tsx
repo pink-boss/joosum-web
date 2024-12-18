@@ -41,7 +41,7 @@ export default function FolderSettingEditor({
   const tabs = useEditorTabs(formState, setFormState);
   const [selectedTab, setSelectedTab] = useState(tabs[0].title);
   return (
-    <>
+    <div className="mb-5 flex w-full flex-col items-center">
       <div
         className={clsx(
           "min-h-[256px] w-full flex-1 bg-background-menu",
@@ -63,6 +63,6 @@ export default function FolderSettingEditor({
         </div>
         {tabs.find(({ title }) => selectedTab === title)?.component}
       </div>
-    </>
+    </div>
   );
 }

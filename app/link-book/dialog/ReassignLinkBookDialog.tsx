@@ -38,8 +38,8 @@ export default function ReassignLinkBookDialog() {
     <ConfirmDialog
       open={isOpen}
       onCloseCallback={onClose}
-      close={{ children: "취소", onClick: onClose }}
-      submit={{
+      closeProps={{ children: "취소", onClick: onClose }}
+      submitProps={{
         children: "이동",
         onClick: handleSubmit,
         disabled: !toLinkBookId,
@@ -52,7 +52,7 @@ export default function ReassignLinkBookDialog() {
         </div>
         <SelectLinkBook
           linkBookId={toLinkBookId}
-          setLinkBookId={setToLinkBookId}
+          setLinkBookId={(name, id) => setToLinkBookId(id)}
           fromLinkBookId={fromLinkBook?.linkBookId}
           className="w-[305px]"
         />

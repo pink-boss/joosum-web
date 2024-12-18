@@ -8,6 +8,7 @@ import useMutateLinkBook from "@/hooks/my-folder/useMutateLinkBook";
 import { CreateFormState } from "@/types/linkBook.types";
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
+import clsx from "clsx";
 
 const defaultValues: CreateFormState = {
   title: "",
@@ -46,8 +47,21 @@ export default function MutateDialog() {
       open={isOpen}
       onCloseCallback={onClose}
       className="w-[792px]"
-      close={{ children: "닫기", onClick: onClose }}
-      submit={{
+      closeProps={{
+        className:
+          "w-[220.5px] h-[56px] rounded-lg bg-[#BBBBBB] font-bold text-white",
+        children: "닫기",
+        onClick: onClose,
+      }}
+      submitProps={{
+        className: clsx([
+          [
+            "w-[220.5px] h-[56px] rounded-lg font-bold text-white",
+            !formState.title
+              ? "cursor-not-allowed bg-background-menu"
+              : "bg-primary",
+          ],
+        ]),
         children: linkBook ? "완료" : "생성",
         onClick: handleSubmit,
         disabled: !formState.title,
@@ -56,9 +70,7 @@ export default function MutateDialog() {
       <div className="my-5 text-center text-2xl font-bold">
         폴더 {linkBook ? "수정" : "생성"}
       </div>
-      <div className="mb-5">
-        <FolderSettingEditor {...formState} setFormState={setFormState} />
-      </div>
+      <FolderSettingEditor {...formState} setFormState={setFormState} />
     </ConfirmDialog>
   );
 }

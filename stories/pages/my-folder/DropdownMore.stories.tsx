@@ -27,7 +27,7 @@ const meta = {
   parameters: {
     msw: {
       handlers: [
-        http.get("/api/my-folder?sort=created_at", () => {
+        http.get("/api/link-books?sort=created_at", () => {
           return HttpResponse.json(mockRespone);
         }),
       ],

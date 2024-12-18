@@ -25,8 +25,8 @@ export default function DeleteDialog() {
     <ConfirmDialog
       open={isOpen}
       onCloseCallback={onClose}
-      close={{ children: "취소", onClick: onClose }}
-      submit={{
+      closeProps={{ children: "취소", onClick: onClose }}
+      submitProps={{
         children: "삭제",
         onClick: handleSubmit,
       }}

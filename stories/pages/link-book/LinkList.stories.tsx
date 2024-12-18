@@ -43,7 +43,7 @@ const meta = {
           capturedRequest = request;
           return HttpResponse.json({ status: 200 });
         }),
-        http.get("/api/my-folder?sort=created_at", ({ request }) => {
+        http.get("/api/link-books?sort=created_at", ({ request }) => {
           capturedRequest = request;
           return HttpResponse.json({
             linkBooks: mockLinkBooks,

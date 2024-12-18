@@ -61,16 +61,17 @@ export default function useMutateLinkBook(onSuccessCallback: () => void) {
     }
   };
 
+  const pathname = linkBook
+    ? `/api/link-books/${linkBook.linkBookId}`
+    : "/api/link-books";
+
   return useMutation<LinkBook | ApiError, Error, CreateFormState>({
     mutationFn: async (state) =>
       (
-        await fetch(
-          `my-folder/api${linkBook ? `/${linkBook.linkBookId}` : ""}`,
-          {
-            method: linkBook ? "PUT" : "POST",
-            body: JSON.stringify(state),
-          },
-        )
+        await fetch(pathname, {
+          method: linkBook ? "PUT" : "POST",
+          body: JSON.stringify(state),
+        })
       ).json(),
     onSuccess: (result) => {
       if ("error" in result) {
