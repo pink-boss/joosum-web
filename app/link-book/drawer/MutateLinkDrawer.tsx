@@ -36,7 +36,6 @@ const defaultValues: CreateFormState = {
   url: undefined,
 };
 
-// TODO: 링크 수정시 Unexpected end of JSON input 에러
 export default function MutateLinkDrawer() {
   const {
     link,

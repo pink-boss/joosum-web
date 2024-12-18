@@ -13,7 +13,7 @@ export default function useCheckLink() {
     enabled:
       queryClient.getQueryState(["linkList", linkBook?.linkBookId])?.status ===
       "success",
-    queryFn: () => queryClient.getQueryData<string[]>(queryKey),
+    queryFn: () => queryClient.getQueryData<string[]>(queryKey) ?? [],
     staleTime: Infinity,
   });
 

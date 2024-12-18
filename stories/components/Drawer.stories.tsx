@@ -19,7 +19,11 @@ import { jest } from "@storybook/jest";
 import { Link } from "@/types/link.types";
 
 const queryClient = new QueryClient();
-let capturedRequest: Request | null = null;
+let capturedRequest: {
+  updateLink?: Request;
+  updateLinkBook?: Request;
+  deleteLink?: Request;
+} = {};
 let invalidateQuerySpy: any;
 
 const meta = {
@@ -53,23 +57,26 @@ const meta = {
           return HttpResponse.json(mockTags);
         }),
         http.put("/api/links/:linkId", async ({ request }) => {
-          capturedRequest = request.clone();
+          capturedRequest.updateLink = request.clone();
           const data = (await request.json()) as CreateFormState;
           return HttpResponse.json({ ...mockLink, ...data });
         }),
         http.put(
           "/api/links/:linkId/link-book-id/:linkBookId",
           ({ request }) => {
-            capturedRequest = request.clone();
+            capturedRequest.updateLinkBook = request.clone();
             return HttpResponse.json({ status: 204 });
           },
         ),
         http.delete("/api/links/:linkId", async ({ request }) => {
-          capturedRequest = request.clone();
+          capturedRequest.deleteLink = request.clone();
           return HttpResponse.json({ status: 204 });
         }),
       ],
     },
+  },
+  beforeEach: () => {
+    capturedRequest = {};
   },
 } satisfies Meta<typeof MutateLinkDrawer>;
 
@@ -247,16 +254,25 @@ export const UpdateLink: Story = {
 
       await userEvent.click(canvas.getByText("수정"));
 
-      // 확인
-      if (capturedRequest) {
-        const url = new URL(capturedRequest.url);
-        const body = await capturedRequest.json();
+      // request 확인
+      if (capturedRequest.updateLink) {
+        const url = new URL(capturedRequest.updateLink.url);
         expect(url.pathname).toBe(`/api/links/${mockLink.linkId}`);
-        expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
-        expect(body.title).toBe(NEW_TITLE);
-        expect(body.linkBookId).toBe(NEW_FOLDER_ID);
-        expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
-      }
+        if (!capturedRequest.updateLink.bodyUsed) {
+          const body = await capturedRequest.updateLink.json();
+          expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
+          expect(body.title).toBe(NEW_TITLE);
+          expect(body.linkBookId).toBe(NEW_FOLDER_ID);
+          expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
+        } else expect(null).toBe("이미 사용된 bodyUsed");
+      } else expect(null).toBe("updateLink request X");
+
+      if (capturedRequest.updateLinkBook) {
+        const url = new URL(capturedRequest.updateLinkBook.url);
+        expect(url.pathname).toBe(
+          `/api/links/${mockLink.linkId}/link-book-id/${NEW_FOLDER_ID}`,
+        );
+      } else expect(null).toBe("updateLinkBook request X");
 
       // toast
       await waitFor(async () => {
@@ -299,10 +315,10 @@ export const DeleteLink: Story = {
     });
 
     // request
-    if (capturedRequest) {
-      const url = new URL(capturedRequest.url);
+    if (capturedRequest.deleteLink) {
+      const url = new URL(capturedRequest.deleteLink.url);
       expect(url.pathname).toBe(`/api/links/${mockLink.linkId}`);
-      expect(capturedRequest.method).toBe("DELETE");
+      expect(capturedRequest.deleteLink.method).toBe("DELETE");
     }
 
     // update cache

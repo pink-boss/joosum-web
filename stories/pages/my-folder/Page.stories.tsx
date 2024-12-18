@@ -4,28 +4,30 @@ import Page from "@/app/my-folder/page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MutateDialog from "@/app/my-folder/mutate/MutateDialog";
 import DeleteFolderDialog from "@/app/my-folder/DeleteDialog";
+import { http, HttpResponse } from "msw";
+import { mockRespone } from "../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();
 
-function ComposeComponent() {
-  return (
+const meta = {
+  title: "Page/MyFolder/Page",
+  component: Page,
+  parameters: {
+    msw: {
+      handlers: [
+        http.get("/api/link-books", () => HttpResponse.json(mockRespone)),
+      ],
+    },
+  },
+  decorators: (Story) => (
     <QueryClientProvider client={queryClient}>
-      <Page />
+      <Story />
       <div id="modal-root" />
       <MutateDialog />
       <DeleteFolderDialog />
     </QueryClientProvider>
-  );
-}
-
-const meta = {
-  title: "Page/MyFolder",
-  component: ComposeComponent,
-  parameters: {
-    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
-    // layout: 'fullscreen',
-  },
-} satisfies Meta<typeof ComposeComponent>;
+  ),
+} satisfies Meta<typeof Page>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

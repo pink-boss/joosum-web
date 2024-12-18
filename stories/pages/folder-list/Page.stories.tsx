@@ -9,12 +9,13 @@ import { mockLinks } from "../mocks/link.mocks";
 import { expect, waitFor, within } from "@storybook/test";
 import { jest } from "@storybook/jest";
 import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
+import { mockLinkBooks } from "../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();
 let capturedRequest: Request | null = null;
 
 const meta = {
-  title: "Page/FolderList",
+  title: "Page/FolderList/Page",
   component: Page,
   tags: ["autodocs"],
   parameters: {
@@ -26,11 +27,14 @@ const meta = {
     },
     msw: {
       handlers: [
-        http.get("/api/links/:linkBookId", ({ request }) => {
+        http.get("/api/links", ({ request }) => {
           capturedRequest = request;
           return HttpResponse.json(mockLinks);
         }),
         http.get("/api/tags", () => HttpResponse.json(mockTags)),
+        http.get("/api/link-books", () => {
+          return HttpResponse.json(mockLinkBooks);
+        }),
       ],
     },
   },
@@ -58,11 +62,14 @@ export const EmptyData: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get("/api/links/:linkBookId", ({ request }) => {
+        http.get("/api/links", ({ request }) => {
           capturedRequest = request;
           return HttpResponse.json([]);
         }),
         http.get("/api/tags", () => HttpResponse.json([])),
+        http.get("/api/link-books", () => {
+          return HttpResponse.json(mockLinkBooks);
+        }),
       ],
     },
   },
@@ -116,5 +123,3 @@ export const TestFilterStatement_TagSelector: Story = {
     });
   },
 };
-
-// TODO: 링크 더보기 버튼 - 우측에 링크 상세 오픈

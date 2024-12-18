@@ -11,14 +11,14 @@ import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 
 const queryClient = new QueryClient();
 
-const CallLinkBookList = () => {
+const QueryLinkBookList = () => {
   useQueryLinkBooks("created_at");
   return <DropdownMore linkBook={mockLinkBooks[1]} />;
 };
 
 const meta = {
-  title: "Page/MyFolder/Dropdown/More",
-  component: CallLinkBookList,
+  title: "Page/MyFolder/DropdownMore",
+  component: QueryLinkBookList,
   tags: ["autodocs"],
   beforeEach: () => {
     useOpenDialogStore.getState().openMutateLinkBook(false);
@@ -41,7 +41,7 @@ const meta = {
       <DeleteDialog />
     </QueryClientProvider>
   ),
-} satisfies Meta<typeof CallLinkBookList>;
+} satisfies Meta<typeof QueryLinkBookList>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -4,7 +4,7 @@ import DatePicker from "@/app/link-book/[title]/date-picker";
 import { dateFormatter } from "@/utils/date";
 
 const meta = {
-  title: "Page/FolderList/Filter/DatePicker",
+  title: "Page/FolderList/DatePicker",
   component: DatePicker,
   tags: ["autodocs"],
   parameters: {
@@ -92,8 +92,6 @@ export const TestPickPastDate: Story = {
     const canvas = within(canvasElement);
     const selectBox = canvas.getByTestId("open-button");
     await userEvent.click(selectBox);
-
-    const dateList = canvas.getAllByRole("listitem");
 
     // 끝 날짜는 시작 날짜 이전의 날짜를 선택 금지
     await userEvent.click(canvas.getByAltText("month-left"));

@@ -45,7 +45,7 @@ const DropdownMore = ({ linkBook }: InputProps) => {
   };
 
   const onOpen = useCallback(() => {
-    setIsOpen(true);
+    setIsOpen((current) => !current);
   }, []);
 
   return (

@@ -10,13 +10,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const queryClient = new QueryClient();
 
 const meta = {
-  title: "Page/FolderList/Filter/Tag",
+  title: "Page/FolderList/TagSelector",
   component: TagSelector,
   tags: ["autodocs"],
   parameters: {
     backgrounds: {
       default: "light",
     },
+
     msw: {
       handlers: [http.get("/api/tags", () => HttpResponse.json(mockTags))],
     },
@@ -26,7 +27,7 @@ const meta = {
     const { tags, setTags } = useLinkFilterStore();
     return (
       <QueryClientProvider client={queryClient}>
-        <Story args={{ tags, setTags }} />
+        <Story args={{ tags, setTags, className: "w-[305px]" }} />
       </QueryClientProvider>
     );
   },
@@ -40,27 +41,23 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const Open: Story = {
-  args: {
-    open: true,
-  },
-};
-
 export const TestCheckTags: Story = {
   play: async ({ canvasElement }) => {
     useLinkFilterStore.setState({ tags: [] });
 
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByTestId("open-button"));
-    const checkboxes = canvas.getAllByRole("checkbox");
+    await waitFor(async () => {
+      const checkboxes = canvas.getAllByRole("checkbox");
 
-    // 체크박스 3개 체크
-    for (const [index, num] of [0, 2, 4].entries()) {
-      await userEvent.click(checkboxes[num]);
-      const selectedTags = within(canvas.getByTestId("selected-tags"));
-      expect(selectedTags.getByText(mockTags[num])).toBeInTheDocument();
-      expect(canvas.getByText(`${index + 1}/10`));
-    }
+      // 체크박스 3개 체크
+      for (const [index, num] of [0, 2, 4].entries()) {
+        await userEvent.click(checkboxes[num]);
+        const selectedTags = within(canvas.getByTestId("selected-tags"));
+        expect(selectedTags.getByText(mockTags[num])).toBeInTheDocument();
+        expect(canvas.getByText(`${index + 1}/10`));
+      }
+    });
 
     // 초기화
     await userEvent.click(canvas.getByText("초기화"));
@@ -129,9 +126,10 @@ export const TestVisibleTags: Story = {
       within(selectbox).queryByText(`#${mockTags[6]}`),
     ).toBeInTheDocument();
 
-    // TODO: 전체 스토리북 테스트시 hidden-count를 못 찾는 에러
-    //   expect(within(selectbox).queryByTestId("hidden-count")?.textContent).toBe(
-    //     "+1개",
-    //   );
+    // hidden-count
+    await waitFor(async () => {
+      const hiddenCount = within(selectbox).getByTestId("hidden-count");
+      expect(hiddenCount).toHaveTextContent("+1개");
+    });
   },
 };

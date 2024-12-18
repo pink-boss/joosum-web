@@ -12,20 +12,18 @@ import ResetButton from "../ResetButton";
 import { useQuery } from "@tanstack/react-query";
 
 export type InputProps = Pick<LinkFilterState, "tags" | "setTags"> & {
-  open?: boolean;
   className?: string;
   selectBoxClassName?: string;
 };
 
 const TagSelector = ({
-  open,
   className,
   selectBoxClassName,
   tags,
   setTags,
 }: InputProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const ref = useClearDropdown(() => setIsOpen(false));
-  const [isOpen, setIsOpen] = useState(open);
 
   const {
     isPending,
