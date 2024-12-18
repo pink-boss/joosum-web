@@ -9,7 +9,7 @@ import { jest } from "@storybook/jest";
 import { LinkSortState } from "@/store/useLinkSortStore";
 import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
 import { DeleteLinkDialog } from "@/components/dialog/dynamic";
-import ReassignLinkBookDialog from "@/app/link-book/dialog/ReassignLinkBookDialog";
+import { ReassignLinkBookDialog } from "@/app/link-book/dialog/dynamic";
 import { mockLinkBooks } from "../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();

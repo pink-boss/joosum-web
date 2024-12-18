@@ -99,7 +99,11 @@ export default function MutateLinkDrawer() {
   return (
     <Drawer open={isOpen} onCloseCallback={onClose}>
       <div className="flex flex-col gap-10">
-        <Header linkBookName={link.linkBookName} onClose={onClose} />
+        <Header
+          linkBookName={link.linkBookName}
+          onClose={onClose}
+          link={link}
+        />
         <div className="flex flex-col gap-4 px-10">
           {/* TODO: 기본 썸네일 이미지 */}
           <Image

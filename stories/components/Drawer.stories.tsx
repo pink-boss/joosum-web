@@ -17,6 +17,8 @@ import { mockTags } from "../pages/mocks/tag.mocks";
 import FakeTimers from "@sinonjs/fake-timers";
 import { jest } from "@storybook/jest";
 import { Link } from "@/types/link.types";
+import { ShareLinkDialog } from "@/app/link-book/dialog/dynamic";
+import { getLinkListQueryKey } from "@/utils/queryKey";
 
 const queryClient = new QueryClient();
 let capturedRequest: {
@@ -31,7 +33,7 @@ const meta = {
   component: MutateLinkDrawer,
   tags: ["autodocs"],
   decorators: (Story) => {
-    const { isMutateLinkBookOpen, isDeleteDrawerLinkOpen } =
+    const { isMutateLinkBookOpen, isDeleteDrawerLinkOpen, isShareLinkOpen } =
       useOpenDialogStore();
     return (
       <QueryClientProvider client={queryClient}>
@@ -39,6 +41,7 @@ const meta = {
         <div id="modal-root" />
         {isMutateLinkBookOpen && <MutateLinkBookDialog />}
         {isDeleteDrawerLinkOpen && <DeleteDrawerLinkDialog />}
+        {isShareLinkOpen && <ShareLinkDialog />}
         <Story />
       </QueryClientProvider>
     );
@@ -297,7 +300,7 @@ export const UpdateLink: Story = {
 
 export const DeleteLink: Story = {
   play: async ({ canvasElement }) => {
-    const queryKey = ["linkList", mockLink.linkBookId];
+    const queryKey = getLinkListQueryKey(mockLink.linkBookId);
     queryClient.setQueryData(queryKey, () =>
       mockLinks.filter((link) => link.linkBookId === mockLink.linkBookId),
     );
@@ -332,10 +335,38 @@ export const DeleteLink: Story = {
   },
 };
 
-// TODO: 공유
-// export const RenderFormData: Story = {
-//   play: async({canvasElement}) => {
-//     const canvas = within(canvasElement)
-//     //
-//   }
-// }
+const mockClipboard = {
+  writeText: jest.fn().mockImplementation(() => Promise.resolve()),
+};
+
+export const ShareLink: Story = {
+  beforeEach: () => {
+    Object.defineProperty(window.navigator, "clipboard", {
+      value: mockClipboard,
+      writable: true,
+    });
+    useOpenDrawerStore.setState({ link: mockLinks[0], isLinkDrawerOpen: true });
+  },
+  decorators: (Story) => {
+    queryClient.setQueryData(getLinkListQueryKey(), () => mockLinks);
+    return <Story />;
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await userEvent.click(canvas.getByAltText("share"));
+    });
+
+    // 링크 복사
+    await waitFor(async () => {
+      await userEvent.click(canvas.getByAltText("copy-link"));
+      expect(mockClipboard.writeText).toHaveBeenCalledWith(mockLinks[0].url);
+    });
+
+    // TODO: 카카오톡
+
+    // 닫기
+    await userEvent.click(canvas.getByRole("button", { name: "취소" }));
+  },
+};

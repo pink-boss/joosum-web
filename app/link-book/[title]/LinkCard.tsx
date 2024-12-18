@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import NextLink from "next/link";
 import DrawerButton from "./DrawerButton";
+import OpenShareButton from "../OpenShareButton";
 
 type InputProps = { link: Link };
 
@@ -88,14 +89,7 @@ export default function LinkCard({ link }: InputProps) {
           e.preventDefault();
         }}
       >
-        {/* TODO: 공유하기 */}
-        <Image
-          src="/icons/icon-download.png"
-          alt="download"
-          width={24}
-          height={24}
-          className="cursor-pointer"
-        />
+        <OpenShareButton link={link} />
         <DrawerButton link={link} />
       </div>
     </div>

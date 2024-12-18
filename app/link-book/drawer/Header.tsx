@@ -1,11 +1,14 @@
 import Image from "next/image";
+import OpenShareButton from "../OpenShareButton";
+import { Link } from "@/types/link.types";
 
 type InputProps = {
   onClose: () => void;
   linkBookName: string;
+  link: Link;
 };
 
-export default function Header({ onClose, linkBookName }: InputProps) {
+export default function Header({ onClose, linkBookName, link }: InputProps) {
   return (
     <div className="flex justify-between px-5 py-1">
       <button onClick={onClose}>
@@ -25,14 +28,7 @@ export default function Header({ onClose, linkBookName }: InputProps) {
         />
         <span className="text-text-secondary">{linkBookName}</span>
       </div>
-      <button>
-        <Image
-          src="icons/icon-download2.png"
-          alt="download"
-          width={24}
-          height={24}
-        />
-      </button>
+      <OpenShareButton link={link} />
     </div>
   );
 }

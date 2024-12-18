@@ -1,6 +1,7 @@
 import { Link } from "@/types/link.types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
+import { getLinkListQueryKey } from "@/utils/queryKey";
 
 const queryKey = ["link", "checkedId"];
 
@@ -11,8 +12,8 @@ export default function useCheckLink() {
   const { data } = useQuery({
     queryKey,
     enabled:
-      queryClient.getQueryState(["linkList", linkBook?.linkBookId])?.status ===
-      "success",
+      queryClient.getQueryState(getLinkListQueryKey(linkBook?.linkBookId))
+        ?.status === "success",
     queryFn: () => queryClient.getQueryData<string[]>(queryKey) ?? [],
     staleTime: Infinity,
   });

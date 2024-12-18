@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, UpdateFormState } from "@/types/link.types";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
+import { getLinkListQueryKey } from "@/utils/queryKey";
 
 type SuccessResult = [Link, { status: 204 }];
 
@@ -50,7 +51,7 @@ export default function useUpdateLink(onSuccessCallback: () => void) {
     },
     onSuccess: (result) => {
       queryClient.invalidateQueries({
-        queryKey: ["linkList", prevLinkBook?.linkBookId],
+        queryKey: getLinkListQueryKey(prevLinkBook?.linkBookId),
       });
       onSuccessCallback();
     },
