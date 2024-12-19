@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Banner } from "../../types/banner.types";
 import { useEffect, useState } from "react";

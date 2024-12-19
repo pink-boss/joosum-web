@@ -2,6 +2,8 @@ import Image from "next/image";
 import { krDateFormatter } from "@/utils/date";
 import { useEffect, useState } from "react";
 import { Link } from "@/types/link.types";
+import ImageWithFallback from "@/components/ImageWithFallback";
+import useIncrementViewCount from "@/hooks/link/useIncrementViewCount";
 
 const WIDTH = 374;
 
@@ -12,6 +14,12 @@ type LinkCardProps = {
 export default function LinkCard({ link }: LinkCardProps) {
   const [visibleTags, setVisibleTags] = useState<string[]>([]);
   const [hiddenCount, setHiddenCount] = useState(0);
+
+  const mutation = useIncrementViewCount(link);
+
+  const handleOpenLink = () => {
+    mutation.mutate();
+  };
 
   useEffect(() => {
     const calculateVisibleTags = () => {
@@ -52,14 +60,18 @@ export default function LinkCard({ link }: LinkCardProps) {
     };
   }, [link.tags]);
   return (
-    <div className="flex flex-col gap-4 pb-4">
-      <Image
-        className="rounded-lg"
-        src={link.thumbnailURL}
-        alt={`${link.thumbnailURL}`}
-        width={WIDTH}
-        height={184}
-      />
+    <div
+      className="flex flex-none cursor-pointer flex-col gap-4 pb-4"
+      onClick={handleOpenLink}
+    >
+      <div className="relative h-[184px] w-[374px] flex-none">
+        <ImageWithFallback
+          src={link.thumbnailURL}
+          alt={`${link.title}-thumbnail`}
+          useFill
+          className="rounded-lg object-cover"
+        />
+      </div>
       <div className="flex flex-col gap-2">
         <div className="truncate text-lg font-bold">{link.title}</div>
         <div className="flex flex-wrap gap-2">

@@ -1,4 +1,5 @@
 import { Link } from "@/types/link.types";
+import { getLinkListQueryKey } from "@/utils/queryKey";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function useIncrementViewCount(link: Link) {
@@ -12,18 +13,9 @@ export default function useIncrementViewCount(link: Link) {
       if ("error" in result) {
         alert(result.error);
       } else {
-        queryClient.setQueryData<Link>(
-          ["link", "title", link.title],
-          (prevLink) => {
-            if (prevLink) {
-              return {
-                ...prevLink,
-                readCount: prevLink.readCount + 1,
-              };
-            }
-            return prevLink;
-          },
-        );
+        queryClient.invalidateQueries({
+          queryKey: getLinkListQueryKey(),
+        });
         window.open(link.url, "_blank");
       }
     },

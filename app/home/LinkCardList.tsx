@@ -6,19 +6,30 @@ import { useState } from "react";
 import NextLink from "next/link";
 import EmptyLinks from "@/components/EmptyLinks";
 import { Link } from "@/types/link.types";
+import { getLinkListQueryKey } from "@/utils/queryKey";
+import { useQuery } from "@tanstack/react-query";
 
-type InputProps = {
-  links: Link[];
-};
-
-export default function LinkCardList({ links }: InputProps) {
+export default function LinkCardList() {
   const [isAllLinks, setIsAllLinks] = useState(false);
   const [filter, setFilter] = useState<"latest" | "unread">("latest");
+
+  const {
+    isPending,
+    error,
+    data = [],
+  } = useQuery<Link[], ApiError>({
+    queryKey: getLinkListQueryKey(),
+    queryFn: () =>
+      fetch(`/api/links`, {
+        method: "GET",
+      }).then((res) => res.json()),
+  });
+
   const handleFilter = (e: any) => {
     setFilter(e.target.value);
   };
   const filteredLinks =
-    filter === "unread" ? links.filter(({ readCount }) => !readCount) : links;
+    filter === "unread" ? data.filter(({ readCount }) => !readCount) : data;
 
   return (
     <div className="flex h-full flex-1 flex-col gap-8 overflow-hidden">
@@ -62,17 +73,17 @@ export default function LinkCardList({ links }: InputProps) {
         </NextLink>
       </div>
       {filteredLinks.length ? (
-        <div className="flex flex-col items-center gap-8 overflow-auto">
-          <div className="grid grid-cols-4 gap-8 overflow-auto">
+        <div className="flex flex-col items-start gap-8 overflow-auto">
+          <div className="flex flex-wrap gap-x-[22px] gap-y-5">
             {filteredLinks
               .slice(0, isAllLinks ? undefined : 29)
               .map((link, index) => (
                 <LinkCard key={index} link={link} />
               ))}
           </div>
-          {filteredLinks.length > 30 && (
+          {filteredLinks.length > 30 && !isAllLinks && (
             <div
-              className="flex cursor-pointer rounded-lg py-4"
+              className="flex cursor-pointer self-center rounded-lg py-4"
               onClick={() => setIsAllLinks(true)}
             >
               <span className="text-lg font-bold text-text-secondary">
