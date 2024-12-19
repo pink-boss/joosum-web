@@ -72,20 +72,22 @@ export default function SelectLinkBook({
       {isOpen && (
         <div
           className={clsx(
-            "absolute z-10 mt-1 flex max-w-min flex-col",
-            "gap-[20px] rounded-lg border border-background-secondary bg-white p-6 shadow-lg",
+            "absolute z-10 mt-1 h-[214px] w-full",
+            "rounded-lg border border-background-secondary bg-white p-6 shadow-lg",
           )}
         >
-          <div className="mini-scroll flex h-[222px] w-[258px] flex-col gap-1 overflow-auto border border-background-secondary p-3">
-            {linkBookOptions?.map(({ label, value }) => (
-              <button
-                key={`reassign-to-${label}`}
-                className="text-single-line py-2 text-start text-sm"
-                onClick={() => handleClick(label, value)}
-              >
-                {label}
-              </button>
-            ))}
+          <div className="mini-scroll h-full">
+            <div className="flex flex-col gap-2 p-3">
+              {linkBookOptions?.map(({ label, value }) => (
+                <button
+                  key={`reassign-to-${label}`}
+                  className="text-single-line h-6 text-start"
+                  onClick={() => handleClick(label, value)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}

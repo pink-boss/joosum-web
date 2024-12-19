@@ -186,7 +186,6 @@ export default function MutateLinkDrawer() {
                     )}
                   </button>
                 </div>
-                {/* TODO: 태그 없을 때 확인 */}
                 {isEditTag ? (
                   <TagSelector
                     tags={formState.tags}

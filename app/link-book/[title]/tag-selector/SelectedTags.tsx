@@ -32,9 +32,12 @@ export function TagBadge({ tags, setTags }: BadgeInputProps) {
       ))}
     </div>
   ) : (
-    <span className="text-sm text-[#BBBBBB]" data-testid="selected-tags-empty">
-      태그를 선택해주세요.
-    </span>
+    <div
+      className="p-2 text-sm text-[#BBBBBB]"
+      data-testid="selected-tags-empty"
+    >
+      태그를 선택 또는 생성 해주세요.
+    </div>
   );
 }
 

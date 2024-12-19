@@ -128,8 +128,7 @@ export const TestVisibleTags: Story = {
 
     // hidden-count
     await waitFor(async () => {
-      const hiddenCount = within(selectbox).getByTestId("hidden-count");
-      expect(hiddenCount).toHaveTextContent("+1개");
+      expect(canvas.getByTestId("hidden-count")).toHaveTextContent("+1개");
     });
   },
 };

@@ -178,7 +178,7 @@ export const AddFolder: Story = {
   },
 };
 
-// TODO: 생성 기능 막고 커밋. 태그 한번 추가하고 난 뒤, ui 어떻게?
+// TODO: 생성 기능 막고 커밋. 태그 한번 추가하고 난 뒤 ui, 링크 복사 피드백은 어떻게?
 // TODO: 기획대로 수정
 // export const UpdateTag: Story = {
 //   play: async ({ canvasElement }) => {
@@ -340,7 +340,6 @@ const mockClipboard = {
   writeText: jest.fn().mockImplementation(() => Promise.resolve()),
 };
 
-// TODO: 링크 복사 피드백
 export const ShareLink: Story = {
   beforeEach: () => {
     Object.defineProperty(window.navigator, "clipboard", {
