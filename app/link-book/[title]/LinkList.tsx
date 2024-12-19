@@ -26,7 +26,7 @@ function Button({
   return (
     <button
       className={clsx(
-        "rounded border border-background-menu px-2 py-1 text-xs",
+        "rounded border border-background-menu px-9 py-1.5 text-xs",
         isPrimary ? "bg-[#1D1D1D] text-white" : "bg-white text-black",
       )}
       onClick={handleClick}
@@ -73,7 +73,7 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
   };
 
   return (
-    <div className="flex flex-1 flex-col gap-1 overflow-hidden">
+    <div className="flex h-full flex-1 flex-col gap-1 overflow-hidden">
       <div className="flex items-center">
         {!editMode ? (
           <>
@@ -120,7 +120,7 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
       {isPending ? (
         <Loading />
       ) : data.length ? (
-        <div role="list">
+        <div role="list" className="flex-1 overflow-auto">
           {data.map((link, index) => (
             <div
               key={`link-${index}`}

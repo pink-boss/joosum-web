@@ -21,7 +21,7 @@ export default function LinkCardList({ links }: InputProps) {
     filter === "unread" ? links.filter(({ readCount }) => !readCount) : links;
 
   return (
-    <div className="flex flex-1 flex-col gap-8">
+    <div className="flex h-full flex-1 flex-col gap-8 overflow-hidden">
       <div className="flex items-center justify-between">
         <form
           className="flex gap-6 text-text-secondary"
@@ -62,7 +62,7 @@ export default function LinkCardList({ links }: InputProps) {
         </NextLink>
       </div>
       {filteredLinks.length ? (
-        <div className="flex flex-col items-center gap-8">
+        <div className="flex flex-col items-center gap-8 overflow-auto">
           <div className="grid grid-cols-4 gap-8 overflow-auto">
             {filteredLinks
               .slice(0, isAllLinks ? undefined : 29)

@@ -167,7 +167,9 @@ export default function MutateLinkDrawer() {
                   <button
                     className="flex font-semibold text-primary"
                     data-testid="edit-tags-button"
-                    onClick={() => setIsEditTag((prev) => !prev)}
+                    onClick={() => {
+                      // setIsEditTag((prev) => !prev)
+                    }}
                   >
                     {isEditTag ? (
                       "추가 종료"

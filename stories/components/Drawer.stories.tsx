@@ -178,39 +178,39 @@ export const AddFolder: Story = {
   },
 };
 
-// TODO: my-folder, folder-list 스크롤
+// TODO: 생성 기능 막고 커밋. 태그 한번 추가하고 난 뒤, ui 어떻게?
 // TODO: 기획대로 수정
-export const UpdateTag: Story = {
-  play: async ({ canvasElement }) => {
-    useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
+// export const UpdateTag: Story = {
+//   play: async ({ canvasElement }) => {
+//     useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
 
-    const canvas = within(canvasElement);
+//     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      const selectedTags = within(canvas.getByTestId("selected-tags"));
-      await userEvent.click(selectedTags.getAllByRole("button")[0]);
-    });
+//     await waitFor(async () => {
+//       const selectedTags = within(canvas.getByTestId("selected-tags"));
+//       await userEvent.click(selectedTags.getAllByRole("button")[0]);
+//     });
 
-    await waitFor(async () => {
-      await userEvent.click(canvas.getByTestId("edit-tags-button"));
-    });
+//     await waitFor(async () => {
+//       await userEvent.click(canvas.getByTestId("edit-tags-button"));
+//     });
 
-    await waitFor(async () => {
-      const tagSelector = within(canvas.getByTestId("tag-selector"));
-      await userEvent.click(tagSelector.getByTestId("open-button"));
-      await userEvent.click(tagSelector.getByText(mockTags[0]));
-    });
+//     await waitFor(async () => {
+//       const tagSelector = within(canvas.getByTestId("tag-selector"));
+//       await userEvent.click(tagSelector.getByTestId("open-button"));
+//       await userEvent.click(tagSelector.getByText(mockTags[0]));
+//     });
 
-    await waitFor(async () => {
-      await userEvent.click(canvas.getByTestId("edit-tags-button"));
-    });
+//     await waitFor(async () => {
+//       await userEvent.click(canvas.getByTestId("edit-tags-button"));
+//     });
 
-    const selectedTags = within(canvas.getByTestId("selected-tags"));
-    expect(selectedTags.getByText(mockLink.tags[1])).toBeInTheDocument();
-    expect(selectedTags.getByText(mockLink.tags[2])).toBeInTheDocument();
-    expect(selectedTags.getByText(mockTags[0])).toBeInTheDocument();
-  },
-};
+//     const selectedTags = within(canvas.getByTestId("selected-tags"));
+//     expect(selectedTags.getByText(mockLink.tags[1])).toBeInTheDocument();
+//     expect(selectedTags.getByText(mockLink.tags[2])).toBeInTheDocument();
+//     expect(selectedTags.getByText(mockTags[0])).toBeInTheDocument();
+//   },
+// };
 
 export const UpdateLink: Story = {
   decorators: (Story) => {
@@ -246,15 +246,15 @@ export const UpdateLink: Story = {
       await userEvent.click(within(folderSelector).getByText(NEW_FOLDER_NAME));
 
       // tag 수정
-      await waitFor(async () => {
-        await userEvent.click(canvas.getByTestId("edit-tags-button"));
-      });
+      // await waitFor(async () => {
+      //   await userEvent.click(canvas.getByTestId("edit-tags-button"));
+      // });
 
-      await waitFor(async () => {
-        const tagSelector = within(canvas.getByTestId("tag-selector"));
-        await userEvent.click(tagSelector.getByTestId("open-button"));
-        await userEvent.click(tagSelector.getByText(NEW_TAG));
-      });
+      // await waitFor(async () => {
+      //   const tagSelector = within(canvas.getByTestId("tag-selector"));
+      //   await userEvent.click(tagSelector.getByTestId("open-button"));
+      //   await userEvent.click(tagSelector.getByText(NEW_TAG));
+      // });
 
       await userEvent.click(canvas.getByText("수정"));
 
@@ -267,7 +267,7 @@ export const UpdateLink: Story = {
           expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
           expect(body.title).toBe(NEW_TITLE);
           expect(body.linkBookId).toBe(NEW_FOLDER_ID);
-          expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
+          // expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
         } else expect(null).toBe("이미 사용된 bodyUsed");
       } else expect(null).toBe("updateLink request X");
 
@@ -340,6 +340,7 @@ const mockClipboard = {
   writeText: jest.fn().mockImplementation(() => Promise.resolve()),
 };
 
+// TODO: 링크 복사 피드백
 export const ShareLink: Story = {
   beforeEach: () => {
     Object.defineProperty(window.navigator, "clipboard", {
