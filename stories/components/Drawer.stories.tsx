@@ -178,6 +178,7 @@ export const AddFolder: Story = {
   },
 };
 
+// TODO: my-folder, folder-list 스크롤
 // TODO: 기획대로 수정
 export const UpdateTag: Story = {
   play: async ({ canvasElement }) => {

@@ -15,7 +15,7 @@ export default function OpenShareButton({ link }: InputProps) {
   return (
     <button onClick={handleClick}>
       <Image
-        src="icons/icon-download2.png"
+        src="/icons/icon-download2.png"
         alt="share"
         width={24}
         height={24}

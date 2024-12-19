@@ -13,7 +13,6 @@ export default function useLinkCache(currentLinkId?: string) {
     enabled: !!currentLinkId,
     queryFn: () => {
       const linkList = queryClient.getQueryData<Link[]>(queryKey) ?? [];
-      console.log("linkList:", linkList);
       return linkList.find((link) => link.linkId === currentLinkId);
     },
     staleTime: Infinity,

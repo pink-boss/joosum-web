@@ -13,6 +13,7 @@ import TagSelector from "../[title]/tag-selector";
 import { clearTimeout, setTimeout } from "timers";
 import useUpdateLink from "@/hooks/link/useUpdateLink";
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import ImageWithFallback from "@/components/ImageWithFallback";
 
 type ToastDefaultValues = {
   isOpen: boolean;
@@ -105,13 +106,9 @@ export default function MutateLinkDrawer() {
           link={link}
         />
         <div className="flex flex-col gap-4 px-10">
-          {/* TODO: 기본 썸네일 이미지 */}
-          <Image
-            src={link.thumbnailURL ?? ""}
-            alt="thumbnail"
-            width={414}
-            height={260}
-          />
+          <div className="relative h-[260px] w-[414px] flex-none">
+            <ImageWithFallback src={link.thumbnailURL} alt="thumbnail" />
+          </div>
           <div>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-2 text-[#1D1D1D]">
@@ -142,7 +139,7 @@ export default function MutateLinkDrawer() {
                   </label>
                   <Button className="flex font-semibold text-primary">
                     <Image
-                      src="icons/icon-plus.png"
+                      src="/icons/icon-plus.png"
                       alt="new-folder"
                       width={24}
                       height={24}
@@ -177,7 +174,7 @@ export default function MutateLinkDrawer() {
                     ) : (
                       <>
                         <Image
-                          src="icons/icon-plus.png"
+                          src="/icons/icon-plus.png"
                           alt="new tag"
                           width={24}
                           height={24}
