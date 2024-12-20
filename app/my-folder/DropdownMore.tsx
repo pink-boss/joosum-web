@@ -60,7 +60,7 @@ const DropdownMore = ({ linkBook }: InputProps) => {
     >
       <button
         onClick={onOpen}
-        className="flex h-12 w-12 items-center justify-center rounded-full bg-black"
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-white/80"
       >
         <Image
           src="/icons/icon-more-vertical.png"

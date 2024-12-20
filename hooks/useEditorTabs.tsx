@@ -8,6 +8,8 @@ import {
 import ColorBox from "../app/my-folder/mutate/ColorBox";
 import IllustrationBox from "../app/my-folder/mutate/IllustrationBox";
 
+const MAX_TITLE_LENGTH = 15;
+
 type FormItemInputProps = {
   children: ReactNode;
   label: string;
@@ -56,8 +58,11 @@ export default function useEditorTabs(
             onChange={handleInputChange}
             value={localState.title}
             autoFocus
-            maxLength={15}
+            maxLength={MAX_TITLE_LENGTH}
           />
+          <div className="text-gray-silver ml-auto mt-1.5">
+            {localState.title?.length ?? 0}/{MAX_TITLE_LENGTH}
+          </div>
         </FormItem>
       ),
     },
