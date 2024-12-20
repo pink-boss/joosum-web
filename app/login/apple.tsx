@@ -1,10 +1,7 @@
+import { sanitizeRedirectUrl } from "@/utils/oauth";
 import { useEffect } from "react";
 
 const APPLE_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH_APPLE_ID;
-const HOST =
-  process.env.NODE_ENV === "production"
-    ? `${process.env.JOOSUM_SERVER_URI}`.replace("joosum", "app.joosum")
-    : process.env.NEXT_PUBLIC_JOOSUM_WEB_URI;
 
 const AppleOAuthHandler = () => {
   const loginWithApple = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -20,7 +17,7 @@ const AppleOAuthHandler = () => {
     window.AppleID?.auth.init({
       clientId: APPLE_CLIENT_ID,
       scope: "name email",
-      redirectURI: encodeURIComponent(redirectURI),
+      redirectURI: sanitizeRedirectUrl(redirectURI),
       state: "signin",
     });
   }, []);
