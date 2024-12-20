@@ -7,7 +7,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 export function CloseButton(props: ButtonProps) {
   return (
     <button
-      className="h-[56px] w-[164.89px] rounded-lg bg-[#BBBBBB] font-bold text-white"
+      className="bg-gray-silver h-[56px] w-[164.89px] rounded-lg font-bold text-white"
       {...props}
     />
   );
@@ -20,9 +20,9 @@ export function SubmitButton(props: ButtonProps) {
         "h-[56px] w-[164.89px] rounded-lg font-bold",
         typeof props.disabled === "boolean"
           ? props.disabled
-            ? "cursor-not-allowed bg-background-menu text-[#BBBBBB]"
-            : "bg-primary text-white"
-          : "bg-primary text-white",
+            ? "text-gray-silver bg-gray-vapor cursor-not-allowed"
+            : "bg-primary-500 text-white"
+          : "bg-primary-500 text-white",
       ])}
       {...props}
     />

@@ -49,7 +49,7 @@ export default function MutateDialog() {
       className="w-[792px]"
       closeProps={{
         className:
-          "w-[220.5px] h-[56px] rounded-lg bg-[#BBBBBB] font-bold text-white",
+          "w-[220.5px] h-[56px] rounded-lg bg-gray-silver font-bold text-white",
         children: "닫기",
         onClick: onClose,
       }}
@@ -58,8 +58,8 @@ export default function MutateDialog() {
           [
             "w-[220.5px] h-[56px] rounded-lg font-bold text-white",
             !formState.title
-              ? "cursor-not-allowed bg-background-menu"
-              : "bg-primary",
+              ? "cursor-not-allowed bg-gray-vapor"
+              : "bg-primary-500",
           ],
         ]),
         children: linkBook ? "완료" : "생성",

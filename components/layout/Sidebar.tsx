@@ -16,7 +16,7 @@ export default function Sidebar({ children }: InputProps) {
   };
   return (
     <div className="flex h-screen">
-      <div className="flex flex-col justify-between bg-background-menu py-11">
+      <div className="bg-gray-vapor flex flex-col justify-between py-11">
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between px-10 py-1">
             <Link

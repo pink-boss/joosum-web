@@ -34,7 +34,7 @@ export default function DeleteDialog() {
         onClick: handleSubmit,
       }}
     >
-      <div className="text-center text-[#2F2F2F]">
+      <div className="text-gray-ink text-center">
         <p>폴더 내의 모든 링크가 삭제됩니다.</p>
         <p>폴더를 삭제하시겠습니까?</p>
       </div>

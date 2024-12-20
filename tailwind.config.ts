@@ -13,14 +13,22 @@ const config: Config = {
     },
     extend: {
       colors: {
-        primary: "#392A95",
+        primary: {
+          500: "#392A95",
+          lavender: "#DFD9FF",
+        },
         secondary: "#6B5FDE",
-        "background-primary": "#EFECFF",
-        "background-secondary": "#F3F4F5",
-        "background-menu": "#EBECED",
-        "text-primary": "#000000",
-        "text-secondary": "#6C6C6C",
-        "text-tertiary": "#555555",
+        gray: {
+          slate: "#909090",
+          ink: "#2F2F2F",
+          black: "#1D1D1D",
+          silver: "#BBBBBB",
+          graphite: "#444444",
+          vapor: "#EBECED",
+          ghost: "#F3F4F5",
+          dim: "#6C6C6C",
+        },
+        paperabovebg: "#5242BF",
       },
       fontFamily: {
         pretendard: ["var(--font-pretendard)"],

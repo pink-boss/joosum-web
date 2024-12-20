@@ -22,8 +22,8 @@ export default function BannerCard({ data }: InputProps) {
   }, [data.length]);
   return (
     <Link href={data[current]?.clickURL ?? ""} target="_blank">
-      <div className="flex items-center justify-center gap-40 rounded-xl bg-[#DFD9FF]">
-        <div className="text-2xl text-[#2F2F2F]">
+      <div className="bg-primary-lavender flex items-center justify-center gap-40 rounded-xl">
+        <div className="text-gray-ink text-2xl">
           <p>지금 볼 시간이 없다면?</p>
           <p className="flex">
             <span className="font-bold">잊지 않게 매주 알려드려요!</span>

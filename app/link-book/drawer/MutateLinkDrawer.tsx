@@ -111,7 +111,7 @@ export default function MutateLinkDrawer() {
           </div>
           <div>
             <div className="flex flex-col gap-6">
-              <div className="flex flex-col gap-2 text-[#1D1D1D]">
+              <div className="text-gray-black flex flex-col gap-2">
                 <label htmlFor="title" className="px-2 text-lg font-semibold">
                   제목
                 </label>
@@ -121,7 +121,7 @@ export default function MutateLinkDrawer() {
                   name="title"
                   className={clsx(
                     "h-[48px] w-full p-3",
-                    "rounded-lg border border-background-secondary bg-background-secondary",
+                    "border-gray-ghost bg-gray-ghost rounded-lg border",
                   )}
                   value={formState.title}
                   onChange={(e) => {
@@ -132,12 +132,12 @@ export default function MutateLinkDrawer() {
                   }}
                 />
               </div>
-              <div className="flex flex-col gap-2 text-[#1D1D1D]">
+              <div className="text-gray-black flex flex-col gap-2">
                 <div className="flex justify-between px-2">
                   <label htmlFor="title" className="text-lg font-semibold">
                     폴더
                   </label>
-                  <Button className="flex font-semibold text-primary">
+                  <Button className="text-primary-500 flex font-semibold">
                     <Image
                       src="/icons/icon-plus.png"
                       alt="new-folder"
@@ -156,16 +156,16 @@ export default function MutateLinkDrawer() {
                       linkBookId,
                     }))
                   }
-                  className="border-none bg-background-secondary"
+                  className="bg-gray-ghost border-none"
                 />
               </div>
-              <div className="flex flex-col gap-2 text-[#1D1D1D]">
+              <div className="text-gray-black flex flex-col gap-2">
                 <div className="flex justify-between px-2">
                   <label htmlFor="title" className="text-lg font-semibold">
                     태그
                   </label>
                   <button
-                    className="flex font-semibold text-primary"
+                    className="text-primary-500 flex font-semibold"
                     data-testid="edit-tags-button"
                     onClick={() => {
                       // setIsEditTag((prev) => !prev)
@@ -192,7 +192,7 @@ export default function MutateLinkDrawer() {
                     setTags={(tags) =>
                       setFormState((prev) => ({ ...prev, tags }))
                     }
-                    selectBoxClassName="border-none bg-background-secondary"
+                    selectBoxClassName="border-none bg-gray-ghost"
                   />
                 ) : (
                   <TagBadge
@@ -205,7 +205,7 @@ export default function MutateLinkDrawer() {
               </div>
             </div>
           </div>
-          <div className="mt-10 flex gap-1 text-xs text-[#909090]">
+          <div className="text-gray-slate mt-10 flex gap-1 text-xs">
             <span>{krDateFormatter(link.createdAt)}에 주섬주섬</span>
             <span>|</span>
             <span>
@@ -218,7 +218,7 @@ export default function MutateLinkDrawer() {
         {toast.isOpen && (
           <div
             data-testid="feedback-toast"
-            className="rounded-lg bg-[#DFD9FF] py-[10px] text-center text-sm font-semibold text-white"
+            className="bg-primary-lavender rounded-lg py-[10px] text-center text-sm font-semibold text-white"
             style={{ backgroundColor: toast.bgColor, color: toast.textColor }}
           >
             {toast.message}
@@ -227,7 +227,7 @@ export default function MutateLinkDrawer() {
 
         <div className="flex justify-center gap-1">
           <button
-            className="h-[56px] w-[220.5px] rounded-lg bg-[#BBBBBB] font-bold text-white"
+            className="bg-gray-silver h-[56px] w-[220.5px] rounded-lg font-bold text-white"
             onClick={handleDelete}
           >
             삭제
@@ -236,8 +236,8 @@ export default function MutateLinkDrawer() {
             className={clsx(
               "h-[56px] w-[220.5px] rounded-lg font-bold text-white",
               !formState.title
-                ? "cursor-not-allowed bg-background-menu"
-                : "bg-primary",
+                ? "bg-gray-vapor cursor-not-allowed"
+                : "bg-primary-500",
             )}
             disabled={!formState.title}
             onClick={handleSubmit}

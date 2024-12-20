@@ -48,7 +48,7 @@ const RenderDate = ({
         <div
           className={clsx(
             "absolute inset-0 left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2",
-            "h-full bg-[#DFD9FF]",
+            "bg-primary-lavender h-full",
             isSelectedDate ? "w-[19.25px]" : "w-[38.5px]",
             isSameDate(startDate, dateObj) && "translate-x-0",
             isSameDate(endDate, dateObj) && "-translate-x-full",
@@ -60,15 +60,15 @@ const RenderDate = ({
         <div
           className={clsx(
             "absolute inset-0 left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2",
-            "h-[30px] w-[30px] rounded-full bg-[#5242BF]",
+            "bg-paperabovebg h-[30px] w-[30px] rounded-full",
           )}
         />
       )}
       <button
         className={clsx(
           "relative h-[30px] w-[30px] text-sm font-semibold",
-          monthType === "this" ? "text-[#2F2F2F]" : "text-[#BBBBBB]",
-          greaterThanToday && "text-[#BBBBBB]",
+          monthType === "this" ? "text-gray-ink" : "text-gray-silver",
+          greaterThanToday && "text-gray-silver",
           isSelectedDate && "text-white",
         )}
         onClick={handleClickDate}

@@ -46,7 +46,7 @@ export default function ReassignLinkBookDialog() {
       }}
     >
       <div className="flex flex-col gap-4 text-center">
-        <div className="text-center text-[#2F2F2F]">
+        <div className="text-gray-ink text-center">
           <p>{cachedLinks.size} 개의 링크가</p>
           <p>이동할 폴더를 선택해주세요.</p>
         </div>

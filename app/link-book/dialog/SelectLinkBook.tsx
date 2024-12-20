@@ -58,8 +58,8 @@ export default function SelectLinkBook({
         data-testid="open-button"
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
-          "flex items-center justify-between gap-0.5 px-3 text-start text-sm text-text-secondary",
-          "h-[46px] w-full rounded-lg border border-[#BBBBBB]",
+          "text-gray-dim flex items-center justify-between gap-0.5 px-3 text-start text-sm",
+          "border-gray-silver h-[46px] w-full rounded-lg border",
           className && className,
         )}
       >
@@ -73,7 +73,7 @@ export default function SelectLinkBook({
         <div
           className={clsx(
             "absolute z-10 mt-1 h-[214px] w-full",
-            "rounded-lg border border-background-secondary bg-white p-6 shadow-lg",
+            "border-gray-ghost rounded-lg border bg-white p-6 shadow-lg",
           )}
         >
           <div className="mini-scroll h-full">

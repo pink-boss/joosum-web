@@ -26,7 +26,7 @@ export default function Header({ onClose, linkBookName, link }: InputProps) {
           width={20}
           height={20}
         />
-        <span className="text-text-secondary">{linkBookName}</span>
+        <span className="text-gray-dim">{linkBookName}</span>
       </div>
       <OpenShareButton link={link} />
     </div>

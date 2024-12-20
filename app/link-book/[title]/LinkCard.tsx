@@ -47,10 +47,10 @@ export default function LinkCard({ link }: InputProps) {
       </div>
       <div className="flex min-w-0 grow flex-col">
         <div className="truncate text-lg font-bold">{link.title}</div>
-        <div className="truncate text-[#2F2F2F]">
+        <div className="text-gray-ink truncate">
           {link.tags.reduce((result, tag) => result + ` #${tag}`, "")}
         </div>
-        <div className="mt-auto flex gap-1 text-text-secondary">
+        <div className="text-gray-dim mt-auto flex gap-1">
           <div className="flex-none">{link.url}</div>|
           <div className="flex-none">
             {dateFormatter(link.createdAt, "2-digit")}

@@ -78,18 +78,18 @@ export default function LinkCard({ link }: LinkCardProps) {
           {visibleTags.map((tag, index) => (
             <div
               key={index}
-              className="whitespace-nowrap rounded-[50px] bg-background-menu px-3 py-1"
+              className="bg-gray-vapor whitespace-nowrap rounded-[50px] px-3 py-1"
             >
               {tag}
             </div>
           ))}
           {hiddenCount > 0 && (
-            <div className="rounded-[50px] bg-background-menu px-3 py-1">
+            <div className="bg-gray-vapor rounded-[50px] px-3 py-1">
               +{hiddenCount}
             </div>
           )}
         </div>
-        <div className="text-sm text-[#909090]">
+        <div className="text-gray-slate text-sm">
           {`${krDateFormatter(link.createdAt)}에 주섬주섬`}
         </div>
       </div>

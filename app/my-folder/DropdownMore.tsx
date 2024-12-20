@@ -14,7 +14,7 @@ const DropdownItem = ({ title, handleClick }: DropdownItemProps) => {
   return (
     <button
       onClick={handleClick}
-      className="w-full px-5 py-1 font-semibold text-[#1D1D1D]"
+      className="text-gray-black w-full px-5 py-1 font-semibold"
     >
       {title}
     </button>
@@ -71,7 +71,7 @@ const DropdownMore = ({ linkBook }: InputProps) => {
       </button>
 
       {isOpen && (
-        <div className="absolute z-20 mt-1 flex w-[110px] flex-col rounded-lg border border-background-secondary bg-white py-4 shadow-lg">
+        <div className="border-gray-ghost absolute z-20 mt-1 flex w-[110px] flex-col rounded-lg border bg-white py-4 shadow-lg">
           <DropdownItem title="폴더 수정" handleClick={handleModify} />
           <DropdownItem title="폴더 삭제" handleClick={handleDelete} />
         </div>

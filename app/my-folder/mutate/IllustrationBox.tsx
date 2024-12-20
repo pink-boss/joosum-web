@@ -25,13 +25,13 @@ export default function IllustrationBox({
   return (
     <button
       data-testid={`${stateName}-${illustrationIndex}`}
-      className={clsx("relative h-20 w-20 rounded-lg bg-background-menu")}
+      className={clsx("bg-gray-vapor relative h-20 w-20 rounded-lg")}
       onClick={() => {
         setPreviewIllustration(stateName, illustration);
       }}
     >
       {isSelected && (
-        <div className="absolute h-full w-full rounded-lg bg-primary opacity-20"></div>
+        <div className="bg-primary-500 absolute h-full w-full rounded-lg opacity-20"></div>
       )}
       <div
         className={clsx(
@@ -46,7 +46,7 @@ export default function IllustrationBox({
             height={54.34}
           />
         ) : (
-          <div className="text-sm text-text-secondary">선택 안함</div>
+          <div className="text-gray-dim text-sm">선택 안함</div>
         )}
       </div>
     </button>

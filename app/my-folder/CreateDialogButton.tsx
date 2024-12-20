@@ -36,7 +36,7 @@ export function Button({ children, className, onClickCallback }: InputProps) {
 
 export default function CreateDialogButton() {
   return (
-    <Button className="flex rounded bg-primary py-[6px] pl-2 pr-3 font-semibold text-white">
+    <Button className="bg-primary-500 flex rounded py-[6px] pl-2 pr-3 font-semibold text-white">
       <Image
         src="/icons/icon-plus-white.png"
         alt="plus"

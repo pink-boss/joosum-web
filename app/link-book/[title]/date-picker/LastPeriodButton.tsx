@@ -27,7 +27,7 @@ export default function LastPeriodButton({
   };
   return (
     <button
-      className="w-[127px] flex-1 rounded border border-background-menu px-2 py-1 text-xs"
+      className="border-gray-vapor w-[127px] flex-1 rounded border px-2 py-1 text-xs"
       onClick={handleClickLastPeriod}
     >
       {children}

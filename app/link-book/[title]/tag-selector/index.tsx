@@ -67,12 +67,12 @@ const TagSelector = ({
         <div
           className={clsx(
             "absolute z-10 mt-1 flex max-w-min flex-col",
-            "gap-[20px] rounded-lg border border-background-secondary bg-white p-6 shadow-lg",
+            "border-gray-ghost gap-[20px] rounded-lg border bg-white p-6 shadow-lg",
           )}
         >
           <div className="flex flex-col gap-[20px]">
             <SelectedTags tags={tags} setTags={setTags} />
-            <div className="mini-scroll flex h-[222px] w-[258px] flex-col gap-[10px] overflow-auto border border-background-secondary p-3">
+            <div className="mini-scroll border-gray-ghost flex h-[222px] w-[258px] flex-col gap-[10px] overflow-auto border p-3">
               {totalTags.map((tag) => (
                 <div key={`total-tag-${tag}`} className="flex gap-2">
                   <Checkbox
@@ -90,7 +90,7 @@ const TagSelector = ({
           </div>
           <div className="flex gap-4">
             <ResetButton handleClick={handleResetTags} />
-            <button className="h-[40px] flex-1 rounded-lg bg-primary text-sm font-bold text-white">
+            <button className="bg-primary-500 h-[40px] flex-1 rounded-lg text-sm font-bold text-white">
               확인
             </button>
           </div>

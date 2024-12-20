@@ -17,7 +17,7 @@ export default function Topbar() {
     }
   };
   return (
-    <div className="mb-8 flex h-[104px] w-full items-center justify-between border bg-[#5242BF] px-10 py-7">
+    <div className="bg-paperabovebg mb-8 flex h-[104px] w-full items-center justify-between border px-10 py-7">
       <div className="relative">
         <input
           type="text"

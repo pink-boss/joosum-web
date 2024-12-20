@@ -9,7 +9,7 @@ export default function FolderDetail() {
 
   return (
     <div className="flex min-h-0 w-full flex-1 flex-col gap-[25px] px-10">
-      <div className="text-[32px] font-extrabold leading-10 text-[#2F2F2F]">
+      <div className="text-gray-ink text-[32px] font-extrabold leading-10">
         {linkBook ? linkBook.title : "전체"}
       </div>
       <Filter />
