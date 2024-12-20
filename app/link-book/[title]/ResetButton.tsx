@@ -7,7 +7,7 @@ type InputProps = {
 export default function ResetButton({ handleClick }: InputProps) {
   return (
     <button
-      className="flex w-16 flex-shrink-0 items-center gap-1 text-sm font-semibold text-text-secondary"
+      className="text-gray-dim flex w-16 flex-shrink-0 items-center gap-1 text-sm font-semibold"
       onClick={handleClick}
     >
       <Image src="/icons/reset.png" alt="reset" width={16} height={16} />

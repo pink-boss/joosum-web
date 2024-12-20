@@ -4,28 +4,15 @@ import { mockLink } from "../mocks/link.mocks";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { http, HttpResponse } from "msw";
 import { jest } from "@storybook/jest";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
-import { Link } from "@/types/link.types";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
-
-const LinkWithCachedData = () => {
-  const { data } = useQuery<Link>({
-    queryKey: ["link", "title", mockLink.title],
-    enabled: false,
-  });
-  if (data) return <LinkCard link={data} />;
-};
 
 let capturedRequest: Request | null = null;
 
 const meta = {
   title: "Page/FolderList/LinkCard",
-  component: LinkWithCachedData,
+  component: LinkCard,
   tags: ["autodocs"],
   parameters: {
     msw: {
@@ -38,21 +25,21 @@ const meta = {
     },
   },
   decorators: (Story) => {
-    queryClient.setQueryData(["link", "title", mockLink.title], () => mockLink);
     return (
       <QueryClientProvider client={queryClient}>
         <Story />
       </QueryClientProvider>
     );
   },
-} satisfies Meta<typeof LinkWithCachedData>;
+  args: { link: mockLink },
+} satisfies Meta<typeof LinkCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const TestLinkClick: Story = {
+export const TestLinkClickCount: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 

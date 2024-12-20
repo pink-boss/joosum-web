@@ -2,24 +2,13 @@ import Dropdown from "@/components/Dropdown";
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
-
-const options = [
-  { label: "생성순", value: "created_at" },
-  { label: "제목순", value: "title" },
-  { label: "업데이트순", value: "last_saved_at" },
-];
+import { options } from "../pages/mocks/filter";
 
 const DropdownWrapper = () => {
   const [selected, setSelected] = useState<Value>("created_at");
 
   return (
-    <Dropdown
-      selected={selected}
-      setSelected={(value) => {
-        setSelected(value);
-      }}
-      options={options}
-    />
+    <Dropdown selected={selected} setSelected={setSelected} options={options} />
   );
 };
 
@@ -28,9 +17,6 @@ const meta = {
   component: DropdownWrapper,
   parameters: {},
   tags: ["autodocs"],
-  args: {
-    options,
-  },
 } satisfies Meta<typeof DropdownWrapper>;
 
 export default meta;

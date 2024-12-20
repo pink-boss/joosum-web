@@ -9,7 +9,7 @@ import { jest } from "@storybook/jest";
 import { LinkSortState } from "@/store/useLinkSortStore";
 import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
 import { DeleteLinkDialog } from "@/components/dialog/dynamic";
-import ReassignLinkBookDialog from "@/app/link-book/dialog/ReassignLinkBookDialog";
+import { ReassignLinkBookDialog } from "@/app/link-book/dialog/dynamic";
 import { mockLinkBooks } from "../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();
@@ -43,7 +43,7 @@ const meta = {
           capturedRequest = request;
           return HttpResponse.json({ status: 200 });
         }),
-        http.get("/api/my-folder?sort=created_at", ({ request }) => {
+        http.get("/api/link-books?sort=created_at", ({ request }) => {
           capturedRequest = request;
           return HttpResponse.json({
             linkBooks: mockLinkBooks,
@@ -93,30 +93,32 @@ export const TestCheckStatement: Story = {
     // edit mode 변경
     await userEvent.click(canvas.getByRole("button", { name: "편집" }));
 
-    const checkboxList = canvas.getAllByRole("listitem");
+    await waitFor(async () => {
+      const checkboxList = canvas.getAllByRole("listitem");
 
-    // 3번 체크 박스 적용 확인
-    await userEvent.click(within(checkboxList[2]).getByRole("checkbox"));
-    await expect(checkboxList[2].firstChild).toBeChecked();
+      // 3번 체크 박스 적용 확인
+      await userEvent.click(within(checkboxList[2]).getByRole("checkbox"));
+      await expect(checkboxList[2].firstChild).toBeChecked();
 
-    // 모두 체크
-    await userEvent.click(
-      canvas.getByRole("checkbox", {
-        name: "모두 선택",
-      }),
-    );
-    checkboxList.forEach(async (checkbox) => {
-      await expect(checkbox.firstChild).toBeChecked();
-    });
+      // 모두 체크
+      await userEvent.click(
+        canvas.getByRole("checkbox", {
+          name: "모두 선택",
+        }),
+      );
+      checkboxList.forEach(async (checkbox) => {
+        await expect(checkbox.firstChild).toBeChecked();
+      });
 
-    // 모두 해제
-    await userEvent.click(
-      canvas.getByRole("checkbox", {
-        name: "모두 선택",
-      }),
-    );
-    checkboxList.forEach(async (checkbox) => {
-      await expect(checkbox.firstChild).not.toBeChecked();
+      // 모두 해제
+      await userEvent.click(
+        canvas.getByRole("checkbox", {
+          name: "모두 선택",
+        }),
+      );
+      checkboxList.forEach(async (checkbox) => {
+        await expect(checkbox.firstChild).not.toBeChecked();
+      });
     });
   },
 };

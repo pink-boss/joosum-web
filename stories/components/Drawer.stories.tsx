@@ -17,9 +17,15 @@ import { mockTags } from "../pages/mocks/tag.mocks";
 import FakeTimers from "@sinonjs/fake-timers";
 import { jest } from "@storybook/jest";
 import { Link } from "@/types/link.types";
+import { ShareLinkDialog } from "@/app/link-book/dialog/dynamic";
+import { getLinkListQueryKey } from "@/utils/queryKey";
 
 const queryClient = new QueryClient();
-let capturedRequest: Request | null = null;
+let capturedRequest: {
+  updateLink?: Request;
+  updateLinkBook?: Request;
+  deleteLink?: Request;
+} = {};
 let invalidateQuerySpy: any;
 
 const meta = {
@@ -27,7 +33,7 @@ const meta = {
   component: MutateLinkDrawer,
   tags: ["autodocs"],
   decorators: (Story) => {
-    const { isMutateLinkBookOpen, isDeleteDrawerLinkOpen } =
+    const { isMutateLinkBookOpen, isDeleteDrawerLinkOpen, isShareLinkOpen } =
       useOpenDialogStore();
     return (
       <QueryClientProvider client={queryClient}>
@@ -35,6 +41,7 @@ const meta = {
         <div id="modal-root" />
         {isMutateLinkBookOpen && <MutateLinkBookDialog />}
         {isDeleteDrawerLinkOpen && <DeleteDrawerLinkDialog />}
+        {isShareLinkOpen && <ShareLinkDialog />}
         <Story />
       </QueryClientProvider>
     );
@@ -42,10 +49,10 @@ const meta = {
   parameters: {
     msw: {
       handlers: [
-        http.get("/api/my-folder?sort=created_at", () => {
+        http.get("/api/link-books?sort=created_at", () => {
           return HttpResponse.json(mockRespone);
         }),
-        http.post("/my-folder/api", async ({ request }) => {
+        http.post("/api/link-books", async ({ request }) => {
           const data = (await request.json()) as CreateFormState;
           return HttpResponse.json({ ...data, linkBookId: "lb_999" });
         }),
@@ -53,23 +60,26 @@ const meta = {
           return HttpResponse.json(mockTags);
         }),
         http.put("/api/links/:linkId", async ({ request }) => {
-          capturedRequest = request.clone();
+          capturedRequest.updateLink = request.clone();
           const data = (await request.json()) as CreateFormState;
           return HttpResponse.json({ ...mockLink, ...data });
         }),
         http.put(
           "/api/links/:linkId/link-book-id/:linkBookId",
           ({ request }) => {
-            capturedRequest = request.clone();
+            capturedRequest.updateLinkBook = request.clone();
             return HttpResponse.json({ status: 204 });
           },
         ),
         http.delete("/api/links/:linkId", async ({ request }) => {
-          capturedRequest = request.clone();
+          capturedRequest.deleteLink = request.clone();
           return HttpResponse.json({ status: 204 });
         }),
       ],
     },
+  },
+  beforeEach: () => {
+    capturedRequest = {};
   },
 } satisfies Meta<typeof MutateLinkDrawer>;
 
@@ -168,38 +178,39 @@ export const AddFolder: Story = {
   },
 };
 
+// TODO: 생성 기능 막고 커밋. 태그 한번 추가하고 난 뒤 ui, 링크 복사 피드백은 어떻게?
 // TODO: 기획대로 수정
-export const UpdateTag: Story = {
-  play: async ({ canvasElement }) => {
-    useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
+// export const UpdateTag: Story = {
+//   play: async ({ canvasElement }) => {
+//     useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
 
-    const canvas = within(canvasElement);
+//     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      const selectedTags = within(canvas.getByTestId("selected-tags"));
-      await userEvent.click(selectedTags.getAllByRole("button")[0]);
-    });
+//     await waitFor(async () => {
+//       const selectedTags = within(canvas.getByTestId("selected-tags"));
+//       await userEvent.click(selectedTags.getAllByRole("button")[0]);
+//     });
 
-    await waitFor(async () => {
-      await userEvent.click(canvas.getByTestId("edit-tags-button"));
-    });
+//     await waitFor(async () => {
+//       await userEvent.click(canvas.getByTestId("edit-tags-button"));
+//     });
 
-    await waitFor(async () => {
-      const tagSelector = within(canvas.getByTestId("tag-selector"));
-      await userEvent.click(tagSelector.getByTestId("open-button"));
-      await userEvent.click(tagSelector.getByText(mockTags[0]));
-    });
+//     await waitFor(async () => {
+//       const tagSelector = within(canvas.getByTestId("tag-selector"));
+//       await userEvent.click(tagSelector.getByTestId("open-button"));
+//       await userEvent.click(tagSelector.getByText(mockTags[0]));
+//     });
 
-    await waitFor(async () => {
-      await userEvent.click(canvas.getByTestId("edit-tags-button"));
-    });
+//     await waitFor(async () => {
+//       await userEvent.click(canvas.getByTestId("edit-tags-button"));
+//     });
 
-    const selectedTags = within(canvas.getByTestId("selected-tags"));
-    expect(selectedTags.getByText(mockLink.tags[1])).toBeInTheDocument();
-    expect(selectedTags.getByText(mockLink.tags[2])).toBeInTheDocument();
-    expect(selectedTags.getByText(mockTags[0])).toBeInTheDocument();
-  },
-};
+//     const selectedTags = within(canvas.getByTestId("selected-tags"));
+//     expect(selectedTags.getByText(mockLink.tags[1])).toBeInTheDocument();
+//     expect(selectedTags.getByText(mockLink.tags[2])).toBeInTheDocument();
+//     expect(selectedTags.getByText(mockTags[0])).toBeInTheDocument();
+//   },
+// };
 
 export const UpdateLink: Story = {
   decorators: (Story) => {
@@ -235,28 +246,37 @@ export const UpdateLink: Story = {
       await userEvent.click(within(folderSelector).getByText(NEW_FOLDER_NAME));
 
       // tag 수정
-      await waitFor(async () => {
-        await userEvent.click(canvas.getByTestId("edit-tags-button"));
-      });
+      // await waitFor(async () => {
+      //   await userEvent.click(canvas.getByTestId("edit-tags-button"));
+      // });
 
-      await waitFor(async () => {
-        const tagSelector = within(canvas.getByTestId("tag-selector"));
-        await userEvent.click(tagSelector.getByTestId("open-button"));
-        await userEvent.click(tagSelector.getByText(NEW_TAG));
-      });
+      // await waitFor(async () => {
+      //   const tagSelector = within(canvas.getByTestId("tag-selector"));
+      //   await userEvent.click(tagSelector.getByTestId("open-button"));
+      //   await userEvent.click(tagSelector.getByText(NEW_TAG));
+      // });
 
       await userEvent.click(canvas.getByText("수정"));
 
-      // 확인
-      if (capturedRequest) {
-        const url = new URL(capturedRequest.url);
-        const body = await capturedRequest.json();
+      // request 확인
+      if (capturedRequest.updateLink) {
+        const url = new URL(capturedRequest.updateLink.url);
         expect(url.pathname).toBe(`/api/links/${mockLink.linkId}`);
-        expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
-        expect(body.title).toBe(NEW_TITLE);
-        expect(body.linkBookId).toBe(NEW_FOLDER_ID);
-        expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
-      }
+        if (!capturedRequest.updateLink.bodyUsed) {
+          const body = await capturedRequest.updateLink.json();
+          expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
+          expect(body.title).toBe(NEW_TITLE);
+          expect(body.linkBookId).toBe(NEW_FOLDER_ID);
+          // expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
+        } else expect(null).toBe("이미 사용된 bodyUsed");
+      } else expect(null).toBe("updateLink request X");
+
+      if (capturedRequest.updateLinkBook) {
+        const url = new URL(capturedRequest.updateLinkBook.url);
+        expect(url.pathname).toBe(
+          `/api/links/${mockLink.linkId}/link-book-id/${NEW_FOLDER_ID}`,
+        );
+      } else expect(null).toBe("updateLinkBook request X");
 
       // toast
       await waitFor(async () => {
@@ -281,7 +301,7 @@ export const UpdateLink: Story = {
 
 export const DeleteLink: Story = {
   play: async ({ canvasElement }) => {
-    const queryKey = ["linkList", mockLink.linkBookId];
+    const queryKey = getLinkListQueryKey(mockLink.linkBookId);
     queryClient.setQueryData(queryKey, () =>
       mockLinks.filter((link) => link.linkBookId === mockLink.linkBookId),
     );
@@ -299,10 +319,10 @@ export const DeleteLink: Story = {
     });
 
     // request
-    if (capturedRequest) {
-      const url = new URL(capturedRequest.url);
+    if (capturedRequest.deleteLink) {
+      const url = new URL(capturedRequest.deleteLink.url);
       expect(url.pathname).toBe(`/api/links/${mockLink.linkId}`);
-      expect(capturedRequest.method).toBe("DELETE");
+      expect(capturedRequest.deleteLink.method).toBe("DELETE");
     }
 
     // update cache
@@ -316,10 +336,38 @@ export const DeleteLink: Story = {
   },
 };
 
-// TODO: 공유
-// export const RenderFormData: Story = {
-//   play: async({canvasElement}) => {
-//     const canvas = within(canvasElement)
-//     //
-//   }
-// }
+const mockClipboard = {
+  writeText: jest.fn().mockImplementation(() => Promise.resolve()),
+};
+
+export const ShareLink: Story = {
+  beforeEach: () => {
+    Object.defineProperty(window.navigator, "clipboard", {
+      value: mockClipboard,
+      writable: true,
+    });
+    useOpenDrawerStore.setState({ link: mockLinks[0], isLinkDrawerOpen: true });
+  },
+  decorators: (Story) => {
+    queryClient.setQueryData(getLinkListQueryKey(), () => mockLinks);
+    return <Story />;
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await userEvent.click(canvas.getByAltText("share"));
+    });
+
+    // 링크 복사
+    await waitFor(async () => {
+      await userEvent.click(canvas.getByAltText("copy-link"));
+      expect(mockClipboard.writeText).toHaveBeenCalledWith(mockLinks[0].url);
+    });
+
+    // TODO: 카카오톡
+
+    // 닫기
+    await userEvent.click(canvas.getByRole("button", { name: "취소" }));
+  },
+};

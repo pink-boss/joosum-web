@@ -37,7 +37,12 @@ export async function serverApi({
       requestInit,
     );
 
+    if (!response.body) {
+      return NextResponse.json({ status: response.status });
+    }
+
     const data = await response.json();
+
     return NextResponse.json(data);
   } catch (error) {
     console.error("Error:", error);

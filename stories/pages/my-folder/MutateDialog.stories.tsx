@@ -13,24 +13,21 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
-function ComposeComponent() {
-  return (
+const meta = {
+  title: "Page/MyFolder/MutateDialog",
+  component: CreateButton,
+  tags: ["autodocs"],
+  decorators: (Story) => (
     <QueryClientProvider client={queryClient}>
-      <CreateButton />
+      <Story />
       <div id="modal-root" />
       <MutateDialog />
     </QueryClientProvider>
-  );
-}
-
-const meta = {
-  title: "Page/MyFolder/Dialog/Mutate",
-  component: ComposeComponent,
-  tags: ["autodocs"],
-} satisfies Meta<typeof ComposeComponent>;
+  ),
+} satisfies Meta<typeof CreateButton>;
 
 export default meta;
-type Story = StoryObj<typeof ComposeComponent>;
+type Story = StoryObj<typeof meta>;
 
 export const OpenCloseDialog: Story = {
   play: async ({ canvasElement }) => {

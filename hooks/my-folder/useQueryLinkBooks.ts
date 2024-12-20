@@ -6,7 +6,7 @@ export default function useQueryLinkBooks(sort: Sort) {
   return useQuery<TQueryLinkBooks>({
     queryKey: ["linkBookList", sort],
     queryFn: () =>
-      fetch(`/api/my-folder?sort=${sort}`, {
+      fetch(`/api/link-books?sort=${sort}`, {
         method: "GET",
       }).then((res) => res.json()),
   });

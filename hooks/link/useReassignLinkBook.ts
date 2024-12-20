@@ -1,9 +1,9 @@
-import { LinkBook, LinkBookIdParam } from "@/types/linkBook.types";
+import { LinkBook } from "@/types/linkBook.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useCheckLink from "./useCheckLink";
 import { Link } from "@/types/link.types";
-import { useParams } from "next/navigation";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
+import { getLinkListQueryKey } from "@/utils/queryKey";
 
 interface ReassignParams {
   toLinkBookId: LinkBook["linkBookId"];
@@ -70,12 +70,12 @@ export default function useReassignLinkBook(onSuccessCallback: () => void) {
     },
     onSuccess: ({ toLinkBookId }) => {
       queryClient.setQueriesData<Link[]>(
-        { queryKey: ["linkList", fromLinkBook?.linkBookId] },
+        { queryKey: getLinkListQueryKey(fromLinkBook?.linkBookId) },
         (prevLinks) =>
           prevLinks?.filter((link) => !cachedLinks.has(link.linkId)),
       );
       queryClient.invalidateQueries({
-        queryKey: ["linkList", toLinkBookId],
+        queryKey: getLinkListQueryKey(toLinkBookId),
       });
 
       onSuccessCallback();

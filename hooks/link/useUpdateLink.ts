@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, UpdateFormState } from "@/types/link.types";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
+import { getLinkListQueryKey } from "@/utils/queryKey";
 
 type SuccessResult = [Link, { status: 204 }];
 
@@ -10,7 +11,7 @@ export default function useUpdateLink(onSuccessCallback: () => void) {
 
   return useMutation<Link, Error, UpdateFormState>({
     mutationFn: async (state) => {
-      const work: Promise<Link | ApiError | { status: 204 }>[] = [];
+      const work: Promise<Link | ApiError | { status: number }>[] = [];
 
       const linkUpdateResult: Promise<Link | ApiError> = (
         await fetch(`/api/links/${state.linkId ?? ""}`, {
@@ -21,7 +22,7 @@ export default function useUpdateLink(onSuccessCallback: () => void) {
       work.push(linkUpdateResult);
 
       if (state.linkId) {
-        const linkBookUpdateResult: Promise<{ status: 204 } | ApiError> = (
+        const linkBookUpdateResult: Promise<{ status: number } | ApiError> = (
           await fetch(
             `/api/links/${state.linkId}/link-book-id/${state.linkBookId}`,
             {
@@ -50,7 +51,7 @@ export default function useUpdateLink(onSuccessCallback: () => void) {
     },
     onSuccess: (result) => {
       queryClient.invalidateQueries({
-        queryKey: ["linkList", prevLinkBook?.linkBookId],
+        queryKey: getLinkListQueryKey(prevLinkBook?.linkBookId),
       });
       onSuccessCallback();
     },
@@ -58,7 +59,7 @@ export default function useUpdateLink(onSuccessCallback: () => void) {
 }
 
 const isSuccessfulResponse = (
-  response: (Link | ApiError | { status: 204 })[],
+  response: (Link | ApiError | { status: number })[],
 ): response is SuccessResult => {
   return response.every((item) => !("error" in item));
 };

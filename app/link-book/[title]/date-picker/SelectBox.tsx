@@ -15,8 +15,8 @@ export function SelectBox({ selected, isOpen, setIsOpen }: SelectBoxProps) {
       data-testid="open-button"
       onClick={() => setIsOpen(!isOpen)}
       className={clsx(
-        "flex items-center px-3 text-sm text-text-secondary",
-        "h-[46px] w-[305px] rounded-lg border border-[#BBBBBB]",
+        "text-gray-dim flex items-center px-3 text-sm",
+        "border-gray-silver h-[46px] w-[305px] rounded-lg border",
       )}
     >
       {selected.length ? (

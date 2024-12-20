@@ -8,10 +8,8 @@ import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import { useLinkBookSortStore } from "@/store/useLinkBookSortStore";
 import { sortOptions } from "./constants";
 
-// TODO: api 이동
 // TODO: 테스트
 // TODO: 고도화 적용 - 폴더 컬러, 타이틀 글자 수, 더보기 버튼 컬러
-// TODO: more dropdown이 overflow hidden 됨
 export default function MyFolder() {
   const { sort, setSort } = useLinkBookSortStore();
 
