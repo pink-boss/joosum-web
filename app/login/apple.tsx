@@ -16,10 +16,11 @@ const AppleOAuthHandler = () => {
   };
 
   useEffect(() => {
+    const redirectURI = `${process.env.NEXT_PUBLIC_JOOSUM_WEB_URI}/auth/callback/apple`;
     window.AppleID?.auth.init({
       clientId: APPLE_CLIENT_ID,
       scope: "name email",
-      redirectURI: `${HOST}/auth/callback/apple`,
+      redirectURI: encodeURIComponent(redirectURI),
       state: "signin",
     });
   }, []);

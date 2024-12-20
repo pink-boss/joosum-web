@@ -39,7 +39,7 @@ export default function Drawer({
         role="dialog"
         className={clsx(
           "fixed right-0 top-0 z-20 h-full w-[494px]",
-          "border border-background-secondary",
+          "border-gray-ghost border",
           "bg-white pb-20 pt-5",
           "flex flex-col gap-10",
           className && className,

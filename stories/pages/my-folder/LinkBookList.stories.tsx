@@ -2,7 +2,7 @@ import LinkBookList from "@/app/my-folder/LinkBookList";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { within, expect } from "@storybook/test";
-import { mockLinkBooks } from "../mocks/linkBook.mocks";
+import { mockRespone } from "../mocks/linkBook.mocks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
@@ -10,7 +10,7 @@ const queryClient = new QueryClient();
 const meta = {
   title: "Page/MyFolder/LinkBookList",
   component: LinkBookList,
-  args: { linkBooks: mockLinkBooks, totalLinkCount: mockLinkBooks.length },
+  args: mockRespone,
   tags: ["autodocs"],
   decorators: (Story) => (
     <QueryClientProvider client={queryClient}>
@@ -20,7 +20,7 @@ const meta = {
 } satisfies Meta<typeof LinkBookList>;
 
 export default meta;
-type Story = StoryObj<typeof LinkBookList>;
+type Story = StoryObj<typeof meta>;
 
 export const RenderList: Story = {
   play: async ({ canvasElement }) => {

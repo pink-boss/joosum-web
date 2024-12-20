@@ -27,7 +27,7 @@ export default function ChangeMonth({
           height={24}
         />
       </button>
-      <span className="font-bold text-[#1D1D1D]">
+      <span className="text-gray-black font-bold">
         {renderMonth.getFullYear()}년 {renderMonth.getMonth() + 1}월
       </span>
       <button onClick={() => handleChangeMonth("next")}>

@@ -20,8 +20,8 @@ function EditorTab({ tab, selectedTab, setSelectedTab }: EditorTabInputProps) {
       className={clsx(
         "min-w-[68px] cursor-pointer px-2 py-1 text-lg",
         isSelected
-          ? "border-b-[2px] border-primary font-bold text-primary"
-          : "text-[#909090]",
+          ? "border-primary-500 text-primary-500 border-b-[2px] font-bold"
+          : "text-gray-slate",
       )}
       onClick={() => setSelectedTab(tab.title)}
     >
@@ -41,10 +41,10 @@ export default function FolderSettingEditor({
   const tabs = useEditorTabs(formState, setFormState);
   const [selectedTab, setSelectedTab] = useState(tabs[0].title);
   return (
-    <>
+    <div className="mb-5 flex w-full flex-col items-center">
       <div
         className={clsx(
-          "min-h-[256px] w-full flex-1 bg-background-menu",
+          "bg-gray-vapor min-h-[256px] w-full flex-1",
           "flex items-center justify-center",
         )}
       >
@@ -63,6 +63,6 @@ export default function FolderSettingEditor({
         </div>
         {tabs.find(({ title }) => selectedTab === title)?.component}
       </div>
-    </>
+    </div>
   );
 }

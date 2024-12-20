@@ -27,14 +27,14 @@ export default function Filter() {
         <input
           type="radio"
           id="unread-radio"
-          className="h-6 w-6 accent-primary"
+          className="accent-primary-500 h-6 w-6"
           onClick={handleClickUnread}
           readOnly
           checked={unread}
         />
         <label
           htmlFor="unread-radio"
-          className="text-lg font-semibold text-text-secondary"
+          className="text-gray-dim text-lg font-semibold"
         >
           읽지 않음
         </label>

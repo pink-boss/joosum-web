@@ -36,7 +36,9 @@ function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
             className={clsx("h-5 w-5 rounded-full border border-white")}
             style={{ backgroundColor: linkBook.backgroundColor }}
           />
-          <div className="font-semibold text-[#444444]">{linkBook.title}</div>
+          <div className="text-gray-graphite font-semibold">
+            {linkBook.title}
+          </div>
         </div>
       </div>
     </LinkToPage>
@@ -118,7 +120,7 @@ export default function Menu() {
         onClick={handleCreateFolder}
       >
         <Image src="/icons/icon-plus.png" width={28} height={28} alt="plus" />
-        <div className="font-semibold text-[#444444]">폴더 만들기</div>
+        <div className="text-gray-graphite font-semibold">폴더 만들기</div>
       </div>
     </div>
   );

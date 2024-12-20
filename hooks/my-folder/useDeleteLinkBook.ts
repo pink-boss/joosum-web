@@ -9,7 +9,7 @@ export default function useDeleteLinkBook(onSuccessCallback: () => void) {
   return useMutation<{ deletedLinks: number }, Error>({
     mutationFn: async () =>
       (
-        await fetch(`my-folder/api/${linkBook?.linkBookId}`, {
+        await fetch(`/api/link-books/${linkBook?.linkBookId}`, {
           method: "DELETE",
         })
       ).json(),

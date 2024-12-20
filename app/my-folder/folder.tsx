@@ -88,7 +88,7 @@ export default function Folder({ linkBook }: InputProps) {
             </div>
           )}
         </FolderBook>
-        <div className="text-text-secondary">{linkBook.linkCount}개</div>
+        <div className="text-gray-dim">{linkBook.linkCount}개</div>
       </div>
     </LinkToPage>
   );

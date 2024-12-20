@@ -1,18 +1,18 @@
 import { Sort } from "@/store/useLinkBookSortStore";
 
 export const pickBackgroundColors = [
-  "#91B0C4",
-  "#FFFFB4",
-  "#F5BAAA",
-  "#FFD8BE",
-  "#CABCD7",
-  "#CCE2CB",
-  "#4D6776",
-  "#F6B756",
-  "#D56573",
-  "#FF6854",
-  "#A86EA0",
-  "#748A7E",
+  "#C295EC",
+  "#9098F7",
+  "#7EBCFF",
+  "#6FDAE6",
+  "#FF6E70",
+  "#FF8AB1",
+  "#FF8F5B",
+  "#FFD56E",
+  "#82DE8E",
+  "#C8E77A",
+  "#A4A4A4",
+  "#F6F6F6",
 ];
 
 export const pickTitleColors = ["#FFFFFF", "#000000"];

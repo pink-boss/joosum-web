@@ -19,7 +19,7 @@ export default function ColorBox({
   colorIndex,
 }: InputProps) {
   const isSelected = previewColor && previewColor === color;
-  const isBrightColor = [WHITE_COLOR, "#FFFFB4"].includes(color);
+  const isBrightColor = [WHITE_COLOR, "#F6F6F6"].includes(color);
   const isWhiteColor = color === WHITE_COLOR;
   return (
     <button

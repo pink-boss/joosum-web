@@ -21,7 +21,7 @@ const Dropdown = ({ selected, setSelected, options }: InputProps) => {
       <button
         data-testid="open-button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-[24px] items-center p-1 font-semibold text-text-secondary"
+        className="text-gray-dim flex h-[24px] items-center p-1 font-semibold"
       >
         <div>{selectedOption?.label}</div>
         <Image src="/icons/icon-down2.png" alt="down" width={24} height={24} />
@@ -29,7 +29,7 @@ const Dropdown = ({ selected, setSelected, options }: InputProps) => {
 
       {isOpen && (
         <div
-          className="absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border border-background-secondary bg-white py-4 shadow-lg"
+          className="border-gray-ghost absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border bg-white py-4 shadow-lg"
           data-testid="dropdown-content"
         >
           {options.map((item) => (
@@ -43,8 +43,8 @@ const Dropdown = ({ selected, setSelected, options }: InputProps) => {
               className={clsx(
                 "w-full px-5 py-1 leading-5",
                 selected === item.value
-                  ? "font-bold text-[#1D1D1D]"
-                  : "text-text-secondary",
+                  ? "text-gray-black font-bold"
+                  : "text-gray-dim",
               )}
             >
               {item.label}

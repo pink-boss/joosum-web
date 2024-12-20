@@ -6,6 +6,7 @@ import { ApiError } from "next/dist/server/api-utils";
 import { useEffect, useMemo } from "react";
 import { Link } from "@/types/link.types";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
+import { getLinkListQueryKey } from "@/utils/queryKey";
 
 export function useQueryLinks() {
   const linkBook = useLinkBookFromTitle();
@@ -23,7 +24,7 @@ export function useQueryLinks() {
     refetch,
     ...others
   } = useQuery<Link[], ApiError>({
-    queryKey: ["linkList", linkBook?.linkBookId],
+    queryKey: getLinkListQueryKey(linkBook?.linkBookId),
     queryFn: () =>
       fetch(`/api/${pathname}?${queryString}`, {
         method: "GET",

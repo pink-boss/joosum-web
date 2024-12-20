@@ -1,4 +1,5 @@
 "use client";
+
 import "./globals.css";
 import localFont from "next/font/local";
 import clsx from "clsx";
@@ -8,12 +9,9 @@ import { usePathname } from "next/navigation";
 import { publicOnlyPaths } from "@/utils/path";
 import Topbar from "@/components/layout/Topbar";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useOpenDialogStore } from "@/store/useDialogStore";
-import {
-  DeleteLinkBookDialog,
-  DeleteLinkDialog,
-  MutateLinkBookDialog,
-} from "@/components/dialog/dynamic";
+import DynamicOpenDialogs from "@/components/dialog/DynamicOpenDialogs";
+import { useOpenDrawerStore } from "@/store/useDrawerStore";
+import { MutateLinkDrawer } from "./link-book/drawer/dynamic";
 
 const queryClient = new QueryClient();
 
@@ -31,8 +29,8 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const isPublicOnlyPath = publicOnlyPaths.includes(pathname);
-  const { isMutateLinkBookOpen, isDeleteLinkBookOpen, isDeleteLinkOpen } =
-    useOpenDialogStore();
+
+  const { isLinkDrawerOpen } = useOpenDrawerStore();
 
   return (
     <html lang="ko">
@@ -55,9 +53,8 @@ export default function RootLayout({
                 {children}
                 <div id="drawer-root" />
                 <div id="modal-root" />
-                {isMutateLinkBookOpen && <MutateLinkBookDialog />}
-                {isDeleteLinkBookOpen && <DeleteLinkBookDialog />}
-                {isDeleteLinkOpen && <DeleteLinkDialog />}
+                {isLinkDrawerOpen && <MutateLinkDrawer />}
+                <DynamicOpenDialogs />
               </Component>
             </Sidebar>
             <ReactQueryDevtools initialIsOpen={false} />

@@ -6,27 +6,35 @@ import { useState } from "react";
 import NextLink from "next/link";
 import EmptyLinks from "@/components/EmptyLinks";
 import { Link } from "@/types/link.types";
+import { getLinkListQueryKey } from "@/utils/queryKey";
+import { useQuery } from "@tanstack/react-query";
 
-type InputProps = {
-  links: Link[];
-};
-
-export default function LinkCardList({ links }: InputProps) {
+export default function LinkCardList() {
   const [isAllLinks, setIsAllLinks] = useState(false);
   const [filter, setFilter] = useState<"latest" | "unread">("latest");
+
+  const {
+    isPending,
+    error,
+    data = [],
+  } = useQuery<Link[], ApiError>({
+    queryKey: getLinkListQueryKey(),
+    queryFn: () =>
+      fetch(`/api/links`, {
+        method: "GET",
+      }).then((res) => res.json()),
+  });
+
   const handleFilter = (e: any) => {
     setFilter(e.target.value);
   };
   const filteredLinks =
-    filter === "unread" ? links.filter(({ readCount }) => !readCount) : links;
+    filter === "unread" ? data.filter(({ readCount }) => !readCount) : data;
 
   return (
-    <div className="flex flex-1 flex-col gap-8">
+    <div className="flex h-full flex-1 flex-col gap-8 overflow-hidden">
       <div className="flex items-center justify-between">
-        <form
-          className="flex gap-6 text-text-secondary"
-          onChange={handleFilter}
-        >
+        <form className="text-gray-dim flex gap-6" onChange={handleFilter}>
           <div className="flex gap-2">
             <input
               type="radio"
@@ -34,7 +42,7 @@ export default function LinkCardList({ links }: InputProps) {
               id="filter-latest"
               value="latest"
               defaultChecked
-              className="h-6 w-6 accent-primary"
+              className="accent-primary-500 h-6 w-6"
             />
             <label htmlFor="filter-latest">최근 저장</label>
           </div>
@@ -44,7 +52,7 @@ export default function LinkCardList({ links }: InputProps) {
               name="filter"
               id="filter-unread"
               value="unread"
-              className="h-6 w-6 accent-primary"
+              className="accent-primary-500 h-6 w-6"
             />
             <label htmlFor="filter-unread">읽지 않음</label>
           </div>
@@ -62,20 +70,20 @@ export default function LinkCardList({ links }: InputProps) {
         </NextLink>
       </div>
       {filteredLinks.length ? (
-        <div className="flex flex-col items-center gap-8">
-          <div className="grid grid-cols-4 gap-8 overflow-auto">
+        <div className="flex flex-col items-start gap-8 overflow-auto">
+          <div className="flex flex-wrap gap-x-[22px] gap-y-5">
             {filteredLinks
               .slice(0, isAllLinks ? undefined : 29)
               .map((link, index) => (
                 <LinkCard key={index} link={link} />
               ))}
           </div>
-          {filteredLinks.length > 30 && (
+          {filteredLinks.length > 30 && !isAllLinks && (
             <div
-              className="flex cursor-pointer rounded-lg py-4"
+              className="flex cursor-pointer self-center rounded-lg py-4"
               onClick={() => setIsAllLinks(true)}
             >
-              <span className="text-lg font-bold text-text-secondary">
+              <span className="text-gray-dim text-lg font-bold">
                 {filter === "latest" ? "저장한" : "읽지 않은"} 링크{" "}
                 {filteredLinks.length - 30 > 999
                   ? "999+"
