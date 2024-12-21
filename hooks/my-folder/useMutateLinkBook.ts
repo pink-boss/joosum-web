@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import {
   CreateFormState,
@@ -9,9 +10,9 @@ import {
 
 import useSelectLinkBook from "./useSelectLinkBook";
 
-
 export default function useMutateLinkBook(onSuccessCallback: () => void) {
-  const { linkBook } = useSelectLinkBook();
+  const { key } = useOpenDialogStore();
+  const { linkBook } = useSelectLinkBook(key);
   const queryClient = useQueryClient();
   const {
     link: drawerLink,
@@ -25,7 +26,7 @@ export default function useMutateLinkBook(onSuccessCallback: () => void) {
       (prevLinkBooks) => {
         if (!prevLinkBooks) {
           return {
-            linkBooks: [result],
+            linkBooks: [{ ...result, linkCount: 0 }],
             totalLinkCount: 1,
           };
         } else if (linkBook) {
@@ -35,7 +36,7 @@ export default function useMutateLinkBook(onSuccessCallback: () => void) {
           return {
             linkBooks: [
               ...prevLinkBooks!.linkBooks.slice(0, index),
-              result,
+              { ...result, linkCount: linkBook.linkCount },
               ...prevLinkBooks!.linkBooks.slice(index + 1),
             ],
             totalLinkCount: prevLinkBooks.totalLinkCount,

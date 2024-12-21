@@ -1,11 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { useOpenDialogStore } from "@/store/useDialogStore";
 import { TQueryLinkBooks } from "@/types/linkBook.types";
 
 import useSelectLinkBook from "./useSelectLinkBook";
 
 export default function useDeleteLinkBook(onSuccessCallback: () => void) {
-  const { linkBook } = useSelectLinkBook();
+  const { key } = useOpenDialogStore();
+  const { linkBook } = useSelectLinkBook(key);
 
   const queryClient = useQueryClient();
   return useMutation<{ deletedLinks: number }, Error>({
