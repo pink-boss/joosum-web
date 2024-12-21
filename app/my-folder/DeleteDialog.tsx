@@ -1,9 +1,9 @@
 "use client";
 
-import { useOpenDialogStore } from "@/store/useDialogStore";
+import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import useDeleteLinkBook from "@/hooks/my-folder/useDeleteLinkBook";
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
-import ConfirmDialog from "@/components/dialog/ConfirmDialog";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 export default function DeleteDialog() {
   const {
@@ -34,7 +34,7 @@ export default function DeleteDialog() {
         onClick: handleSubmit,
       }}
     >
-      <div className="text-gray-ink text-center">
+      <div className="text-center text-gray-ink">
         <p>폴더 내의 모든 링크가 삭제됩니다.</p>
         <p>폴더를 삭제하시겠습니까?</p>
       </div>

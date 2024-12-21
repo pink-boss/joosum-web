@@ -25,17 +25,17 @@ export default function IllustrationBox({
   return (
     <button
       data-testid={`${stateName}-${illustrationIndex}`}
-      className={clsx("bg-gray-vapor relative h-20 w-20 rounded-lg")}
+      className={clsx("relative size-20 rounded-lg bg-gray-vapor")}
       onClick={() => {
         setPreviewIllustration(stateName, illustration);
       }}
     >
       {isSelected && (
-        <div className="bg-primary-500 absolute h-full w-full rounded-lg opacity-20"></div>
+        <div className="absolute size-full rounded-lg bg-primary-500 opacity-20"></div>
       )}
       <div
         className={clsx(
-          "flex h-full w-full items-center justify-center rounded-lg border",
+          "flex size-full items-center justify-center rounded-lg border",
         )}
       >
         {illustration ? (
@@ -46,7 +46,7 @@ export default function IllustrationBox({
             height={54.34}
           />
         ) : (
-          <div className="text-gray-dim text-sm">선택 안함</div>
+          <div className="text-sm text-gray-dim">선택 안함</div>
         )}
       </div>
     </button>

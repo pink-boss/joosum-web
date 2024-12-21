@@ -1,10 +1,12 @@
 "use client";
 
-import Image from "next/image";
-import { Banner } from "../../types/banner.types";
-import { useEffect, useState } from "react";
 import { setInterval } from "timers";
+
+import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+import { Banner } from "../../types/banner.types";
 
 type InputProps = {
   data: Banner[];
@@ -22,8 +24,8 @@ export default function BannerCard({ data }: InputProps) {
   }, [data.length]);
   return (
     <Link href={data[current]?.clickURL ?? ""} target="_blank">
-      <div className="bg-primary-lavender flex items-center justify-center gap-40 rounded-xl">
-        <div className="text-gray-ink text-2xl">
+      <div className="flex items-center justify-center gap-40 rounded-xl bg-primary-lavender">
+        <div className="text-2xl text-gray-ink">
           <p>지금 볼 시간이 없다면?</p>
           <p className="flex">
             <span className="font-bold">잊지 않게 매주 알려드려요!</span>

@@ -1,16 +1,18 @@
 "use client";
 
 import "./globals.css";
-import localFont from "next/font/local";
-import clsx from "clsx";
-import Sidebar from "@/components/layout/Sidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { usePathname } from "next/navigation";
-import { publicOnlyPaths } from "@/utils/path";
-import Topbar from "@/components/layout/Topbar";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import clsx from "clsx";
+import localFont from "next/font/local";
+import { usePathname } from "next/navigation";
+
 import DynamicOpenDialogs from "@/components/dialog/DynamicOpenDialogs";
+import Sidebar from "@/components/layout/Sidebar";
+import Topbar from "@/components/layout/Topbar";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
+import { publicOnlyPaths } from "@/utils/path";
+
 import { MutateLinkDrawer } from "./link-book/drawer/dynamic";
 
 const queryClient = new QueryClient();

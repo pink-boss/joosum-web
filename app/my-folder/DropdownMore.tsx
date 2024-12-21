@@ -1,9 +1,10 @@
-import { useClearDropdown } from "@/hooks/useClearDropdown";
-import { useOpenDialogStore } from "@/store/useDialogStore";
 import Image from "next/image";
 import { useCallback, useState } from "react";
-import { LinkBook } from "@/types/linkBook.types";
+
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
+import { useClearDropdown } from "@/hooks/useClearDropdown";
+import { useOpenDialogStore } from "@/store/useDialogStore";
+import { LinkBook } from "@/types/linkBook.types";
 
 type DropdownItemProps = {
   title: string;
@@ -14,7 +15,7 @@ const DropdownItem = ({ title, handleClick }: DropdownItemProps) => {
   return (
     <button
       onClick={handleClick}
-      className="text-gray-black w-full px-5 py-1 font-semibold"
+      className="w-full px-5 py-1 font-semibold text-gray-black"
     >
       {title}
     </button>
@@ -60,7 +61,7 @@ const DropdownMore = ({ linkBook }: InputProps) => {
     >
       <button
         onClick={onOpen}
-        className="flex h-12 w-12 items-center justify-center rounded-full bg-white/80"
+        className="flex size-12 items-center justify-center rounded-full bg-white/80"
       >
         <Image
           src="/icons/icon-more-vertical.png"
@@ -71,7 +72,7 @@ const DropdownMore = ({ linkBook }: InputProps) => {
       </button>
 
       {isOpen && (
-        <div className="border-gray-ghost absolute z-20 mt-1 flex w-[110px] flex-col rounded-lg border bg-white py-4 shadow-lg">
+        <div className="absolute z-20 mt-1 flex w-[110px] flex-col rounded-lg border border-gray-ghost bg-white py-4 shadow-lg">
           <DropdownItem title="폴더 수정" handleClick={handleModify} />
           <DropdownItem title="폴더 삭제" handleClick={handleDelete} />
         </div>

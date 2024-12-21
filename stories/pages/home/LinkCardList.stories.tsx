@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { mockLinks } from "../mocks/link.mocks";
-import LinkCardList from "@/app/home/LinkCardList";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import LinkCardList from "@/app/home/LinkCardList";
 import { getLinkListQueryKey } from "@/utils/queryKey";
+
+import { mockLinks } from "../mocks/link.mocks";
 
 const queryClient = new QueryClient();
 

@@ -1,9 +1,10 @@
 "use client";
 
-import { useOpenDialogStore } from "@/store/useDialogStore";
 import clsx from "clsx";
 import { ReactNode, useCallback } from "react";
 import { createPortal } from "react-dom";
+
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 export type InputProps = {
   open: boolean;
@@ -61,7 +62,7 @@ export default function Dialog({
         role="dialog"
         className={clsx(
           "absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2",
-          "rounded-2xl bg-white px-10 py-10 shadow-xl",
+          "rounded-2xl bg-white p-10 shadow-xl",
           className && className,
         )}
         aria-modal

@@ -1,7 +1,8 @@
-import { useSearchBarStore } from "@/store/useSearchBarStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { KeyboardEvent, useState } from "react";
+
+import { useSearchBarStore } from "@/store/useSearchBarStore";
 
 export default function Topbar() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function Topbar() {
     }
   };
   return (
-    <div className="bg-paperabovebg mb-8 flex h-[104px] w-full items-center justify-between border px-10 py-7">
+    <div className="mb-8 flex h-[104px] w-full items-center justify-between border bg-paperabovebg px-10 py-7">
       <div className="relative">
         <input
           type="text"
@@ -28,7 +29,7 @@ export default function Topbar() {
           onChange={(e) => setValue(e.target.value)}
         />
         <div
-          className="absolute right-3 top-1/2 -translate-y-1/2 transform cursor-pointer p-2"
+          className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer p-2"
           onClick={handleSubmit}
         >
           <Image

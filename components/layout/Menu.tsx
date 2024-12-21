@@ -1,13 +1,15 @@
-import Image from "next/image";
 import clsx from "clsx";
-import Loading from "../Loading";
+import Image from "next/image";
 import Link from "next/link";
-import { useOpenDialogStore } from "@/store/useDialogStore";
-import { useLayoutStore } from "@/store/useLayoutStore";
 import { MouseEvent } from "react";
-import LinkToPage from "../link-book/LinkToPage";
+
 import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
+import { useOpenDialogStore } from "@/store/useDialogStore";
+import { useLayoutStore } from "@/store/useLayoutStore";
+
+import LinkToPage from "../link-book/LinkToPage";
+import Loading from "../Loading";
 
 interface LinkBook {
   linkBookId: string;
@@ -33,10 +35,10 @@ function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
       <div className={clsx("h-[48px] py-3 pl-12 pr-5")}>
         <div className="flex gap-2">
           <div
-            className={clsx("h-5 w-5 rounded-full border border-white")}
+            className={clsx("size-5 rounded-full border border-white")}
             style={{ backgroundColor: linkBook.backgroundColor }}
           />
-          <div className="text-gray-graphite font-semibold">
+          <div className="font-semibold text-gray-graphite">
             {linkBook.title}
           </div>
         </div>
@@ -120,7 +122,7 @@ export default function Menu() {
         onClick={handleCreateFolder}
       >
         <Image src="/icons/icon-plus.png" width={28} height={28} alt="plus" />
-        <div className="text-gray-graphite font-semibold">폴더 만들기</div>
+        <div className="font-semibold text-gray-graphite">폴더 만들기</div>
       </div>
     </div>
   );

@@ -1,13 +1,15 @@
 "use client";
-import { useClearDropdown } from "@/hooks/useClearDropdown";
 import clsx from "clsx";
 import { useState } from "react";
-import { SelectBox } from "./SelectBox";
+
+import { useClearDropdown } from "@/hooks/useClearDropdown";
 import { useLinkFilterStore } from "@/store/useLinkFilterStore";
 import { getCalendarDate } from "@/utils/date";
-import RenderDate from "./RenderDate";
+
 import ChangeMonth from "./ChangeMonth";
 import LastPeriodButton from "./LastPeriodButton";
+import RenderDate from "./RenderDate";
+import { SelectBox } from "./SelectBox";
 import ResetButton from "../ResetButton";
 import RenderWeek from "./RenderWeek";
 
@@ -35,7 +37,7 @@ const DatePicker = ({ open }: InputProps) => {
         <div
           className={clsx(
             "absolute z-10 mt-1 flex max-w-min flex-col",
-            "border-gray-ghost gap-[20px] rounded-lg border bg-white p-6 shadow-lg",
+            "gap-[20px] rounded-lg border border-gray-ghost bg-white p-6 shadow-lg",
           )}
         >
           <div className="flex flex-col gap-[20px]">
@@ -76,7 +78,7 @@ const DatePicker = ({ open }: InputProps) => {
           </div>
           <div className="flex gap-4">
             <ResetButton handleClick={handleResetDateRange} />
-            <button className="bg-primary-500 h-[40px] flex-1 rounded-lg text-sm font-bold text-white">
+            <button className="h-[40px] flex-1 rounded-lg bg-primary-500 text-sm font-bold text-white">
               확인
             </button>
           </div>

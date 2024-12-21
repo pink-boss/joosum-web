@@ -1,6 +1,7 @@
-import { DateRange } from "@/types/date.types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+
+import { DateRange } from "@/types/date.types";
 
 export interface LinkFilterState {
   unread: boolean;

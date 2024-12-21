@@ -1,14 +1,16 @@
 "use client";
 
+import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
+
+import ConfirmDialog from "@/components/dialog/ConfirmDialog";
+import useMutateLinkBook from "@/hooks/my-folder/useMutateLinkBook";
+import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
+import { useOpenDialogStore } from "@/store/useDialogStore";
+import { CreateFormState } from "@/types/linkBook.types";
+
 import FolderSettingEditor from "./FolderSettingEditor";
 import { pickBackgroundColors, pickTitleColors } from "../constants";
-import { useOpenDialogStore } from "@/store/useDialogStore";
-import useMutateLinkBook from "@/hooks/my-folder/useMutateLinkBook";
-import { CreateFormState } from "@/types/linkBook.types";
-import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
-import ConfirmDialog from "@/components/dialog/ConfirmDialog";
-import clsx from "clsx";
 
 const defaultValues: CreateFormState = {
   title: "",
@@ -56,7 +58,7 @@ export default function MutateDialog() {
       submitProps={{
         className: clsx([
           [
-            "w-[220.5px] h-[56px] rounded-lg font-bold text-white",
+            "h-[56px] w-[220.5px] rounded-lg font-bold text-white",
             !formState.title
               ? "cursor-not-allowed bg-gray-vapor"
               : "bg-primary-500",

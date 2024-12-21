@@ -1,5 +1,7 @@
-import { TQueryLinkBooks } from "@/types/linkBook.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { TQueryLinkBooks } from "@/types/linkBook.types";
+
 import useSelectLinkBook from "./useSelectLinkBook";
 
 export default function useDeleteLinkBook(onSuccessCallback: () => void) {

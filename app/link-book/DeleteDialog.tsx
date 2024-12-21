@@ -1,9 +1,9 @@
 "use client";
 
-import { useOpenDialogStore } from "@/store/useDialogStore";
-import useDeleteLink from "@/hooks/link/useDeleteLink";
-import useCheckLink from "@/hooks/link/useCheckLink";
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
+import useCheckLink from "@/hooks/link/useCheckLink";
+import useDeleteLink from "@/hooks/link/useDeleteLink";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 export default function DeleteDialog() {
   const { isDeleteLinkOpen: isOpen, openDeleteLink: open } =
@@ -32,7 +32,7 @@ export default function DeleteDialog() {
       }}
     >
       <div className="flex flex-col gap-4 text-center">
-        <div className="text-gray-ink text-center">
+        <div className="text-center text-gray-ink">
           <p>{cachedLinks.size} 개의 링크를</p>
           <p>삭제하겠습니까?</p>
         </div>

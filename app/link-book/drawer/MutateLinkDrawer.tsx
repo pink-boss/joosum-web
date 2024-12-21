@@ -1,19 +1,22 @@
-import Drawer from "@/components/Drawer";
-import { useOpenDrawerStore } from "@/store/useDrawerStore";
-import { CreateFormState } from "@/types/link.types";
-import { krDateFormatter } from "@/utils/date";
+import { clearTimeout, setTimeout } from "timers";
+
 import clsx from "clsx";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { TagBadge } from "../[title]/tag-selector/SelectedTags";
-import SelectLinkBook from "../dialog/SelectLinkBook";
-import Header from "./Header";
+
 import { Button } from "@/app/my-folder/CreateDialogButton";
-import TagSelector from "../[title]/tag-selector";
-import { clearTimeout, setTimeout } from "timers";
+import Drawer from "@/components/Drawer";
+import ImageWithFallback from "@/components/ImageWithFallback";
 import useUpdateLink from "@/hooks/link/useUpdateLink";
 import { useOpenDialogStore } from "@/store/useDialogStore";
-import ImageWithFallback from "@/components/ImageWithFallback";
+import { useOpenDrawerStore } from "@/store/useDrawerStore";
+import { CreateFormState } from "@/types/link.types";
+import { krDateFormatter } from "@/utils/date";
+
+import Header from "./Header";
+import TagSelector from "../[title]/tag-selector";
+import { TagBadge } from "../[title]/tag-selector/SelectedTags";
+import SelectLinkBook from "../dialog/SelectLinkBook";
 
 type ToastDefaultValues = {
   isOpen: boolean;
@@ -111,7 +114,7 @@ export default function MutateLinkDrawer() {
           </div>
           <div>
             <div className="flex flex-col gap-6">
-              <div className="text-gray-black flex flex-col gap-2">
+              <div className="flex flex-col gap-2 text-gray-black">
                 <label htmlFor="title" className="px-2 text-lg font-semibold">
                   제목
                 </label>
@@ -121,7 +124,7 @@ export default function MutateLinkDrawer() {
                   name="title"
                   className={clsx(
                     "h-[48px] w-full p-3",
-                    "border-gray-ghost bg-gray-ghost rounded-lg border",
+                    "rounded-lg border border-gray-ghost bg-gray-ghost",
                   )}
                   value={formState.title}
                   onChange={(e) => {
@@ -132,12 +135,12 @@ export default function MutateLinkDrawer() {
                   }}
                 />
               </div>
-              <div className="text-gray-black flex flex-col gap-2">
+              <div className="flex flex-col gap-2 text-gray-black">
                 <div className="flex justify-between px-2">
                   <label htmlFor="title" className="text-lg font-semibold">
                     폴더
                   </label>
-                  <Button className="text-primary-500 flex font-semibold">
+                  <Button className="flex font-semibold text-primary-500">
                     <Image
                       src="/icons/icon-plus.png"
                       alt="new-folder"
@@ -156,16 +159,16 @@ export default function MutateLinkDrawer() {
                       linkBookId,
                     }))
                   }
-                  className="bg-gray-ghost border-none"
+                  className="border-none bg-gray-ghost"
                 />
               </div>
-              <div className="text-gray-black flex flex-col gap-2">
+              <div className="flex flex-col gap-2 text-gray-black">
                 <div className="flex justify-between px-2">
                   <label htmlFor="title" className="text-lg font-semibold">
                     태그
                   </label>
                   <button
-                    className="text-primary-500 flex font-semibold"
+                    className="flex font-semibold text-primary-500"
                     data-testid="edit-tags-button"
                     onClick={() => {
                       // setIsEditTag((prev) => !prev)
@@ -205,7 +208,7 @@ export default function MutateLinkDrawer() {
               </div>
             </div>
           </div>
-          <div className="text-gray-slate mt-10 flex gap-1 text-xs">
+          <div className="mt-10 flex gap-1 text-xs text-gray-slate">
             <span>{krDateFormatter(link.createdAt)}에 주섬주섬</span>
             <span>|</span>
             <span>
@@ -218,7 +221,7 @@ export default function MutateLinkDrawer() {
         {toast.isOpen && (
           <div
             data-testid="feedback-toast"
-            className="bg-primary-lavender rounded-lg py-[10px] text-center text-sm font-semibold text-white"
+            className="rounded-lg bg-primary-lavender py-[10px] text-center text-sm font-semibold text-white"
             style={{ backgroundColor: toast.bgColor, color: toast.textColor }}
           >
             {toast.message}
@@ -227,7 +230,7 @@ export default function MutateLinkDrawer() {
 
         <div className="flex justify-center gap-1">
           <button
-            className="bg-gray-silver h-[56px] w-[220.5px] rounded-lg font-bold text-white"
+            className="h-[56px] w-[220.5px] rounded-lg bg-gray-silver font-bold text-white"
             onClick={handleDelete}
           >
             삭제
@@ -236,7 +239,7 @@ export default function MutateLinkDrawer() {
             className={clsx(
               "h-[56px] w-[220.5px] rounded-lg font-bold text-white",
               !formState.title
-                ? "bg-gray-vapor cursor-not-allowed"
+                ? "cursor-not-allowed bg-gray-vapor"
                 : "bg-primary-500",
             )}
             disabled={!formState.title}

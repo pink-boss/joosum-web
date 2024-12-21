@@ -1,5 +1,6 @@
-import { serverApi } from "@/utils/api";
 import { NextRequest } from "next/server";
+
+import { serverApi } from "@/utils/api";
 
 export async function PUT(
   request: NextRequest,

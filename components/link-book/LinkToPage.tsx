@@ -1,11 +1,12 @@
+import Link from "next/link";
+import { ReactNode } from "react";
+
 import {
   DefaultFolderProps,
   EntireFolderProps,
   OptionalFolderProps,
 } from "@/types/linkBook.types";
 import { replaceSpacesWithDash } from "@/utils/urlEncoder";
-import Link from "next/link";
-import { ReactNode } from "react";
 
 export function isNormalLinkBook(
   linkBook: EntireFolderProps,

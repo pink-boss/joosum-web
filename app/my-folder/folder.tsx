@@ -1,11 +1,13 @@
 import clsx from "clsx";
-import { CreateLinkBook, EntireFolderProps } from "@/types/linkBook.types";
 import Image from "next/image";
-import DropdownMore from "./DropdownMore";
 import { ReactNode } from "react";
+
 import LinkToPage, {
   isNormalLinkBook,
 } from "@/components/link-book/LinkToPage";
+import { CreateLinkBook, EntireFolderProps } from "@/types/linkBook.types";
+
+import DropdownMore from "./DropdownMore";
 
 type FolderBookInputProps = Partial<CreateLinkBook> & {
   children?: ReactNode;

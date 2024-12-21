@@ -70,8 +70,8 @@ export function SelectBox({
       data-testid="open-button"
       onClick={() => setIsOpen(!isOpen)}
       className={clsx(
-        "text-gray-dim flex items-center justify-between gap-0.5 px-3 text-sm",
-        "border-gray-silver h-[46px] w-full rounded-lg border",
+        "flex items-center justify-between gap-0.5 px-3 text-sm text-gray-dim",
+        "h-[46px] w-full rounded-lg border border-gray-silver",
         className && className,
       )}
     >

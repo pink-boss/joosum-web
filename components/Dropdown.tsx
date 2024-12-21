@@ -1,8 +1,9 @@
 "use client";
-import { useClearDropdown } from "@/hooks/useClearDropdown";
 import clsx from "clsx";
 import Image from "next/image";
 import { useState } from "react";
+
+import { useClearDropdown } from "@/hooks/useClearDropdown";
 
 type InputProps = {
   selected: Value;
@@ -21,7 +22,7 @@ const Dropdown = ({ selected, setSelected, options }: InputProps) => {
       <button
         data-testid="open-button"
         onClick={() => setIsOpen(!isOpen)}
-        className="text-gray-dim flex h-[24px] items-center p-1 font-semibold"
+        className="flex h-[24px] items-center p-1 font-semibold text-gray-dim"
       >
         <div>{selectedOption?.label}</div>
         <Image src="/icons/icon-down2.png" alt="down" width={24} height={24} />
@@ -29,7 +30,7 @@ const Dropdown = ({ selected, setSelected, options }: InputProps) => {
 
       {isOpen && (
         <div
-          className="border-gray-ghost absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border bg-white py-4 shadow-lg"
+          className="absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border border-gray-ghost bg-white py-4 shadow-lg"
           data-testid="dropdown-content"
         >
           {options.map((item) => (
@@ -43,7 +44,7 @@ const Dropdown = ({ selected, setSelected, options }: InputProps) => {
               className={clsx(
                 "w-full px-5 py-1 leading-5",
                 selected === item.value
-                  ? "text-gray-black font-bold"
+                  ? "font-bold text-gray-black"
                   : "text-gray-dim",
               )}
             >

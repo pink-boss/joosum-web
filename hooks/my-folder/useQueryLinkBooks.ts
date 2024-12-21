@@ -1,6 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
+
 import { Sort } from "@/store/useLinkBookSortStore";
 import { TQueryLinkBooks } from "@/types/linkBook.types";
-import { useQuery } from "@tanstack/react-query";
 
 export default function useQueryLinkBooks(sort: Sort) {
   return useQuery<TQueryLinkBooks>({

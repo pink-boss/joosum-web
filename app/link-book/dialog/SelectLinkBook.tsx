@@ -1,10 +1,11 @@
 "use client";
 
-import { useClearDropdown } from "@/hooks/useClearDropdown";
 import clsx from "clsx";
-import { useMemo, useState } from "react";
-import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import Image from "next/image";
+import { useMemo, useState } from "react";
+
+import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
+import { useClearDropdown } from "@/hooks/useClearDropdown";
 import { LinkBook } from "@/types/linkBook.types";
 
 export type InputProps = {
@@ -58,8 +59,8 @@ export default function SelectLinkBook({
         data-testid="open-button"
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
-          "text-gray-dim flex items-center justify-between gap-0.5 px-3 text-start text-sm",
-          "border-gray-silver h-[46px] w-full rounded-lg border",
+          "flex items-center justify-between gap-0.5 px-3 text-start text-sm text-gray-dim",
+          "h-[46px] w-full rounded-lg border border-gray-silver",
           className && className,
         )}
       >
@@ -73,7 +74,7 @@ export default function SelectLinkBook({
         <div
           className={clsx(
             "absolute z-10 mt-1 h-[214px] w-full",
-            "border-gray-ghost rounded-lg border bg-white p-6 shadow-lg",
+            "rounded-lg border border-gray-ghost bg-white p-6 shadow-lg",
           )}
         >
           <div className="mini-scroll h-full">

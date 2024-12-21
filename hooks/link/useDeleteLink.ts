@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { Link } from "@/types/link.types";
-import useLinkBookFromTitle from "./useLinkBookFromTitle";
 import { getLinkListQueryKey } from "@/utils/queryKey";
+
+import useLinkBookFromTitle from "./useLinkBookFromTitle";
 
 export default function useDeleteLink(
   onSuccessCallback: () => void,

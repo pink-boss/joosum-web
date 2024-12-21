@@ -1,5 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction, useState } from "react";
+
 import { CreateFormState } from "@/types/linkBook.types";
+
 import {
   pickBackgroundColors,
   pickIllustrations,
@@ -18,7 +20,7 @@ type FormItemInputProps = {
 function FormItem({ children, label }: FormItemInputProps) {
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-gray-black px-1 font-semibold">{label}</label>
+      <label className="px-1 font-semibold text-gray-black">{label}</label>
       {children}
     </div>
   );
@@ -54,13 +56,13 @@ export default function useEditorTabs(
             data-testid="link-book-title"
             name="title"
             placeholder="폴더명을 입력해주세요."
-            className="border-gray-ghost bg-gray-ghost rounded-lg border p-3"
+            className="rounded-lg border border-gray-ghost bg-gray-ghost p-3"
             onChange={handleInputChange}
             value={localState.title}
             autoFocus
             maxLength={MAX_TITLE_LENGTH}
           />
-          <div className="text-gray-silver ml-auto mt-1.5">
+          <div className="ml-auto mt-1.5 text-gray-silver">
             {localState.title?.length ?? 0}/{MAX_TITLE_LENGTH}
           </div>
         </FormItem>

@@ -1,9 +1,10 @@
 import Image from "next/image";
-import { krDateFormatter } from "@/utils/date";
 import { useEffect, useState } from "react";
-import { Link } from "@/types/link.types";
+
 import ImageWithFallback from "@/components/ImageWithFallback";
 import useIncrementViewCount from "@/hooks/link/useIncrementViewCount";
+import { Link } from "@/types/link.types";
+import { krDateFormatter } from "@/utils/date";
 
 const WIDTH = 374;
 
@@ -78,18 +79,18 @@ export default function LinkCard({ link }: LinkCardProps) {
           {visibleTags.map((tag, index) => (
             <div
               key={index}
-              className="bg-gray-vapor whitespace-nowrap rounded-[50px] px-3 py-1"
+              className="whitespace-nowrap rounded-[50px] bg-gray-vapor px-3 py-1"
             >
               {tag}
             </div>
           ))}
           {hiddenCount > 0 && (
-            <div className="bg-gray-vapor rounded-[50px] px-3 py-1">
+            <div className="rounded-[50px] bg-gray-vapor px-3 py-1">
               +{hiddenCount}
             </div>
           )}
         </div>
-        <div className="text-gray-slate text-sm">
+        <div className="text-sm text-gray-slate">
           {`${krDateFormatter(link.createdAt)}에 주섬주섬`}
         </div>
       </div>

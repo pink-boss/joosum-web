@@ -1,7 +1,9 @@
-import Dropdown from "@/components/Dropdown";
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
+
+import Dropdown from "@/components/Dropdown";
+
 import { options } from "../pages/mocks/filter";
 
 const DropdownWrapper = () => {

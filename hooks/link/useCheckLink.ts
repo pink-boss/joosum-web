@@ -1,7 +1,10 @@
-import { Link } from "@/types/link.types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import useLinkBookFromTitle from "./useLinkBookFromTitle";
+
+import { Link } from "@/types/link.types";
 import { getLinkListQueryKey } from "@/utils/queryKey";
+
+import useLinkBookFromTitle from "./useLinkBookFromTitle";
+
 
 const queryKey = ["link", "checkedId"];
 

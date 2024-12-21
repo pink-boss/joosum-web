@@ -1,7 +1,8 @@
+import { useSearchLinkStore } from "@/store/useSearchLinkStore";
+
+import BannerCard from "./Banner";
 import LinkCardList from "./LinkCardList";
 import { Banner } from "../../types/banner.types";
-import BannerCard from "./Banner";
-import { useSearchLinkStore } from "@/store/useSearchLinkStore";
 
 type TQueryBanners = Banner[];
 

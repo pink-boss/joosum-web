@@ -1,8 +1,10 @@
-import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
-import DatePicker from "./date-picker";
-import TagSelector from "./tag-selector";
 import { useMemo } from "react";
+
+import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
+
+import DatePicker from "./date-picker";
 import ResetButton from "./ResetButton";
+import TagSelector from "./tag-selector";
 
 export default function Filter() {
   const { unread, dateRange, tags, setUnread, setDateRange, setTags } =
@@ -23,18 +25,18 @@ export default function Filter() {
   };
   return (
     <div className="flex items-center gap-6">
-      <div className="flex flex-shrink-0 items-center gap-2">
+      <div className="flex shrink-0 items-center gap-2">
         <input
           type="radio"
           id="unread-radio"
-          className="accent-primary-500 h-6 w-6"
+          className="size-6 accent-primary-500"
           onClick={handleClickUnread}
           readOnly
           checked={unread}
         />
         <label
           htmlFor="unread-radio"
-          className="text-gray-dim text-lg font-semibold"
+          className="text-lg font-semibold text-gray-dim"
         >
           읽지 않음
         </label>
