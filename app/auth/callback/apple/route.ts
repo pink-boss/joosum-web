@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
+import { trimTrailingSlash } from "@/utils/envUri";
+
 export async function POST(request: NextRequest) {
   try {
     const formData = parse(await request.text());
@@ -14,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     // 서버에 로그인 요청 보내기
     const response = await fetch(
-      `${process.env.JOOSUM_SERVER_URI}/api/auth/apple`,
+      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/auth/apple`,
       {
         headers: {
           "Content-Type": "application/json",

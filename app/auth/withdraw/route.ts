@@ -1,6 +1,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
+import { trimTrailingSlash } from "@/utils/envUri";
+
 // TODO: 애플 개발 아이디 오류
 export async function DELETE() {
   try {
@@ -12,16 +14,16 @@ export async function DELETE() {
       });
     }
 
-    console.log("토큰:", token.value);
-    console.log("API URL:", `${process.env.JOOSUM_SERVER_URI}/auth/me`);
-
-    const res = await fetch(`${process.env.JOOSUM_SERVER_URI}/auth/me`, {
-      headers: {
-        Authorization: `Bearer ${token.value}`,
+    const res = await fetch(
+      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/auth/me`,
+      {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+        method: "DELETE",
+        cache: "no-store",
       },
-      method: "DELETE",
-      cache: "no-store",
-    });
+    );
 
     console.log("응답 상태:", res.status);
     console.log("응답 헤더:", Object.fromEntries(res.headers));
