@@ -1,6 +1,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
+import { trimTrailingSlash } from "@/utils/envUri";
+
 export async function POST() {
   const token = cookies().get("accessToken");
 
@@ -8,13 +10,16 @@ export async function POST() {
     return NextResponse.json({ error: "정상적으로 로그인되어 있지 않습니다." });
   }
 
-  const response = await fetch(`${process.env.JOOSUM_SERVER_URI}/auth/logout`, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token.value,
+  const response = await fetch(
+    `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/auth/logout`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token.value,
+      },
+      method: "POST",
     },
-    method: "POST",
-  });
+  );
 
   if (response.ok) {
     cookies().delete("accessToken");

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+import { trimTrailingSlash } from "@/utils/envUri";
 import { sanitizeRedirectUrl } from "@/utils/oauth";
 
 const APPLE_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH_APPLE_ID;
@@ -14,7 +15,7 @@ const AppleOAuthHandler = () => {
   };
 
   useEffect(() => {
-    const redirectURI = `${process.env.NEXT_PUBLIC_JOOSUM_WEB_URI}/auth/callback/apple`;
+    const redirectURI = `${trimTrailingSlash(process.env.NEXT_PUBLIC_JOOSUM_WEB_URI)}/auth/callback/apple`;
     window.AppleID?.auth.init({
       clientId: APPLE_CLIENT_ID,
       scope: "name email",

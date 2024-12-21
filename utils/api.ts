@@ -1,6 +1,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
+import { trimTrailingSlash } from "./envUri";
+
 interface FetchParams {
   path: string;
   method?: "GET" | "POST" | "PUT" | "DELETE";
@@ -33,7 +35,7 @@ export async function serverApi({
     }
 
     const response = await fetch(
-      `${process.env.JOOSUM_SERVER_URI}/${path}${queryString ? `?${queryString}` : ""}`,
+      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/${path}${queryString ? `?${queryString}` : ""}`,
       requestInit,
     );
 
