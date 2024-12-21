@@ -10,7 +10,7 @@ export default function EmptyLinks({ unread }: InputProps) {
     <div
       className={clsx(
         "flex flex-1 flex-col items-center justify-center gap-[14.4px]",
-        "text-gray-dim text-center text-lg",
+        "text-center text-lg text-gray-dim",
       )}
     >
       {!unread ? (

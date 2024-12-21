@@ -1,4 +1,5 @@
 import { TQueryLinkBooks } from "@/types/linkBook.types";
+
 import Folder from "./folder";
 
 type LinkBookListInputProps = TQueryLinkBooks & {};

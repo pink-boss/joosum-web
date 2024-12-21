@@ -1,13 +1,14 @@
 import clsx from "clsx";
-import Dialog, { InputProps as DialogInputProps } from "./Dialog";
 import { ReactNode, ButtonHTMLAttributes } from "react";
+
+import Dialog, { InputProps as DialogInputProps } from "./Dialog";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function CloseButton(props: ButtonProps) {
   return (
     <button
-      className="bg-gray-silver h-[56px] w-[164.89px] rounded-lg font-bold text-white"
+      className="h-[56px] w-[164.89px] rounded-lg bg-gray-silver font-bold text-white"
       {...props}
     />
   );
@@ -20,7 +21,7 @@ export function SubmitButton(props: ButtonProps) {
         "h-[56px] w-[164.89px] rounded-lg font-bold",
         typeof props.disabled === "boolean"
           ? props.disabled
-            ? "text-gray-silver bg-gray-vapor cursor-not-allowed"
+            ? "cursor-not-allowed bg-gray-vapor text-gray-silver"
             : "bg-primary-500 text-white"
           : "bg-primary-500 text-white",
       ])}

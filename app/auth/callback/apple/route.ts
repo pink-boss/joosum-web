@@ -1,7 +1,8 @@
+import { parse } from "querystring";
+
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
-import { parse } from "querystring";
-import { cookies } from "next/headers";
 
 export async function POST(request: NextRequest) {
   try {

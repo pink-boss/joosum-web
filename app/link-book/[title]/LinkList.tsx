@@ -1,16 +1,18 @@
-import LinkComponent from "./LinkCard";
-import { ChangeEvent, ReactNode, useState } from "react";
 import clsx from "clsx";
-import Dropdown from "@/components/Dropdown";
+import { ChangeEvent, ReactNode, useState } from "react";
+
 import Checkbox from "@/components/Checkbox";
-import Loading from "@/components/Loading";
-import { useLinkSortStore } from "@/store/useLinkSortStore";
-import { useLinkFilterStore } from "@/store/useLinkFilterStore";
+import Dropdown from "@/components/Dropdown";
 import EmptyLinks from "@/components/EmptyLinks";
-import { useQueryLinks } from "@/hooks/link/useQueryLinks";
-import { sortOptions } from "../constants";
+import Loading from "@/components/Loading";
 import useCheckLink from "@/hooks/link/useCheckLink";
+import { useQueryLinks } from "@/hooks/link/useQueryLinks";
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import { useLinkFilterStore } from "@/store/useLinkFilterStore";
+import { useLinkSortStore } from "@/store/useLinkSortStore";
+
+import { sortOptions } from "../constants";
+import LinkComponent from "./LinkCard";
 
 type ButtonInputProps = {
   children: ReactNode;
@@ -26,7 +28,7 @@ function Button({
   return (
     <button
       className={clsx(
-        "border-gray-vapor rounded border px-9 py-1.5 text-xs",
+        "rounded border border-gray-vapor px-9 py-1.5 text-xs",
         isPrimary ? "bg-gray-black text-white" : "bg-white text-black",
       )}
       onClick={handleClick}
@@ -77,7 +79,7 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
       <div className="flex items-center">
         {!editMode ? (
           <>
-            <div className="text-gray-ink text-lg font-semibold">
+            <div className="text-lg font-semibold text-gray-ink">
               {totalCount}개 주섬
             </div>
             <div className="ml-auto flex items-center gap-2">
@@ -93,7 +95,7 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
           </>
         ) : (
           <>
-            <div className="text-gray-ink flex items-center gap-3 text-lg">
+            <div className="flex items-center gap-3 text-lg text-gray-ink">
               <div className="flex items-center gap-2 font-semibold">
                 <Checkbox
                   onChange={handleAllCheckLinks}

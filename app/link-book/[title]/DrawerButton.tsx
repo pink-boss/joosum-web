@@ -1,6 +1,7 @@
+import Image from "next/image";
+
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { Link } from "@/types/link.types";
-import Image from "next/image";
 
 type InputProps = { link: Link };
 

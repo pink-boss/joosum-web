@@ -1,6 +1,7 @@
+import Image from "next/image";
+
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { Link } from "@/types/link.types";
-import Image from "next/image";
 
 type InputProps = {
   link: Link;

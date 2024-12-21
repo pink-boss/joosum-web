@@ -1,5 +1,6 @@
-import { sanitizeRedirectUrl } from "@/utils/oauth";
 import { useEffect } from "react";
+
+import { sanitizeRedirectUrl } from "@/utils/oauth";
 
 const APPLE_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH_APPLE_ID;
 

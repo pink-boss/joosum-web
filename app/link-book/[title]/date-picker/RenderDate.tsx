@@ -1,7 +1,8 @@
-import { isAfter, isBefore, isBetween, isSameDate } from "@/utils/date";
 import clsx from "clsx";
+
 import { useLinkFilterStore } from "@/store/useLinkFilterStore";
 import { RenderDateType } from "@/types/date.types";
+import { isAfter, isBefore, isBetween, isSameDate } from "@/utils/date";
 
 type InputProps = RenderDateType & {
   tmpSelectedDate: Date | null;
@@ -48,7 +49,7 @@ const RenderDate = ({
         <div
           className={clsx(
             "absolute inset-0 left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2",
-            "bg-primary-lavender h-full",
+            "h-full bg-primary-lavender",
             isSelectedDate ? "w-[19.25px]" : "w-[38.5px]",
             isSameDate(startDate, dateObj) && "translate-x-0",
             isSameDate(endDate, dateObj) && "-translate-x-full",
@@ -60,13 +61,13 @@ const RenderDate = ({
         <div
           className={clsx(
             "absolute inset-0 left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2",
-            "bg-paperabovebg h-[30px] w-[30px] rounded-full",
+            "size-[30px] rounded-full bg-paperabovebg",
           )}
         />
       )}
       <button
         className={clsx(
-          "relative h-[30px] w-[30px] text-sm font-semibold",
+          "relative size-[30px] text-sm font-semibold",
           monthType === "this" ? "text-gray-ink" : "text-gray-silver",
           greaterThanToday && "text-gray-silver",
           isSelectedDate && "text-white",

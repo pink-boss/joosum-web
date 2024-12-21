@@ -1,11 +1,13 @@
-import { Link } from "@/types/link.types";
-import { dateFormatter } from "@/utils/date";
 import Image from "next/image";
 import NextLink from "next/link";
+
+import ImageWithFallback from "@/components/ImageWithFallback";
+import useIncrementViewCount from "@/hooks/link/useIncrementViewCount";
+import { Link } from "@/types/link.types";
+import { dateFormatter } from "@/utils/date";
+
 import DrawerButton from "./DrawerButton";
 import OpenShareButton from "../OpenShareButton";
-import useIncrementViewCount from "@/hooks/link/useIncrementViewCount";
-import ImageWithFallback from "@/components/ImageWithFallback";
 
 type FolderLinkInputProps = { linkBookName: string };
 
@@ -47,10 +49,10 @@ export default function LinkCard({ link }: InputProps) {
       </div>
       <div className="flex min-w-0 grow flex-col">
         <div className="truncate text-lg font-bold">{link.title}</div>
-        <div className="text-gray-ink truncate">
+        <div className="truncate text-gray-ink">
           {link.tags.reduce((result, tag) => result + ` #${tag}`, "")}
         </div>
-        <div className="text-gray-dim mt-auto flex gap-1">
+        <div className="mt-auto flex gap-1 text-gray-dim">
           <div className="flex-none">{link.url}</div>|
           <div className="flex-none">
             {dateFormatter(link.createdAt, "2-digit")}

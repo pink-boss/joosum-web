@@ -24,7 +24,7 @@ export default function ColorBox({
   return (
     <button
       data-testid={`${stateName}-${colorIndex}`}
-      className={clsx("h-12 w-12 rounded-lg border", isSelected && "p-0")}
+      className={clsx("size-12 rounded-lg border", isSelected && "p-0")}
       style={{ backgroundColor: color, borderColor: color }}
       onClick={() => {
         setPreviewColor(stateName, color);
@@ -32,7 +32,7 @@ export default function ColorBox({
     >
       <div
         className={clsx(
-          "flex h-full w-full items-center justify-center rounded-lg border",
+          "flex size-full items-center justify-center rounded-lg border",
           isBrightColor ? "border-black" : "border-white",
           isSelected
             ? "block"

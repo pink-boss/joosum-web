@@ -1,5 +1,6 @@
-import { Link } from "@/types/link.types";
 import { create } from "zustand";
+
+import { Link } from "@/types/link.types";
 
 type LinkDrawerState =
   | { isLinkDrawerOpen: false; link: undefined }

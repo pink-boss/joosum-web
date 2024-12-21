@@ -1,6 +1,7 @@
-import { LinkBook, TQueryLinkBooks } from "@/types/linkBook.types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
+
+import { LinkBook, TQueryLinkBooks } from "@/types/linkBook.types";
 
 export default function useSelectLinkBook(_title?: string) {
   const queryClient = useQueryClient();

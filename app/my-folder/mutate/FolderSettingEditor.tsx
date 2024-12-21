@@ -1,8 +1,10 @@
 import clsx from "clsx";
-import { FolderBook } from "../folder";
 import { Dispatch, ReactNode, SetStateAction, useState } from "react";
+
 import useEditorTabs from "@/hooks/useEditorTabs";
 import { CreateFormState } from "@/types/linkBook.types";
+
+import { FolderBook } from "../folder";
 
 type Tab = { title: string; component: ReactNode };
 
@@ -20,7 +22,7 @@ function EditorTab({ tab, selectedTab, setSelectedTab }: EditorTabInputProps) {
       className={clsx(
         "min-w-[68px] cursor-pointer px-2 py-1 text-lg",
         isSelected
-          ? "border-primary-500 text-primary-500 border-b-[2px] font-bold"
+          ? "border-b-2 border-primary-500 font-bold text-primary-500"
           : "text-gray-slate",
       )}
       onClick={() => setSelectedTab(tab.title)}
@@ -44,7 +46,7 @@ export default function FolderSettingEditor({
     <div className="mb-5 flex w-full flex-col items-center">
       <div
         className={clsx(
-          "bg-gray-vapor min-h-[256px] w-full flex-1",
+          "min-h-[256px] w-full flex-1 bg-gray-vapor",
           "flex items-center justify-center",
         )}
       >

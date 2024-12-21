@@ -1,6 +1,7 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { Link } from "@/types/link.types";
 import { getLinkListQueryKey } from "@/utils/queryKey";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function useIncrementViewCount(link: Link) {
   const queryClient = useQueryClient();

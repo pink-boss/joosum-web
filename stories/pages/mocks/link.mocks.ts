@@ -1,4 +1,5 @@
 import { Link } from "@/types/link.types";
+
 import { mockLinkBooks } from "./linkBook.mocks";
 
 export const mockLink: Link = {

@@ -1,6 +1,8 @@
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { Link } from "@/types/link.types";
 import { getLinkListQueryKey } from "@/utils/queryKey";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
 
 export default function useLinkCache(currentLinkId?: string) {

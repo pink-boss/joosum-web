@@ -1,7 +1,8 @@
-import { DateRange } from "@/types/date.types";
-import { dateFormatter } from "@/utils/date";
 import clsx from "clsx";
 import Image from "next/image";
+
+import { DateRange } from "@/types/date.types";
+import { dateFormatter } from "@/utils/date";
 
 type SelectBoxProps = {
   selected: DateRange;
@@ -15,8 +16,8 @@ export function SelectBox({ selected, isOpen, setIsOpen }: SelectBoxProps) {
       data-testid="open-button"
       onClick={() => setIsOpen(!isOpen)}
       className={clsx(
-        "text-gray-dim flex items-center px-3 text-sm",
-        "border-gray-silver h-[46px] w-[305px] rounded-lg border",
+        "flex items-center px-3 text-sm text-gray-dim",
+        "h-[46px] w-[305px] rounded-lg border border-gray-silver",
       )}
     >
       {selected.length ? (

@@ -1,5 +1,6 @@
-import { useLinkFilterStore } from "@/store/useLinkFilterStore";
 import { ReactNode } from "react";
+
+import { useLinkFilterStore } from "@/store/useLinkFilterStore";
 
 type InputProps = {
   period: "1w" | "3m";
@@ -27,7 +28,7 @@ export default function LastPeriodButton({
   };
   return (
     <button
-      className="border-gray-vapor w-[127px] flex-1 rounded border px-2 py-1 text-xs"
+      className="w-[127px] flex-1 rounded border border-gray-vapor px-2 py-1 text-xs"
       onClick={handleClickLastPeriod}
     >
       {children}

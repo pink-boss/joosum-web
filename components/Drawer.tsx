@@ -1,9 +1,10 @@
 "use client";
 
-import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import clsx from "clsx";
 import { ReactNode, useCallback } from "react";
 import { createPortal } from "react-dom";
+
+import { useOpenDrawerStore } from "@/store/useDrawerStore";
 
 type InputProps = {
   open: boolean;
@@ -39,7 +40,7 @@ export default function Drawer({
         role="dialog"
         className={clsx(
           "fixed right-0 top-0 z-20 h-full w-[494px]",
-          "border-gray-ghost border",
+          "border border-gray-ghost",
           "bg-white pb-20 pt-5",
           "flex flex-col gap-10",
           className && className,

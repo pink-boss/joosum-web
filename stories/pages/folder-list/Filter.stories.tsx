@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Filter from "@/app/link-book/[title]/Filter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import Filter from "@/app/link-book/[title]/Filter";
 
 const queryClient = new QueryClient();
 

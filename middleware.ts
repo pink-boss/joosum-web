@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+
 import { defaultPath, protectedPaths, publicOnlyPaths } from "./utils/path";
 
 export function middleware(request: NextRequest) {

@@ -1,9 +1,10 @@
 "use client";
 
-import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
-import { useOpenDialogStore } from "@/store/useDialogStore";
 import Image from "next/image";
 import { ReactNode } from "react";
+
+import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 type InputProps = {
   children: ReactNode;
@@ -36,7 +37,7 @@ export function Button({ children, className, onClickCallback }: InputProps) {
 
 export default function CreateDialogButton() {
   return (
-    <Button className="bg-primary-500 flex rounded py-[6px] pl-2 pr-3 font-semibold text-white">
+    <Button className="flex rounded bg-primary-500 py-[6px] pl-2 pr-3 font-semibold text-white">
       <Image
         src="/icons/icon-plus-white.png"
         alt="plus"

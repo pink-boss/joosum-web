@@ -1,9 +1,10 @@
 "use client";
 
-import { useOpenDialogStore } from "@/store/useDialogStore";
-import Dialog from "@/components/dialog/Dialog";
 import Image from "next/image";
+
+import Dialog from "@/components/dialog/Dialog";
 import useLinkCache from "@/hooks/link/useLinkCache";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 export default function ShareLinkDialog() {
   const {
@@ -40,20 +41,20 @@ export default function ShareLinkDialog() {
                 width={60}
                 height={60}
               />
-              <span className="text-gray-black text-sm">링크 복사</span>
+              <span className="text-sm text-gray-black">링크 복사</span>
             </button>
             <button
               className="flex flex-col items-center gap-1"
               onClick={handleShareToKakao}
             >
               <Image src="/kakao.png" alt="kakao" width={60} height={60} />
-              <span className="text-gray-black text-sm">카카오톡</span>
+              <span className="text-sm text-gray-black">카카오톡</span>
             </button>
           </div>
         </div>
         <div className="mt-3 w-full">
           <button
-            className="bg-gray-silver h-[56px] w-full rounded-lg font-bold text-white"
+            className="h-[56px] w-full rounded-lg bg-gray-silver font-bold text-white"
             onClick={onClose}
           >
             취소

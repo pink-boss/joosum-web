@@ -1,13 +1,15 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import LinkCard from "./LinkCard";
-import { useState } from "react";
 import NextLink from "next/link";
+import { useState } from "react";
+
 import EmptyLinks from "@/components/EmptyLinks";
 import { Link } from "@/types/link.types";
 import { getLinkListQueryKey } from "@/utils/queryKey";
-import { useQuery } from "@tanstack/react-query";
+
+import LinkCard from "./LinkCard";
 
 export default function LinkCardList() {
   const [isAllLinks, setIsAllLinks] = useState(false);
@@ -34,7 +36,7 @@ export default function LinkCardList() {
   return (
     <div className="flex h-full flex-1 flex-col gap-8 overflow-hidden">
       <div className="flex items-center justify-between">
-        <form className="text-gray-dim flex gap-6" onChange={handleFilter}>
+        <form className="flex gap-6 text-gray-dim" onChange={handleFilter}>
           <div className="flex gap-2">
             <input
               type="radio"
@@ -42,7 +44,7 @@ export default function LinkCardList() {
               id="filter-latest"
               value="latest"
               defaultChecked
-              className="accent-primary-500 h-6 w-6"
+              className="size-6 accent-primary-500"
             />
             <label htmlFor="filter-latest">최근 저장</label>
           </div>
@@ -52,7 +54,7 @@ export default function LinkCardList() {
               name="filter"
               id="filter-unread"
               value="unread"
-              className="accent-primary-500 h-6 w-6"
+              className="size-6 accent-primary-500"
             />
             <label htmlFor="filter-unread">읽지 않음</label>
           </div>
@@ -83,7 +85,7 @@ export default function LinkCardList() {
               className="flex cursor-pointer self-center rounded-lg py-4"
               onClick={() => setIsAllLinks(true)}
             >
-              <span className="text-gray-dim text-lg font-bold">
+              <span className="text-lg font-bold text-gray-dim">
                 {filter === "latest" ? "저장한" : "읽지 않은"} 링크{" "}
                 {filteredLinks.length - 30 > 999
                   ? "999+"

@@ -1,8 +1,10 @@
 import Image from "next/image";
-import React from "react";
-import Menu from "./Menu";
 import Link from "next/link";
+import React from "react";
+
 import { useOpenDialogStore } from "@/store/useDialogStore";
+
+import Menu from "./Menu";
 
 type InputProps = {
   children: React.ReactNode;
@@ -16,7 +18,7 @@ export default function Sidebar({ children }: InputProps) {
   };
   return (
     <div className="flex h-screen">
-      <div className="bg-gray-vapor flex flex-col justify-between py-11">
+      <div className="flex flex-col justify-between bg-gray-vapor py-11">
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between px-10 py-1">
             <Link

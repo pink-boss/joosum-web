@@ -1,15 +1,17 @@
 "use client";
 
-import { useClearDropdown } from "@/hooks/useClearDropdown";
+import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { ChangeEvent, useState } from "react";
-import { LinkFilterState } from "@/store/useLinkFilterStore";
-import { SelectBox } from "./SelectBox";
+
 import Checkbox from "@/components/Checkbox";
-import SelectedTags from "./SelectedTags";
+import { useClearDropdown } from "@/hooks/useClearDropdown";
+import { LinkFilterState } from "@/store/useLinkFilterStore";
 import { removeItem } from "@/utils/array";
+
+import { SelectBox } from "./SelectBox";
+import SelectedTags from "./SelectedTags";
 import ResetButton from "../ResetButton";
-import { useQuery } from "@tanstack/react-query";
 
 export type InputProps = Pick<LinkFilterState, "tags" | "setTags"> & {
   className?: string;
@@ -67,12 +69,12 @@ const TagSelector = ({
         <div
           className={clsx(
             "absolute z-10 mt-1 flex max-w-min flex-col",
-            "border-gray-ghost gap-[20px] rounded-lg border bg-white p-6 shadow-lg",
+            "gap-[20px] rounded-lg border border-gray-ghost bg-white p-6 shadow-lg",
           )}
         >
           <div className="flex flex-col gap-[20px]">
             <SelectedTags tags={tags} setTags={setTags} />
-            <div className="mini-scroll border-gray-ghost flex h-[222px] w-[258px] flex-col gap-[10px] overflow-auto border p-3">
+            <div className="mini-scroll flex h-[222px] w-[258px] flex-col gap-[10px] overflow-auto border border-gray-ghost p-3">
               {totalTags.map((tag) => (
                 <div key={`total-tag-${tag}`} className="flex gap-2">
                   <Checkbox
@@ -90,7 +92,7 @@ const TagSelector = ({
           </div>
           <div className="flex gap-4">
             <ResetButton handleClick={handleResetTags} />
-            <button className="bg-primary-500 h-[40px] flex-1 rounded-lg text-sm font-bold text-white">
+            <button className="h-[40px] flex-1 rounded-lg bg-primary-500 text-sm font-bold text-white">
               확인
             </button>
           </div>

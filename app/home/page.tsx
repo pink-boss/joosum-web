@@ -1,13 +1,7 @@
-import LinkCardList from "./LinkCardList";
-import { Banner } from "../../types/banner.types";
 import BannerCard from "./Banner";
-import { useSearchLinkStore } from "@/store/useSearchLinkStore";
-
-type TQueryBanners = Banner[];
+import LinkCardList from "./LinkCardList";
 
 export default function Home() {
-  const { sort, order, search } = useSearchLinkStore();
-
   // const bannerData = useQuery<TQueryBanners>({
   //   queryKey: ["banners"],
   //   queryFn: () =>
