@@ -1,22 +1,16 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 interface SearchBarState {
-  title: string;
-  setTitle: (title: string) => void;
+  // filter
+  keyword?: string;
+  isDropdownOpen: boolean;
+  setKeyword: (keyword?: string) => void;
+  setIsDropdownOpen: (isOpen: boolean) => void;
 }
 
-export const useSearchBarStore = create<SearchBarState>()(
-  persist(
-    (set) => ({
-      title: "",
-      setTitle: (title) => set({ title }),
-    }),
-    {
-      name: "search-bar",
-      partialize: (state) => ({
-        title: state.title,
-      }),
-    },
-  ),
-);
+export const useSearchBarStore = create<SearchBarState>()((set) => ({
+  keyword: undefined,
+  isDropdownOpen: false,
+  setKeyword: (keyword) => set({ keyword }),
+  setIsDropdownOpen: (isOpen) => set({ isDropdownOpen: isOpen }),
+}));
