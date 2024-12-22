@@ -110,7 +110,11 @@ export default function MutateLinkDrawer() {
         />
         <div className="flex flex-col gap-4 px-10">
           <div className="relative h-[260px] w-[414px] flex-none">
-            <ImageWithFallback src={link.thumbnailURL} alt="thumbnail" />
+            <ImageWithFallback
+              src={link.thumbnailURL}
+              alt="thumbnail"
+              unoptimized
+            />
           </div>
           <div>
             <div className="flex flex-col gap-6">
