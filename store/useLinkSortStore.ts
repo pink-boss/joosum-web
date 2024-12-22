@@ -17,15 +17,15 @@ export const useLinkSortStore = create<LinkSortState>()(
     (set) => ({
       field: "lastest",
       sort: "created_at",
-      orderBy: "asc",
+      orderBy: "desc",
       setField: (field) => {
         if (field === "lastest")
-          set({ field, sort: "created_at", orderBy: "asc" });
-        else if (field === "oldest")
           set({ field, sort: "created_at", orderBy: "desc" });
+        else if (field === "oldest")
+          set({ field, sort: "created_at", orderBy: "asc" });
         else if (field === "title")
-          set({ field, sort: "title", orderBy: "desc" });
-        else set({ field, sort: "title", orderBy: "asc" }); // refech를 위한 상태 변경
+          set({ field, sort: "title", orderBy: "asc" });
+        else set({ field, sort: "title", orderBy: "desc" }); // refech를 위한 상태 변경
       },
     }),
     {
