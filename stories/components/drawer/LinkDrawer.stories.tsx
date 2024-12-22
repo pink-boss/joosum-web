@@ -18,9 +18,9 @@ import { Link } from "@/types/link.types";
 import { CreateFormState } from "@/types/linkBook.types";
 import { getLinkListQueryKey } from "@/utils/queryKey";
 
-import { mockLink, mockLinks } from "../pages/mocks/link.mocks";
-import { mockLinkBooks, mockRespone } from "../pages/mocks/linkBook.mocks";
-import { mockTags } from "../pages/mocks/tag.mocks";
+import { mockLink, mockLinks } from "../../mocks/link.mocks";
+import { mockLinkBooks, mockRespone } from "../../mocks/linkBook.mocks";
+import { mockTags } from "../../mocks/tag.mocks";
 
 const queryClient = new QueryClient();
 let capturedRequest: {
@@ -31,7 +31,7 @@ let capturedRequest: {
 let invalidateQuerySpy: any;
 
 const meta = {
-  title: "Component/Drawer",
+  title: "Component/Drawer/Link",
   component: MutateLinkDrawer,
   tags: ["autodocs"],
   decorators: (Story) => {

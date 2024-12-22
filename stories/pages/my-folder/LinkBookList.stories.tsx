@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import LinkBookList from "@/app/my-folder/LinkBookList";
 
-import { mockRespone } from "../mocks/linkBook.mocks";
+import { mockRespone } from "../../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();
 

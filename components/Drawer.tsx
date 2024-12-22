@@ -19,12 +19,20 @@ export default function Drawer({
   className,
   onCloseCallback,
 }: InputProps) {
-  const { isLinkDrawerOpen, openLinkDrawer } = useOpenDrawerStore();
+  const { isLinkDrawerOpen, openLinkDrawer, isUserDrawerOpen, openUserDrawer } =
+    useOpenDrawerStore();
 
   const onClose = useCallback(() => {
     onCloseCallback();
     if (isLinkDrawerOpen) openLinkDrawer(false);
-  }, [isLinkDrawerOpen, onCloseCallback, openLinkDrawer]);
+    if (isUserDrawerOpen) openUserDrawer(false);
+  }, [
+    isLinkDrawerOpen,
+    isUserDrawerOpen,
+    onCloseCallback,
+    openLinkDrawer,
+    openUserDrawer,
+  ]);
 
   if (!open) return null;
 

@@ -8,11 +8,9 @@ import * as navigationHooks from "next/navigation";
 import Page from "@/app/link-book/[title]/page";
 import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
 
-import { mockLinks } from "../mocks/link.mocks";
-import { mockLinkBooks } from "../mocks/linkBook.mocks";
-import { mockTags } from "../mocks/tag.mocks";
-
-
+import { mockLinks } from "../../mocks/link.mocks";
+import { mockLinkBooks } from "../../mocks/linkBook.mocks";
+import { mockTags } from "../../mocks/tag.mocks";
 
 const queryClient = new QueryClient();
 let capturedRequest: Request | null = null;

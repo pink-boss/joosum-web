@@ -6,7 +6,7 @@ import DeleteFolderDialog from "@/app/my-folder/DeleteDialog";
 import MutateDialog from "@/app/my-folder/mutate/MutateDialog";
 import Page from "@/app/my-folder/page";
 
-import { mockRespone } from "../mocks/linkBook.mocks";
+import { mockRespone } from "../../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();
 

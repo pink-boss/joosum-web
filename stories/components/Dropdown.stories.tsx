@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import Dropdown from "@/components/Dropdown";
 
-import { options } from "../pages/mocks/filter";
+import { options } from "../mocks/filter";
 
 const DropdownWrapper = () => {
   const [selected, setSelected] = useState<Value>("created_at");

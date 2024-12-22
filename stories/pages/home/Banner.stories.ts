@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import BannerCard from "@/app/home/Banner";
 
-import { mockBanners } from "../mocks/banner.mocks";
+import { mockBanners } from "../../mocks/banner.mocks";
 
 const meta = {
   title: "Page/Home/Banner",

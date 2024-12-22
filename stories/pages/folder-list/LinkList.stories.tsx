@@ -11,8 +11,8 @@ import { DeleteLinkDialog } from "@/components/dialog/dynamic";
 import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
 import { LinkSortState } from "@/store/useLinkSortStore";
 
-import { mockLinks } from "../mocks/link.mocks";
-import { mockLinkBooks } from "../mocks/linkBook.mocks";
+import { mockLinks } from "../../mocks/link.mocks";
+import { mockLinkBooks } from "../../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();
 let capturedRequest: Request | null = null;
