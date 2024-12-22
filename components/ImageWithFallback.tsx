@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { ImageProps } from "next/image";
 import { useState } from "react";
 
 const noImagePlaceholder = `data:image/svg+xml,${encodeURIComponent(`
@@ -25,6 +25,8 @@ interface ImageWithFallbackProps {
   sizes?: string;
 }
 
+type InputProps = ImageWithFallbackProps & Pick<ImageProps, "unoptimized">;
+
 export default function ImageWithFallback({
   src,
   alt,
@@ -33,7 +35,8 @@ export default function ImageWithFallback({
   quality,
   priority,
   sizes,
-}: ImageWithFallbackProps) {
+  unoptimized,
+}: InputProps) {
   const [error, setError] = useState(false);
 
   const imgSrc = error || !src ? noImagePlaceholder : src;
@@ -51,6 +54,7 @@ export default function ImageWithFallback({
         quality={quality}
         priority={priority}
         sizes={sizes || "100vw"}
+        unoptimized={!!unoptimized}
       />
     );
   }
@@ -68,6 +72,7 @@ export default function ImageWithFallback({
       quality={quality}
       priority={priority}
       sizes={sizes}
+      unoptimized={!!unoptimized}
     />
   );
 }

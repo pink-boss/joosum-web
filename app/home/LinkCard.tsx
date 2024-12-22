@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import ImageWithFallback from "@/components/ImageWithFallback";
@@ -71,6 +70,7 @@ export default function LinkCard({ link }: LinkCardProps) {
           alt={`${link.title}-thumbnail`}
           useFill
           className="rounded-lg object-cover"
+          unoptimized
         />
       </div>
       <div className="flex flex-col gap-2">

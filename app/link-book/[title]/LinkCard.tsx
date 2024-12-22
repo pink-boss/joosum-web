@@ -45,6 +45,7 @@ export default function LinkCard({ link }: InputProps) {
           alt={`${link.title}-thumbnail`}
           useFill
           className="rounded-lg object-cover"
+          unoptimized
         />
       </div>
       <div className="flex min-w-0 grow flex-col">
