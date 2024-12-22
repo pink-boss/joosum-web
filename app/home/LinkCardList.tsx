@@ -22,7 +22,7 @@ export default function LinkCardList() {
   } = useQuery<Link[], ApiError>({
     queryKey: getLinkListQueryKey(),
     queryFn: () =>
-      fetch(`/api/links`, {
+      fetch(`/api/links?sort=created_at&order=desc`, {
         method: "GET",
       }).then((res) => res.json()),
   });
