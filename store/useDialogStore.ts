@@ -18,6 +18,10 @@ interface OpenDialogState {
   openReassignLinkBook: (isOpen: boolean) => void;
   openDeleteDrawerLink: (isOpen: boolean) => void;
   openShareLink: (isOpen: boolean, key?: string) => void;
+
+  // auth
+  isAccountOpen: boolean;
+  openAccount: (isOpen: boolean) => void;
 }
 
 export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
@@ -43,4 +47,8 @@ export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
   openDeleteDrawerLink: (isOpen) => set({ isDeleteDrawerLinkOpen: isOpen }),
   openShareLink: (isOpen, newKey) =>
     set({ isShareLinkOpen: isOpen, key: isOpen ? newKey : undefined }),
+
+  // auth
+  isAccountOpen: false,
+  openAccount: (isOpen) => set({ isAccountOpen: isOpen }),
 }));

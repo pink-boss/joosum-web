@@ -2,11 +2,14 @@ import clsx from "clsx";
 import Image from "next/image";
 
 import Drawer from "@/components/Drawer";
+import useQueryAccount from "@/hooks/useQueryAccount";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 
 export default function UserDrawer() {
   const { isUserDrawerOpen: isOpen, openUserDrawer: open } =
     useOpenDrawerStore();
+
+  const { data } = useQueryAccount();
 
   const onClose = () => {
     open(false);
@@ -30,9 +33,18 @@ export default function UserDrawer() {
             </div>
             <div className="flex flex-col gap-[10px] px-10 py-5">
               <div className="font-semibold">내 계정</div>
-              <div className="font-bold text-gray-black">
-                pinkbossjoosum@gmail.com
-              </div>
+              <button
+                data-testid="open-my-account"
+                className="flex justify-between"
+              >
+                <span className="font-bold text-gray-black">{data?.email}</span>
+                <Image
+                  src="/icons/icon-chevron-right.png"
+                  alt="open"
+                  width={24}
+                  height={24}
+                />
+              </button>
             </div>
           </div>
           <div>
