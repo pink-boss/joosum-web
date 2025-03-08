@@ -10,4 +10,6 @@ export const mockAccount: Account = {
   social: "apple",
   updatedAt: "2024-03-21T15:30:00Z",
   userId: "user-1",
+  linkCount: 1423,
+  folderCount: 12,
 };

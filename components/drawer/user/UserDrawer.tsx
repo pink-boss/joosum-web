@@ -4,15 +4,21 @@ import Image from "next/image";
 import Drawer from "@/components/Drawer";
 import useQueryAccount from "@/hooks/useQueryAccount";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 export default function UserDrawer() {
   const { isUserDrawerOpen: isOpen, openUserDrawer: open } =
     useOpenDrawerStore();
+  const { openAccount: openAccountDialog } = useOpenDialogStore();
 
   const { data } = useQueryAccount();
 
   const onClose = () => {
     open(false);
+  };
+
+  const onOpenMyAccount = () => {
+    openAccountDialog(true);
   };
 
   return (
@@ -36,6 +42,7 @@ export default function UserDrawer() {
               <button
                 data-testid="open-my-account"
                 className="flex justify-between"
+                onClick={onOpenMyAccount}
               >
                 <span className="font-bold text-gray-black">{data?.email}</span>
                 <Image
