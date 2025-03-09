@@ -12,16 +12,21 @@ import useLogout from "@/hooks/auth/useLogout";
 type InputProps = {};
 
 export default function AccountDialog({}: InputProps) {
-  const { isAccountOpen: isOpen, openAccount: open } = useOpenDialogStore();
+  const {
+    isAccountOpen: isOpen,
+    openAccount: open,
+
+    openDeleteAccount,
+  } = useOpenDialogStore();
   const { data } = useQueryAccount();
 
   const onClose = () => {
     open(false);
   };
-  const deleteAccount = useDelete(onClose);
 
   async function handleDeleteAccount() {
-    deleteAccount.mutate();
+    openDeleteAccount(true);
+    open(false);
   }
 
   const logout = useLogout(onClose);

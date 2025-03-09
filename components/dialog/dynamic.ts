@@ -24,9 +24,18 @@ const AccountDialog = dynamic(() => import("./auth/AccountDialog"), {
   ssr: false,
 });
 
+const DeleteAccountDialog = dynamic(
+  () => import("./auth/DeleteAccountDialog"),
+  {
+    loading: () => null,
+    ssr: false,
+  },
+);
+
 export {
   MutateLinkBookDialog,
   DeleteLinkBookDialog,
   DeleteLinkDialog,
   AccountDialog,
+  DeleteAccountDialog,
 };
