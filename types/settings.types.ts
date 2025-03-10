@@ -12,3 +12,10 @@ export type UpdateFormState = Pick<
 >;
 
 export type UpdateNotificationType = "read" | "classify";
+
+export type UpdateFormResult = {
+  matchedCount: number;
+  modifiedCount: number;
+  upsertedCount: number;
+  upsertedID: string;
+};

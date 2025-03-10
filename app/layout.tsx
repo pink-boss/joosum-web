@@ -14,6 +14,7 @@ import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { publicOnlyPaths } from "@/utils/path";
 
 import { MutateLinkDrawer } from "./link-book/drawer/dynamic";
+import { UserDrawer } from "@/components/drawer/dynamic";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +33,7 @@ export default function RootLayout({
   const pathname = usePathname();
   const isPublicOnlyPath = publicOnlyPaths.includes(pathname);
 
-  const { isLinkDrawerOpen } = useOpenDrawerStore();
+  const { isLinkDrawerOpen, isUserDrawerOpen } = useOpenDrawerStore();
 
   return (
     <html lang="ko">
@@ -56,6 +57,7 @@ export default function RootLayout({
                 <div id="drawer-root" />
                 <div id="modal-root" />
                 {isLinkDrawerOpen && <MutateLinkDrawer />}
+                {isUserDrawerOpen && <UserDrawer />}
                 <DynamicOpenDialogs />
               </Component>
             </Sidebar>

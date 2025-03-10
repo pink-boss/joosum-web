@@ -9,7 +9,8 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 export default function UserDrawer() {
   const { isUserDrawerOpen: isOpen, openUserDrawer: open } =
     useOpenDrawerStore();
-  const { openAccount: openAccountDialog } = useOpenDialogStore();
+  const { openAccount: openAccountDialog, openNotificationSetting } =
+    useOpenDialogStore();
 
   const { data } = useQueryAccount();
 
@@ -64,7 +65,10 @@ export default function UserDrawer() {
                 "font-semibold",
               )}
             >
-              <div className="flex justify-between">
+              <div
+                className="flex cursor-pointer justify-between"
+                onClick={() => openNotificationSetting(true)}
+              >
                 <span>알림 설정</span>
                 <Image
                   src="/icons/icon-chevron-right.png"

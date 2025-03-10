@@ -18,6 +18,7 @@ const Toggle: React.FC<InputProps> = ({ isOn, onUpdate }) => {
         checked={isOn}
         onClick={handleToggle}
         className="peer sr-only"
+        readOnly
       />
       {/* 배경(OFF/ON에 따라 색상 변경) */}
       <span className="absolute bottom-0 left-0 right-0 top-0 cursor-pointer rounded-full bg-gray-slate transition-colors duration-300 peer-checked:bg-primary-500" />

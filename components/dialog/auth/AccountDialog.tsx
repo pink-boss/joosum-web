@@ -6,7 +6,7 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import Dialog from "../Dialog";
 import { formatNumber } from "@/utils/number";
-import useDelete from "@/hooks/auth/useDelete";
+
 import useLogout from "@/hooks/auth/useLogout";
 
 type InputProps = {};

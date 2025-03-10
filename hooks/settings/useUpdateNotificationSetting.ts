@@ -1,15 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { Notification, UpdateFormState } from "@/types/settings.types";
+import { UpdateFormResult, UpdateFormState } from "@/types/settings.types";
 
 export default function useUpdateNotificationSetting() {
   const queryClient = useQueryClient();
 
-  return useMutation<Notification, Error, UpdateFormState>({
-    mutationFn: async () => {
+  return useMutation<UpdateFormResult, Error, UpdateFormState>({
+    mutationFn: async (state: UpdateFormState) => {
       return (
         await fetch(`/api/settings/notification`, {
           method: "PUT",
+          body: JSON.stringify(state),
         })
       ).json();
     },
