@@ -7,8 +7,6 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 import Dialog from "../Dialog";
 import { formatNumber } from "@/utils/number";
 
-import useLogout from "@/hooks/auth/useLogout";
-
 type InputProps = {};
 
 export default function AccountDialog({}: InputProps) {
@@ -16,6 +14,7 @@ export default function AccountDialog({}: InputProps) {
     isAccountOpen: isOpen,
     openAccount: open,
     openDeleteAccount,
+    openLogout,
   } = useOpenDialogStore();
   const { data } = useQueryAccount();
 
@@ -28,10 +27,9 @@ export default function AccountDialog({}: InputProps) {
     open(false);
   }
 
-  const logout = useLogout(onClose);
-
   async function handleLogout() {
-    logout.mutate();
+    onClose();
+    openLogout(true);
   }
 
   return (

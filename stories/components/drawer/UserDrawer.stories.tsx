@@ -6,6 +6,7 @@ import { http, HttpResponse } from "msw";
 import {
   AccountDialog,
   DeleteAccountDialog,
+  LogoutDialog,
   NotificationSettingDialog,
 } from "@/components/dialog/dynamic";
 import { UserDrawer } from "@/components/drawer/dynamic";
@@ -152,6 +153,17 @@ export const TestOpenMyAccountDialog: Story = {
   },
 };
 
+export const OpenLogoutDialog: Story = {
+  render: () => {
+    useOpenDialogStore.setState({ isLogoutOpen: true });
+    return (
+      <>
+        <LogoutDialog />
+      </>
+    );
+  },
+};
+
 // 로그아웃 테스트
 export const TestLogout: Story = {
   decorators: (Story) => {
@@ -160,6 +172,7 @@ export const TestLogout: Story = {
     return (
       <>
         <AccountDialog />
+        <LogoutDialog />
         <Story />
       </>
     );
@@ -193,6 +206,14 @@ export const TestLogout: Story = {
 
     await userEvent.click(
       within(dialog).getByRole("button", { name: "로그아웃" }),
+    );
+    // 로그아웃 컨펌 다이얼로그
+
+    const confirmDialog = await canvas.findByTestId("logout-confirm");
+
+    // 로그아웃 클릭
+    await userEvent.click(
+      within(confirmDialog).getByRole("button", { name: "확인" }),
     );
     await waitFor(function requestLogout() {
       if (capturedRequest.logout) {

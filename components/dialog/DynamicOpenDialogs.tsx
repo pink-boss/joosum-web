@@ -10,6 +10,7 @@ import {
   DeleteAccountDialog,
   DeleteLinkBookDialog,
   DeleteLinkDialog,
+  LogoutDialog,
   MutateLinkBookDialog,
   NotificationSettingDialog,
 } from "./dynamic";
@@ -24,6 +25,7 @@ export default function DynamicOpenDialogs() {
     isShareLinkOpen,
     isAccountOpen,
     isDeleteAccountOpen,
+    isLogoutOpen,
     isNotificationSettingOpen,
   } = useOpenDialogStore();
 
@@ -37,6 +39,7 @@ export default function DynamicOpenDialogs() {
       {isShareLinkOpen && <ShareLinkDialog />}
       {isAccountOpen && <AccountDialog />}
       {isDeleteAccountOpen && <DeleteAccountDialog />}
+      {isLogoutOpen && <LogoutDialog />}
       {isNotificationSettingOpen && <NotificationSettingDialog />}
     </>
   );

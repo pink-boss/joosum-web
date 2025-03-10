@@ -1,7 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
-export default function useLogout(onSuccessCallback: () => void) {
+export default function useLogout() {
   const queryClient = useQueryClient();
+  const router = useRouter();
+
   return useMutation<unknown, Error>({
     mutationFn: async () =>
       (
@@ -11,8 +14,9 @@ export default function useLogout(onSuccessCallback: () => void) {
       ).json(),
     onSuccess: () => {
       queryClient.clear();
-      // accessToken 쿠키 삭제
-      onSuccessCallback();
+      // TODO: accessToken 쿠키 삭제할 필요 없나?
+
+      router.push("/login");
     },
   });
 }

@@ -22,8 +22,10 @@ interface OpenDialogState {
   // auth
   isAccountOpen: boolean;
   isDeleteAccountOpen: boolean;
+  isLogoutOpen: boolean;
   openAccount: (isOpen: boolean) => void;
   openDeleteAccount: (isOpen: boolean) => void;
+  openLogout: (isOpen: boolean) => void;
 
   // notification
   isNotificationSettingOpen: boolean;
@@ -56,9 +58,11 @@ export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
 
   // auth
   isAccountOpen: false,
-  openAccount: (isOpen) => set({ isAccountOpen: isOpen }),
   isDeleteAccountOpen: false,
+  isLogoutOpen: false,
+  openAccount: (isOpen) => set({ isAccountOpen: isOpen }),
   openDeleteAccount: (isOpen) => set({ isDeleteAccountOpen: isOpen }),
+  openLogout: (isOpen) => set({ isLogoutOpen: isOpen }),
 
   // notification
   isNotificationSettingOpen: false,

@@ -32,6 +32,11 @@ const DeleteAccountDialog = dynamic(
   },
 );
 
+const LogoutDialog = dynamic(() => import("./auth/LogoutDialog"), {
+  loading: () => null,
+  ssr: false,
+});
+
 const NotificationSettingDialog = dynamic(
   () => import("./NotificationSettingDialog"),
   {
@@ -46,5 +51,6 @@ export {
   DeleteLinkDialog,
   AccountDialog,
   DeleteAccountDialog,
+  LogoutDialog,
   NotificationSettingDialog,
 };
