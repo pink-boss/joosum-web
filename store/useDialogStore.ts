@@ -24,6 +24,10 @@ interface OpenDialogState {
   isDeleteAccountOpen: boolean;
   openAccount: (isOpen: boolean) => void;
   openDeleteAccount: (isOpen: boolean) => void;
+
+  // notification
+  isNotificationSettingOpen: boolean;
+  openNotificationSetting: (isOpen: boolean) => void;
 }
 
 export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
@@ -55,4 +59,9 @@ export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
   openAccount: (isOpen) => set({ isAccountOpen: isOpen }),
   isDeleteAccountOpen: false,
   openDeleteAccount: (isOpen) => set({ isDeleteAccountOpen: isOpen }),
+
+  // notification
+  isNotificationSettingOpen: false,
+  openNotificationSetting: (isOpen) =>
+    set({ isNotificationSettingOpen: isOpen }),
 }));

@@ -15,7 +15,6 @@ export default function AccountDialog({}: InputProps) {
   const {
     isAccountOpen: isOpen,
     openAccount: open,
-
     openDeleteAccount,
   } = useOpenDialogStore();
   const { data } = useQueryAccount();

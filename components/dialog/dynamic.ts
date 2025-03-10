@@ -32,10 +32,19 @@ const DeleteAccountDialog = dynamic(
   },
 );
 
+const NotificationSettingDialog = dynamic(
+  () => import("./NotificationSettingDialog"),
+  {
+    loading: () => null,
+    ssr: false,
+  },
+);
+
 export {
   MutateLinkBookDialog,
   DeleteLinkBookDialog,
   DeleteLinkDialog,
   AccountDialog,
   DeleteAccountDialog,
+  NotificationSettingDialog,
 };
