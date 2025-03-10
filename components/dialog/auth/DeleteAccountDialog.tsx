@@ -6,7 +6,6 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import Dialog from "../Dialog";
 import useDelete from "@/hooks/auth/useDelete";
-import { useState } from "react";
 
 type InputProps = {};
 
@@ -18,7 +17,7 @@ export default function DeleteAccountDialog({}: InputProps) {
   const onClose = () => {
     open(false);
   };
-  const deleteAccount = useDelete(onClose);
+  const deleteAccount = useDelete();
 
   async function handleDeleteAccount(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

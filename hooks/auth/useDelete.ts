@@ -1,17 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
-export default function useDelete(onSuccessCallback: () => void) {
+export default function useDelete() {
   const queryClient = useQueryClient();
+  const router = useRouter();
+
   return useMutation<unknown, Error>({
     mutationFn: async () =>
       (
-        await fetch(`/api/auth/delete`, {
+        await fetch(`/api/auth/me`, {
           method: "DELETE",
         })
       ).json(),
     onSuccess: () => {
       queryClient.clear();
-      onSuccessCallback();
+      router.push("/login");
     },
   });
 }
