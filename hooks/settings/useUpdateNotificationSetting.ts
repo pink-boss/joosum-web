@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { UpdateFormResult, UpdateFormState } from "@/types/settings.types";
+import { UpdateFormResult, UpdateFormState } from "@/types/notification.types";
 
 export default function useUpdateNotificationSetting() {
   const queryClient = useQueryClient();

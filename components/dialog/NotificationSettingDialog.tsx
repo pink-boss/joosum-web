@@ -7,7 +7,7 @@ import useUpdateNotificationSetting from "@/hooks/settings/useUpdateNotification
 import {
   UpdateFormState,
   UpdateNotificationType,
-} from "@/types/settings.types";
+} from "@/types/notification.types";
 
 export default function NotificationSettingDialog() {
   const { isNotificationSettingOpen: isOpen, openNotificationSetting: open } =

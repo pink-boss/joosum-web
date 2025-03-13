@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ApiError } from "next/dist/server/api-utils";
-import { Notification } from "@/types/settings.types";
+import { Notification } from "@/types/notification.types";
 
 export function useQueryNotificationSetting() {
   const { data, refetch, ...others } = useQuery<Notification, ApiError>({

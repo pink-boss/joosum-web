@@ -30,6 +30,10 @@ interface OpenDialogState {
   // notification
   isNotificationSettingOpen: boolean;
   openNotificationSetting: (isOpen: boolean) => void;
+
+  // tag
+  isTagSettingOpen: boolean;
+  openTagSetting: (isOpen: boolean) => void;
 }
 
 export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
@@ -68,4 +72,8 @@ export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
   isNotificationSettingOpen: false,
   openNotificationSetting: (isOpen) =>
     set({ isNotificationSettingOpen: isOpen }),
+
+  // tag
+  isTagSettingOpen: false,
+  openTagSetting: (isOpen) => set({ isTagSettingOpen: isOpen }),
 }));

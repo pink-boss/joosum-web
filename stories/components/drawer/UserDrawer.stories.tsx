@@ -8,6 +8,7 @@ import {
   DeleteAccountDialog,
   LogoutDialog,
   NotificationSettingDialog,
+  TagSettingDialog,
 } from "@/components/dialog/dynamic";
 import { UserDrawer } from "@/components/drawer/dynamic";
 import OpenUserDrawerButton from "@/components/drawer/user/OpenDrawerButton";
@@ -15,6 +16,9 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { mockAccount } from "@/stories/mocks/account.mocks";
 import { mockNotification } from "@/stories/mocks/settings.mocks";
+import { mockTags } from "@/stories/mocks/tag.mocks";
+import TagMore from "@/components/dialog/tag/TagMore";
+import { TagCard } from "@/components/dialog/tag/TagSettingDialog";
 
 const queryClient = new QueryClient();
 let capturedRequest: {
@@ -401,6 +405,46 @@ export const TestNotificationSetting: Story = {
   },
 };
 
-// 태그 관리
+// 태그 관리 (데이터 x)
+export const OpenTagSettingDialogWithEmptyData: Story = {
+  render: () => {
+    useOpenDialogStore.setState({ isTagSettingOpen: true });
+    return (
+      <>
+        <TagSettingDialog />
+      </>
+    );
+  },
+};
 
-// 개인정보처리방침 오픈
+// 태그 관리 (데이터 o)
+export const OpenTagSettingDialogWithMockData: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get("/api/settings/tag", async () => {
+          return HttpResponse.json(mockTags);
+        }),
+      ],
+    },
+  },
+  render: () => {
+    useOpenDialogStore.setState({ isTagSettingOpen: true });
+    return (
+      <>
+        <TagSettingDialog />
+      </>
+    );
+  },
+};
+
+// 태그 관리 (태그 옵션)
+export const OpenTagOptionOfTagSettingDialog: Story = {
+  render: () => {
+    return (
+      <>
+        <TagCard tag={mockTags[0]} />
+      </>
+    );
+  },
+};
