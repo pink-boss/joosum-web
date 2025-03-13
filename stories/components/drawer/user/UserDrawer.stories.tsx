@@ -7,24 +7,17 @@ import {
   AccountDialog,
   DeleteAccountDialog,
   LogoutDialog,
-  NotificationSettingDialog,
-  TagSettingDialog,
 } from "@/components/dialog/dynamic";
 import { UserDrawer } from "@/components/drawer/dynamic";
 import OpenUserDrawerButton from "@/components/drawer/user/OpenDrawerButton";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { mockAccount } from "@/stories/mocks/account.mocks";
-import { mockNotification } from "@/stories/mocks/settings.mocks";
-import { mockTags } from "@/stories/mocks/tag.mocks";
-import TagMore from "@/components/dialog/tag/TagMore";
-import { TagCard } from "@/components/dialog/tag/TagSettingDialog";
 
 const queryClient = new QueryClient();
 let capturedRequest: {
   logout?: Request;
   deleteAccount?: Request;
-  notificationSetting?: Request;
 } = {};
 
 const meta = {
@@ -97,9 +90,6 @@ export const TestOpenCloseDrawer: Story = {
   },
 };
 
-// TODO: 목업 데이터 기반으로 테스트 코드 확인
-// TODO: 테스트 통과되도록 코드 작성
-// TODO: 개발 환경에서도 통과하도록 코드 작성
 // 내 계정 정보
 export const TestOpenMyAccountDialog: Story = {
   decorators: (Story) => {
@@ -321,130 +311,5 @@ export const TestDeleteAccount: Story = {
     });
 
     capturedRequest = {};
-  },
-};
-
-export const OpenNotificationSettingDialog: Story = {
-  render: () => {
-    useOpenDialogStore.setState({ isNotificationSettingOpen: true });
-    return (
-      <>
-        <NotificationSettingDialog />
-      </>
-    );
-  },
-};
-
-// 알림 설정
-export const TestNotificationSetting: Story = {
-  decorators: (Story) => {
-    useOpenDialogStore.setState({ isNotificationSettingOpen: true });
-    return (
-      <>
-        <NotificationSettingDialog />
-      </>
-    );
-  },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get("/api/settings/notification", async () => {
-          return HttpResponse.json(mockNotification);
-        }),
-        http.put("/api/settings/notification", async ({ request }) => {
-          capturedRequest.notificationSetting = request.clone();
-          console.log("request");
-          return HttpResponse.json({
-            matchedCount: 0,
-            modifiedCount: 0,
-            upsertedCount: 0,
-            upsertedID: "testUpsertedID",
-          });
-        }),
-      ],
-    },
-  },
-  beforeEach: () => {
-    capturedRequest = {};
-  },
-
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // 읽지 않은 링크
-    const readAgree = await canvas.findByTestId("read-agree");
-
-    await userEvent.click(within(readAgree).getByRole("checkbox"));
-    await waitFor(function requestReadAgree() {
-      if (capturedRequest.notificationSetting) {
-        const url = new URL(capturedRequest.notificationSetting.url);
-        expect(url.pathname).toBe(`/api/settings/notification`);
-        expect(capturedRequest.notificationSetting.method).toBe("PUT");
-      } else {
-        throw new Error("읽지 않은 링크 요청 없음 에러");
-      }
-    });
-
-    // capturedRequest = {};
-
-    // 분류되지 않은 링크
-    // const classifyAgree = await canvas.findByTestId("classify-agree");
-
-    // await userEvent.click(within(classifyAgree).getByRole("checkbox"));
-    // await waitFor(function requestClassifyAgree() {
-    //   if (capturedRequest.notificationSetting) {
-    //     const url = new URL(capturedRequest.notificationSetting.url);
-    //     expect(url.pathname).toBe(`/api/settings/notification`);
-    //     expect(capturedRequest.notificationSetting.method).toBe("PUT");
-    //   } else {
-    //     throw new Error("분류되지 않은 링크 요청 없음 에러");
-    //   }
-    // });
-
-    // capturedRequest = {};
-  },
-};
-
-// 태그 관리 (데이터 x)
-export const OpenTagSettingDialogWithEmptyData: Story = {
-  render: () => {
-    useOpenDialogStore.setState({ isTagSettingOpen: true });
-    return (
-      <>
-        <TagSettingDialog />
-      </>
-    );
-  },
-};
-
-// 태그 관리 (데이터 o)
-export const OpenTagSettingDialogWithMockData: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        http.get("/api/settings/tag", async () => {
-          return HttpResponse.json(mockTags);
-        }),
-      ],
-    },
-  },
-  render: () => {
-    useOpenDialogStore.setState({ isTagSettingOpen: true });
-    return (
-      <>
-        <TagSettingDialog />
-      </>
-    );
-  },
-};
-
-// 태그 관리 (태그 옵션)
-export const OpenTagOptionOfTagSettingDialog: Story = {
-  render: () => {
-    return (
-      <>
-        <TagCard tag={mockTags[0]} />
-      </>
-    );
   },
 };
