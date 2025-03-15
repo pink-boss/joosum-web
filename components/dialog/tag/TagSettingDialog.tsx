@@ -79,7 +79,10 @@ function TagList({ tagList }: TagListProps) {
         태그 목록
       </div>
       {tagList?.length ? (
-        <div className="mini-scroll h-60 w-full overflow-scroll px-5">
+        <div
+          data-testid="tag-list"
+          className="mini-scroll h-60 w-full overflow-scroll px-5"
+        >
           {tagList.map((tag) => (
             <TagCard tag={tag} />
           ))}

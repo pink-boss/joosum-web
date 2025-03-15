@@ -8,11 +8,10 @@ import { UserDrawer } from "@/components/drawer/dynamic";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
-import { mockAccount } from "@/stories/mocks/account.mocks";
-
 import { mockTags } from "@/stories/mocks/tag.mocks";
 
 import { TagCard } from "@/components/dialog/tag/TagSettingDialog";
+import { expect, within } from "@storybook/test";
 
 const queryClient = new QueryClient();
 let capturedRequest: {
@@ -29,8 +28,8 @@ const meta = {
     layout: "fullscreen",
     msw: {
       handlers: [
-        http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockAccount);
+        http.get("/api/settings/tag", async () => {
+          return HttpResponse.json(mockTags);
         }),
       ],
     },
@@ -51,6 +50,15 @@ type Story = StoryObj<typeof meta>;
 
 // 태그 관리 (데이터 x)
 export const OpenTagSettingDialogWithEmptyData: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get("/api/settings/tag", async () => {
+          return HttpResponse.json([]);
+        }),
+      ],
+    },
+  },
   render: () => {
     useOpenDialogStore.setState({ isTagSettingOpen: true });
     return (
@@ -63,15 +71,6 @@ export const OpenTagSettingDialogWithEmptyData: Story = {
 
 // 태그 관리 (데이터 o)
 export const OpenTagSettingDialogWithMockData: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        http.get("/api/settings/tag", async () => {
-          return HttpResponse.json(mockTags);
-        }),
-      ],
-    },
-  },
   render: () => {
     useOpenDialogStore.setState({ isTagSettingOpen: true });
     return (
@@ -92,3 +91,34 @@ export const OpenTagOptionOfTagSettingDialog: Story = {
     );
   },
 };
+
+export const TestQueryTagSetting: Story = {
+  decorators: (Story) => {
+    useOpenDialogStore.setState({ isTagSettingOpen: true });
+    return (
+      <>
+        <TagSettingDialog />
+      </>
+    );
+  },
+  parameters: {},
+
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // 읽지 않은 링크
+    const tags = await canvas.findByTestId("tag-list");
+
+    // 첫 번째 태그
+    const first = tags.children[0] as HTMLElement;
+    expect(within(first).getByText("생산성")).toBeTruthy();
+
+    // 네 번쨰 태그
+    const fourth = tags.children[3] as HTMLElement;
+    expect(within(fourth).getByText("AI")).toBeTruthy();
+  },
+};
+
+// TODO: 태그 삽입
+// TODO: 태그 수정
+// TODO: 태그 삭제
