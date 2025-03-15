@@ -22,7 +22,7 @@ let capturedRequest: {
 } = {};
 
 const meta = {
-  title: "Component/Drawer/User",
+  title: "Component/Drawer/User/Tag",
   component: UserDrawer,
   tags: ["autodocs"],
   parameters: {
