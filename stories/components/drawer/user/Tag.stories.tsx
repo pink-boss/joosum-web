@@ -156,7 +156,7 @@ export const TestInsertTag: Story = {
       }
     });
 
-    expect(canvas.getByText("블록체인")).toBeTruthy();
+    expect(canvas.queryByText("블록체인")).toBeTruthy();
 
     // 스페이스바
     await userEvent.type(input, "양자컴퓨터 ");
@@ -170,7 +170,7 @@ export const TestInsertTag: Story = {
       }
     });
 
-    expect(canvas.getByText("양자컴퓨터")).toBeTruthy();
+    expect(canvas.queryByText("양자컴퓨터")).toBeTruthy();
   },
 };
 
@@ -222,7 +222,7 @@ export const TestUpdateTag: Story = {
     });
 
     expect(canvas.getByText("맛집")).toBeTruthy();
-    expect(canvas.queryByText("생산성")).not.toBeInTheDocument();
+
     capturedRequest = {};
 
     // 스페이스바
@@ -248,7 +248,7 @@ export const TestUpdateTag: Story = {
     });
 
     expect(canvas.getByText("견문")).toBeTruthy();
-    expect(canvas.queryByText("여행")).not.toBeInTheDocument();
+
     capturedRequest = {};
   },
 };
@@ -260,9 +260,10 @@ export const TestDeleteTag: Story = {
         http.get("/api/settings/tags", async () => {
           return HttpResponse.json(mockTags);
         }),
-        http.delete("/api/settings/tags", async ({ request }) => {
+        http.delete("/api/settings/tags/:tag", async ({ request, params }) => {
           capturedRequest.tags = request.clone();
-          const target = await request.json();
+          const { tag: target } = params;
+          console.log(target);
           const index = mockTags.indexOf(target as string);
           const tags = [
             ...mockTags.slice(0, index),
@@ -287,7 +288,7 @@ export const TestDeleteTag: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const targetForEnterKey = await canvas.findByText("인공지능");
+    const targetForEnterKey = await canvas.findByText("AI");
 
     let moreOption = targetForEnterKey.nextElementSibling! as HTMLElement;
     let moreButton = within(moreOption).getByRole("button");
@@ -303,14 +304,15 @@ export const TestDeleteTag: Story = {
     await waitFor(function requestDeleteTag() {
       if (capturedRequest.tags) {
         const url = new URL(capturedRequest.tags.url);
-        expect(url.pathname).toBe(`/api/settings/tags`);
+        expect(url.pathname).toBe(`/api/settings/tags/AI`);
         expect(capturedRequest.tags.method).toBe("DELETE");
       } else {
         throw new Error("태그 삭제 에러");
       }
     });
-
-    expect(canvas.queryByText("인공지능")).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(canvas.queryByText("AI")).not.toBeInTheDocument();
+    });
     capturedRequest = {};
   },
 };

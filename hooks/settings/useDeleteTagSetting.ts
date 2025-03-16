@@ -8,9 +8,8 @@ export default function useDeleteTagsSetting(onSuccessCallback: () => void) {
   return useMutation<[TagList], Error, Tag>({
     mutationFn: async (state: Tag) => {
       return (
-        await fetch(`/api/settings/tags`, {
+        await fetch(`/api/settings/tags/${state}`, {
           method: "DELETE",
-          body: JSON.stringify(state),
         })
       ).json();
     },
