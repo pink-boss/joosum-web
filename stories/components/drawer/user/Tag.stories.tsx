@@ -11,13 +11,11 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 import { mockTags } from "@/stories/mocks/tag.mocks";
 
 import { TagCard } from "@/components/dialog/tag/TagSettingDialog";
-import { expect, within } from "@storybook/test";
+import { expect, userEvent, waitFor, within } from "@storybook/test";
 
 const queryClient = new QueryClient();
 let capturedRequest: {
-  logout?: Request;
-  deleteAccount?: Request;
-  notificationSetting?: Request;
+  tags?: Request;
 } = {};
 
 const meta = {
@@ -28,7 +26,7 @@ const meta = {
     layout: "fullscreen",
     msw: {
       handlers: [
-        http.get("/api/settings/tag", async () => {
+        http.get("/api/settings/tags", async () => {
           return HttpResponse.json(mockTags);
         }),
       ],
@@ -92,7 +90,7 @@ export const OpenTagOptionOfTagSettingDialog: Story = {
   },
 };
 
-export const TestQueryTagSetting: Story = {
+export const TestQueryTag: Story = {
   decorators: (Story) => {
     useOpenDialogStore.setState({ isTagSettingOpen: true });
     return (
@@ -101,12 +99,10 @@ export const TestQueryTagSetting: Story = {
       </>
     );
   },
-  parameters: {},
 
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // 읽지 않은 링크
     const tags = await canvas.findByTestId("tag-list");
 
     // 첫 번째 태그
@@ -119,6 +115,62 @@ export const TestQueryTagSetting: Story = {
   },
 };
 
-// TODO: 태그 삽입
+export const TestInsertTag: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.post("/api/settings/tags", async ({ request }) => {
+          capturedRequest.tags = request.clone();
+          const value = await request.json();
+          console.log(value);
+          return HttpResponse.json([value]);
+        }),
+      ],
+    },
+  },
+  decorators: (Story) => {
+    useOpenDialogStore.setState({ isTagSettingOpen: true });
+    return (
+      <>
+        <TagSettingDialog />
+      </>
+    );
+  },
+
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // 입력창에 태그 이름 입력
+    const input = await canvas.findByRole("textbox");
+
+    // 엔터키
+    await userEvent.type(input, "블록체인{enter}");
+    await waitFor(function requestInsertTagsWithEnterKey() {
+      if (capturedRequest.tags) {
+        const url = new URL(capturedRequest.tags.url);
+        expect(url.pathname).toBe(`/api/settings/tags`);
+        expect(capturedRequest.tags.method).toBe("POST");
+      } else {
+        throw new Error("태그 추가 에러 (enter)");
+      }
+    });
+
+    // 스페이스바
+    await userEvent.type(input, "양자컴퓨터 ");
+    await waitFor(function requestInsertTagsWithSpacebarKey() {
+      if (capturedRequest.tags) {
+        const url = new URL(capturedRequest.tags.url);
+        expect(url.pathname).toBe(`/api/settings/tags`);
+        expect(capturedRequest.tags.method).toBe("POST");
+      } else {
+        throw new Error("태그 추가 에러 (spacebar)");
+      }
+    });
+
+    expect(canvas.getByText("블록체인")).toBeTruthy();
+    expect(canvas.getByText("양자컴퓨터")).toBeTruthy();
+  },
+};
+
 // TODO: 태그 수정
 // TODO: 태그 삭제

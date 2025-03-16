@@ -3,9 +3,11 @@ import Dialog from "../Dialog";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import clsx from "clsx";
-import { Tag, TagList as TagListType } from "@/types/tag.types";
-import { useQueryTagSetting } from "@/hooks/settings/useQueryTagSetting";
+import { Tag, TagList as TagListType } from "@/types/tags.types";
+import { useQueryTagsSetting } from "@/hooks/settings/useQueryTagsSetting";
 import TagMore from "./TagMore";
+import { KeyboardEvent, useRef } from "react";
+import useUpsertTagsSetting from "@/hooks/settings/useUpsertTagsSetting";
 
 export default function TagSettingDialog() {
   const { isTagSettingOpen: isOpen, openTagSetting: open } =
@@ -15,13 +17,20 @@ export default function TagSettingDialog() {
     open(false);
   };
 
-  const { data } = useQueryTagSetting();
+  const { data } = useQueryTagsSetting();
 
-  // const mutateTagSetting = useMutateTagSetting();
+  const upsertTags = useUpsertTagsSetting();
 
-  // const handleSetting = () => {
-  //   updateTagSetting.mutate();
-  // };
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleInput = (event: KeyboardEvent<HTMLInputElement>) => {
+    const newTag = inputRef.current?.value;
+
+    if (newTag && ["Enter", " "].includes(event.key)) {
+      upsertTags.mutate([newTag.trim(), ...(data ?? [])]);
+      if (inputRef.current) inputRef.current.value = "";
+    }
+  };
 
   return (
     <Dialog
@@ -47,8 +56,10 @@ export default function TagSettingDialog() {
         </div>
 
         <input
+          ref={inputRef}
           className="h-12 w-full rounded-lg border border-gray-ghost bg-gray-ghost pl-3"
           placeholder="태그를 생성하여 목록에 추가해보세요."
+          onKeyUp={handleInput}
         />
 
         <TagList tagList={data} />

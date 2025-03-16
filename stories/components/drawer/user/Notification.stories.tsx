@@ -73,7 +73,7 @@ export const TestNotificationSetting: Story = {
         }),
         http.put("/api/settings/notification", async ({ request }) => {
           capturedRequest.notificationSetting = request.clone();
-          console.log("request");
+
           return HttpResponse.json({
             matchedCount: 0,
             modifiedCount: 0,
