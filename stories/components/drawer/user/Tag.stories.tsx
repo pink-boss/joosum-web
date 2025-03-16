@@ -121,9 +121,7 @@ export const TestInsertTag: Story = {
       handlers: [
         http.post("/api/settings/tags", async ({ request }) => {
           capturedRequest.tags = request.clone();
-          const value = await request.json();
-          console.log(value);
-          return HttpResponse.json([value]);
+          return HttpResponse.json([await request.json()]);
         }),
       ],
     },
@@ -155,6 +153,8 @@ export const TestInsertTag: Story = {
       }
     });
 
+    expect(canvas.getByText("블록체인")).toBeTruthy();
+
     // 스페이스바
     await userEvent.type(input, "양자컴퓨터 ");
     await waitFor(function requestInsertTagsWithSpacebarKey() {
@@ -167,10 +167,83 @@ export const TestInsertTag: Story = {
       }
     });
 
-    expect(canvas.getByText("블록체인")).toBeTruthy();
     expect(canvas.getByText("양자컴퓨터")).toBeTruthy();
   },
 };
 
-// TODO: 태그 수정
+export const TestUpdateTag: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get("/api/settings/tags", async () => {
+          return HttpResponse.json(mockTags);
+        }),
+        http.post("/api/settings/tags", async ({ request }) => {
+          capturedRequest.tags = request.clone();
+          return HttpResponse.json([await request.json()]);
+        }),
+      ],
+    },
+  },
+  decorators: (Story) => {
+    useOpenDialogStore.setState({ isTagSettingOpen: true });
+    return (
+      <>
+        <TagSettingDialog />
+      </>
+    );
+  },
+
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // 엔터키
+    const targetForEnterKey = await canvas.findByText("생산성");
+
+    let moreOption = targetForEnterKey.nextElementSibling! as HTMLElement;
+    let moreButton = within(moreOption).getByRole("button");
+    await userEvent.click(moreButton);
+
+    let updateInput = within(moreOption).getByRole("textbox");
+    await userEvent.clear(updateInput);
+    await userEvent.type(updateInput, "맛집{enter}");
+
+    await waitFor(function requestUpdateTagsWithEnterKey() {
+      if (capturedRequest.tags) {
+        const url = new URL(capturedRequest.tags.url);
+        expect(url.pathname).toBe(`/api/settings/tags`);
+        expect(capturedRequest.tags.method).toBe("POST");
+      } else {
+        throw new Error("태그 추가 에러 (enter)");
+      }
+    });
+
+    expect(canvas.getByText("맛집")).toBeTruthy();
+
+    // 스페이스바
+    const targetForSpacebarKey = await canvas.findByText("여행");
+    await userEvent.click(targetForSpacebarKey.nextElementSibling!);
+
+    moreOption = targetForEnterKey.nextElementSibling! as HTMLElement;
+    moreButton = within(moreOption).getByRole("button");
+    await userEvent.click(moreButton);
+
+    updateInput = within(moreOption).getByRole("textbox");
+    await userEvent.clear(updateInput);
+    await userEvent.type(updateInput, "견문{enter}");
+
+    await waitFor(function requestUpdateTagsWithSpacebarKey() {
+      if (capturedRequest.tags) {
+        const url = new URL(capturedRequest.tags.url);
+        expect(url.pathname).toBe(`/api/settings/tags`);
+        expect(capturedRequest.tags.method).toBe("POST");
+      } else {
+        throw new Error("태그 추가 에러 (spacebar)");
+      }
+    });
+
+    expect(canvas.getByText("견문")).toBeTruthy();
+  },
+};
+
 // TODO: 태그 삭제

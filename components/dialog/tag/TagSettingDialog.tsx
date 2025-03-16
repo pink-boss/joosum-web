@@ -4,10 +4,10 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import clsx from "clsx";
 import { Tag, TagList as TagListType } from "@/types/tags.types";
-import { useQueryTagsSetting } from "@/hooks/settings/useQueryTagsSetting";
+
 import TagMore from "./TagMore";
-import { KeyboardEvent, useRef } from "react";
-import useUpsertTagsSetting from "@/hooks/settings/useUpsertTagsSetting";
+
+import useUpsertTags from "@/hooks/settings/useUpsertTags";
 
 export default function TagSettingDialog() {
   const { isTagSettingOpen: isOpen, openTagSetting: open } =
@@ -16,21 +16,7 @@ export default function TagSettingDialog() {
   const onClose = () => {
     open(false);
   };
-
-  const { data } = useQueryTagsSetting();
-
-  const upsertTags = useUpsertTagsSetting();
-
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleInput = (event: KeyboardEvent<HTMLInputElement>) => {
-    const newTag = inputRef.current?.value;
-
-    if (newTag && ["Enter", " "].includes(event.key)) {
-      upsertTags.mutate([newTag.trim(), ...(data ?? [])]);
-      if (inputRef.current) inputRef.current.value = "";
-    }
-  };
+  const { handleInput, inputRef, tags } = useUpsertTags();
 
   return (
     <Dialog
@@ -62,7 +48,7 @@ export default function TagSettingDialog() {
           onKeyUp={handleInput}
         />
 
-        <TagList tagList={data} />
+        <TagList tagList={tags} />
 
         <div className="w-full pt-3">
           <button

@@ -7,6 +7,8 @@ import { useClearDropdown } from "@/hooks/useClearDropdown";
 
 import Image from "next/image";
 
+import useUpsertTags from "@/hooks/settings/useUpsertTags";
+
 export type InputProps = {
   label: string;
 };
@@ -43,10 +45,7 @@ const TagMore = ({ label }: InputProps) => {
             "gap-[20px] rounded-lg border border-gray-ghost bg-white p-6 shadow-lg",
           )}
         >
-          <input
-            className="w-full bg-gray-ghost px-2 py-[9px] text-gray-dim"
-            defaultValue={label}
-          />
+          <TagUpdaterInput defaultValue={label} />
           <button className="w-full pl-1 text-start font-semibold text-gray-black">
             태그 삭제
           </button>
@@ -57,6 +56,22 @@ const TagMore = ({ label }: InputProps) => {
 };
 
 export default TagMore;
+
+type TagUpdaterInputProps = {
+  defaultValue: string;
+};
+
+function TagUpdaterInput({ defaultValue }: TagUpdaterInputProps) {
+  const { handleInput, inputRef } = useUpsertTags();
+  return (
+    <input
+      ref={inputRef}
+      className="w-full bg-gray-ghost px-2 py-[9px] text-gray-dim"
+      defaultValue={defaultValue}
+      onKeyUp={handleInput}
+    />
+  );
+}
 
 // TODO: 테스트 정의하고 통과 시키기
 // TODO: 서버랑 연결해서 기능 마무리 짓기
