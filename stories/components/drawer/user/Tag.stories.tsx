@@ -3,7 +3,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
 
-import { TagSettingDialog } from "@/components/dialog/dynamic";
+import {
+  DeleteTagConfirmDialog,
+  TagSettingDialog,
+} from "@/components/dialog/dynamic";
 import { UserDrawer } from "@/components/drawer/dynamic";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
@@ -219,6 +222,8 @@ export const TestUpdateTag: Story = {
     });
 
     expect(canvas.getByText("맛집")).toBeTruthy();
+    expect(canvas.queryByText("생산성")).not.toBeInTheDocument();
+    capturedRequest = {};
 
     // 스페이스바
     const targetForSpacebarKey = await canvas.findByText("여행");
@@ -243,7 +248,69 @@ export const TestUpdateTag: Story = {
     });
 
     expect(canvas.getByText("견문")).toBeTruthy();
+    expect(canvas.queryByText("여행")).not.toBeInTheDocument();
+    capturedRequest = {};
   },
 };
 
-// TODO: 태그 삭제
+export const TestDeleteTag: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get("/api/settings/tags", async () => {
+          return HttpResponse.json(mockTags);
+        }),
+        http.delete("/api/settings/tags", async ({ request }) => {
+          capturedRequest.tags = request.clone();
+          const target = await request.json();
+          const index = mockTags.indexOf(target as string);
+          const tags = [
+            ...mockTags.slice(0, index),
+            ...mockTags.slice(index + 1, -1),
+          ];
+          console.log(tags);
+          return HttpResponse.json([tags]);
+        }),
+      ],
+    },
+  },
+  decorators: (Story) => {
+    useOpenDialogStore.setState({ isTagSettingOpen: true });
+    return (
+      <>
+        <TagSettingDialog />
+        <DeleteTagConfirmDialog />
+      </>
+    );
+  },
+
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const targetForEnterKey = await canvas.findByText("인공지능");
+
+    let moreOption = targetForEnterKey.nextElementSibling! as HTMLElement;
+    let moreButton = within(moreOption).getByRole("button");
+    await userEvent.click(moreButton);
+
+    await userEvent.click(within(moreOption).getByText("태그 삭제"));
+    await userEvent.click(
+      within(canvas.getByTestId("delete-tag-confirm")).getByRole("button", {
+        name: "확인",
+      }),
+    );
+
+    await waitFor(function requestDeleteTag() {
+      if (capturedRequest.tags) {
+        const url = new URL(capturedRequest.tags.url);
+        expect(url.pathname).toBe(`/api/settings/tags`);
+        expect(capturedRequest.tags.method).toBe("DELETE");
+      } else {
+        throw new Error("태그 삭제 에러");
+      }
+    });
+
+    expect(canvas.queryByText("인공지능")).not.toBeInTheDocument();
+    capturedRequest = {};
+  },
+};

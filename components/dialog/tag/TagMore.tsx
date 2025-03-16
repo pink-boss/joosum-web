@@ -8,6 +8,7 @@ import { useClearDropdown } from "@/hooks/useClearDropdown";
 import Image from "next/image";
 
 import useUpsertTags from "@/hooks/settings/useUpsertTags";
+import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 
 export type InputProps = {
   label: string;
@@ -17,6 +18,13 @@ const TagMore = ({ label }: InputProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const ref = useClearDropdown(() => setIsOpen(false));
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const { openDeleteTagConfirm } = useOpenSubDialogStore();
+
+  const handleDelete = () => {
+    useOpenSubDialogStore.setState({ key: label });
+    openDeleteTagConfirm(true);
+  };
 
   useEffect(() => {
     if (isOpen && dropdownRef.current) {
@@ -46,7 +54,10 @@ const TagMore = ({ label }: InputProps) => {
           )}
         >
           <TagUpdaterInput defaultValue={label} />
-          <button className="w-full pl-1 text-start font-semibold text-gray-black">
+          <button
+            className="w-full pl-1 text-start font-semibold text-gray-black"
+            onClick={handleDelete}
+          >
             태그 삭제
           </button>
         </div>
@@ -73,5 +84,4 @@ function TagUpdaterInput({ defaultValue }: TagUpdaterInputProps) {
   );
 }
 
-// TODO: 테스트 정의하고 통과 시키기
 // TODO: 서버랑 연결해서 기능 마무리 짓기

@@ -50,6 +50,14 @@ const TagSettingDialog = dynamic(() => import("./tag/TagSettingDialog"), {
   ssr: false,
 });
 
+const DeleteTagConfirmDialog = dynamic(
+  () => import("./tag/DeleteConfirmDialog"),
+  {
+    loading: () => null,
+    ssr: false,
+  },
+);
+
 export {
   MutateLinkBookDialog,
   DeleteLinkBookDialog,
@@ -59,4 +67,5 @@ export {
   LogoutDialog,
   NotificationSettingDialog,
   TagSettingDialog,
+  DeleteTagConfirmDialog,
 };

@@ -10,10 +10,12 @@ import {
   DeleteAccountDialog,
   DeleteLinkBookDialog,
   DeleteLinkDialog,
+  DeleteTagConfirmDialog,
   LogoutDialog,
   MutateLinkBookDialog,
   NotificationSettingDialog,
 } from "./dynamic";
+import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 
 export default function DynamicOpenDialogs() {
   const {
@@ -29,6 +31,7 @@ export default function DynamicOpenDialogs() {
     isNotificationSettingOpen,
   } = useOpenDialogStore();
 
+  const { isDeleteTagConfirmOpen } = useOpenSubDialogStore();
   return (
     <>
       {isMutateLinkBookOpen && <MutateLinkBookDialog />}
@@ -41,6 +44,8 @@ export default function DynamicOpenDialogs() {
       {isDeleteAccountOpen && <DeleteAccountDialog />}
       {isLogoutOpen && <LogoutDialog />}
       {isNotificationSettingOpen && <NotificationSettingDialog />}
+
+      {isDeleteTagConfirmOpen && <DeleteTagConfirmDialog />}
     </>
   );
 }
