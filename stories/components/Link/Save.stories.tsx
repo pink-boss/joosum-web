@@ -2,18 +2,17 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { LinkSaveDrawer } from "@/components/drawer/dynamic";
-
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 
 import React from "react";
+import { SaveLinkDrawer } from "@/components/drawer/dynamic";
 
 const queryClient = new QueryClient();
 let capturedRequest: Request | null;
 
 const meta = {
   title: "Component/Drawer/Link/Save",
-  component: LinkSaveDrawer,
+  component: SaveLinkDrawer,
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
@@ -30,7 +29,7 @@ const meta = {
       </QueryClientProvider>
     );
   },
-} satisfies Meta<typeof LinkSaveDrawer>;
+} satisfies Meta<typeof SaveLinkDrawer>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

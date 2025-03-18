@@ -12,7 +12,7 @@ import Sidebar from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
 import { publicOnlyPaths } from "@/utils/path";
 
-import DynamicOpenDrawers from "@/components/dialog/DynamicOpenDrawers";
+import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
 
 const queryClient = new QueryClient();
 

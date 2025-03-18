@@ -7,11 +7,11 @@ import { http, HttpResponse } from "msw";
 
 import DrawerButton from "@/app/link-book/[title]/DrawerButton";
 import { ShareLinkDialog } from "@/app/link-book/dialog/dynamic";
+
 import {
   DeleteDrawerLinkDialog,
-  MutateLinkDrawer,
-} from "@/app/link-book/drawer/dynamic";
-import { MutateLinkBookDialog } from "@/components/dialog/dynamic";
+  MutateLinkBookDialog,
+} from "@/components/dialog/dynamic";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { Link } from "@/types/link.types";
@@ -21,8 +21,9 @@ import { getLinkListQueryKey } from "@/utils/queryKey";
 import { mockLink, mockLinks } from "../../mocks/link.mocks";
 import { mockLinkBooks, mockRespone } from "../../mocks/linkBook.mocks";
 import { mockTags } from "../../mocks/tag.mocks";
+import { MutateLinkDrawer } from "@/components/drawer/dynamic";
 
-// TODO: 위치 이동 및 코드 정리
+// TODO: 코드 정리
 const queryClient = new QueryClient();
 let capturedRequest: {
   updateLink?: Request;
@@ -32,7 +33,7 @@ let capturedRequest: {
 let invalidateQuerySpy: any;
 
 const meta = {
-  title: "Component/Drawer/Link",
+  title: "Component/Drawer/Link/Mutate",
   component: MutateLinkDrawer,
   tags: ["autodocs"],
   decorators: (Story) => {

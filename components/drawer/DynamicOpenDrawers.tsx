@@ -1,7 +1,5 @@
-import { MutateLinkDrawer } from "@/app/link-book/drawer/dynamic";
-
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
-import { LinkSaveDrawer, UserDrawer } from "../drawer/dynamic";
+import { MutateLinkDrawer, SaveLinkDrawer, UserDrawer } from "./dynamic";
 
 export default function DynamicOpenDrawers() {
   const { isLinkDrawerOpen, isLinkSaveDrawerOpen, isUserDrawerOpen } =
@@ -10,7 +8,7 @@ export default function DynamicOpenDrawers() {
   return (
     <>
       {isLinkDrawerOpen && <MutateLinkDrawer />}
-      {isLinkSaveDrawerOpen && <LinkSaveDrawer />}
+      {isLinkSaveDrawerOpen && <SaveLinkDrawer />}
       {isUserDrawerOpen && <UserDrawer />}
     </>
   );

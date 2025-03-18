@@ -1,8 +1,7 @@
 import Image from "next/image";
 
 import { Link } from "@/types/link.types";
-
-import OpenShareButton from "../OpenShareButton";
+import OpenShareButton from "@/app/link-book/OpenShareButton";
 
 type InputProps = {
   onClose: () => void;

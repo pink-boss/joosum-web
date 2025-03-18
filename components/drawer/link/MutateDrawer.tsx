@@ -14,9 +14,9 @@ import { CreateFormState } from "@/types/link.types";
 import { krDateFormatter } from "@/utils/date";
 
 import Header from "./Header";
-import TagSelector from "../[title]/tag-selector";
-import { TagBadge } from "../[title]/tag-selector/SelectedTags";
-import SelectLinkBook from "../dialog/SelectLinkBook";
+import { SelectLinkBook } from "@/app/link-book/dialog/dynamic";
+import TagSelector from "@/app/link-book/[title]/tag-selector";
+import { TagBadge } from "@/app/link-book/[title]/tag-selector/SelectedTags";
 
 type ToastDefaultValues = {
   isOpen: boolean;
