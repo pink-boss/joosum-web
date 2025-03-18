@@ -6,10 +6,17 @@ import { DeleteDrawerLinkDialog } from "@/app/link-book/drawer/dynamic";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import {
+  AccountDialog,
+  DeleteAccountDialog,
   DeleteLinkBookDialog,
   DeleteLinkDialog,
+  DeleteTagConfirmDialog,
+  LogoutDialog,
   MutateLinkBookDialog,
+  NotificationSettingDialog,
+  TagSettingDialog,
 } from "./dynamic";
+import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 
 export default function DynamicOpenDialogs() {
   const {
@@ -19,8 +26,14 @@ export default function DynamicOpenDialogs() {
     isDeleteDrawerLinkOpen,
     isReassignLinkBookOpen,
     isShareLinkOpen,
+    isAccountOpen,
+    isDeleteAccountOpen,
+    isLogoutOpen,
+    isNotificationSettingOpen,
+    isTagSettingOpen,
   } = useOpenDialogStore();
 
+  const { isDeleteTagConfirmOpen } = useOpenSubDialogStore();
   return (
     <>
       {isMutateLinkBookOpen && <MutateLinkBookDialog />}
@@ -29,6 +42,13 @@ export default function DynamicOpenDialogs() {
       {isDeleteDrawerLinkOpen && <DeleteDrawerLinkDialog />}
       {isReassignLinkBookOpen && <ReassignLinkBookDialog />}
       {isShareLinkOpen && <ShareLinkDialog />}
+      {isAccountOpen && <AccountDialog />}
+      {isDeleteAccountOpen && <DeleteAccountDialog />}
+      {isLogoutOpen && <LogoutDialog />}
+      {isNotificationSettingOpen && <NotificationSettingDialog />}
+      {isTagSettingOpen && <TagSettingDialog />}
+
+      {isDeleteTagConfirmOpen && <DeleteTagConfirmDialog />}
     </>
   );
 }

@@ -7,8 +7,7 @@ import { http, HttpResponse } from "msw";
 import TagSelector from "@/app/link-book/[title]/tag-selector";
 import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
 
-import { mockTags } from "../mocks/tag.mocks";
-
+import { mockTags } from "../../mocks/tag.mocks";
 
 const queryClient = new QueryClient();
 

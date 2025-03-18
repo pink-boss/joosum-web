@@ -11,8 +11,8 @@ import { DeleteLinkDialog } from "@/components/dialog/dynamic";
 import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
 import { LinkSortState } from "@/store/useLinkSortStore";
 
-import { mockLinks } from "../mocks/link.mocks";
-import { mockLinkBooks } from "../mocks/linkBook.mocks";
+import { mockLinks } from "../../mocks/link.mocks";
+import { mockLinkBooks } from "../../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();
 let capturedRequest: Request | null = null;
@@ -161,7 +161,7 @@ export const TestSortRequestURI_Lastest: Story = {
       canvasElement,
       label: "최신순",
       sort: "created_at",
-      orderBy: "asc",
+      orderBy: "desc",
     });
   },
 };
@@ -172,7 +172,7 @@ export const TestSortRequestURI_Oldest: Story = {
       canvasElement,
       label: "오래된순",
       sort: "created_at",
-      orderBy: "desc",
+      orderBy: "asc",
     });
   },
 };
@@ -183,7 +183,7 @@ export const TestSortRequestURI_Title: Story = {
       canvasElement,
       label: "제목순",
       sort: "title",
-      orderBy: "desc",
+      orderBy: "asc",
     });
   },
 };

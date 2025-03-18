@@ -9,9 +9,7 @@ import MutateDialog from "@/app/my-folder/mutate/MutateDialog";
 import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
-import { mockLinkBooks, mockRespone } from "../mocks/linkBook.mocks";
-
-
+import { mockLinkBooks, mockRespone } from "../../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();
 

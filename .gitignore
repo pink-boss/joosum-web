@@ -26,6 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env.*
 
 # vercel
@@ -36,4 +37,9 @@ yarn-error.log*
 next-env.d.ts
 node_modules
 
+# storybook
 *storybook.log
+storybook-static
+
+# vscode
+/.vscode

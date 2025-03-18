@@ -6,8 +6,7 @@ import { http, HttpResponse } from "msw";
 
 import LinkCard from "@/app/link-book/[title]/LinkCard";
 
-import { mockLink } from "../mocks/link.mocks";
-
+import { mockLink } from "../../mocks/link.mocks";
 
 const queryClient = new QueryClient();
 

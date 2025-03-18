@@ -3,8 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import LinkCard from "@/app/home/LinkCard";
 
-import { mockLink } from "../mocks/link.mocks";
-
+import { mockLink } from "../../mocks/link.mocks";
 
 const queryClient = new QueryClient();
 

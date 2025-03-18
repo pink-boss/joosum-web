@@ -108,7 +108,7 @@ export default function Menu() {
               : "h-0 overflow-hidden",
           )}
         >
-          {data?.linkBooks.map((linkBook, index) => (
+          {data?.linkBooks?.map((linkBook, index) => (
             <LinkBookMenu
               linkBook={linkBook}
               key={index}

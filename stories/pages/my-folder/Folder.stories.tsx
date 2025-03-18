@@ -8,7 +8,7 @@ import {
   longTitleLinkBook,
   mockRespone,
   shortTitleLinkBook,
-} from "../mocks/linkBook.mocks";
+} from "../../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();
 

@@ -1,5 +1,9 @@
 import { LinkBook, TQueryLinkBooks } from "@/types/linkBook.types";
 
+import { mockAccount } from "./account.mocks";
+
+const userId = mockAccount.userId;
+
 export const defaultLinkBook: LinkBook = {
   backgroundColor: "#8A8A9A",
   createdAt: "2024-11-22T09:30:00.000Z",
@@ -10,7 +14,7 @@ export const defaultLinkBook: LinkBook = {
   linkCount: 130,
   title: "기본",
   titleColor: "#FFFFFF",
-  userId: "user_123",
+  userId,
 };
 
 export const longTitleLinkBook: LinkBook = {
@@ -23,7 +27,7 @@ export const longTitleLinkBook: LinkBook = {
   linkCount: 12,
   title: "개발 참고 자료 - 가나다라마바사 테스트 자료",
   titleColor: "#FFFFFF",
-  userId: "user_123",
+  userId,
 };
 
 export const shortTitleLinkBook: LinkBook = {
@@ -36,7 +40,7 @@ export const shortTitleLinkBook: LinkBook = {
   linkCount: 8,
   title: "주간 독서 목록",
   titleColor: "#FFFFFF",
-  userId: "user_123",
+  userId,
 };
 
 export const mockLinkBooks: LinkBook[] = [
@@ -53,7 +57,7 @@ export const mockLinkBooks: LinkBook[] = [
     linkCount: 15,
     title: "디자인 영감",
     titleColor: "#FFFFFF",
-    userId: "user_123",
+    userId,
   },
   {
     backgroundColor: "#FFF3E0",
@@ -65,7 +69,7 @@ export const mockLinkBooks: LinkBook[] = [
     linkCount: 6,
     title: "요리 레시피",
     titleColor: "#FFFFFF",
-    userId: "user_123",
+    userId,
   },
   {
     backgroundColor: "#E8F5E9",
@@ -77,7 +81,7 @@ export const mockLinkBooks: LinkBook[] = [
     linkCount: 10,
     title: "여행 계획",
     titleColor: "#FFFFFF",
-    userId: "user_123",
+    userId,
   },
 ];
 

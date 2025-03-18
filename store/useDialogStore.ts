@@ -18,6 +18,22 @@ interface OpenDialogState {
   openReassignLinkBook: (isOpen: boolean) => void;
   openDeleteDrawerLink: (isOpen: boolean) => void;
   openShareLink: (isOpen: boolean, key?: string) => void;
+
+  // auth
+  isAccountOpen: boolean;
+  isDeleteAccountOpen: boolean;
+  isLogoutOpen: boolean;
+  openAccount: (isOpen: boolean) => void;
+  openDeleteAccount: (isOpen: boolean) => void;
+  openLogout: (isOpen: boolean) => void;
+
+  // notification
+  isNotificationSettingOpen: boolean;
+  openNotificationSetting: (isOpen: boolean) => void;
+
+  // tag
+  isTagSettingOpen: boolean;
+  openTagSetting: (isOpen: boolean) => void;
 }
 
 export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
@@ -43,4 +59,21 @@ export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
   openDeleteDrawerLink: (isOpen) => set({ isDeleteDrawerLinkOpen: isOpen }),
   openShareLink: (isOpen, newKey) =>
     set({ isShareLinkOpen: isOpen, key: isOpen ? newKey : undefined }),
+
+  // auth
+  isAccountOpen: false,
+  isDeleteAccountOpen: false,
+  isLogoutOpen: false,
+  openAccount: (isOpen) => set({ isAccountOpen: isOpen }),
+  openDeleteAccount: (isOpen) => set({ isDeleteAccountOpen: isOpen }),
+  openLogout: (isOpen) => set({ isLogoutOpen: isOpen }),
+
+  // notification
+  isNotificationSettingOpen: false,
+  openNotificationSetting: (isOpen) =>
+    set({ isNotificationSettingOpen: isOpen }),
+
+  // tag
+  isTagSettingOpen: false,
+  openTagSetting: (isOpen) => set({ isTagSettingOpen: isOpen }),
 }));

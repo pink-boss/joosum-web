@@ -4,6 +4,8 @@ import { KeyboardEvent, useState } from "react";
 
 import { useSearchBarStore } from "@/store/useSearchBarStore";
 
+import OpenUserDrawerButton from "../drawer/user/OpenDrawerButton";
+
 export default function Topbar() {
   const router = useRouter();
   const { setTitle } = useSearchBarStore();
@@ -44,13 +46,7 @@ export default function Topbar() {
         <button className="h-[48px] w-[200px] rounded-xl bg-black text-xl font-bold text-white">
           링크 저장
         </button>
-        <Image
-          src="/icons/user.png"
-          alt="user"
-          width={48}
-          height={48}
-          className="cursor-pointer"
-        />
+        <OpenUserDrawerButton />
       </div>
     </div>
   );
