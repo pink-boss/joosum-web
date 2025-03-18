@@ -8,8 +8,8 @@ export async function GET(request: NextRequest) {
   });
 }
 
+// TODO: access token 제거되는지 확인
 export async function DELETE() {
-  console.log("delete in server");
   return serverApi({
     path: "api/auth/me",
     method: "DELETE",

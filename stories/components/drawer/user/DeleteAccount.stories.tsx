@@ -11,7 +11,8 @@ import { UserDrawer } from "@/components/drawer/dynamic";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
-import { mockAccount } from "@/stories/mocks/account.mocks";
+import { mockAccount, mockTQueryAccount } from "@/stories/mocks/account.mocks";
+import React from "react";
 
 const queryClient = new QueryClient();
 let capturedRequest: {
@@ -27,7 +28,7 @@ const meta = {
     msw: {
       handlers: [
         http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockAccount);
+          return HttpResponse.json(mockTQueryAccount);
         }),
       ],
     },
@@ -48,7 +49,9 @@ type Story = StoryObj<typeof meta>;
 
 export const OpenDeleteAccountDialog: Story = {
   decorators: (Story) => {
-    useOpenDialogStore.setState({ isDeleteAccountOpen: true });
+    React.useEffect(() => {
+      useOpenDialogStore.setState({ isDeleteAccountOpen: true });
+    }, []);
     return (
       <>
         <DeleteAccountDialog />
@@ -61,8 +64,10 @@ export const OpenDeleteAccountDialog: Story = {
 // 회원탈퇴 테스트
 export const TestDeleteAccount: Story = {
   decorators: (Story) => {
-    useOpenDrawerStore.setState({ isUserDrawerOpen: true });
-    useOpenDialogStore.setState({ isAccountOpen: true });
+    React.useEffect(() => {
+      useOpenDrawerStore.setState({ isUserDrawerOpen: true });
+      useOpenDialogStore.setState({ isAccountOpen: true });
+    }, []);
     return (
       <>
         <AccountDialog />
@@ -75,9 +80,9 @@ export const TestDeleteAccount: Story = {
     msw: {
       handlers: [
         http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockAccount);
+          return HttpResponse.json(mockTQueryAccount);
         }),
-        http.delete("/api/auth/delete", async ({ request }) => {
+        http.delete("/api/auth/me", async ({ request }) => {
           capturedRequest.deleteAccount = request.clone();
           return HttpResponse.json({ message: "success" });
         }),
@@ -126,7 +131,7 @@ export const TestDeleteAccount: Story = {
     await waitFor(function requestDeleteAccount() {
       if (capturedRequest.deleteAccount) {
         const url = new URL(capturedRequest.deleteAccount.url);
-        expect(url.pathname).toBe(`/api/auth/delete`);
+        expect(url.pathname).toBe(`/api/auth/me`);
         expect(capturedRequest.deleteAccount.method).toBe("DELETE");
       } else {
         throw new Error("회원 탈퇴 요청 없음 에러");

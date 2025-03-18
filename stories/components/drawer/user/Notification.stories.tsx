@@ -8,8 +8,9 @@ import { UserDrawer } from "@/components/drawer/dynamic";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
-import { mockAccount } from "@/stories/mocks/account.mocks";
+import { mockTQueryAccount } from "@/stories/mocks/account.mocks";
 import { mockNotification } from "@/stories/mocks/settings.mocks";
+import React from "react";
 
 const queryClient = new QueryClient();
 let capturedRequest: {
@@ -18,22 +19,24 @@ let capturedRequest: {
 
 const meta = {
   title: "Component/Drawer/User/Notification",
-  component: UserDrawer,
+  component: NotificationSettingDialog,
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
     msw: {
       handlers: [
         http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockAccount);
+          return HttpResponse.json(mockTQueryAccount);
         }),
       ],
     },
   },
   decorators: (Story) => {
+    React.useEffect(() => {
+      useOpenDialogStore.setState({ isNotificationSettingOpen: true });
+    }, []);
     return (
       <QueryClientProvider client={queryClient}>
-        <div id="drawer-root" />
         <div id="modal-root" />
         <Story />
       </QueryClientProvider>
@@ -44,27 +47,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const OpenNotificationSettingDialog: Story = {
-  render: () => {
-    useOpenDialogStore.setState({ isNotificationSettingOpen: true });
-    return (
-      <>
-        <NotificationSettingDialog />
-      </>
-    );
-  },
-};
+export const OpenNotificationSettingDialog: Story = {};
 
 // 알림 설정
 export const TestNotificationSetting: Story = {
-  decorators: (Story) => {
-    useOpenDialogStore.setState({ isNotificationSettingOpen: true });
-    return (
-      <>
-        <NotificationSettingDialog />
-      </>
-    );
-  },
   parameters: {
     msw: {
       handlers: [
@@ -105,22 +91,22 @@ export const TestNotificationSetting: Story = {
       }
     });
 
-    // capturedRequest = {};
+    capturedRequest = {};
 
     // 분류되지 않은 링크
-    // const classifyAgree = await canvas.findByTestId("classify-agree");
+    const classifyAgree = await canvas.findByTestId("classify-agree");
 
-    // await userEvent.click(within(classifyAgree).getByRole("checkbox"));
-    // await waitFor(function requestClassifyAgree() {
-    //   if (capturedRequest.notificationSetting) {
-    //     const url = new URL(capturedRequest.notificationSetting.url);
-    //     expect(url.pathname).toBe(`/api/settings/notification`);
-    //     expect(capturedRequest.notificationSetting.method).toBe("PUT");
-    //   } else {
-    //     throw new Error("분류되지 않은 링크 요청 없음 에러");
-    //   }
-    // });
+    await userEvent.click(within(classifyAgree).getByRole("checkbox"));
+    await waitFor(function requestClassifyAgree() {
+      if (capturedRequest.notificationSetting) {
+        const url = new URL(capturedRequest.notificationSetting.url);
+        expect(url.pathname).toBe(`/api/settings/notification`);
+        expect(capturedRequest.notificationSetting.method).toBe("PUT");
+      } else {
+        throw new Error("분류되지 않은 링크 요청 없음 에러");
+      }
+    });
 
-    // capturedRequest = {};
+    capturedRequest = {};
   },
 };

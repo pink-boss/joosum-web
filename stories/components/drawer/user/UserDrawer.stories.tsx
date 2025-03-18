@@ -8,7 +8,8 @@ import { UserDrawer } from "@/components/drawer/dynamic";
 import OpenUserDrawerButton from "@/components/drawer/user/OpenDrawerButton";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
-import { mockAccount } from "@/stories/mocks/account.mocks";
+import { mockAccount, mockTQueryAccount } from "@/stories/mocks/account.mocks";
+import React from "react";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,7 @@ const meta = {
     msw: {
       handlers: [
         http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockAccount);
+          return HttpResponse.json(mockTQueryAccount);
         }),
       ],
     },
@@ -42,14 +43,18 @@ type Story = StoryObj<typeof meta>;
 
 export const OpenDrawer: Story = {
   decorators: (Story) => {
-    useOpenDrawerStore.setState({ isUserDrawerOpen: true });
+    React.useEffect(() => {
+      useOpenDrawerStore.setState({ isUserDrawerOpen: true });
+    }, []);
     return <Story />;
   },
 };
 
 export const OpenAccountDialog: Story = {
   render: () => {
-    useOpenDialogStore.setState({ isAccountOpen: true });
+    React.useEffect(() => {
+      useOpenDialogStore.setState({ isAccountOpen: true });
+    }, []);
     return (
       <>
         <AccountDialog />
@@ -60,7 +65,9 @@ export const OpenAccountDialog: Story = {
 
 export const TestOpenCloseDrawer: Story = {
   decorators: (Story) => {
-    useOpenDrawerStore.setState({ isUserDrawerOpen: false });
+    React.useEffect(() => {
+      useOpenDrawerStore.setState({ isUserDrawerOpen: false });
+    }, []);
     return (
       <>
         <OpenUserDrawerButton />
@@ -85,7 +92,9 @@ export const TestOpenCloseDrawer: Story = {
 // 내 계정 정보
 export const TestOpenMyAccountDialog: Story = {
   decorators: (Story) => {
-    useOpenDrawerStore.setState({ isUserDrawerOpen: true });
+    React.useEffect(() => {
+      useOpenDrawerStore.setState({ isUserDrawerOpen: true });
+    }, []);
     return (
       <>
         <AccountDialog />
@@ -97,7 +106,7 @@ export const TestOpenMyAccountDialog: Story = {
     msw: {
       handlers: [
         http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockAccount);
+          return HttpResponse.json(mockTQueryAccount);
         }),
       ],
     },

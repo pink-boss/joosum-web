@@ -8,7 +8,8 @@ import { UserDrawer } from "@/components/drawer/dynamic";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
-import { mockAccount } from "@/stories/mocks/account.mocks";
+import { mockAccount, mockTQueryAccount } from "@/stories/mocks/account.mocks";
+import React from "react";
 
 const queryClient = new QueryClient();
 let capturedRequest: {
@@ -24,7 +25,7 @@ const meta = {
     msw: {
       handlers: [
         http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockAccount);
+          return HttpResponse.json(mockTQueryAccount);
         }),
       ],
     },
@@ -45,7 +46,9 @@ type Story = StoryObj<typeof meta>;
 
 export const OpenLogoutDialog: Story = {
   render: () => {
-    useOpenDialogStore.setState({ isLogoutOpen: true });
+    React.useEffect(() => {
+      useOpenDialogStore.setState({ isLogoutOpen: true });
+    }, []);
     return (
       <>
         <LogoutDialog />
@@ -57,8 +60,10 @@ export const OpenLogoutDialog: Story = {
 // 로그아웃 테스트
 export const TestLogout: Story = {
   decorators: (Story) => {
-    useOpenDrawerStore.setState({ isUserDrawerOpen: true });
-    useOpenDialogStore.setState({ isAccountOpen: true });
+    React.useEffect(() => {
+      useOpenDrawerStore.setState({ isUserDrawerOpen: true });
+      useOpenDialogStore.setState({ isAccountOpen: true });
+    }, []);
     return (
       <>
         <AccountDialog />
@@ -71,7 +76,7 @@ export const TestLogout: Story = {
     msw: {
       handlers: [
         http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockAccount);
+          return HttpResponse.json(mockTQueryAccount);
         }),
         http.post("/api/auth/logout", async ({ request }) => {
           capturedRequest.logout = request.clone();

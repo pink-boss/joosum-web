@@ -15,6 +15,7 @@ import { mockTags } from "@/stories/mocks/tag.mocks";
 
 import { TagCard } from "@/components/dialog/tag/TagSettingDialog";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
+import React from "react";
 
 const queryClient = new QueryClient();
 let capturedRequest: {
@@ -61,7 +62,9 @@ export const OpenTagSettingDialogWithEmptyData: Story = {
     },
   },
   render: () => {
-    useOpenDialogStore.setState({ isTagSettingOpen: true });
+    React.useEffect(() => {
+      useOpenDialogStore.setState({ isTagSettingOpen: true });
+    }, []);
     return (
       <>
         <TagSettingDialog />
@@ -73,7 +76,9 @@ export const OpenTagSettingDialogWithEmptyData: Story = {
 // 태그 관리 (데이터 o)
 export const OpenTagSettingDialogWithMockData: Story = {
   render: () => {
-    useOpenDialogStore.setState({ isTagSettingOpen: true });
+    React.useEffect(() => {
+      useOpenDialogStore.setState({ isTagSettingOpen: true });
+    }, []);
     return (
       <>
         <TagSettingDialog />
@@ -95,7 +100,10 @@ export const OpenTagOptionOfTagSettingDialog: Story = {
 
 export const TestQueryTag: Story = {
   decorators: (Story) => {
-    useOpenDialogStore.setState({ isTagSettingOpen: true });
+    React.useEffect(() => {
+      useOpenDialogStore.setState({ isTagSettingOpen: true });
+    }, []);
+
     return (
       <>
         <TagSettingDialog />
@@ -130,7 +138,9 @@ export const TestInsertTag: Story = {
     },
   },
   decorators: (Story) => {
-    useOpenDialogStore.setState({ isTagSettingOpen: true });
+    React.useEffect(() => {
+      useOpenDialogStore.setState({ isTagSettingOpen: true });
+    }, []);
     return (
       <>
         <TagSettingDialog />
@@ -189,7 +199,9 @@ export const TestUpdateTag: Story = {
     },
   },
   decorators: (Story) => {
-    useOpenDialogStore.setState({ isTagSettingOpen: true });
+    React.useEffect(() => {
+      useOpenDialogStore.setState({ isTagSettingOpen: true });
+    }, []);
     return (
       <>
         <TagSettingDialog />
@@ -276,7 +288,9 @@ export const TestDeleteTag: Story = {
     },
   },
   decorators: (Story) => {
-    useOpenDialogStore.setState({ isTagSettingOpen: true });
+    React.useEffect(() => {
+      useOpenDialogStore.setState({ isTagSettingOpen: true });
+    }, []);
     return (
       <>
         <TagSettingDialog />
