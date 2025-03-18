@@ -25,35 +25,6 @@ const meta = {
     layout: "fullscreen",
     msw: {
       handlers: [
-        http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockTQueryAccount);
-        }),
-      ],
-    },
-  },
-  decorators: (Story) => {
-    React.useEffect(() => {
-      useOpenDialogStore.setState({ isNotificationSettingOpen: true });
-    }, []);
-    return (
-      <QueryClientProvider client={queryClient}>
-        <div id="modal-root" />
-        <Story />
-      </QueryClientProvider>
-    );
-  },
-} satisfies Meta<typeof UserDrawer>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const OpenNotificationSettingDialog: Story = {};
-
-// 알림 설정
-export const TestNotificationSetting: Story = {
-  parameters: {
-    msw: {
-      handlers: [
         http.get("/api/settings/notification", async () => {
           return HttpResponse.json(mockNotification);
         }),
@@ -70,14 +41,33 @@ export const TestNotificationSetting: Story = {
       ],
     },
   },
+  decorators: (Story) => {
+    React.useEffect(() => {
+      useOpenDialogStore.setState({ isNotificationSettingOpen: true });
+    }, []);
+    return (
+      <QueryClientProvider client={queryClient}>
+        <div id="modal-root" />
+        <Story />
+      </QueryClientProvider>
+    );
+  },
   beforeEach: () => {
     capturedRequest = {};
   },
+} satisfies Meta<typeof NotificationSettingDialog>;
 
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const OpenNotificationSettingDialog: Story = {
+  parameters: {},
+};
+
+export const TestNotRead: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // 읽지 않은 링크
     const readAgree = await canvas.findByTestId("read-agree");
 
     await userEvent.click(within(readAgree).getByRole("checkbox"));
@@ -90,10 +80,13 @@ export const TestNotificationSetting: Story = {
         throw new Error("읽지 않은 링크 요청 없음 에러");
       }
     });
+  },
+};
 
-    capturedRequest = {};
+export const TestNotClassify: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-    // 분류되지 않은 링크
     const classifyAgree = await canvas.findByTestId("classify-agree");
 
     await userEvent.click(within(classifyAgree).getByRole("checkbox"));
@@ -106,7 +99,5 @@ export const TestNotificationSetting: Story = {
         throw new Error("분류되지 않은 링크 요청 없음 에러");
       }
     });
-
-    capturedRequest = {};
   },
 };

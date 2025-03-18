@@ -7,7 +7,6 @@ import {
   DeleteTagConfirmDialog,
   TagSettingDialog,
 } from "@/components/dialog/dynamic";
-import { UserDrawer } from "@/components/drawer/dynamic";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
@@ -16,15 +15,14 @@ import { mockTags } from "@/stories/mocks/tag.mocks";
 import { TagCard } from "@/components/dialog/tag/TagSettingDialog";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import React from "react";
+import { verifyTestAPI } from "@/utils/storybook-test";
 
 const queryClient = new QueryClient();
-let capturedRequest: {
-  tags?: Request;
-} = {};
+let capturedRequest: Request | null;
 
 const meta = {
   title: "Component/Drawer/User/Tag",
-  component: UserDrawer,
+  component: TagSettingDialog,
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
@@ -37,6 +35,9 @@ const meta = {
     },
   },
   decorators: (Story) => {
+    React.useEffect(() => {
+      useOpenDialogStore.setState({ isTagSettingOpen: true });
+    }, []);
     return (
       <QueryClientProvider client={queryClient}>
         <div id="drawer-root" />
@@ -45,13 +46,12 @@ const meta = {
       </QueryClientProvider>
     );
   },
-} satisfies Meta<typeof UserDrawer>;
+} satisfies Meta<typeof TagSettingDialog>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// 태그 관리 (데이터 x)
-export const OpenTagSettingDialogWithEmptyData: Story = {
+export const OpenDialogWithEmptyData: Story = {
   parameters: {
     msw: {
       handlers: [
@@ -61,56 +61,16 @@ export const OpenTagSettingDialogWithEmptyData: Story = {
       ],
     },
   },
-  render: () => {
-    React.useEffect(() => {
-      useOpenDialogStore.setState({ isTagSettingOpen: true });
-    }, []);
-    return (
-      <>
-        <TagSettingDialog />
-      </>
-    );
-  },
 };
 
-// 태그 관리 (데이터 o)
-export const OpenTagSettingDialogWithMockData: Story = {
-  render: () => {
-    React.useEffect(() => {
-      useOpenDialogStore.setState({ isTagSettingOpen: true });
-    }, []);
-    return (
-      <>
-        <TagSettingDialog />
-      </>
-    );
-  },
-};
+export const OpenDialogWithMockData: Story = {};
 
 // 태그 관리 (태그 옵션)
-export const OpenTagOptionOfTagSettingDialog: Story = {
-  render: () => {
-    return (
-      <>
-        <TagCard tag={mockTags[0]} />
-      </>
-    );
-  },
+export const OpenTagOption: Story = {
+  render: () => <TagCard tag={mockTags[0]} />,
 };
 
 export const TestQueryTag: Story = {
-  decorators: (Story) => {
-    React.useEffect(() => {
-      useOpenDialogStore.setState({ isTagSettingOpen: true });
-    }, []);
-
-    return (
-      <>
-        <TagSettingDialog />
-      </>
-    );
-  },
-
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -131,21 +91,11 @@ export const TestInsertTag: Story = {
     msw: {
       handlers: [
         http.post("/api/settings/tags", async ({ request }) => {
-          capturedRequest.tags = request.clone();
+          capturedRequest = request.clone();
           return HttpResponse.json([await request.json()]);
         }),
       ],
     },
-  },
-  decorators: (Story) => {
-    React.useEffect(() => {
-      useOpenDialogStore.setState({ isTagSettingOpen: true });
-    }, []);
-    return (
-      <>
-        <TagSettingDialog />
-      </>
-    );
   },
 
   play: async ({ canvasElement }) => {
@@ -156,31 +106,17 @@ export const TestInsertTag: Story = {
 
     // 엔터키
     await userEvent.type(input, "블록체인{enter}");
-    await waitFor(function requestInsertTagsWithEnterKey() {
-      if (capturedRequest.tags) {
-        const url = new URL(capturedRequest.tags.url);
-        expect(url.pathname).toBe(`/api/settings/tags`);
-        expect(capturedRequest.tags.method).toBe("POST");
-      } else {
-        throw new Error("태그 추가 에러 (enter)");
-      }
-    });
+    await verifyTestAPI(capturedRequest, `/api/settings/tags`, "POST");
 
     expect(canvas.queryByText("블록체인")).toBeTruthy();
+    capturedRequest = null;
 
     // 스페이스바
     await userEvent.type(input, "양자컴퓨터 ");
-    await waitFor(function requestInsertTagsWithSpacebarKey() {
-      if (capturedRequest.tags) {
-        const url = new URL(capturedRequest.tags.url);
-        expect(url.pathname).toBe(`/api/settings/tags`);
-        expect(capturedRequest.tags.method).toBe("POST");
-      } else {
-        throw new Error("태그 추가 에러 (spacebar)");
-      }
-    });
+    await verifyTestAPI(capturedRequest, `/api/settings/tags`, "POST");
 
     expect(canvas.queryByText("양자컴퓨터")).toBeTruthy();
+    capturedRequest = null;
   },
 };
 
@@ -188,25 +124,13 @@ export const TestUpdateTag: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get("/api/settings/tags", async () => {
-          return HttpResponse.json(mockTags);
-        }),
+        ...meta.parameters.msw.handlers,
         http.post("/api/settings/tags", async ({ request }) => {
-          capturedRequest.tags = request.clone();
+          capturedRequest = request.clone();
           return HttpResponse.json([await request.json()]);
         }),
       ],
     },
-  },
-  decorators: (Story) => {
-    React.useEffect(() => {
-      useOpenDialogStore.setState({ isTagSettingOpen: true });
-    }, []);
-    return (
-      <>
-        <TagSettingDialog />
-      </>
-    );
   },
 
   play: async ({ canvasElement }) => {
@@ -223,19 +147,10 @@ export const TestUpdateTag: Story = {
     await userEvent.clear(updateInput);
     await userEvent.type(updateInput, "맛집{enter}");
 
-    await waitFor(function requestUpdateTagsWithEnterKey() {
-      if (capturedRequest.tags) {
-        const url = new URL(capturedRequest.tags.url);
-        expect(url.pathname).toBe(`/api/settings/tags`);
-        expect(capturedRequest.tags.method).toBe("POST");
-      } else {
-        throw new Error("태그 추가 에러 (enter)");
-      }
-    });
+    await verifyTestAPI(capturedRequest, `/api/settings/tags`, "POST");
 
     expect(canvas.getByText("맛집")).toBeTruthy();
-
-    capturedRequest = {};
+    capturedRequest = null;
 
     // 스페이스바
     const targetForSpacebarKey = await canvas.findByText("여행");
@@ -249,19 +164,10 @@ export const TestUpdateTag: Story = {
     await userEvent.clear(updateInput);
     await userEvent.type(updateInput, "견문{enter}");
 
-    await waitFor(function requestUpdateTagsWithSpacebarKey() {
-      if (capturedRequest.tags) {
-        const url = new URL(capturedRequest.tags.url);
-        expect(url.pathname).toBe(`/api/settings/tags`);
-        expect(capturedRequest.tags.method).toBe("POST");
-      } else {
-        throw new Error("태그 추가 에러 (spacebar)");
-      }
-    });
+    await verifyTestAPI(capturedRequest, `/api/settings/tags`, "POST");
 
     expect(canvas.getByText("견문")).toBeTruthy();
-
-    capturedRequest = {};
+    capturedRequest = null;
   },
 };
 
@@ -269,35 +175,27 @@ export const TestDeleteTag: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get("/api/settings/tags", async () => {
-          return HttpResponse.json(mockTags);
-        }),
+        ...meta.parameters.msw.handlers,
         http.delete("/api/settings/tags/:tag", async ({ request, params }) => {
-          capturedRequest.tags = request.clone();
+          capturedRequest = request.clone();
           const { tag: target } = params;
-          console.log(target);
           const index = mockTags.indexOf(target as string);
           const tags = [
             ...mockTags.slice(0, index),
             ...mockTags.slice(index + 1, -1),
           ];
-          console.log(tags);
+
           return HttpResponse.json([tags]);
         }),
       ],
     },
   },
-  decorators: (Story) => {
-    React.useEffect(() => {
-      useOpenDialogStore.setState({ isTagSettingOpen: true });
-    }, []);
-    return (
-      <>
-        <TagSettingDialog />
-        <DeleteTagConfirmDialog />
-      </>
-    );
-  },
+  render: () => (
+    <>
+      <TagSettingDialog />
+      <DeleteTagConfirmDialog />
+    </>
+  ),
 
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -308,25 +206,20 @@ export const TestDeleteTag: Story = {
     let moreButton = within(moreOption).getByRole("button");
     await userEvent.click(moreButton);
 
-    await userEvent.click(within(moreOption).getByText("태그 삭제"));
-    await userEvent.click(
-      within(canvas.getByTestId("delete-tag-confirm")).getByRole("button", {
-        name: "확인",
-      }),
-    );
-
-    await waitFor(function requestDeleteTag() {
-      if (capturedRequest.tags) {
-        const url = new URL(capturedRequest.tags.url);
-        expect(url.pathname).toBe(`/api/settings/tags/AI`);
-        expect(capturedRequest.tags.method).toBe("DELETE");
-      } else {
-        throw new Error("태그 삭제 에러");
-      }
+    await waitFor(async () => {
+      await userEvent.click(within(moreOption).getByText("태그 삭제"));
+      await userEvent.click(
+        within(canvas.getByTestId("delete-tag-confirm")).getByRole("button", {
+          name: "확인",
+        }),
+      );
     });
+
+    await verifyTestAPI(capturedRequest, `/api/settings/tags/AI`, "DELETE");
+
     await waitFor(() => {
       expect(canvas.queryByText("AI")).not.toBeInTheDocument();
     });
-    capturedRequest = {};
+    capturedRequest = null;
   },
 };

@@ -28,6 +28,9 @@ const meta = {
     },
   },
   decorators: (Story) => {
+    React.useEffect(() => {
+      useOpenDrawerStore.setState({ isUserDrawerOpen: true });
+    }, []);
     return (
       <QueryClientProvider client={queryClient}>
         <div id="drawer-root" />
@@ -41,14 +44,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const OpenDrawer: Story = {
-  decorators: (Story) => {
-    React.useEffect(() => {
-      useOpenDrawerStore.setState({ isUserDrawerOpen: true });
-    }, []);
-    return <Story />;
-  },
-};
+export const OpenDrawer: Story = {};
 
 export const OpenAccountDialog: Story = {
   render: () => {
@@ -65,9 +61,6 @@ export const OpenAccountDialog: Story = {
 
 export const TestOpenCloseDrawer: Story = {
   decorators: (Story) => {
-    React.useEffect(() => {
-      useOpenDrawerStore.setState({ isUserDrawerOpen: false });
-    }, []);
     return (
       <>
         <OpenUserDrawerButton />
@@ -77,7 +70,7 @@ export const TestOpenCloseDrawer: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole("button"));
+    await userEvent.click(canvas.getByTestId("user-drawer-open"));
 
     await waitFor(() => {
       expect(canvas.queryByRole("dialog")).toBeInTheDocument();
@@ -91,51 +84,35 @@ export const TestOpenCloseDrawer: Story = {
 
 // 내 계정 정보
 export const TestOpenMyAccountDialog: Story = {
-  decorators: (Story) => {
-    React.useEffect(() => {
-      useOpenDrawerStore.setState({ isUserDrawerOpen: true });
-    }, []);
+  render: () => {
     return (
       <>
         <AccountDialog />
-        <Story />
+        <UserDrawer />
       </>
     );
-  },
-  parameters: {
-    msw: {
-      handlers: [
-        http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockTQueryAccount);
-        }),
-      ],
-    },
   },
 
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // 다이얼로그 오픈
+    // 오픈
     await userEvent.click(await canvas.findByTestId("open-my-account"));
 
     let dialog: HTMLElement | null = null;
-
     dialog = await canvas.findByTestId("my-account");
 
     waitFor(function bindAccountInfo() {
-      // 계정 확인
       expect(
         within(dialog).getByText("pinkbossjoosum@gmail.com"),
       ).toBeInTheDocument();
 
-      // 링크 확인
       expect(within(dialog).getByText("1,423개")).toBeInTheDocument();
 
-      // 폴더 확인
       expect(within(dialog).getByText("12개")).toBeInTheDocument();
     });
 
-    // 다이얼로그 클로즈
+    // 클로즈
     await userEvent.click(within(dialog).getByAltText("close"));
     await waitFor(function closeDialog() {
       expect(canvas.queryByTestId("my-account")).not.toBeInTheDocument();

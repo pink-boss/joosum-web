@@ -18,28 +18,20 @@ let capturedRequest: {
 
 const meta = {
   title: "Component/Drawer/User/Account",
-  component: UserDrawer,
+  component: AccountDialog,
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
-    msw: {
-      handlers: [
-        http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockTQueryAccount);
-        }),
-      ],
-    },
   },
   decorators: (Story) => {
     return (
       <QueryClientProvider client={queryClient}>
-        <div id="drawer-root" />
         <div id="modal-root" />
         <Story />
       </QueryClientProvider>
     );
   },
-} satisfies Meta<typeof UserDrawer>;
+} satisfies Meta<typeof AccountDialog>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -66,7 +58,6 @@ export const TestLogout: Story = {
     }, []);
     return (
       <>
-        <AccountDialog />
         <LogoutDialog />
         <Story />
       </>
@@ -75,9 +66,6 @@ export const TestLogout: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockTQueryAccount);
-        }),
         http.post("/api/auth/logout", async ({ request }) => {
           capturedRequest.logout = request.clone();
           return HttpResponse.json({

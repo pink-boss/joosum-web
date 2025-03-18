@@ -7,11 +7,10 @@ import {
   AccountDialog,
   DeleteAccountDialog,
 } from "@/components/dialog/dynamic";
-import { UserDrawer } from "@/components/drawer/dynamic";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
-import { mockAccount, mockTQueryAccount } from "@/stories/mocks/account.mocks";
+import { mockTQueryAccount } from "@/stories/mocks/account.mocks";
 import React from "react";
 
 const queryClient = new QueryClient();
@@ -21,7 +20,7 @@ let capturedRequest: {
 
 const meta = {
   title: "Component/Drawer/User/Account",
-  component: UserDrawer,
+  component: AccountDialog,
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
@@ -36,13 +35,12 @@ const meta = {
   decorators: (Story) => {
     return (
       <QueryClientProvider client={queryClient}>
-        <div id="drawer-root" />
         <div id="modal-root" />
         <Story />
       </QueryClientProvider>
     );
   },
-} satisfies Meta<typeof UserDrawer>;
+} satisfies Meta<typeof AccountDialog>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -61,7 +59,6 @@ export const OpenDeleteAccountDialog: Story = {
   },
 };
 
-// 회원탈퇴 테스트
 export const TestDeleteAccount: Story = {
   decorators: (Story) => {
     React.useEffect(() => {
@@ -70,7 +67,6 @@ export const TestDeleteAccount: Story = {
     }, []);
     return (
       <>
-        <AccountDialog />
         <DeleteAccountDialog />
         <Story />
       </>
@@ -79,9 +75,6 @@ export const TestDeleteAccount: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get("/api/auth/me", async () => {
-          return HttpResponse.json(mockTQueryAccount);
-        }),
         http.delete("/api/auth/me", async ({ request }) => {
           capturedRequest.deleteAccount = request.clone();
           return HttpResponse.json({ message: "success" });
