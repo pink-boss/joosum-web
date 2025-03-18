@@ -5,4 +5,9 @@ const UserDrawer = dynamic(() => import("./user/UserDrawer"), {
   ssr: false,
 });
 
-export { UserDrawer };
+const LinkSaveDrawer = dynamic(() => import("./LinkSaveDrawer"), {
+  loading: () => null,
+  ssr: false,
+});
+
+export { UserDrawer, LinkSaveDrawer };

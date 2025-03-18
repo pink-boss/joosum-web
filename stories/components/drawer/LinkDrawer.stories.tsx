@@ -22,6 +22,7 @@ import { mockLink, mockLinks } from "../../mocks/link.mocks";
 import { mockLinkBooks, mockRespone } from "../../mocks/linkBook.mocks";
 import { mockTags } from "../../mocks/tag.mocks";
 
+// TODO: 위치 이동 및 코드 정리
 const queryClient = new QueryClient();
 let capturedRequest: {
   updateLink?: Request;
