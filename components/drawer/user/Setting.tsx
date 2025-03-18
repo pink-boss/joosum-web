@@ -22,7 +22,7 @@ function Menu({ title, onClick }: MenuInputProps) {
 }
 
 export default function Setting() {
-  const { openNotificationSetting } = useOpenDialogStore();
+  const { openNotificationSetting, openTagSetting } = useOpenDialogStore();
 
   return (
     <div>
@@ -33,7 +33,7 @@ export default function Setting() {
         className={clsx("flex flex-col gap-[10px] px-10 py-5", "font-semibold")}
       >
         <Menu title="알림 설정" onClick={() => openNotificationSetting(true)} />
-        <Menu title="태그 관리" onClick={() => {}} />
+        <Menu title="태그 관리" onClick={() => openTagSetting(true)} />
       </div>
     </div>
   );
