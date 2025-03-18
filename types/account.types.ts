@@ -8,6 +8,10 @@ export interface Account {
   social: string;
   updatedAt: string;
   userId: string;
-  linkCount?: number;
-  folderCount?: number;
 }
+
+export type TQueryAccount = {
+  user: Account;
+  totalLinkCount: number;
+  totalFolderCount: number;
+};

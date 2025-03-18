@@ -58,18 +58,18 @@ export default function AccountDialog({}: InputProps) {
               className={clsx(
                 "size-10 rounded-full border border-gray-silver",
                 "flex items-center justify-center",
-                data?.social === "apple" && "bg-black",
+                data?.user.social === "apple" && "bg-black",
               )}
             >
               <Image
-                src={`/logo/${data?.social}.png`}
+                src={`/logo/${data?.user.social}.png`}
                 alt="social"
                 width={24}
                 height={24}
               />
             </div>
             <span className="text-xl font-bold text-gray-black">
-              {data?.email}
+              {data?.user.email}
             </span>
           </div>
           <div className="flex flex-col gap-5 pb-5 pl-[10px]">
@@ -90,7 +90,9 @@ export default function AccountDialog({}: InputProps) {
                   <span className="font-bold">링크</span>
                 </div>
 
-                <span className="">{formatNumber(data?.linkCount || 0)}개</span>
+                <span className="">
+                  {formatNumber(data?.totalLinkCount || 0)}개
+                </span>
               </div>
             </div>
             <div className="gap-5">
@@ -111,7 +113,7 @@ export default function AccountDialog({}: InputProps) {
                 </div>
 
                 <span className="">
-                  {formatNumber(data?.folderCount || 0)}개
+                  {formatNumber(data?.totalFolderCount || 0)}개
                 </span>
               </div>
             </div>
