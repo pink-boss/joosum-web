@@ -25,7 +25,7 @@ export default function Account() {
           className="flex justify-between"
           onClick={onOpenMyAccount}
         >
-          <span className="font-bold text-gray-black">{data?.email}</span>
+          <span className="font-bold text-gray-black">{data?.user.email}</span>
           <Image
             src="/icons/icon-chevron-right.png"
             alt="open"

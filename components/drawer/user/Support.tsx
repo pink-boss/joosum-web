@@ -42,7 +42,7 @@ export default function Support() {
         href="https://joosum.notion.site/6df241a6e3174b8fbfc7933a506a0b1e"
         title="서비스 이용약관"
       />
-      <div className="flex justify-between">
+      <div className="flex cursor-not-allowed justify-between">
         <span>이용 문의</span>
         <Image
           src="/icons/icon-new-window.png"

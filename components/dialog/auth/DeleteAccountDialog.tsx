@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import Image from "next/image";
 
-import useQueryAccount from "@/hooks/useQueryAccount";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import Dialog from "../Dialog";
@@ -10,9 +9,11 @@ import useDelete from "@/hooks/auth/useDelete";
 type InputProps = {};
 
 export default function DeleteAccountDialog({}: InputProps) {
-  const { isDeleteAccountOpen: isOpen, openDeleteAccount: open } =
-    useOpenDialogStore();
-  const { data } = useQueryAccount();
+  const {
+    isDeleteAccountOpen: isOpen,
+    openDeleteAccount: open,
+    openAccount,
+  } = useOpenDialogStore();
 
   const onClose = () => {
     open(false);
@@ -26,6 +27,7 @@ export default function DeleteAccountDialog({}: InputProps) {
 
   async function handleMaintainService() {
     onClose();
+    openAccount(true);
   }
 
   return (

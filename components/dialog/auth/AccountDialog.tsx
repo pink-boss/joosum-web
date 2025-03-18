@@ -68,7 +68,7 @@ export default function AccountDialog({}: InputProps) {
                 height={24}
               />
             </div>
-            <span className="text-xl font-bold text-gray-black">
+            <span className="overflow-hidden text-ellipsis whitespace-nowrap text-xl font-bold text-gray-black">
               {data?.user.email}
             </span>
           </div>
