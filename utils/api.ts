@@ -26,7 +26,7 @@ export async function serverApi({
     const requestInit: RequestInit = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: token.value,
+        Authorization: `Bearer ${token.value}`,
       },
       method: method ?? "GET",
     };

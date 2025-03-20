@@ -15,7 +15,7 @@ export interface LinkBook extends LinkBookIdParam {
 }
 
 export interface TQueryLinkBooks {
-  linkBooks: LinkBook[];
+  linkBooks?: LinkBook[];
   totalLinkCount: number;
 }
 
