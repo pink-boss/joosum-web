@@ -1,26 +1,17 @@
-import FakeTimers from "@sinonjs/fake-timers";
-import { jest } from "@storybook/jest";
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
 
-import DrawerButton from "@/app/link-book/[title]/DrawerButton";
-import { ShareLinkDialog } from "@/app/link-book/dialog/dynamic";
-
-import {
-  DeleteDrawerLinkDialog,
-  MutateLinkBookDialog,
-} from "@/components/dialog/dynamic";
+import { MutateLinkBookDialog } from "@/components/dialog/dynamic";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
-import { Link } from "@/types/link.types";
-import { CreateFormState } from "@/types/linkBook.types";
-import { getLinkListQueryKey } from "@/utils/queryKey";
 
-import { mockLink, mockLinks } from "../../../mocks/link.mocks";
-import { mockLinkBooks, mockRespone } from "../../../mocks/linkBook.mocks";
-import { mockTags } from "../../../mocks/tag.mocks";
+import { CreateFormState } from "@/types/linkBook.types";
+
+import { mockLink } from "../../../mocks/link.mocks";
+import { mockRespone } from "../../../mocks/linkBook.mocks";
+
 import { MutateLinkDrawer } from "@/components/drawer/dynamic";
 import Folder from "@/components/drawer/link/Folder";
 import { useState } from "react";
@@ -46,6 +37,7 @@ const meta = {
 
     return (
       <QueryClientProvider client={queryClient}>
+        <div id="drawer-root" />
         <div id="modal-root" />
         {isMutateLinkBookOpen && <MutateLinkBookDialog />}
         <Story />
@@ -84,6 +76,18 @@ export const TestSelectFolder: Story = {
 };
 
 export const TestAddFolder: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        ...meta.parameters.msw.handlers,
+        http.post("/api/link-books", async ({ request }) => {
+          const data = (await request.json()) as CreateFormState;
+          return HttpResponse.json({ ...data, linkBookId: "lb_999" });
+        }),
+      ],
+    },
+  },
+  render: () => <MutateLinkDrawer />,
   play: async ({ canvasElement }) => {
     useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
 

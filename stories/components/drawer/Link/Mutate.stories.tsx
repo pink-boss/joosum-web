@@ -151,37 +151,6 @@ export const RenderFormData: Story = {
   },
 };
 
-export const AddFolder: Story = {
-  play: async ({ canvasElement }) => {
-    useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
-
-    const canvas = within(canvasElement);
-
-    await waitFor(async () => {
-      await userEvent.click(canvas.getByTestId("create-folder-dialog-button"));
-    });
-
-    await waitFor(async () => {
-      const titleInput = canvas.getByTestId("link-book-title");
-      await userEvent.type(titleInput, "새로 만든 폴더");
-    });
-
-    await waitFor(async () => {
-      expect(canvas.getByText("생성")).not.toBeDisabled();
-    });
-
-    await userEvent.click(canvas.getByText("생성"));
-
-    await waitFor(async () => {
-      expect(
-        within(canvas.getByTestId("link-book-selector")).getByText(
-          "새로 만든 폴더",
-        ),
-      ).toBeInTheDocument();
-    });
-  },
-};
-
 // TODO: 생성 기능 막고 커밋. 태그 한번 추가하고 난 뒤 ui, 링크 복사 피드백은 어떻게?
 // TODO: 기획대로 수정
 // export const UpdateTag: Story = {
