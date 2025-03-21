@@ -11,12 +11,8 @@ export async function verifyTestAPI(
   }
 
   await waitFor(function verifyTestAPI() {
-    if (capturedRequest) {
-      const url = new URL(capturedRequest.url);
-      expect(url.pathname).toBe(pathname);
-      expect(capturedRequest.method).toBe(method);
-    } else {
-      throw error;
-    }
+    const url = new URL(capturedRequest.url);
+    expect(url.pathname).toBe(pathname);
+    expect(capturedRequest.method).toBe(method);
   });
 }

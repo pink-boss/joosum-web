@@ -1,4 +1,4 @@
-import { sanitizeRedirectUrl } from "@/utils/oauth";
+import { sanitizeRedirectUrl } from "@/utils/auth/oauth";
 
 describe("Oauth redirect url", () => {
   test("dev", () => {

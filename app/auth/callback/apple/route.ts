@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
 import { trimTrailingSlash } from "@/utils/envUri";
+import { handleAuthToken } from "@/utils/auth/auth";
 
 export async function POST(request: NextRequest) {
   try {
@@ -39,21 +40,11 @@ export async function POST(request: NextRequest) {
       return redirect("/onboarding");
     }
 
-    // 결과 받아서 세션이나 쿠키에 저장
-    cookies().set({
-      name: "accessToken",
-      value: data.accessToken,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24, // 1일
-    });
+    handleAuthToken(data);
+
+    return redirect("/");
   } catch (e) {
     console.log(e);
-    // 에러 발생하면 로그인 화면으로
     return redirect("/login");
   }
-
-  return redirect("/");
 }
