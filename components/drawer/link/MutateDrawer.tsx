@@ -1,10 +1,7 @@
 import { clearTimeout, setTimeout } from "timers";
 
-import clsx from "clsx";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { Button } from "@/app/my-folder/CreateDialogButton";
 import Drawer from "@/components/Drawer";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import useUpdateLink from "@/hooks/link/useUpdateLink";
@@ -14,9 +11,14 @@ import { CreateFormState } from "@/types/link.types";
 import { krDateFormatter } from "@/utils/date";
 
 import Header from "./Header";
-import { SelectLinkBook } from "@/app/link-book/dialog/dynamic";
-import TagSelector from "@/app/link-book/[title]/tag-selector";
-import { TagBadge } from "@/app/link-book/[title]/tag-selector/SelectedTags";
+import Tag from "./Tag";
+import { defaultValues } from "./data";
+import Folder from "./Folder";
+
+import Buttons from "./Buttons";
+import FormItem from "./FormItem";
+import Image from "next/image";
+import OpenShareButton from "@/app/link-book/OpenShareButton";
 
 type ToastDefaultValues = {
   isOpen: boolean;
@@ -32,14 +34,6 @@ const toastDefaultValues = {
   message: "수정되었습니다.",
 };
 
-const defaultValues: CreateFormState = {
-  title: "",
-  linkBookId: undefined,
-  tags: [],
-  thumbnailURL: undefined,
-  url: undefined,
-};
-
 export default function MutateLinkDrawer() {
   const {
     link,
@@ -49,7 +43,6 @@ export default function MutateLinkDrawer() {
   const { openDeleteDrawerLink } = useOpenDialogStore();
 
   const [formState, setFormState] = useState<CreateFormState>(defaultValues);
-  const [isEditTag, setIsEditTag] = useState<boolean>(false);
   const [toast, setToast] = useState<ToastDefaultValues>(toastDefaultValues);
 
   const onClose = () => {
@@ -104,9 +97,19 @@ export default function MutateLinkDrawer() {
     <Drawer open={isOpen} onCloseCallback={onClose}>
       <div className="flex flex-col gap-10">
         <Header
-          linkBookName={link.linkBookName}
           onClose={onClose}
-          link={link}
+          center={
+            <div className="flex items-center gap-1">
+              <Image
+                src="/icons/icon-folder2.png"
+                alt="folder"
+                width={20}
+                height={20}
+              />
+              <span className="text-gray-dim">{link.linkBookName}</span>
+            </div>
+          }
+          right={<OpenShareButton link={link} />}
         />
         <div className="flex flex-col gap-4 px-10">
           <div className="relative h-[260px] w-[414px] flex-none">
@@ -118,98 +121,34 @@ export default function MutateLinkDrawer() {
           </div>
           <div>
             <div className="flex flex-col gap-6">
-              <div className="flex flex-col gap-2 text-gray-black">
-                <label htmlFor="title" className="px-2 text-lg font-semibold">
-                  제목
-                </label>
-                <input
-                  data-testid="title"
-                  id="title"
-                  name="title"
-                  className={clsx(
-                    "h-[48px] w-full p-3",
-                    "rounded-lg border border-gray-ghost bg-gray-ghost",
-                  )}
-                  value={formState.title}
-                  onChange={(e) => {
-                    setFormState((prev) => ({
-                      ...prev,
-                      title: e.target.value,
-                    }));
-                  }}
-                />
-              </div>
-              <div className="flex flex-col gap-2 text-gray-black">
-                <div className="flex justify-between px-2">
-                  <label htmlFor="title" className="text-lg font-semibold">
-                    폴더
-                  </label>
-                  <Button className="flex font-semibold text-primary-500">
-                    <Image
-                      src="/icons/icon-plus.png"
-                      alt="new-folder"
-                      width={24}
-                      height={24}
-                    />
-                    새폴더
-                  </Button>
-                </div>
-                <SelectLinkBook
-                  linkBookId={formState.linkBookId}
-                  setLinkBookId={(linkBookName, linkBookId) =>
-                    setFormState((prev) => ({
-                      ...prev,
-                      linkBookName,
-                      linkBookId,
-                    }))
-                  }
-                  className="border-none bg-gray-ghost"
-                />
-              </div>
-              <div className="flex flex-col gap-2 text-gray-black">
-                <div className="flex justify-between px-2">
-                  <label htmlFor="title" className="text-lg font-semibold">
-                    태그
-                  </label>
-                  <button
-                    className="flex font-semibold text-primary-500"
-                    data-testid="edit-tags-button"
-                    onClick={() => {
-                      // setIsEditTag((prev) => !prev)
-                    }}
-                  >
-                    {isEditTag ? (
-                      "추가 종료"
-                    ) : (
-                      <>
-                        <Image
-                          src="/icons/icon-plus.png"
-                          alt="new tag"
-                          width={24}
-                          height={24}
-                        />
-                        태그추가
-                      </>
-                    )}
-                  </button>
-                </div>
-                {isEditTag ? (
-                  <TagSelector
-                    tags={formState.tags}
-                    setTags={(tags) =>
-                      setFormState((prev) => ({ ...prev, tags }))
-                    }
-                    selectBoxClassName="border-none bg-gray-ghost"
-                  />
-                ) : (
-                  <TagBadge
-                    tags={formState.tags}
-                    setTags={(tags) =>
-                      setFormState((prev) => ({ ...prev, tags }))
-                    }
-                  />
-                )}
-              </div>
+              <FormItem
+                label="제목"
+                name="title"
+                value={formState.title}
+                setValue={(value) => {
+                  setFormState((prev) => ({
+                    ...prev,
+                    title: value,
+                  }));
+                }}
+                inputProps={{
+                  placeholder: "제목을 입력해주세요.",
+                }}
+              />
+              <Folder
+                linkBookId={formState.linkBookId}
+                setLinkBookId={(linkBookName, linkBookId) =>
+                  setFormState((prev) => ({
+                    ...prev,
+                    linkBookName,
+                    linkBookId,
+                  }))
+                }
+              />
+              <Tag
+                tags={formState.tags}
+                setTags={(tags) => setFormState((prev) => ({ ...prev, tags }))}
+              />
             </div>
           </div>
           <div className="mt-10 flex gap-1 text-xs text-gray-slate">
@@ -232,26 +171,13 @@ export default function MutateLinkDrawer() {
           </div>
         )}
 
-        <div className="flex justify-center gap-1">
-          <button
-            className="h-[56px] w-[220.5px] rounded-lg bg-gray-silver font-bold text-white"
-            onClick={handleDelete}
-          >
-            삭제
-          </button>
-          <button
-            className={clsx(
-              "h-[56px] w-[220.5px] rounded-lg font-bold text-white",
-              !formState.title
-                ? "cursor-not-allowed bg-gray-vapor"
-                : "bg-primary-500",
-            )}
-            disabled={!formState.title}
-            onClick={handleSubmit}
-          >
-            수정
-          </button>
-        </div>
+        <Buttons
+          title={formState.title}
+          closeBtnName="삭제"
+          onCloseCallback={handleDelete}
+          submitBtnName="수정"
+          onSubmitCallback={handleSubmit}
+        />
       </div>
     </Drawer>
   );

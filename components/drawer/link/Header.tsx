@@ -1,35 +1,30 @@
 import Image from "next/image";
 
-import { Link } from "@/types/link.types";
-import OpenShareButton from "@/app/link-book/OpenShareButton";
-
 type InputProps = {
   onClose: () => void;
-  linkBookName: string;
-  link: Link;
+
+  center: React.ReactNode;
+  right?: React.ReactNode;
 };
 
-export default function Header({ onClose, linkBookName, link }: InputProps) {
+export default function Header({
+  onClose,
+
+  center,
+  right = <div />,
+}: InputProps) {
   return (
     <div className="flex justify-between px-5 py-1">
       <button onClick={onClose}>
         <Image
-          src="/icons/icon-close-outline.png"
+          src="/icons/icon-close-outline-black.png"
           alt="close"
           width={24}
           height={24}
         />
       </button>
-      <div className="flex items-center gap-1">
-        <Image
-          src="/icons/icon-folder2.png"
-          alt="folder"
-          width={20}
-          height={20}
-        />
-        <span className="text-gray-dim">{linkBookName}</span>
-      </div>
-      <OpenShareButton link={link} />
+      {center}
+      {right}
     </div>
   );
 }
