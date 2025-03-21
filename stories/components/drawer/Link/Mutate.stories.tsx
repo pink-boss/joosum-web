@@ -18,9 +18,9 @@ import { Link } from "@/types/link.types";
 import { CreateFormState } from "@/types/linkBook.types";
 import { getLinkListQueryKey } from "@/utils/queryKey";
 
-import { mockLink, mockLinks } from "../../mocks/link.mocks";
-import { mockLinkBooks, mockRespone } from "../../mocks/linkBook.mocks";
-import { mockTags } from "../../mocks/tag.mocks";
+import { mockLink, mockLinks } from "../../../mocks/link.mocks";
+import { mockLinkBooks, mockRespone } from "../../../mocks/linkBook.mocks";
+import { mockTags } from "../../../mocks/tag.mocks";
 import { MutateLinkDrawer } from "@/components/drawer/dynamic";
 
 // TODO: 코드 정리
