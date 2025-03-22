@@ -1,8 +1,7 @@
-import TagSelector from "@/app/link-book/[title]/tag-selector";
-import { TagBadge } from "@/app/link-book/[title]/tag-selector/SelectedTags";
 import clsx from "clsx";
-import Image from "next/image";
-import { useState } from "react";
+import { MouseEvent as ReactMouseEvent } from "react";
+
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 type InputProps = {
   tags: string[];
@@ -10,50 +9,122 @@ type InputProps = {
 };
 
 export default function Tag({ tags, setTags }: InputProps) {
-  const [isEditTag, setIsEditTag] = useState<boolean>(true);
+  const [isActive, setIsActive] = useState(false);
 
+  const [input, setInput] = useState<string | undefined>();
+
+  const handleSubmit = () => {
+    if (input) {
+      setTags([...tags, input.trim()]);
+      setInput("");
+    }
+  };
+
+  const handleTypeInput = (value: string) => {
+    if (["Enter", " "].includes(value)) {
+      handleSubmit();
+    }
+  };
+
+  const preventActive = (event: ReactMouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
   return (
-    <div className="flex flex-col gap-2 text-gray-black">
+    <div className={clsx("flex flex-col gap-2", "text-gray-black")}>
       <div className="flex justify-between px-2">
         <label htmlFor="title" className="text-lg font-semibold">
           태그
         </label>
         <span className="text-sm">{tags.length}/10</span>
       </div>
-      <div className="flex flex-wrap items-center gap-2 rounded border border-gray-300 p-2">
-        {tags.map((tag, index) => (
-          <div
-            key={index}
-            className="flex items-center rounded-full bg-gray-200 px-2 py-1 text-sm"
-          >
-            <span>{tag}</span>
-            <button
-              type="button"
-              // onClick={() => removeTag(index)}
-              className="ml-1 text-gray-500 hover:text-red-500"
-            >
-              &times;
-            </button>
+      <TagWrapper isActive={isActive} setIsActive={setIsActive}>
+        <div
+          className={clsx(
+            "flex p-3",
+            "rounded-lg border",
+            isActive
+              ? "bg-inputactivebg border-primary-500"
+              : "border-gray-ghost bg-gray-ghost",
+          )}
+        >
+          <div className={clsx("flex flex-wrap items-center gap-2")}>
+            {tags.map((tag, index) => (
+              <div
+                key={index}
+                className="flex items-center rounded-full bg-gray-200 px-2 py-1 text-sm"
+                onClick={preventActive}
+              >
+                <span>{tag}</span>
+                <button
+                  type="button"
+                  // onClick={() => removeTag(index)}
+                  className="ml-1 text-gray-500 hover:text-red-500"
+                >
+                  &times;
+                </button>
+              </div>
+            ))}
+            <input
+              className="min-w-[120px] flex-1 bg-transparent p-1 outline-none"
+              type="text"
+              autoFocus
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyUp={(e) => handleTypeInput(e.key)}
+              placeholder={!tags.length ? "태그를 추가해보세요." : undefined}
+              onFocus={() => setIsActive(true)}
+              onBlur={() => setIsActive(false)}
+            />
           </div>
-        ))}
-        <input
-          className="min-w-[120px] flex-1 p-1 outline-none"
-          type="text"
-          // value={input}
-          // onChange={(e) => setInput(e.target.value)}
-          // onKeyDown={handleKeyDown}
-          placeholder="태그 입력..."
-        />
-      </div>
-      {/* <input
-        className={clsx(
-          "h-[48px] w-full p-3",
-          "rounded-lg border border-gray-ghost bg-gray-ghost",
-        )}
-        placeholder="태그를 추가해보세요."
-        value={tags}
+          {input && (
+            <button
+              className={clsx("w-28 px-2", "text-primary-400 font-semibold")}
+              onClick={(e) => {
+                preventActive(e);
+                handleSubmit();
+              }}
+            >
+              생성하기
+            </button>
+          )}
+        </div>
+      </TagWrapper>
+    </div>
+  );
+}
 
-      /> */}
+type TagWrapperInputProps = {
+  children: ReactNode;
+  isActive: boolean;
+  setIsActive: (isActive: boolean) => void;
+};
+
+function TagWrapper({ children, isActive, setIsActive }: TagWrapperInputProps) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setIsActive(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div
+      ref={wrapperRef}
+      onClick={() => {
+        setIsActive(true);
+      }}
+    >
+      {children}
     </div>
   );
 }

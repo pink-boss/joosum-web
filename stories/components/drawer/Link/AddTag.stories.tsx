@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, waitFor, within } from "@storybook/test";
+import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
 
@@ -70,18 +70,45 @@ export const TestRenderTags: Story = {
   },
 };
 
-// export const TestAddTags: Story = {
-//   play: async ({ canvasElement }) => {
+export const TestAddTags: Story = {
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole("textbox") as HTMLInputElement;
+
+    await step("엔터 저장", async () => {
+      await userEvent.click(input);
+      await userEvent.keyboard("web{enter}");
+      expect(input.value).toBeFalsy();
+      expect(canvas.getByText("web")).toBeInTheDocument();
+    });
+
+    await step("스페이스바 저장", async () => {
+      await userEvent.click(input);
+      await userEvent.keyboard("ios ");
+      expect(input.value).toBeFalsy();
+      expect(canvas.getByText("ios")).toBeInTheDocument();
+    });
+
+    await step("버튼 저장", async () => {
+      await userEvent.click(input);
+      await userEvent.keyboard("android");
+      await userEvent.click(canvas.getByRole("button", { name: "생성하기" }));
+      expect(input.value).toBeFalsy();
+      expect(canvas.getByText("android")).toBeInTheDocument();
+    });
+  },
+};
+
+// export const TestLimit: Story = {
+//   args: { defaultTags: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] },
+//   play: async ({ canvasElement, step }) => {
 //     const canvas = within(canvasElement);
-//     // 입력창 선택
-//     // 입력
-//     // 엔터 누르면 저장
-//     // 입력
-//     // 스페이스 누르면 저장
-//     // 입력
-//     // 생성버튼 누르면 저장
-//     // 입력 확인
-//   },
+//     const input = canvas.getByRole("textbox") as HTMLInputElement;
+
+// 하나 더 추가
+// 추가 안되는지 확인
+// 토스트 팝업 뜨는지 확인
+// },
 // };
 
 // export const TestDeleteTags: Story = {
