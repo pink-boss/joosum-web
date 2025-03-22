@@ -1,5 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, waitFor, within } from "@storybook/test";
+import {
+  expect,
+  queryByText,
+  userEvent,
+  waitFor,
+  within,
+} from "@storybook/test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
 
@@ -99,6 +105,20 @@ export const TestAddTags: Story = {
   },
 };
 
+export const TestRemoveTag: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const wrapper = canvas.getByText("인공지능").parentElement;
+    expect(wrapper).not.toBeNull();
+
+    const RemoveButton = within(wrapper!).getByRole("button");
+    await userEvent.click(RemoveButton);
+
+    expect(canvas.queryByText("인공지능")).toBeNull();
+  },
+};
+
 // export const TestLimit: Story = {
 //   args: { defaultTags: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] },
 //   play: async ({ canvasElement, step }) => {
@@ -107,56 +127,15 @@ export const TestAddTags: Story = {
 
 // 하나 더 추가
 // 추가 안되는지 확인
-// 토스트 팝업 뜨는지 확인
+// 토스트 팝업 호출 확인
 // },
 // };
-
-// export const TestDeleteTags: Story = {
-//   play: async ({ canvasElement }) => {
-//     const canvas = within(canvasElement);
-//     // 특정 태그 삭제
-//     // 확인
-//   },
-// };
+// TODO: 토스트 팝업 컴포넌트 만들고 테스트 -> 전부 전환
 
 // export const TestRecentTags: Story = {
 //   play: async ({ canvasElement }) => {
 //     const canvas = within(canvasElement);
 //     // 태그 추가
 //     // 최근 태그 목록에 뜨는지 확인
-//   },
-// };
-
-// TODO: 생성 기능 막고 커밋. 태그 한번 추가하고 난 뒤 ui, 링크 복사 피드백은 어떻게?
-// TODO: 기획대로 수정
-// export const UpdateTag: Story = {
-//   play: async ({ canvasElement }) => {
-//     useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
-
-//     const canvas = within(canvasElement);
-
-//     await waitFor(async () => {
-//       const selectedTags = within(canvas.getByTestId("selected-tags"));
-//       await userEvent.click(selectedTags.getAllByRole("button")[0]);
-//     });
-
-//     await waitFor(async () => {
-//       await userEvent.click(canvas.getByTestId("edit-tags-button"));
-//     });
-
-//     await waitFor(async () => {
-//       const tagSelector = within(canvas.getByTestId("tag-selector"));
-//       await userEvent.click(tagSelector.getByTestId("open-button"));
-//       await userEvent.click(tagSelector.getByText(mockTags[0]));
-//     });
-
-//     await waitFor(async () => {
-//       await userEvent.click(canvas.getByTestId("edit-tags-button"));
-//     });
-
-//     const selectedTags = within(canvas.getByTestId("selected-tags"));
-//     expect(selectedTags.getByText(mockLink.tags[1])).toBeInTheDocument();
-//     expect(selectedTags.getByText(mockLink.tags[2])).toBeInTheDocument();
-//     expect(selectedTags.getByText(mockTags[0])).toBeInTheDocument();
 //   },
 // };

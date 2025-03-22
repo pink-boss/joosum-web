@@ -8,6 +8,7 @@ type InputProps = {
   setTags: (tags: string[]) => void;
 };
 
+// TODO: 10개 넘어가면 토스트 팝업
 export default function Tag({ tags, setTags }: InputProps) {
   const [isActive, setIsActive] = useState(false);
 
@@ -29,6 +30,10 @@ export default function Tag({ tags, setTags }: InputProps) {
   const preventActive = (event: ReactMouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
+  };
+
+  const removeTag = (index: number) => {
+    setTags([...tags.slice(0, index), ...tags.slice(index + 1)]);
   };
   return (
     <div className={clsx("flex flex-col gap-2", "text-gray-black")}>
@@ -52,14 +57,17 @@ export default function Tag({ tags, setTags }: InputProps) {
             {tags.map((tag, index) => (
               <div
                 key={index}
-                className="flex items-center rounded-full bg-gray-200 px-2 py-1 text-sm"
+                className="flex items-center gap-1 rounded-full bg-gray-vapor px-2 py-1 text-xs"
                 onClick={preventActive}
               >
                 <span>{tag}</span>
                 <button
                   type="button"
-                  // onClick={() => removeTag(index)}
-                  className="ml-1 text-gray-500 hover:text-red-500"
+                  onClick={() => removeTag(index)}
+                  className={clsx(
+                    "size-[13.33px] rounded-full bg-gray-silver",
+                    "flex items-center justify-center pb-0.5 text-white",
+                  )}
                 >
                   &times;
                 </button>
