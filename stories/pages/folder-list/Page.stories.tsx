@@ -1,4 +1,5 @@
-import { jest } from "@storybook/jest";
+import "@storybook/test";
+import * as test from "@storybook/test";
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, waitFor, within } from "@storybook/test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -40,7 +41,7 @@ const meta = {
     },
   },
   decorators: (Story) => {
-    jest.spyOn(navigationHooks, "useParams").mockReturnValue({
+    test.spyOn(navigationHooks, "useParams").mockReturnValue({
       title: "",
     });
     return (

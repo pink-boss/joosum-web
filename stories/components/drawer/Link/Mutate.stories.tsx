@@ -1,7 +1,7 @@
 import FakeTimers from "@sinonjs/fake-timers";
-import { jest } from "@storybook/jest";
+
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, waitFor, within } from "@storybook/test";
+import { expect, fn, spyOn, userEvent, waitFor, within } from "@storybook/test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
 
@@ -24,6 +24,7 @@ import { mockTags } from "../../../mocks/tag.mocks";
 import { MutateLinkDrawer } from "@/components/drawer/dynamic";
 
 // TODO: 코드 정리
+// TODO: 태그 추가 주석 제거
 const queryClient = new QueryClient();
 let capturedRequest: {
   updateLink?: Request;
@@ -151,43 +152,9 @@ export const RenderFormData: Story = {
   },
 };
 
-// TODO: 생성 기능 막고 커밋. 태그 한번 추가하고 난 뒤 ui, 링크 복사 피드백은 어떻게?
-// TODO: 기획대로 수정
-// export const UpdateTag: Story = {
-//   play: async ({ canvasElement }) => {
-//     useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
-
-//     const canvas = within(canvasElement);
-
-//     await waitFor(async () => {
-//       const selectedTags = within(canvas.getByTestId("selected-tags"));
-//       await userEvent.click(selectedTags.getAllByRole("button")[0]);
-//     });
-
-//     await waitFor(async () => {
-//       await userEvent.click(canvas.getByTestId("edit-tags-button"));
-//     });
-
-//     await waitFor(async () => {
-//       const tagSelector = within(canvas.getByTestId("tag-selector"));
-//       await userEvent.click(tagSelector.getByTestId("open-button"));
-//       await userEvent.click(tagSelector.getByText(mockTags[0]));
-//     });
-
-//     await waitFor(async () => {
-//       await userEvent.click(canvas.getByTestId("edit-tags-button"));
-//     });
-
-//     const selectedTags = within(canvas.getByTestId("selected-tags"));
-//     expect(selectedTags.getByText(mockLink.tags[1])).toBeInTheDocument();
-//     expect(selectedTags.getByText(mockLink.tags[2])).toBeInTheDocument();
-//     expect(selectedTags.getByText(mockTags[0])).toBeInTheDocument();
-//   },
-// };
-
 export const UpdateLink: Story = {
   decorators: (Story) => {
-    invalidateQuerySpy = jest.spyOn(queryClient, "invalidateQueries");
+    invalidateQuerySpy = spyOn(queryClient, "invalidateQueries");
     return <Story />;
   },
   play: async ({ canvasElement }) => {
@@ -310,7 +277,7 @@ export const DeleteLink: Story = {
 };
 
 const mockClipboard = {
-  writeText: jest.fn().mockImplementation(() => Promise.resolve()),
+  writeText: fn().mockImplementation(() => Promise.resolve()),
 };
 
 export const ShareLink: Story = {

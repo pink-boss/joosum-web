@@ -1,4 +1,5 @@
-import { jest } from "@storybook/jest";
+import "@storybook/test";
+import * as test from "@storybook/test";
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -24,7 +25,7 @@ const meta = {
       handlers: [http.get("/api/tags", () => HttpResponse.json(mockTags))],
     },
   },
-  args: { tags: defaultValues.tags, setTags: jest.fn() },
+  args: { tags: defaultValues.tags, setTags: test.fn() },
   decorators: (Story) => {
     const { tags, setTags } = useLinkFilterStore();
     return (

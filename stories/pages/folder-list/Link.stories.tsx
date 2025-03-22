@@ -1,4 +1,5 @@
-import { jest } from "@storybook/jest";
+import "@storybook/test";
+import * as test from "@storybook/test";
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -45,7 +46,7 @@ export const TestLinkClickCount: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const windowSpy = jest.spyOn(window, "open");
+    const windowSpy = test.spyOn(window, "open");
     windowSpy.mockImplementation(() => null);
 
     await userEvent.click(canvas.getByText(mockLink.title));

@@ -1,4 +1,5 @@
-import { jest } from "@storybook/jest";
+import "@storybook/test";
+import * as test from "@storybook/test";
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -63,7 +64,7 @@ const meta = {
     },
   },
   decorators: (Story) => {
-    jest.spyOn(navigationHooks, "useParams").mockReturnValue({
+    test.spyOn(navigationHooks, "useParams").mockReturnValue({
       title: mockLinkBooks[2].title,
     });
     return (
@@ -190,7 +191,7 @@ export const TestSortRequestURI_Title: Story = {
 
 export const TestSortRequestURI_MostViewd: Story = {
   decorators: (Story) => {
-    jest.spyOn(navigationHooks, "useParams").mockReturnValue({ title: "" });
+    test.spyOn(navigationHooks, "useParams").mockReturnValue({ title: "" });
     return <Story />;
   },
   play: async ({ canvasElement }) => {
@@ -219,7 +220,7 @@ export const TestSortRequestURI_MostViewd: Story = {
 export const TestDeleteLinks: Story = {
   args: { defaultEditMode: true },
   decorators: (Story) => {
-    jest
+    test
       .spyOn(navigationHooks, "useParams")
       .mockReturnValue({ title: mockLinkBooks[0].title });
     return (
@@ -267,7 +268,7 @@ let invalidateQuerySpy: any;
 export const TestReassignLinkBook: Story = {
   args: { defaultEditMode: true },
   decorators: (Story) => {
-    invalidateQuerySpy = jest.spyOn(queryClient, "invalidateQueries");
+    invalidateQuerySpy = test.spyOn(queryClient, "invalidateQueries");
     return (
       <>
         <Story />

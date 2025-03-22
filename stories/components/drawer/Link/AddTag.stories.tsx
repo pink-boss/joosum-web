@@ -20,7 +20,6 @@ function Wrapper({ defaultTags }: { defaultTags: string[] }) {
 const meta = {
   title: "Component/Drawer/Link/Add Tags",
   component: Wrapper,
-  tags: ["autodocs"],
   decorators: (Story) => {
     return (
       <QueryClientProvider client={queryClient}>
@@ -55,19 +54,19 @@ export const EmptyTags: Story = {
   tags: [],
 };
 
-// TODO: step assert 써서 테스트 아웃풋 가독성을 높여보자
-
 export const TestRenderTags: Story = {
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     await waitFor(function assertTagCount() {
       expect(canvas.getByText(`${mockTags.length}/10`)).toBeInTheDocument();
     });
 
-    for (let tag of mockTags) {
-      expect(canvas.getByText(tag)).toBeInTheDocument();
-    }
+    await step("태그 렌더링 확인", () => {
+      for (let tag of mockTags) {
+        expect(canvas.getByText(tag)).toBeInTheDocument();
+      }
+    });
   },
 };
 

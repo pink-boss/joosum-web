@@ -11,7 +11,6 @@ import CreateButton from "@/app/my-folder/CreateDialogButton";
 import MutateDialog from "@/app/my-folder/mutate/MutateDialog";
 import { hexToRgb } from "@/utils/color";
 
-
 const queryClient = new QueryClient();
 
 const meta = {
