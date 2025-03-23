@@ -1,19 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Notification } from "@/components/notification/dynamic";
-import { useOpenNotificationStore } from "@/store/useNotificationStore";
+
 import React from "react";
+import {
+  saveLinkFailedProps,
+  saveLinkSuccessProps,
+} from "@/components/notification/data";
+import { expect, waitFor, within } from "@storybook/test";
+import NotificationRoot from "@/components/notification/NotificationRoot";
 
 const meta = {
   title: "Component/Notification",
   component: Notification,
   decorators: (Story) => {
-    React.useEffect(() => {
-      useOpenNotificationStore.setState({ isNotificationOpen: true });
-    }, []);
     return (
       <>
-        <div id="notification-root" />
+        <NotificationRoot />
         <Story />
       </>
     );
@@ -24,22 +27,54 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Success: Story = {
-  args: {
-    message: "링크가 저장되었습니다.",
-    status: "success",
-  },
+  args: { ...saveLinkSuccessProps, duration: 1000 * 60 * 60 * 24 },
 };
 
 export const Fail: Story = {
-  args: {
-    message: "링크 저장에 실패했습니다.",
-    status: "fail",
+  args: { ...saveLinkFailedProps, duration: 1000 * 60 * 60 * 24 },
+};
+
+function DelayedToast({
+  delay,
+  ...props
+}: { delay: number } & React.ComponentProps<typeof Notification>) {
+  const [show, setShow] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => setShow(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  return show ? <Notification {...props} /> : null;
+}
+
+export const MultiToast: Story = {
+  args: { ...saveLinkSuccessProps, duration: 1000 * 60 * 60 * 24 },
+  render: () => {
+    return (
+      <>
+        <Notification {...saveLinkFailedProps} />
+        <DelayedToast delay={600} {...saveLinkSuccessProps} />
+        <DelayedToast delay={1200} {...saveLinkSuccessProps} />
+      </>
+    );
   },
 };
-// TODO: Open Close
 
-// TODO: 3초 뒤에 자동으로 사라지기
+export const TestOpenClose: Story = {
+  args: { ...saveLinkSuccessProps, duration: 100 },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-// TODO: failed
+    await waitFor(function OpenToast() {
+      expect(canvas.getByRole("alertdialog")).toBeInTheDocument();
+    });
 
-// TODO: 여러개 띄우기?
+    await waitFor(
+      function CloseToastAfterDuration() {
+        expect(canvas.queryByRole("alertdialog")).toBeNull();
+      },
+      { timeout: 200 },
+    );
+  },
+};

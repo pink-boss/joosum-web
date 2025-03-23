@@ -21,3 +21,8 @@ export type UpdateFormResult = {
 };
 
 export type ToastNotificationStatus = "success" | "fail";
+
+export type ToastNotificationProps = {
+  message: string;
+  status: ToastNotificationStatus;
+};
