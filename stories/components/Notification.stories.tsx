@@ -62,19 +62,22 @@ export const MultiToast: Story = {
 };
 
 export const TestOpenClose: Story = {
-  args: { ...saveLinkSuccessProps, duration: 100 },
+  args: { ...saveLinkSuccessProps, duration: 200, animationDuration: 0 },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await waitFor(function OpenToast() {
-      expect(canvas.getByRole("alertdialog")).toBeInTheDocument();
-    });
+    await waitFor(
+      function OpenToast() {
+        expect(canvas.getByRole("alertdialog")).toBeInTheDocument();
+      },
+      { timeout: 100 },
+    );
 
     await waitFor(
       function CloseToastAfterDuration() {
         expect(canvas.queryByRole("alertdialog")).toBeNull();
       },
-      { timeout: 200 },
+      { timeout: 300 },
     );
   },
 };

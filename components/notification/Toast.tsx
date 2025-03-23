@@ -10,14 +10,15 @@ type InputProps = {
   message: string;
   status: ToastNotificationStatus;
   duration?: number;
+  animationDuration?: number;
 };
 
 export default function Toast({
   message,
   status,
   duration = 3000,
+  animationDuration = 400,
 }: InputProps) {
-  const animationDuration = 400;
   const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
 
