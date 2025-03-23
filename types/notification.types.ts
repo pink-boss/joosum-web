@@ -19,3 +19,5 @@ export type UpdateFormResult = {
   upsertedCount: number;
   upsertedID: string;
 };
+
+export type ToastNotificationStatus = "success" | "fail";

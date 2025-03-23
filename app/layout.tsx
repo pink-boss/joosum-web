@@ -13,6 +13,7 @@ import Topbar from "@/components/layout/Topbar";
 import { publicOnlyPaths } from "@/utils/path";
 
 import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
+import DynamicOpenNotification from "@/components/notification/DynamicOpenNotification";
 
 const queryClient = new QueryClient();
 
@@ -52,8 +53,10 @@ export default function RootLayout({
                 {children}
                 <div id="drawer-root" />
                 <div id="modal-root" />
+                <div id="notification-root" />
                 <DynamicOpenDrawers />
                 <DynamicOpenDialogs />
+                <DynamicOpenNotification />
               </Component>
             </Sidebar>
             <ReactQueryDevtools initialIsOpen={false} />

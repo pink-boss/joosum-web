@@ -2,7 +2,7 @@ import { clearTimeout, setTimeout } from "timers";
 
 import { useEffect, useState } from "react";
 
-import Drawer from "@/components/Drawer";
+import Drawer from "@/components/drawer/Drawer";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import useUpdateLink from "@/hooks/link/useUpdateLink";
 import { useOpenDialogStore } from "@/store/useDialogStore";
