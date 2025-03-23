@@ -20,9 +20,15 @@ export type UpdateFormResult = {
   upsertedID: string;
 };
 
-export type ToastNotificationStatus = "success" | "fail" | "warning";
+export type ToastStatus = "success" | "fail" | "warning";
 
-export type ToastNotificationProps = {
-  message: string;
-  status: ToastNotificationStatus;
+export type ToastNotify = ToastNotification & {
+  animationDuration?: number;
 };
+
+export interface ToastNotification {
+  message: string;
+  status: ToastStatus;
+  duration?: number;
+  visible?: boolean;
+}

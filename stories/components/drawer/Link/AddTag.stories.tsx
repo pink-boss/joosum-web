@@ -9,8 +9,6 @@ import { mockTags } from "../../../mocks/tag.mocks";
 import { useEffect, useState } from "react";
 import Tag from "@/components/drawer/link/Tag";
 
-import NotificationRoot from "@/components/notification/NotificationRoot";
-
 const queryClient = new QueryClient();
 
 function Wrapper({ defaultTags }: { defaultTags: string[] }) {
@@ -27,7 +25,7 @@ const meta = {
       <QueryClientProvider client={queryClient}>
         <div id="drawer-root" />
         <div id="modal-root" />
-        <NotificationRoot />
+
         <Story />
       </QueryClientProvider>
     );

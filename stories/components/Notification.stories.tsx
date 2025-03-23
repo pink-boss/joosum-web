@@ -1,24 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Notification } from "@/components/notification/dynamic";
-
-import React from "react";
-import {
-  saveLinkFailedProps,
-  saveLinkSuccessProps,
-} from "@/components/notification/data";
+import React, { useEffect } from "react";
 import { expect, waitFor, within } from "@storybook/test";
-import NotificationRoot from "@/components/notification/NotificationRoot";
+import Notification from "@/components/notification/Notification";
+import { toast } from "@/components/notification/toast";
+import { ToastProvider } from "@/components/notification/ToastProvider";
+import { screen } from "@storybook/test";
 
 const meta = {
   title: "Component/Notification",
   component: Notification,
   decorators: (Story) => {
     return (
-      <>
-        <NotificationRoot />
+      <ToastProvider>
         <Story />
-      </>
+      </ToastProvider>
     );
   },
 } satisfies Meta<typeof Notification>;
@@ -26,66 +22,67 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const ALL_DAY = 1000 * 60 * 60 * 24;
+
 export const Success: Story = {
-  args: { ...saveLinkSuccessProps, duration: 1000 * 60 * 60 * 24 },
+  args: {
+    message: "링크가 저장되었습니다.",
+    status: "success",
+    duration: ALL_DAY,
+    visible: true,
+  },
 };
 
 export const Fail: Story = {
-  args: { ...saveLinkFailedProps, duration: 1000 * 60 * 60 * 24 },
+  args: {
+    message: "링크 저장에 실패했습니다.",
+    status: "fail",
+    duration: ALL_DAY,
+    visible: true,
+  },
 };
 
 export const Warning: Story = {
   args: {
     message: "더 이상 추가할 수 없습니다.",
     status: "warning",
-    duration: 1000 * 60 * 60 * 24,
+    duration: ALL_DAY,
+    visible: true,
   },
 };
 
-function DelayedToast({
-  delay,
-  ...props
-}: { delay: number } & React.ComponentProps<typeof Notification>) {
-  const [show, setShow] = React.useState(false);
-
+function useDelayToast(delay: number) {
   React.useEffect(() => {
-    const timer = setTimeout(() => setShow(true), delay);
+    const timer = setTimeout(
+      () => toast({ ...Success.args, duration: 3000 }),
+      delay,
+    );
     return () => clearTimeout(timer);
   }, [delay]);
-
-  return show ? <Notification {...props} /> : null;
 }
 
-export const MultiToast: Story = {
-  args: { ...saveLinkSuccessProps, duration: 1000 * 60 * 60 * 24 },
-  render: () => {
-    return (
-      <>
-        <Notification {...saveLinkFailedProps} />
-        <DelayedToast delay={600} {...saveLinkSuccessProps} />
-        <DelayedToast delay={1200} {...saveLinkSuccessProps} />
-      </>
-    );
+export const MultiToast: StoryObj = {
+  decorators: (Story) => {
+    useDelayToast(0);
+    useDelayToast(600);
+    useDelayToast(1200);
+    return <Story />;
   },
 };
 
-export const TestOpenClose: Story = {
-  args: { ...saveLinkSuccessProps, duration: 200, animationDuration: 0 },
+export const TestOpenClose: StoryObj = {
+  render: () => <></>, // 삭제 확인을 위해 앞의 스토리 기록을 삭제
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+    toast({ ...Success.args, duration: 500, animationDuration: 10 });
 
-    await waitFor(
-      function OpenToast() {
-        expect(canvas.getByRole("alertdialog")).toBeInTheDocument();
-      },
-      { timeout: 100 },
-    );
+    expect(screen.queryByRole("alertdialog")).toBeNull();
 
-    await waitFor(
-      function CloseToastAfterDuration() {
-        expect(canvas.queryByRole("alertdialog")).toBeNull();
-      },
-      { timeout: 300 },
-    );
+    await waitFor(async function OpenToast() {
+      expect(screen.getByRole("alertdialog")).toBeInTheDocument();
+    });
+
+    await waitFor(function CloseToastAfterDuration() {
+      expect(screen.queryByRole("alertdialog")).toBeNull();
+    });
   },
 };

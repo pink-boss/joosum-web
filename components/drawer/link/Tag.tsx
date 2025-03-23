@@ -1,4 +1,4 @@
-import { Notification } from "@/components/notification/dynamic";
+import { toast } from "@/components/notification/toast";
 import clsx from "clsx";
 import { MouseEvent as ReactMouseEvent } from "react";
 
@@ -14,10 +14,12 @@ export default function Tag({ tags, setTags }: InputProps) {
 
   const [input, setInput] = useState<string | undefined>();
 
-  const [renderToast, setRenderToast] = useState(false);
   const handleSubmit = () => {
     if (tags.length == 10) {
-      setRenderToast(true);
+      toast({
+        message: "태그는 10개까지 선택할 수 있어요.",
+        status: "warning",
+      });
     } else if (input) {
       setTags([...tags, input.trim()]);
       setInput("");
@@ -101,13 +103,6 @@ export default function Tag({ tags, setTags }: InputProps) {
           )}
         </div>
       </TagWrapper>
-      {renderToast && (
-        <Notification
-          message="태그는 10개까지 선택할 수 있어요."
-          status="warning"
-          onCloseCallback={() => setRenderToast(false)}
-        />
-      )}
     </div>
   );
 }

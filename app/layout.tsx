@@ -14,7 +14,6 @@ import { publicOnlyPaths } from "@/utils/path";
 
 import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
 import DynamicOpenNotification from "@/components/notification/DynamicOpenNotification";
-import NotificationRoot from "@/components/notification/NotificationRoot";
 
 const queryClient = new QueryClient();
 
@@ -54,7 +53,6 @@ export default function RootLayout({
                 {children}
                 <div id="drawer-root" />
                 <div id="modal-root" />
-                <NotificationRoot />
                 <DynamicOpenDrawers />
                 <DynamicOpenDialogs />
                 <DynamicOpenNotification />
