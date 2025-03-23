@@ -20,7 +20,7 @@ export type UpdateFormResult = {
   upsertedID: string;
 };
 
-export type ToastNotificationStatus = "success" | "fail";
+export type ToastNotificationStatus = "success" | "fail" | "warning";
 
 export type ToastNotificationProps = {
   message: string;

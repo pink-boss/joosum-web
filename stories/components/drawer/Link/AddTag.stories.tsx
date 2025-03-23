@@ -1,11 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import {
-  expect,
-  queryByText,
-  userEvent,
-  waitFor,
-  within,
-} from "@storybook/test";
+import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
 
@@ -14,6 +8,8 @@ import { mockTags } from "../../../mocks/tag.mocks";
 
 import { useEffect, useState } from "react";
 import Tag from "@/components/drawer/link/Tag";
+
+import NotificationRoot from "@/components/notification/NotificationRoot";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +27,7 @@ const meta = {
       <QueryClientProvider client={queryClient}>
         <div id="drawer-root" />
         <div id="modal-root" />
-
+        <NotificationRoot />
         <Story />
       </QueryClientProvider>
     );
@@ -119,18 +115,19 @@ export const TestRemoveTag: Story = {
   },
 };
 
-// export const TestLimit: Story = {
-//   args: { defaultTags: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] },
-//   play: async ({ canvasElement, step }) => {
-//     const canvas = within(canvasElement);
-//     const input = canvas.getByRole("textbox") as HTMLInputElement;
+export const TestLimit: Story = {
+  args: { defaultTags: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
 
-// 하나 더 추가
-// 추가 안되는지 확인
-// 토스트 팝업 호출 확인
-// },
-// };
-// TODO: 토스트 팝업 컴포넌트 만들고 테스트 -> 전부 전환
+    await userEvent.keyboard("web{enter}");
+    await waitFor(() => {
+      expect(canvas.queryByText("web")).toBeNull();
+      expect(canvas.getByText("10/10"));
+      expect(canvas.getByRole("alertdialog")).toBeInTheDocument();
+    });
+  },
+};
 
 // export const TestRecentTags: Story = {
 //   play: async ({ canvasElement }) => {

@@ -34,6 +34,14 @@ export const Fail: Story = {
   args: { ...saveLinkFailedProps, duration: 1000 * 60 * 60 * 24 },
 };
 
+export const Warning: Story = {
+  args: {
+    message: "더 이상 추가할 수 없습니다.",
+    status: "warning",
+    duration: 1000 * 60 * 60 * 24,
+  },
+};
+
 function DelayedToast({
   delay,
   ...props

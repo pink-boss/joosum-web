@@ -11,6 +11,7 @@ type InputProps = {
   status: ToastNotificationStatus;
   duration?: number;
   animationDuration?: number;
+  onCloseCallback?: () => void;
 };
 
 export default function Toast({
@@ -18,6 +19,7 @@ export default function Toast({
   status,
   duration = 3000,
   animationDuration = 400,
+  onCloseCallback,
 }: InputProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
@@ -27,10 +29,12 @@ export default function Toast({
     const preRenderTimer = setTimeout(() => setIsVisible(true), 100);
 
     const hideTimer = setTimeout(() => setIsVisible(false), duration);
-    const removeTimer = setTimeout(
-      () => setShouldRender(false),
-      duration + animationDuration,
-    );
+    const removeTimer = setTimeout(() => {
+      setShouldRender(false);
+      if (onCloseCallback) {
+        onCloseCallback();
+      }
+    }, duration + animationDuration);
     return () => {
       clearTimeout(preRenderTimer);
       clearTimeout(hideTimer);
@@ -50,6 +54,8 @@ export default function Toast({
         isVisible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0",
         status === "success" && "text-primary-600 bg-primary-200",
         status === "fail" && "bg-error text-white",
+        status === "warning" && "bg-yellow-100 text-yellow-800",
+
         "mb-4",
       )}
       aria-modal

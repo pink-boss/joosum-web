@@ -1,3 +1,4 @@
+import { Notification } from "@/components/notification/dynamic";
 import clsx from "clsx";
 import { MouseEvent as ReactMouseEvent } from "react";
 
@@ -8,14 +9,16 @@ type InputProps = {
   setTags: (tags: string[]) => void;
 };
 
-// TODO: 10개 넘어가면 토스트 팝업
 export default function Tag({ tags, setTags }: InputProps) {
   const [isActive, setIsActive] = useState(false);
 
   const [input, setInput] = useState<string | undefined>();
 
+  const [renderToast, setRenderToast] = useState(false);
   const handleSubmit = () => {
-    if (input) {
+    if (tags.length == 10) {
+      setRenderToast(true);
+    } else if (input) {
       setTags([...tags, input.trim()]);
       setInput("");
     }
@@ -49,7 +52,7 @@ export default function Tag({ tags, setTags }: InputProps) {
             "flex p-3",
             "rounded-lg border",
             isActive
-              ? "bg-inputactivebg border-primary-500"
+              ? "border-primary-500 bg-inputactivebg"
               : "border-gray-ghost bg-gray-ghost",
           )}
         >
@@ -87,7 +90,7 @@ export default function Tag({ tags, setTags }: InputProps) {
           </div>
           {input && (
             <button
-              className={clsx("w-28 px-2", "text-primary-400 font-semibold")}
+              className={clsx("w-28 px-2", "font-semibold text-primary-400")}
               onClick={(e) => {
                 preventActive(e);
                 handleSubmit();
@@ -98,6 +101,13 @@ export default function Tag({ tags, setTags }: InputProps) {
           )}
         </div>
       </TagWrapper>
+      {renderToast && (
+        <Notification
+          message="태그는 10개까지 선택할 수 있어요."
+          status="warning"
+          onCloseCallback={() => setRenderToast(false)}
+        />
+      )}
     </div>
   );
 }
