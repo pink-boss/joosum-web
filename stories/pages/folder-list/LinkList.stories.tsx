@@ -3,8 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
-import * as navigationHooksImport from "next/navigation";
-const navigationHooks = { ...navigationHooksImport };
 
 import LinkList from "@/app/link-book/[title]/LinkList";
 import { ReassignLinkBookDialog } from "@/app/link-book/dialog/dynamic";
@@ -17,16 +15,16 @@ import { mockLinkBooks } from "../../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();
 let capturedRequest: Request | null = null;
-let mockUseParams: ReturnType<typeof test.spyOn>;
-mockUseParams = test.spyOn(navigationHooks, "useParams");
 
 const meta = {
   title: "Page/FolderList/LinkList",
   component: LinkList,
   tags: ["autodocs"],
   parameters: {
-    backgrounds: {
-      default: "light",
+    nextjs: {
+      navigation: {
+        segments: [["title", mockLinkBooks[2].title]],
+      },
     },
     msw: {
       handlers: [
@@ -66,9 +64,6 @@ const meta = {
     },
   },
   decorators: (Story) => {
-    mockUseParams.mockReturnValue({
-      title: mockLinkBooks[2].title,
-    });
     return (
       <QueryClientProvider client={queryClient}>
         <Story />
@@ -77,7 +72,7 @@ const meta = {
   },
   beforeEach: () => {
     useLinkFilterStore.setState(defaultValues);
-    test.restoreAllMocks();
+    queryClient.clear();
   },
 } satisfies Meta<typeof LinkList>;
 
@@ -193,9 +188,12 @@ export const TestSortRequestURI_Title: Story = {
 };
 
 export const TestSortRequestURI_MostViewd: Story = {
-  decorators: (Story) => {
-    mockUseParams.mockReturnValue({ title: "" });
-    return <Story />;
+  parameters: {
+    nextjs: {
+      navigation: {
+        segments: [["title", ""]],
+      },
+    },
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -223,7 +221,6 @@ export const TestSortRequestURI_MostViewd: Story = {
 export const TestDeleteLinks: Story = {
   args: { defaultEditMode: true },
   decorators: (Story) => {
-    mockUseParams.mockReturnValue({ title: mockLinkBooks[0].title });
     return (
       <>
         <Story />
@@ -235,24 +232,26 @@ export const TestDeleteLinks: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    waitFor(async () => {
+    await waitFor(async () => {
       const checkboxList = canvas.queryAllByRole("listitem");
 
       await userEvent.click(within(checkboxList[0]).getByRole("checkbox"));
       await userEvent.click(within(checkboxList[2]).getByRole("checkbox"));
 
       await userEvent.click(canvas.getByRole("button", { name: "삭제" }));
-
-      const dialog = within(canvas.getByRole("dialog"));
-      await userEvent.click(dialog.getByRole("button", { name: "삭제" }));
     });
 
     await waitFor(async () => {
-      const filteredLinkBooks = mockLinks.filter(
-        (link) => mockLinkBooks[2].linkBookId === link.linkBookId,
-      );
+      const dialog = within(canvas.queryByRole("dialog")!);
+      await userEvent.click(dialog.getByRole("button", { name: "삭제" }));
+    });
+
+    const filteredLinkBooks = mockLinks.filter(
+      (link) => mockLinkBooks[2].linkBookId === link.linkBookId,
+    );
+    await waitFor(async () => {
       expect(
-        canvas.getByText(`0/${filteredLinkBooks.length - 2}개`),
+        canvas.queryByText(`0/${filteredLinkBooks.length - 2}개`),
       ).toBeInTheDocument();
       expect(
         canvas.queryByRole("checkbox", { name: mockLinks[0].title }),
@@ -280,15 +279,18 @@ export const TestReassignLinkBook: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const checkboxList = canvas.getAllByRole("listitem");
 
-    await userEvent.click(within(checkboxList[0]).getByRole("checkbox"));
-    await userEvent.click(within(checkboxList[2]).getByRole("checkbox"));
+    await waitFor(async function Check() {
+      const checkboxList = canvas.queryAllByRole("listitem");
 
-    await userEvent.click(canvas.getByRole("button", { name: "폴더이동" }));
+      await userEvent.click(within(checkboxList[0]).getByRole("checkbox"));
+      await userEvent.click(within(checkboxList[2]).getByRole("checkbox"));
 
-    const dialog = within(canvas.getByRole("dialog"));
-    await waitFor(async () => {
+      await userEvent.click(canvas.getByRole("button", { name: "폴더이동" }));
+    });
+
+    await waitFor(async function HanldeReassignLinkBooks() {
+      const dialog = within(canvas.queryByRole("dialog")!);
       await userEvent.click(dialog.getByTestId("open-button"));
       await userEvent.click(
         dialog.getByRole("button", { name: mockLinkBooks[4].title }),
@@ -296,7 +298,7 @@ export const TestReassignLinkBook: Story = {
       await userEvent.click(dialog.getByRole("button", { name: "이동" }));
     });
 
-    await waitFor(async () => {
+    await waitFor(async function VerifyChanges() {
       const filteredLinkBooks = mockLinks.filter(
         (link) => mockLinkBooks[2].linkBookId === link.linkBookId,
       );

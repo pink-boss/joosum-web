@@ -55,8 +55,8 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
     setEditMode((prev) => !prev);
   };
 
-  const handleAllCheckLinks = () => {
-    setAllLinks(hasAllChecked);
+  const handleAllCheckLinks = (e: ChangeEvent<HTMLInputElement>) => {
+    setAllLinks(!!e.target.checked);
   };
 
   const handleCheckLink = (e: ChangeEvent<HTMLInputElement>) => {

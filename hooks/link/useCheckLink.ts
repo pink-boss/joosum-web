@@ -5,7 +5,6 @@ import { getLinkListQueryKey } from "@/utils/queryKey";
 
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
 
-
 const queryKey = ["link", "checkedId"];
 
 export default function useCheckLink() {
@@ -32,13 +31,12 @@ export default function useCheckLink() {
   };
 
   const setAllLinks = (isAllChecked: boolean) => {
-    const allLinks = queryClient.getQueryData<Link[]>([
-      "linkList",
-      linkBook?.linkBookId,
-    ]);
+    const allLinks = queryClient.getQueryData<Link[]>(
+      getLinkListQueryKey(linkBook?.linkBookId),
+    );
     queryClient.setQueryData(
       queryKey,
-      isAllChecked ? null : allLinks?.map((link) => link.linkId),
+      isAllChecked ? allLinks?.map((link) => link.linkId) : null,
     );
   };
 
