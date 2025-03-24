@@ -1,10 +1,10 @@
-import "@storybook/test";
 import * as test from "@storybook/test";
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
-import * as navigationHooks from "next/navigation";
+import * as navigationHooksImport from "next/navigation";
+const navigationHooks = { ...navigationHooksImport };
 
 import LinkList from "@/app/link-book/[title]/LinkList";
 import { ReassignLinkBookDialog } from "@/app/link-book/dialog/dynamic";
@@ -17,6 +17,8 @@ import { mockLinkBooks } from "../../mocks/linkBook.mocks";
 
 const queryClient = new QueryClient();
 let capturedRequest: Request | null = null;
+let mockUseParams: ReturnType<typeof test.spyOn>;
+mockUseParams = test.spyOn(navigationHooks, "useParams");
 
 const meta = {
   title: "Page/FolderList/LinkList",
@@ -64,7 +66,7 @@ const meta = {
     },
   },
   decorators: (Story) => {
-    test.spyOn(navigationHooks, "useParams").mockReturnValue({
+    mockUseParams.mockReturnValue({
       title: mockLinkBooks[2].title,
     });
     return (
@@ -75,6 +77,7 @@ const meta = {
   },
   beforeEach: () => {
     useLinkFilterStore.setState(defaultValues);
+    test.restoreAllMocks();
   },
 } satisfies Meta<typeof LinkList>;
 
@@ -191,7 +194,7 @@ export const TestSortRequestURI_Title: Story = {
 
 export const TestSortRequestURI_MostViewd: Story = {
   decorators: (Story) => {
-    test.spyOn(navigationHooks, "useParams").mockReturnValue({ title: "" });
+    mockUseParams.mockReturnValue({ title: "" });
     return <Story />;
   },
   play: async ({ canvasElement }) => {
@@ -220,9 +223,7 @@ export const TestSortRequestURI_MostViewd: Story = {
 export const TestDeleteLinks: Story = {
   args: { defaultEditMode: true },
   decorators: (Story) => {
-    test
-      .spyOn(navigationHooks, "useParams")
-      .mockReturnValue({ title: mockLinkBooks[0].title });
+    mockUseParams.mockReturnValue({ title: mockLinkBooks[0].title });
     return (
       <>
         <Story />
