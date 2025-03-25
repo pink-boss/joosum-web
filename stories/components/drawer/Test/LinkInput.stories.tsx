@@ -9,12 +9,9 @@ const testMeta = {
   title: "Component/Drawer/LinkInput",
   decorators: [
     (Story) => (
-      <form>
+      <form className="flex flex-col gap-2">
         <Story />
-        <button
-          type="submit"
-          className="mt-2 bg-primary-500 px-4 text-white outline"
-        >
+        <button type="submit" className="bg-primary-500 text-white outline">
           submit
         </button>
       </form>
