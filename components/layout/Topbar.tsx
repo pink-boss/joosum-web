@@ -5,6 +5,7 @@ import { KeyboardEvent, useState } from "react";
 import { useSearchBarStore } from "@/store/useSearchBarStore";
 
 import OpenUserDrawerButton from "../drawer/user/OpenDrawerButton";
+import OpenLinkSaveDrawerButton from "../drawer/link/OpenSaveDrawerButton";
 
 export default function Topbar() {
   const router = useRouter();
@@ -43,9 +44,7 @@ export default function Topbar() {
         </div>
       </div>
       <div className="flex gap-[20px]">
-        <button className="h-[48px] w-[200px] rounded-xl bg-black text-xl font-bold text-white">
-          링크 저장
-        </button>
+        <OpenLinkSaveDrawerButton />
         <OpenUserDrawerButton />
       </div>
     </div>

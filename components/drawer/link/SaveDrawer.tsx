@@ -28,7 +28,21 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
     open(false);
   };
 
-  const handleSubmit = () => {};
+  async function handleSubmit(formData: FormData) {
+    "use server";
+
+    const rawFormData = {
+      url: formData.get("url"),
+      title: formData.get("title"),
+      linkBookId: formData.get("linkBookId"),
+      tags: formData.get("tags"),
+      thumbnail: formData.get("thumbnail"),
+    };
+
+    console.log(rawFormData);
+    // mutate data
+    // revalidate cache
+  }
 
   const [formState, setFormState] = useState<CreateFormState>(
     _defaultValues ?? defaultValues,
@@ -43,7 +57,10 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
           }
           right={<div />}
         />
-        <div className="flex flex-1 flex-col gap-6 px-10">
+        <form
+          className="flex flex-1 flex-col gap-6 px-10"
+          action={handleSubmit}
+        >
           <LinkInput
             value={formState.url}
             setValue={(value) => {
@@ -89,9 +106,8 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
             closeBtnName="취소"
             onCloseCallback={onClose}
             submitBtnName="저장"
-            onSubmitCallback={handleSubmit}
           />
-        </div>
+        </form>
       </div>
     </Drawer>
   );

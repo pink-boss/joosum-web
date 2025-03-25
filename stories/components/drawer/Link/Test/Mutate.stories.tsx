@@ -60,6 +60,7 @@ const testMeta = {
   },
   beforeEach: () => {
     capturedRequest = {};
+    queryClient.clear();
   },
 } satisfies Meta<typeof MutateLinkDrawer>;
 

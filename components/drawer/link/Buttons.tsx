@@ -7,7 +7,7 @@ type InputProps = {
   onCloseCallback: () => void;
 
   submitBtnName: string;
-  onSubmitCallback: () => void;
+  onSubmitCallback?: () => void;
 };
 
 export default function Buttons({
@@ -26,6 +26,7 @@ export default function Buttons({
         {closeBtnName}
       </button>
       <button
+        type="submit"
         className={clsx(
           "h-[56px] w-[220.5px] rounded-lg font-bold text-white",
           !title ? "cursor-not-allowed bg-gray-vapor" : "bg-primary-500",
