@@ -69,6 +69,12 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 url: value,
               }));
             }}
+            setThumbnail={(values) =>
+              setFormState((prev) => ({
+                ...prev,
+                ...values,
+              }))
+            }
           />
           <TitleInput
             value={formState.title}
@@ -79,7 +85,6 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
               }));
             }}
           />
-
           <Folder
             linkBookId={formState.linkBookId}
             setLinkBookId={(linkBookName, linkBookId) =>
@@ -90,7 +95,6 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
               }))
             }
           />
-
           <Tag
             tags={formState.tags}
             setTags={(tags) =>
@@ -99,6 +103,13 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 tags,
               }))
             }
+          />
+          <input
+            data-testid="thumbnailURL"
+            id="thumbnailURL"
+            name="thumbnailURL"
+            className="hidden"
+            value={formState.thumbnailURL}
           />
 
           <Buttons

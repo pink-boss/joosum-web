@@ -27,6 +27,7 @@ export function Button({ children, className, onClickCallback }: InputProps) {
   return (
     <button
       data-testid="create-folder-dialog-button"
+      type="button"
       className={className}
       onClick={handleClick}
     >

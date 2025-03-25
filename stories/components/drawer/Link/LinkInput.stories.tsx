@@ -8,6 +8,7 @@ const meta = {
   component: LinkInput,
   args: {
     setValue: test.fn(),
+    setThumbnail: test.fn(),
   },
 } satisfies Meta<typeof LinkInput>;
 

@@ -36,6 +36,7 @@ const meta = {
   },
   beforeEach: () => {
     queryClient.clear();
+    useOpenDialogStore.setState({ isMutateLinkBookOpen: false });
   },
 } satisfies Meta<typeof SaveLinkDrawer>;
 

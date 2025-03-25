@@ -33,3 +33,6 @@ export type SaveLink = Pick<
   Link,
   "linkBookId" | "tags" | "thumbnailURL" | "title" | "url"
 >;
+
+export type TQueryThumbnailArgs = Pick<Link, "url">;
+export type TQueryThumbnail = Pick<Link, "thumbnailURL" | "title" | "url">;
