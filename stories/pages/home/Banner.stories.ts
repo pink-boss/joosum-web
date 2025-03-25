@@ -7,7 +7,6 @@ import { mockBanners } from "../../mocks/banner.mocks";
 const meta = {
   title: "Page/Home/Banner",
   component: BannerCard,
-  tags: ["autodocs"],
   args: { data: mockBanners },
 } satisfies Meta<typeof BannerCard>;
 

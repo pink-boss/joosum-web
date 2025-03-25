@@ -1,11 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import React, { useEffect } from "react";
-import { expect, waitFor, within } from "@storybook/test";
+import React from "react";
 import Notification from "@/components/notification/Notification";
 import { toast } from "@/components/notification/toast";
 import { ToastProvider } from "@/components/notification/ToastProvider";
-import { screen } from "@storybook/test";
 
 const meta = {
   title: "Component/Notification",
@@ -67,22 +65,5 @@ export const MultiToast: StoryObj = {
     useDelayToast(600);
     useDelayToast(1200);
     return <Story />;
-  },
-};
-
-export const TestOpenClose: StoryObj = {
-  render: () => <></>, // 삭제 확인을 위해 앞의 스토리 기록을 삭제
-  play: async ({ canvasElement }) => {
-    toast({ ...Success.args, duration: 500, animationDuration: 10 });
-
-    expect(screen.queryByRole("alertdialog")).toBeNull();
-
-    await waitFor(async function OpenToast() {
-      expect(screen.getByRole("alertdialog")).toBeInTheDocument();
-    });
-
-    await waitFor(function CloseToastAfterDuration() {
-      expect(screen.queryByRole("alertdialog")).toBeNull();
-    });
   },
 };

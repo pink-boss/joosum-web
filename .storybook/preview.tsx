@@ -3,6 +3,9 @@ import "../app/globals.css";
 
 import { initialize, mswLoader } from "msw-storybook-addon";
 import { http, passthrough } from "msw";
+import { QueryClientProvider } from "@tanstack/react-query";
+import React from "react";
+import { queryClient } from "../stories/mocks/store.mocks";
 
 initialize({
   serviceWorker: {
@@ -11,6 +14,15 @@ initialize({
 });
 
 const preview: Preview = {
+  decorators: [
+    (Story) => (
+      <QueryClientProvider client={queryClient}>
+        <Story />
+        <div id="drawer-root" />
+        <div id="modal-root" />
+      </QueryClientProvider>
+    ),
+  ],
   parameters: {
     controls: {
       matchers: {
@@ -31,7 +43,7 @@ const preview: Preview = {
   },
 
   loaders: [mswLoader],
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default preview;
