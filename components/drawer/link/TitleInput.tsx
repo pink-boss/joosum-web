@@ -1,10 +1,10 @@
-import FormItem from "./link/FormItem";
+import FormItem from "./FormItem";
 
 type InputProps = {
   value?: string;
   setValue: (value: string) => void;
 };
-export default function LinkInput({ value, setValue }: InputProps) {
+export default function TitleInput({ value, setValue }: InputProps) {
   return (
     <FormItem
       label="제목"
@@ -17,6 +17,10 @@ export default function LinkInput({ value, setValue }: InputProps) {
         type: "url",
         autoFocus: !value,
         maxLength: 60,
+        onInvalid: (e: React.FormEvent<HTMLInputElement>) => {
+          const input = e.target as HTMLInputElement;
+          input.setCustomValidity("제목은 1 글자 이상 입력해주세요.");
+        },
       }}
     />
   );

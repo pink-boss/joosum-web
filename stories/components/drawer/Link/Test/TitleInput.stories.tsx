@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import TitleInput from "@/components/drawer/TitleInput";
+import TitleInput from "@/components/drawer/link/TitleInput";
 import meta from "../TitleInput.stories";
 import { expect, userEvent, within } from "@storybook/test";
 

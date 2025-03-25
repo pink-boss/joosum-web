@@ -1,4 +1,4 @@
-import FormItem from "./link/FormItem";
+import FormItem from "./FormItem";
 
 type InputProps = {
   value?: string;
@@ -16,6 +16,10 @@ export default function LinkInput({ value, setValue }: InputProps) {
         required: true,
         type: "url",
         autoFocus: !value,
+        onInvalid: (e: React.FormEvent<HTMLInputElement>) => {
+          const input = e.target as HTMLInputElement;
+          input.setCustomValidity("유효한 링크를 입력해주세요.");
+        },
       }}
     />
   );

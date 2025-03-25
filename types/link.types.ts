@@ -28,3 +28,8 @@ export type CreateFormState = Partial<Omit<MutateLink, "tags">> &
   Pick<MutateLink, "tags">;
 
 export type UpdateFormState = MutateLink;
+
+export type SaveLink = Pick<
+  Link,
+  "linkBookId" | "tags" | "thumbnailURL" | "title" | "url"
+>;

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import LinkInput from "@/components/drawer/LinkInput";
+import LinkInput from "@/components/drawer/link/LinkInput";
 import meta from "../LinkInput.stories";
 import { expect, userEvent, within } from "@storybook/test";
 

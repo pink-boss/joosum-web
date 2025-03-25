@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as test from "@storybook/test";
 
-import TitleInput from "@/components/drawer/TitleInput";
+import TitleInput from "@/components/drawer/link/TitleInput";
 
 const meta = {
   title: "Component/Drawer/TitleInput",
