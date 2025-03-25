@@ -10,3 +10,5 @@ const testMeta = {
 
 export default testMeta;
 type Story = StoryObj<typeof testMeta>;
+
+// TODO: 링크 선택을 못 건너 뛰도록
