@@ -4,10 +4,19 @@ import { expect, userEvent, waitFor, within } from "@storybook/test";
 import meta from "../AddTag.stories";
 import { Wrapper } from "../AddFolder.stories";
 import { mockTags } from "@/stories/mocks/tag.mocks";
+import { ToastProvider } from "@/components/notification/ToastProvider";
+import { screen } from "@storybook/test";
 
 const testMeta = {
   ...meta,
   title: "Component/Drawer/Link/Add Tags",
+  decorators: (Story) => {
+    return (
+      <ToastProvider>
+        <Story />
+      </ToastProvider>
+    );
+  },
 } satisfies Meta<typeof Wrapper>;
 
 export default testMeta;
@@ -74,14 +83,14 @@ export const TestRemoveTag: Story = {
 
 export const TestLimit: Story = {
   args: { defaultTags: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] },
-  play: async ({ canvasElement, step }) => {
+  play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     await userEvent.keyboard("web{enter}");
     await waitFor(() => {
       expect(canvas.queryByText("web")).toBeNull();
       expect(canvas.getByText("10/10"));
-      expect(canvas.getByRole("alertdialog")).toBeInTheDocument();
+      expect(screen.queryByRole("alertdialog")).toBeInTheDocument();
     });
   },
 };
