@@ -1,4 +1,5 @@
 import { toast } from "@/components/notification/toast";
+import { useLinkInputStore } from "@/store/useLinkInputStore";
 import clsx from "clsx";
 import { MouseEvent as ReactMouseEvent } from "react";
 
@@ -11,6 +12,7 @@ type InputProps = {
 
 export default function Tag({ tags, setTags }: InputProps) {
   const [isActive, setIsActive] = useState(false);
+  const { isValid } = useLinkInputStore();
 
   const [input, setInput] = useState<string | undefined>();
 
@@ -43,7 +45,7 @@ export default function Tag({ tags, setTags }: InputProps) {
   return (
     <div className={clsx("flex flex-col gap-2", "text-gray-black")}>
       <div className="flex justify-between px-2">
-        <label htmlFor="title" className="text-lg font-semibold">
+        <label htmlFor="tag-input" className="text-lg font-semibold">
           태그
         </label>
         <span className="text-sm">{tags.length}/10</span>
@@ -79,6 +81,9 @@ export default function Tag({ tags, setTags }: InputProps) {
               </div>
             ))}
             <input
+              data-testid="tag-input"
+              id="tag-input"
+              name="tag-input"
               className="min-w-[120px] flex-1 bg-transparent p-1 outline-none"
               type="text"
               autoFocus
@@ -88,6 +93,7 @@ export default function Tag({ tags, setTags }: InputProps) {
               placeholder={!tags.length ? "태그를 추가해보세요." : undefined}
               onFocus={() => setIsActive(true)}
               onBlur={() => setIsActive(false)}
+              disabled={!isValid}
             />
           </div>
           {input && (
@@ -115,6 +121,7 @@ type TagWrapperInputProps = {
 
 function TagWrapper({ children, isActive, setIsActive }: TagWrapperInputProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const { isValid } = useLinkInputStore();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -134,7 +141,7 @@ function TagWrapper({ children, isActive, setIsActive }: TagWrapperInputProps) {
     <div
       ref={wrapperRef}
       onClick={() => {
-        setIsActive(true);
+        if (isValid) setIsActive(true);
       }}
     >
       {children}

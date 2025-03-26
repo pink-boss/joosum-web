@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import { useLinkInputStore } from "@/store/useLinkInputStore";
 
 type InputProps = {
   children: ReactNode;
@@ -15,6 +16,7 @@ type InputProps = {
 export function Button({ children, className, onClickCallback }: InputProps) {
   const { openMutateLinkBook } = useOpenDialogStore();
   const { clearLinkBook } = useSelectLinkBook();
+  const { isValid } = useLinkInputStore();
 
   const handleClick = () => {
     clearLinkBook();
@@ -30,6 +32,7 @@ export function Button({ children, className, onClickCallback }: InputProps) {
       type="button"
       className={className}
       onClick={handleClick}
+      disabled={!isValid}
     >
       {children}
     </button>

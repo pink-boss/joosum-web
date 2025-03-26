@@ -1,10 +1,36 @@
+import { useLinkInputStore } from "@/store/useLinkInputStore";
 import FormItem from "./FormItem";
+import { ChangeEvent, KeyboardEvent } from "react";
 
 type InputProps = {
   value?: string;
   setValue: (value: string) => void;
 };
 export default function TitleInput({ value, setValue }: InputProps) {
+  const { isValid } = useLinkInputStore();
+
+  const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    setValue(value);
+
+    if (value.length < 1) {
+      e.target.setCustomValidity("제목은 1 글자 이상 입력해주세요.");
+    } else {
+      e.target.setCustomValidity("");
+    }
+  };
+
+  const handlePressEnterKey = (e: KeyboardEvent<HTMLInputElement>) => {
+    const isValid = e.currentTarget.checkValidity();
+
+    if (isValid && e.key === "Enter") {
+      e.currentTarget.blur();
+      const nextInput = document.querySelector<HTMLInputElement>(
+        '[data-testid="open-button"]',
+      );
+      nextInput?.focus();
+    }
+  };
   return (
     <FormItem
       label="제목"
@@ -14,13 +40,10 @@ export default function TitleInput({ value, setValue }: InputProps) {
       inputProps={{
         placeholder: "제목을 입력해주세요.",
         required: true,
-        type: "url",
-        autoFocus: !value,
         maxLength: 60,
-        onInvalid: (e: React.FormEvent<HTMLInputElement>) => {
-          const input = e.target as HTMLInputElement;
-          input.setCustomValidity("제목은 1 글자 이상 입력해주세요.");
-        },
+        onChange: handleChangeValue,
+        onKeyDown: handlePressEnterKey,
+        disabled: !isValid,
       }}
     />
   );

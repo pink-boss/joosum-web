@@ -15,9 +15,7 @@ export default function Folder({ linkBookId, setLinkBookId }: InputProps) {
   return (
     <div className="flex flex-col gap-2 text-gray-black">
       <div className="flex justify-between px-2">
-        <label htmlFor="title" className="text-lg font-semibold">
-          폴더
-        </label>
+        <label className="text-lg font-semibold">폴더</label>
         <Button className="flex font-semibold text-primary-500">
           <Image
             src="/icons/icon-plus.png"

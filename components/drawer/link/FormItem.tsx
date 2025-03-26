@@ -21,7 +21,6 @@ export default function FormItem({
         {label}
       </label>
       <input
-        {...inputProps}
         data-testid={name}
         id={name}
         name={name}
@@ -31,6 +30,7 @@ export default function FormItem({
         )}
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        {...inputProps}
       />
     </div>
   );
