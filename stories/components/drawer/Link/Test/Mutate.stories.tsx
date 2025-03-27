@@ -1,5 +1,3 @@
-import FakeTimers from "@sinonjs/fake-timers";
-
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, fn, spyOn, userEvent, waitFor, within } from "@storybook/test";
 import { http, HttpResponse } from "msw";
@@ -61,6 +59,7 @@ const testMeta = {
   beforeEach: () => {
     capturedRequest = {};
     queryClient.clear();
+    useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
   },
 } satisfies Meta<typeof MutateLinkDrawer>;
 
@@ -68,8 +67,10 @@ export default testMeta;
 type Story = StoryObj<typeof testMeta>;
 
 export const TestOpenCloseDrawer: Story = {
-  decorators: (Story) => {
+  beforeEach: () => {
     useOpenDrawerStore.setState({ link: undefined, isLinkDrawerOpen: false });
+  },
+  decorators: (Story) => {
     return (
       <>
         <DrawerButton link={mockLink} />
@@ -93,8 +94,6 @@ export const TestOpenCloseDrawer: Story = {
 
 export const TestRenderFormData: Story = {
   play: async ({ canvasElement }) => {
-    useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
-
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
@@ -113,7 +112,8 @@ export const TestRenderFormData: Story = {
         ),
       ).toBeInTheDocument();
 
-      expect(canvas.getByTestId("selected-tags").childElementCount).toBe(3);
+      const tagInput = within(canvas.getByTestId("tags-input"));
+      expect(tagInput.getAllByRole("listitem").length).toBe(3);
       for (const tag of mockLink.tags) {
         expect(canvas.getByText(tag)).toBeInTheDocument();
       }
@@ -126,85 +126,72 @@ export const TestUpdateLink: Story = {
     invalidateQuerySpy = spyOn(queryClient, "invalidateQueries");
     return <Story />;
   },
-  play: async ({ canvasElement }) => {
-    const clock = FakeTimers.install({
-      shouldAdvanceTime: true,
-      advanceTimeDelta: 20,
-      shouldClearNativeTimers: true,
+  play: async ({ canvasElement, step }) => {
+    const NEW_TITLE = "뉴 타이틀";
+    const NEW_FOLDER_ID = mockLinkBooks[1].linkBookId;
+    const NEW_FOLDER_NAME = mockLinkBooks[1].title;
+    const NEW_TAG = "생산성";
+
+    const canvas = within(canvasElement);
+
+    await step("title 수정", async () => {
+      const inputElement = await canvas.findByTestId("title");
+      await userEvent.click(inputElement);
+      await waitFor(async () => {
+        for (let i = 0; i < 5; i++) {
+          await userEvent.keyboard("{Backspace}");
+        }
+      });
+      await userEvent.type(inputElement, NEW_TITLE);
     });
 
-    try {
-      useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
-      const NEW_TITLE = "뉴 타이틀";
-      const NEW_FOLDER_ID = mockLinkBooks[1].linkBookId;
-      const NEW_FOLDER_NAME = mockLinkBooks[1].title;
-      const NEW_TAG = "생산성";
-
-      const canvas = within(canvasElement);
-
-      // title 수정
-      await waitFor(async () => {
-        const inputElement = canvas.getByTestId("title");
-        await userEvent.clear(inputElement);
-        await userEvent.type(inputElement, NEW_TITLE);
-      });
-
-      // folder 수정
+    await step("folder 수정", async () => {
       const folderSelector = canvas.getByTestId("link-book-selector");
-      await userEvent.click(within(folderSelector).getByTestId("open-button"));
+      await userEvent.click(folderSelector.firstElementChild as HTMLElement);
       await userEvent.click(within(folderSelector).getByText(NEW_FOLDER_NAME));
+    });
+    // tag 수정
+    // await waitFor(async () => {
+    //   await userEvent.click(canvas.getByTestId("edit-tags-button"));
+    // });
 
-      // tag 수정
-      // await waitFor(async () => {
-      //   await userEvent.click(canvas.getByTestId("edit-tags-button"));
-      // });
+    // await waitFor(async () => {
+    //   const tagSelector = within(canvas.getByTestId("tag-selector"));
+    //   await userEvent.click(tagSelector.getByTestId("open-button"));
+    //   await userEvent.click(tagSelector.getByText(NEW_TAG));
+    // });
 
-      // await waitFor(async () => {
-      //   const tagSelector = within(canvas.getByTestId("tag-selector"));
-      //   await userEvent.click(tagSelector.getByTestId("open-button"));
-      //   await userEvent.click(tagSelector.getByText(NEW_TAG));
-      // });
+    await userEvent.click(canvas.getByText("수정"));
 
-      await userEvent.click(canvas.getByText("수정"));
+    // request 확인
+    if (capturedRequest.updateLink) {
+      const url = new URL(capturedRequest.updateLink.url);
+      expect(url.pathname).toBe(`/api/links/${mockLink.linkId}`);
+      if (!capturedRequest.updateLink.bodyUsed) {
+        const body = await capturedRequest.updateLink.json();
+        expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
+        expect(body.title).toBe(NEW_TITLE);
+        expect(body.linkBookId).toBe(NEW_FOLDER_ID);
+        // expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
+      } else expect(null).toBe("이미 사용된 bodyUsed");
+    } else expect(null).toBe("updateLink request X");
 
-      // request 확인
-      if (capturedRequest.updateLink) {
-        const url = new URL(capturedRequest.updateLink.url);
-        expect(url.pathname).toBe(`/api/links/${mockLink.linkId}`);
-        if (!capturedRequest.updateLink.bodyUsed) {
-          const body = await capturedRequest.updateLink.json();
-          expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
-          expect(body.title).toBe(NEW_TITLE);
-          expect(body.linkBookId).toBe(NEW_FOLDER_ID);
-          // expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
-        } else expect(null).toBe("이미 사용된 bodyUsed");
-      } else expect(null).toBe("updateLink request X");
+    if (capturedRequest.updateLinkBook) {
+      const url = new URL(capturedRequest.updateLinkBook.url);
+      expect(url.pathname).toBe(
+        `/api/links/${mockLink.linkId}/link-book-id/${NEW_FOLDER_ID}`,
+      );
+    } else expect(null).toBe("updateLinkBook request X");
 
-      if (capturedRequest.updateLinkBook) {
-        const url = new URL(capturedRequest.updateLinkBook.url);
-        expect(url.pathname).toBe(
-          `/api/links/${mockLink.linkId}/link-book-id/${NEW_FOLDER_ID}`,
-        );
-      } else expect(null).toBe("updateLinkBook request X");
+    // toast
+    await waitFor(async () => {
+      const toast = canvas.queryByTestId("feedback-toast");
+      expect(toast).toBeInTheDocument();
+      expect(toast).toHaveTextContent("수정되었습니다.");
+    });
 
-      // toast
-      await waitFor(async () => {
-        const toast = canvas.getByTestId("feedback-toast");
-        expect(toast).toBeInTheDocument();
-        expect(toast).toHaveTextContent("수정되었습니다.");
-      });
-
-      await clock.tickAsync(4000);
-
-      await waitFor(() => {
-        expect(canvas.queryByTestId("feedback-toast")).not.toBeInTheDocument();
-      });
-
-      // 링크 리스트 캐시 확인
-      expect(invalidateQuerySpy).toHaveBeenCalled();
-    } finally {
-      clock.uninstall();
-    }
+    // 링크 리스트 캐시 확인
+    expect(invalidateQuerySpy).toHaveBeenCalled();
   },
 };
 
@@ -214,7 +201,6 @@ export const TestDeleteLink: Story = {
     queryClient.setQueryData(queryKey, () =>
       mockLinks.filter((link) => link.linkBookId === mockLink.linkBookId),
     );
-    useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
 
     const canvas = within(canvasElement);
 

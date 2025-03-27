@@ -1,14 +1,12 @@
-import { useLinkInputStore } from "@/store/useLinkInputStore";
 import FormItem from "./FormItem";
 import { ChangeEvent, KeyboardEvent } from "react";
 
 type InputProps = {
   value?: string;
   setValue: (value: string) => void;
+  disabled?: boolean;
 };
-export default function TitleInput({ value, setValue }: InputProps) {
-  const { isValid } = useLinkInputStore();
-
+export default function TitleInput({ value, setValue, disabled }: InputProps) {
   const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
     setValue(value);
@@ -43,7 +41,7 @@ export default function TitleInput({ value, setValue }: InputProps) {
         maxLength: 60,
         onChange: handleChangeValue,
         onKeyDown: handlePressEnterKey,
-        disabled: !isValid,
+        disabled: disabled,
       }}
     />
   );

@@ -8,11 +8,11 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 type InputProps = {
   tags: string[];
   setTags: (tags: string[]) => void;
+  disabled?: boolean;
 };
 
-export default function Tag({ tags, setTags }: InputProps) {
+export default function Tag({ tags, setTags, disabled }: InputProps) {
   const [isActive, setIsActive] = useState(false);
-  const { isValid } = useLinkInputStore();
 
   const [input, setInput] = useState<string | undefined>();
 
@@ -43,7 +43,10 @@ export default function Tag({ tags, setTags }: InputProps) {
     setTags([...tags.slice(0, index), ...tags.slice(index + 1)]);
   };
   return (
-    <div className={clsx("flex flex-col gap-2", "text-gray-black")}>
+    <div
+      data-testid="tags-input"
+      className={clsx("flex flex-col gap-2", "text-gray-black")}
+    >
       <div className="flex justify-between px-2">
         <label htmlFor="tag-input" className="text-lg font-semibold">
           태그
@@ -60,10 +63,14 @@ export default function Tag({ tags, setTags }: InputProps) {
               : "border-gray-ghost bg-gray-ghost",
           )}
         >
-          <div className={clsx("flex flex-wrap items-center gap-2")}>
+          <div
+            role="list"
+            className={clsx("flex flex-wrap items-center gap-2")}
+          >
             {tags.map((tag, index) => (
               <div
                 key={index}
+                role="listitem"
                 className="flex items-center gap-1 rounded-full bg-gray-vapor px-2 py-1 text-xs"
                 onClick={preventActive}
               >
@@ -93,7 +100,7 @@ export default function Tag({ tags, setTags }: InputProps) {
               placeholder={!tags.length ? "태그를 추가해보세요." : undefined}
               onFocus={() => setIsActive(true)}
               onBlur={() => setIsActive(false)}
-              disabled={!isValid}
+              disabled={disabled}
             />
           </div>
           {input && (

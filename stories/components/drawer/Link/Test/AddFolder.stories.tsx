@@ -20,7 +20,7 @@ type Story = StoryObj<typeof testMeta>;
 export const TestSelectFolder: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByTestId("open-button"));
+    await userEvent.click(await canvas.findByTestId("open-button"));
     await waitFor(async () => {
       await userEvent.click(
         canvas.getByRole("button", { name: "디자인 영감" }),
@@ -54,8 +54,9 @@ export const TestAddFolder: Story = {
     });
 
     await waitFor(async () => {
-      const titleInput = canvas.getByTestId("link-book-title");
-      await userEvent.type(titleInput, "새로 만든 폴더");
+      const titleInput = canvas.queryByTestId("link-book-title");
+      expect(titleInput).toBeInTheDocument();
+      await userEvent.type(titleInput!, "새로 만든 폴더");
     });
 
     await waitFor(async () => {

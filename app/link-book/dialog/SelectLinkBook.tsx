@@ -18,6 +18,7 @@ export type InputProps = {
   ) => void;
   fromLinkBookId?: string;
   className?: string;
+  disabled?: boolean;
 };
 
 export default function SelectLinkBook({
@@ -26,11 +27,11 @@ export default function SelectLinkBook({
   setLinkBookId,
   fromLinkBookId,
   className,
+  disabled,
 }: InputProps) {
   const ref = useClearDropdown(() => setIsOpen(false));
   const [isOpen, setIsOpen] = useState(open);
   const { data } = useQueryLinkBooks("created_at");
-  const { isValid } = useLinkInputStore();
 
   const linkBookOptions: OptionItem<string>[] = useMemo(() => {
     const linkBooks = fromLinkBookId
@@ -65,7 +66,7 @@ export default function SelectLinkBook({
           "h-[46px] w-full rounded-lg border border-gray-silver",
           className && className,
         )}
-        disabled={!isValid}
+        disabled={disabled}
       >
         <span data-testid="selected" className="text-single-line w-64">
           {linkBookOptions?.find(({ value }) => value === linkBookId)?.label}

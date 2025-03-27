@@ -144,6 +144,7 @@ export default function MutateLinkDrawer() {
                     linkBookId,
                   }))
                 }
+                disabled={false}
               />
               <Tag
                 tags={formState.tags}

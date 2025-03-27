@@ -12,6 +12,7 @@ import Header from "./Header";
 import LinkInput from "./LinkInput";
 import TitleInput from "./TitleInput";
 import Tag from "./Tag";
+import { useLinkInputStore } from "@/store/useLinkInputStore";
 
 // TODO: 테스트 작성
 // TODO: 실제 기능 구현
@@ -23,6 +24,7 @@ type InputProps = {
 export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
   const { isLinkSaveDrawerOpen: isOpen, openLinkSaveDrawer: open } =
     useOpenDrawerStore();
+  const { isValid } = useLinkInputStore();
 
   const onClose = () => {
     open(false);
@@ -84,6 +86,7 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 title: value,
               }));
             }}
+            disabled={!isValid}
           />
           <Folder
             linkBookId={formState.linkBookId}
@@ -94,6 +97,7 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 linkBookId,
               }))
             }
+            disabled={!isValid}
           />
           <Tag
             tags={formState.tags}
@@ -103,6 +107,7 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 tags,
               }))
             }
+            disabled={!isValid}
           />
           <input
             data-testid="thumbnailURL"

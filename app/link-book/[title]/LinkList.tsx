@@ -121,7 +121,11 @@ export default function LinkList({ defaultEditMode = false }: InputProps) {
       {isPending ? (
         <Loading />
       ) : data.length ? (
-        <div role="list" className="flex-1 overflow-auto">
+        <div
+          data-testid="link-list"
+          role="list"
+          className="flex-1 overflow-auto"
+        >
           {data.map((link, index) => (
             <div
               key={`link-${index}`}

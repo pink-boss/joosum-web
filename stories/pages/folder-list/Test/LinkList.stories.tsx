@@ -118,10 +118,12 @@ const testRequestURI = async ({
   const canvas = within(canvasElement);
   const dropdown = canvas.getByTestId("sort-dropdown");
 
-  await waitFor(async () => {
-    await userEvent.click(within(dropdown).getByTestId("open-button"));
-    await userEvent.click(within(dropdown).getByText(label));
+  await userEvent.click(within(dropdown).getByTestId("open-button"));
+  await userEvent.click(
+    await within(dropdown.lastElementChild as HTMLElement).findByText(label),
+  );
 
+  await waitFor(async () => {
     if (capturedRequest) {
       const url = new URL(capturedRequest.url);
       expect(url.pathname).toBe(
@@ -273,9 +275,11 @@ export const TestReassignLinkBook: Story = {
     await waitFor(async function HanldeReassignLinkBooks() {
       const dialog = within(canvas.queryByRole("dialog")!);
       await userEvent.click(dialog.getByTestId("open-button"));
-      await userEvent.click(
-        dialog.getByRole("button", { name: mockLinkBooks[4].title }),
-      );
+      const linkBook = dialog.queryByRole("button", {
+        name: mockLinkBooks[4].title,
+      });
+      expect(linkBook).toBeInTheDocument();
+      await userEvent.click(linkBook!);
       await userEvent.click(dialog.getByRole("button", { name: "이동" }));
     });
 

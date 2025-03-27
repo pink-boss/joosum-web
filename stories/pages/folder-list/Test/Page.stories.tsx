@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 
 import Page from "@/app/link-book/[title]/page";
-import { useLinkFilterStore } from "@/store/useLinkFilterStore";
+import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
 
 import meta from "../Page.stories";
 import { queryClient } from "@/stories/mocks/store.mocks";
@@ -12,6 +12,7 @@ const testMeta = {
   title: "Page/FolderList/Page",
   beforeEach: () => {
     queryClient.clear();
+    useLinkFilterStore.setState(defaultValues);
   },
 } satisfies Meta<typeof Page>;
 
@@ -56,18 +57,23 @@ export const TestFilterStatement_TagSelector: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const selectBox = canvas.getByTestId("tag-selector").firstElementChild;
+    const tagSelector = canvas.getByTestId("tag-selector");
+    const selectBox = tagSelector.firstElementChild;
     expect(selectBox).toBeInTheDocument();
     await userEvent.click(selectBox! as HTMLElement);
 
-    await userEvent.click(await canvas.findByText("여행")!);
-    await userEvent.click(await canvas.findByText("쇼핑")!);
+    const checkList = within(tagSelector).getByRole("list");
+    await userEvent.click(await within(checkList).findByText("여행")!);
+    await userEvent.click(await within(checkList).findByText("쇼핑")!);
 
     await waitFor(() => {
-      expect(canvas.queryAllByRole("listitem").length).toBe(21);
-      const tagSelector = within(canvas.getByTestId("tag-selector"));
-      expect(tagSelector.getByText("#여행")).toBeInTheDocument();
-      expect(tagSelector.getByText("#쇼핑")).toBeInTheDocument();
+      expect(canvas.getByTestId("link-list").children.length).toBe(21);
+      expect(
+        within(selectBox as HTMLElement).getByText("#여행"),
+      ).toBeInTheDocument();
+      expect(
+        within(selectBox as HTMLElement).getByText("#쇼핑"),
+      ).toBeInTheDocument();
     });
   },
 };

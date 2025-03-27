@@ -9,7 +9,10 @@ const testMeta = {
   title: "Component/Drawer/TitleInput",
   decorators: [
     (Story) => (
-      <form className="flex flex-col gap-2">
+      <form
+        className="flex flex-col gap-2"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <Story />
         <button type="submit" className="bg-primary-500 text-white outline">
           submit
