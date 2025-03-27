@@ -24,10 +24,12 @@ const testMeta = {
         ...meta.parameters.msw.handlers,
         http.post("/api/links/thumbnail", async ({ request }) => {
           capturedRequest.getThumbnail = request.clone();
+          const { url } = (await request.json()) as { url: string };
+          console.log("msw: " + url);
           return HttpResponse.json({
             thumbnailURL: "https://nextjs.org/static/twitter-cards/home.jpg",
             title: "Next JS",
-            url: "https://nextjs.org",
+            url,
           });
         }),
         http.post("/api/links", async ({ request }) => {
@@ -49,8 +51,6 @@ const testMeta = {
 
 export default testMeta;
 type Story = StoryObj<typeof testMeta>;
-
-export const Test: Story = {};
 
 export const TestOpenCloseDrawer: Story = {
   beforeEach: () => {
@@ -157,6 +157,30 @@ export const TestRequiredURL: Story = {
   },
 };
 
-// TODO: 링크 수정시 제목 삭제
+export const TestClearTitleOnLinkUpdate: Story = {
+  args: {
+    _defaultValues: {
+      url: "https://nextjs.org",
+      title: "Next JS",
+      linkBookId: "",
+      tags: [],
+      thumbnailURL: "",
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const titleInput = await canvas.findByTestId("title");
+    expect(titleInput).toHaveValue("Next JS");
+
+    const linkInput = canvas.getByTestId("url");
+    await userEvent.click(linkInput);
+    await userEvent.keyboard("{Backspace}");
+
+    await waitFor(() => {
+      expect(titleInput).toHaveValue("");
+    });
+  },
+};
 
 // TODO: submit 제대로 되는지

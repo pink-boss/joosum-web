@@ -1,17 +1,18 @@
 import useQueryThumbnail from "@/hooks/link/useQueryThumbnail";
 import FormItem from "./FormItem";
-import { TQueryThumbnail } from "@/types/link.types";
+import { SaveFormState } from "@/types/link.types";
 import { useLinkInputStore } from "@/store/useLinkInputStore";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 type InputProps = {
   value?: string;
-  setValue: (value: string) => void;
-  setThumbnail: (values: TQueryThumbnail) => void;
+  titleInput?: HTMLInputElement | null;
+  setFormState: Dispatch<SetStateAction<SaveFormState>>;
 };
 export default function LinkInput({
   value,
-  setValue,
-  setThumbnail,
+  titleInput,
+  setFormState,
 }: InputProps) {
   const queryThumbnail = useQueryThumbnail();
   const { setIsValid } = useLinkInputStore();
@@ -21,27 +22,33 @@ export default function LinkInput({
 
     if (isValidURL(input.value)) {
       const result = await queryThumbnail.mutateAsync({ url: input.value });
-      setThumbnail(result);
+      setFormState((prev) => ({
+        ...prev,
+        ...result,
+      }));
 
       input.setCustomValidity("");
       setIsValid(true);
-      const nextInput = document.querySelector<HTMLInputElement>(
-        '[data-testid="title"]',
-      );
-      nextInput?.focus();
+      if (titleInput) titleInput.focus();
     } else {
       input.setCustomValidity("유효한 링크를 입력해주세요.");
       setIsValid(false);
     }
   };
 
+  const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormState((prev) => ({
+      ...prev,
+      url: e?.target?.value,
+      title: "",
+    }));
+  };
   return (
     <FormItem
       label="링크"
       name="url"
-      value={value}
-      setValue={setValue}
       inputProps={{
+        value: value,
         placeholder: "URL을 입력하거나 붙여넣어주세요.",
         required: true,
         type: "url",
@@ -50,6 +57,7 @@ export default function LinkInput({
         onKeyDown: (e) => {
           if ("Enter" === e.key) handleValidURL(e.currentTarget);
         },
+        onChange: handleChangeValue,
       }}
     />
   );

@@ -7,7 +7,6 @@ import { useMemo, useState } from "react";
 import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import { useClearDropdown } from "@/hooks/useClearDropdown";
 import { LinkBook } from "@/types/linkBook.types";
-import { useLinkInputStore } from "@/store/useLinkInputStore";
 
 export type InputProps = {
   open?: boolean;

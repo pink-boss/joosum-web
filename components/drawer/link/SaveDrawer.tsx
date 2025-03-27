@@ -2,8 +2,8 @@ import Drawer from "@/components/drawer/Drawer";
 
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 
-import { useState } from "react";
-import { CreateFormState, SaveLink } from "@/types/link.types";
+import { useRef, useState } from "react";
+import { SaveFormState, SaveLink } from "@/types/link.types";
 import { defaultValues } from "./data";
 import Folder from "./Folder";
 import Buttons from "./Buttons";
@@ -25,6 +25,7 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
   const { isLinkSaveDrawerOpen: isOpen, openLinkSaveDrawer: open } =
     useOpenDrawerStore();
   const { isValid } = useLinkInputStore();
+  const titleRef = useRef<HTMLInputElement>(null);
 
   const onClose = () => {
     open(false);
@@ -46,7 +47,7 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
     // revalidate cache
   }
 
-  const [formState, setFormState] = useState<CreateFormState>(
+  const [formState, setFormState] = useState<SaveFormState>(
     _defaultValues ?? defaultValues,
   );
   return (
@@ -65,18 +66,8 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
         >
           <LinkInput
             value={formState.url}
-            setValue={(value) => {
-              setFormState((prev) => ({
-                ...prev,
-                url: value,
-              }));
-            }}
-            setThumbnail={(values) =>
-              setFormState((prev) => ({
-                ...prev,
-                ...values,
-              }))
-            }
+            titleInput={titleRef.current}
+            setFormState={setFormState}
           />
           <TitleInput
             value={formState.title}
@@ -87,6 +78,7 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
               }));
             }}
             disabled={!isValid}
+            inputRef={titleRef}
           />
           <Folder
             linkBookId={formState.linkBookId}

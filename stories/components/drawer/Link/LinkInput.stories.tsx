@@ -7,8 +7,7 @@ const meta = {
   title: "Component/Drawer/LinkInput",
   component: LinkInput,
   args: {
-    setValue: test.fn(),
-    setThumbnail: test.fn(),
+    setFormState: test.fn(),
   },
 } satisfies Meta<typeof LinkInput>;
 

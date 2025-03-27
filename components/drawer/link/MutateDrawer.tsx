@@ -16,9 +16,9 @@ import { defaultValues } from "./data";
 import Folder from "./Folder";
 
 import Buttons from "./Buttons";
-import FormItem from "./FormItem";
 import Image from "next/image";
 import OpenShareButton from "@/app/link-book/OpenShareButton";
+import TitleInput from "./TitleInput";
 
 type ToastDefaultValues = {
   isOpen: boolean;
@@ -121,18 +121,13 @@ export default function MutateLinkDrawer() {
           </div>
           <div>
             <div className="flex flex-col gap-6">
-              <FormItem
-                label="제목"
-                name="title"
+              <TitleInput
                 value={formState.title}
                 setValue={(value) => {
                   setFormState((prev) => ({
                     ...prev,
                     title: value,
                   }));
-                }}
-                inputProps={{
-                  placeholder: "제목을 입력해주세요.",
                 }}
               />
               <Folder

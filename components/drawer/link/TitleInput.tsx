@@ -1,12 +1,18 @@
 import FormItem from "./FormItem";
-import { ChangeEvent, KeyboardEvent } from "react";
+import { ChangeEvent, KeyboardEvent, RefObject } from "react";
 
 type InputProps = {
   value?: string;
   setValue: (value: string) => void;
   disabled?: boolean;
+  inputRef?: RefObject<HTMLInputElement>;
 };
-export default function TitleInput({ value, setValue, disabled }: InputProps) {
+export default function TitleInput({
+  value,
+  setValue,
+  disabled,
+  inputRef,
+}: InputProps) {
   const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
     setValue(value);
@@ -33,9 +39,9 @@ export default function TitleInput({ value, setValue, disabled }: InputProps) {
     <FormItem
       label="제목"
       name="title"
-      value={value}
-      setValue={setValue}
       inputProps={{
+        ref: inputRef,
+        value: value,
         placeholder: "제목을 입력해주세요.",
         required: true,
         maxLength: 60,

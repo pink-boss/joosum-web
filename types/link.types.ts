@@ -34,5 +34,8 @@ export type SaveLink = Pick<
   "linkBookId" | "tags" | "thumbnailURL" | "title" | "url"
 >;
 
+export type SaveFormState = Partial<Omit<SaveLink, "tags">> &
+  Pick<SaveLink, "tags">;
+
 export type TQueryThumbnailArgs = Pick<Link, "url">;
 export type TQueryThumbnail = Pick<Link, "thumbnailURL" | "title" | "url">;
