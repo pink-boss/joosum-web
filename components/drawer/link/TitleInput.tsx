@@ -1,5 +1,5 @@
 import FormItem from "./FormItem";
-import { ChangeEvent, KeyboardEvent, RefObject } from "react";
+import { ChangeEvent, KeyboardEvent, RefObject, useState } from "react";
 
 type InputProps = {
   value?: string;
@@ -13,14 +13,15 @@ export default function TitleInput({
   disabled,
   inputRef,
 }: InputProps) {
+  const [isError, setIsError] = useState(false);
   const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
     setValue(value);
 
     if (value.length < 1) {
-      e.target.setCustomValidity("제목은 1 글자 이상 입력해주세요.");
+      setIsError(true);
     } else {
-      e.target.setCustomValidity("");
+      setIsError(false);
     }
   };
 
@@ -49,6 +50,7 @@ export default function TitleInput({
         onKeyDown: handlePressEnterKey,
         disabled: disabled,
       }}
+      error={{ status: isError, message: "제목은 1 글자 이상 입력해주세요." }}
     />
   );
 }

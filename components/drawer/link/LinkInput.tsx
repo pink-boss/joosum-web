@@ -2,11 +2,16 @@ import useQueryThumbnail from "@/hooks/link/useQueryThumbnail";
 import FormItem from "./FormItem";
 import { SaveFormState } from "@/types/link.types";
 import { useLinkInputStore } from "@/store/useLinkInputStore";
-import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  KeyboardEvent,
+  SetStateAction,
+  useState,
+} from "react";
 import { toast } from "@/components/notification/toast";
 import { isApiError } from "@/utils/error";
 
-// TODO: 에러 메시지 ui로 변경
 type InputProps = {
   value?: string;
   titleInput?: HTMLInputElement | null;
@@ -19,6 +24,7 @@ export default function LinkInput({
 }: InputProps) {
   const queryThumbnail = useQueryThumbnail();
   const { setIsValid } = useLinkInputStore();
+  const [isError, setIsError] = useState(false);
 
   const handleValidURL = async (input: HTMLInputElement) => {
     const isValidURL = (url: string) => /^https?:\/\/.{3,}$/.test(url);
@@ -36,14 +42,11 @@ export default function LinkInput({
         ...result,
       }));
 
-      input.setCustomValidity("");
-      input.reportValidity();
+      setIsError(false);
       setIsValid(true);
       if (titleInput) titleInput.focus();
     } else {
-      console.log("실패");
-      input.setCustomValidity("유효한 링크를 입력해주세요.");
-      input.reportValidity();
+      setIsError(true);
       setIsValid(false);
     }
   };
@@ -76,6 +79,7 @@ export default function LinkInput({
         onKeyDown: handlePressKey,
         onChange: handleChangeValue,
       }}
+      error={{ status: isError, message: "유효한 링크를 입력해주세요." }}
     />
   );
 }
