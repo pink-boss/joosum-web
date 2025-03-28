@@ -13,7 +13,7 @@ import Topbar from "@/components/layout/Topbar";
 import { publicOnlyPaths } from "@/utils/path";
 
 import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
-import DynamicOpenNotification from "@/components/notification/DynamicOpenNotification";
+import { ToastProvider } from "@/components/notification/ToastProvider";
 
 const queryClient = new QueryClient();
 
@@ -47,17 +47,18 @@ export default function RootLayout({
           <Component className="justify-center">{children}</Component>
         ) : (
           <QueryClientProvider client={queryClient}>
-            <Sidebar>
-              <Component>
-                <Topbar />
-                {children}
-                <div id="drawer-root" />
-                <div id="modal-root" />
-                <DynamicOpenDrawers />
-                <DynamicOpenDialogs />
-                <DynamicOpenNotification />
-              </Component>
-            </Sidebar>
+            <ToastProvider>
+              <Sidebar>
+                <Component>
+                  <Topbar />
+                  {children}
+                  <div id="drawer-root" />
+                  <div id="modal-root" />
+                  <DynamicOpenDrawers />
+                  <DynamicOpenDialogs />
+                </Component>
+              </Sidebar>
+            </ToastProvider>
             <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         )}

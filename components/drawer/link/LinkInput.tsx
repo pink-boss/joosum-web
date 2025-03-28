@@ -3,7 +3,10 @@ import FormItem from "./FormItem";
 import { SaveFormState } from "@/types/link.types";
 import { useLinkInputStore } from "@/store/useLinkInputStore";
 import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction } from "react";
+import { toast } from "@/components/notification/toast";
+import { isApiError } from "@/utils/error";
 
+// TODO: 에러 메시지 ui로 변경
 type InputProps = {
   value?: string;
   titleInput?: HTMLInputElement | null;
@@ -22,16 +25,25 @@ export default function LinkInput({
 
     if (isValidURL(input.value)) {
       const result = await queryThumbnail.mutateAsync({ url: input.value });
+
+      if (isApiError(result)) {
+        toast({ status: "fail", message: "링크 불러오기를 실패했습니다." });
+        return;
+      }
+
       setFormState((prev) => ({
         ...prev,
         ...result,
       }));
 
       input.setCustomValidity("");
+      input.reportValidity();
       setIsValid(true);
       if (titleInput) titleInput.focus();
     } else {
+      console.log("실패");
       input.setCustomValidity("유효한 링크를 입력해주세요.");
+      input.reportValidity();
       setIsValid(false);
     }
   };

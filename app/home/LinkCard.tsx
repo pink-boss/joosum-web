@@ -34,7 +34,7 @@ export default function LinkCard({ link }: LinkCardProps) {
       tempElement.style.whiteSpace = "nowrap";
       document.body.appendChild(tempElement);
 
-      for (let i = 0; i < link.tags.length; i++) {
+      for (let i = 0; i < link.tags?.length; i++) {
         const tag = link.tags[i];
         tempElement.textContent = tag;
         const tagWidth = tempElement.offsetWidth + 8; // 간격 8px 추가

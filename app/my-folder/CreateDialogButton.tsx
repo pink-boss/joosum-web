@@ -5,7 +5,6 @@ import { ReactNode } from "react";
 
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import { useOpenDialogStore } from "@/store/useDialogStore";
-import { useLinkInputStore } from "@/store/useLinkInputStore";
 
 type InputProps = {
   children: ReactNode;

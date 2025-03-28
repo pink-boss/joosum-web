@@ -1,7 +1,6 @@
 import { toast } from "@/components/notification/toast";
-import { useLinkInputStore } from "@/store/useLinkInputStore";
 import clsx from "clsx";
-import { KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
+import { KeyboardEvent, MouseEvent as ReactMouseEvent, RefObject } from "react";
 
 import { ReactNode, useEffect, useRef, useState } from "react";
 
@@ -11,10 +10,11 @@ type InputProps = {
   disabled?: boolean;
 };
 
-export default function Tag({ tags, setTags, disabled }: InputProps) {
+export default function Tag({ tags, setTags, disabled = false }: InputProps) {
   const [isActive, setIsActive] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const [input, setInput] = useState<string | undefined>();
+  const [input, setInput] = useState<string>("");
 
   const handleSubmit = () => {
     if (tags.length == 10) {
@@ -52,12 +52,16 @@ export default function Tag({ tags, setTags, disabled }: InputProps) {
         <label htmlFor="tag-input" className="text-lg font-semibold">
           태그
         </label>
-        <span className="text-sm">{tags.length}/10</span>
+        <span className="text-sm">{tags?.length ?? 0}/10</span>
       </div>
-      <TagWrapper isActive={isActive} setIsActive={setIsActive}>
+      <TagWrapper
+        inputRef={inputRef}
+        disabled={disabled}
+        setIsActive={setIsActive}
+      >
         <div
           className={clsx(
-            "flex p-3",
+            "flex justify-between p-3",
             "rounded-lg border",
             isActive
               ? "border-primary-500 bg-inputactivebg"
@@ -68,7 +72,7 @@ export default function Tag({ tags, setTags, disabled }: InputProps) {
             role="list"
             className={clsx("flex flex-wrap items-center gap-2")}
           >
-            {tags.map((tag, index) => (
+            {tags?.map((tag, index) => (
               <div
                 key={index}
                 role="listitem"
@@ -90,15 +94,15 @@ export default function Tag({ tags, setTags, disabled }: InputProps) {
             ))}
             <input
               data-testid="tag-input"
+              ref={inputRef}
               id="tag-input"
               name="tag-input"
               className="min-w-[120px] flex-1 bg-transparent p-1 outline-none"
               type="text"
-              autoFocus
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyUp={(e) => handleTypeInput(e)}
-              placeholder={!tags.length ? "태그를 추가해보세요." : undefined}
+              onKeyDown={(e) => handleTypeInput(e)}
+              placeholder={!tags?.length ? "태그를 추가해보세요." : undefined}
               onFocus={() => setIsActive(true)}
               onBlur={() => setIsActive(false)}
               disabled={disabled}
@@ -106,7 +110,11 @@ export default function Tag({ tags, setTags, disabled }: InputProps) {
           </div>
           {input && (
             <button
-              className={clsx("w-28 px-2", "font-semibold text-primary-400")}
+              type="button"
+              className={clsx(
+                "ml-auto w-28 px-2",
+                "font-semibold text-primary-400",
+              )}
               onClick={(e) => {
                 preventActive(e);
                 handleSubmit();
@@ -123,13 +131,26 @@ export default function Tag({ tags, setTags, disabled }: InputProps) {
 
 type TagWrapperInputProps = {
   children: ReactNode;
-  isActive: boolean;
   setIsActive: (isActive: boolean) => void;
+  disabled?: boolean;
+  inputRef: RefObject<HTMLInputElement>;
 };
 
-function TagWrapper({ children, isActive, setIsActive }: TagWrapperInputProps) {
+function TagWrapper({
+  children,
+  disabled,
+  setIsActive,
+  inputRef,
+}: TagWrapperInputProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const { isValid } = useLinkInputStore();
+
+  const handleClick = () => {
+    if (!disabled) {
+      setIsActive(true);
+
+      inputRef.current?.focus();
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -146,12 +167,7 @@ function TagWrapper({ children, isActive, setIsActive }: TagWrapperInputProps) {
   }, []);
 
   return (
-    <div
-      ref={wrapperRef}
-      onClick={() => {
-        if (isValid) setIsActive(true);
-      }}
-    >
+    <div ref={wrapperRef} onClick={handleClick}>
       {children}
     </div>
   );

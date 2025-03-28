@@ -19,6 +19,7 @@ const NotificationContext = createContext<NotificationContextType | null>(null);
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<ToastMetaData[]>([]);
+  const [mounted, setMounted] = useState(false);
 
   const notify = useCallback<(props: ToastNotify) => void>(
     ({ message, status, duration = 3000, animationDuration = 400 }) => {
@@ -57,6 +58,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 
   // 전역 설정
   useEffect(() => {
+    setMounted(true);
     window.__notify = notify;
     return () => {
       delete window.__notify;
@@ -66,18 +68,19 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   return (
     <NotificationContext.Provider value={{ notify }}>
       {children}
-      {createPortal(
-        <div
-          id="notification-root"
-          data-testid="notification-root"
-          className="fixed right-4 top-10 z-50 flex flex-col items-end"
-        >
-          {toasts.map((toast) => (
-            <Notification {...toast} key={toast.id} />
-          ))}
-        </div>,
-        document.body,
-      )}
+      {mounted &&
+        createPortal(
+          <div
+            id="notification-root"
+            data-testid="notification-root"
+            className="fixed right-4 top-10 z-50 flex flex-col items-end"
+          >
+            {toasts.map((toast) => (
+              <Notification {...toast} key={toast.id} />
+            ))}
+          </div>,
+          document.body,
+        )}
     </NotificationContext.Provider>
   );
 }

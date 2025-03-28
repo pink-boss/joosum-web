@@ -4,6 +4,6 @@ export const defaultValues: CreateFormState = {
   title: "",
   linkBookId: "",
   tags: [],
-  thumbnailURL: undefined,
-  url: undefined,
+  thumbnailURL: "",
+  url: "",
 };

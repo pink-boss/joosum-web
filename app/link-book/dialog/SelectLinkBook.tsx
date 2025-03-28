@@ -69,7 +69,8 @@ export default function SelectLinkBook({
         disabled={disabled}
       >
         <span data-testid="selected" className="text-single-line w-64">
-          {linkBookOptions?.find(({ value }) => value === linkBookId)?.label}
+          {linkBookOptions?.find(({ value }) => value === linkBookId)?.label ??
+            (linkBookOptions.length && linkBookOptions[0].label)}
         </span>
         <Image src="/icons/icon-down3.png" alt="down" width={20} height={20} />
       </button>

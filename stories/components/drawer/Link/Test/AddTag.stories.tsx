@@ -86,6 +86,7 @@ export const TestLimit: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
+    await userEvent.click(canvas.getByTestId("tag-input"));
     await userEvent.keyboard("web{enter}");
     await waitFor(() => {
       expect(canvas.queryByText("web")).toBeNull();

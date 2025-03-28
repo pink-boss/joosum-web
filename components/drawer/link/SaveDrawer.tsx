@@ -15,8 +15,6 @@ import Tag from "./Tag";
 import { useLinkInputStore } from "@/store/useLinkInputStore";
 import useSaveLink from "@/hooks/link/useSaveLink";
 
-// TODO: 실제 기능 구현
-
 type InputProps = {
   _defaultValues?: SaveLink;
 };
@@ -32,8 +30,9 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
   };
   const saveLink = useSaveLink(onClose);
 
-  async function handleSubmit(formData: FormData) {
-    "use server";
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
 
     const rawFormData = {
       url: formData.get("url"),
@@ -44,7 +43,7 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
     } as unknown as SaveFormState;
 
     saveLink.mutate(rawFormData);
-  }
+  };
 
   const [formState, setFormState] = useState<SaveFormState>(
     _defaultValues ?? defaultValues,
@@ -61,7 +60,7 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
         />
         <form
           className="flex flex-1 flex-col gap-6 px-10"
-          action={handleSubmit}
+          onSubmit={handleSubmit}
         >
           <LinkInput
             value={formState.url}
@@ -105,6 +104,7 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
             name="thumbnailURL"
             className="hidden"
             value={formState.thumbnailURL}
+            readOnly
           />
 
           <Buttons
