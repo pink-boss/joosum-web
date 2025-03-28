@@ -13,8 +13,8 @@ import LinkInput from "./LinkInput";
 import TitleInput from "./TitleInput";
 import Tag from "./Tag";
 import { useLinkInputStore } from "@/store/useLinkInputStore";
+import useSaveLink from "@/hooks/link/useSaveLink";
 
-// TODO: 테스트 작성
 // TODO: 실제 기능 구현
 
 type InputProps = {
@@ -30,6 +30,7 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
   const onClose = () => {
     open(false);
   };
+  const saveLink = useSaveLink(onClose);
 
   async function handleSubmit(formData: FormData) {
     "use server";
@@ -37,14 +38,12 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
     const rawFormData = {
       url: formData.get("url"),
       title: formData.get("title"),
-      linkBookId: formData.get("linkBookId"),
+      linkBookId: formData.get("linkBookId") ?? defaultValues.linkBookId,
       tags: formData.get("tags"),
       thumbnail: formData.get("thumbnail"),
-    };
+    } as unknown as SaveFormState;
 
-    console.log(rawFormData);
-    // mutate data
-    // revalidate cache
+    saveLink.mutate(rawFormData);
   }
 
   const [formState, setFormState] = useState<SaveFormState>(
@@ -85,7 +84,6 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
             setLinkBookId={(linkBookName, linkBookId) =>
               setFormState((prev) => ({
                 ...prev,
-                linkBookName,
                 linkBookId,
               }))
             }

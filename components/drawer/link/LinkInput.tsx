@@ -2,7 +2,7 @@ import useQueryThumbnail from "@/hooks/link/useQueryThumbnail";
 import FormItem from "./FormItem";
 import { SaveFormState } from "@/types/link.types";
 import { useLinkInputStore } from "@/store/useLinkInputStore";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction } from "react";
 
 type InputProps = {
   value?: string;
@@ -43,6 +43,13 @@ export default function LinkInput({
       title: "",
     }));
   };
+
+  const handlePressKey = (e: KeyboardEvent<HTMLInputElement>) => {
+    if ("Enter" === e.key) {
+      e.preventDefault();
+      handleValidURL(e.currentTarget);
+    }
+  };
   return (
     <FormItem
       label="링크"
@@ -54,9 +61,7 @@ export default function LinkInput({
         type: "url",
         autoFocus: !value,
         onBlur: (e) => handleValidURL(e.currentTarget),
-        onKeyDown: (e) => {
-          if ("Enter" === e.key) handleValidURL(e.currentTarget);
-        },
+        onKeyDown: handlePressKey,
         onChange: handleChangeValue,
       }}
     />

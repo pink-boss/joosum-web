@@ -5,6 +5,12 @@ export type Field = "lastest" | "oldest" | "title" | "mostViewd";
 type Sort = "created_at" | "title";
 type OrderBy = "asc" | "desc";
 
+export const defaultValues: Omit<LinkSortState, "setField"> = {
+  field: "lastest",
+  sort: "created_at",
+  orderBy: "desc",
+};
+
 export interface LinkSortState {
   field: Field;
   sort: Sort;
@@ -15,9 +21,7 @@ export interface LinkSortState {
 export const useLinkSortStore = create<LinkSortState>()(
   persist(
     (set) => ({
-      field: "lastest",
-      sort: "created_at",
-      orderBy: "desc",
+      ...defaultValues,
       setField: (field) => {
         if (field === "lastest")
           set({ field, sort: "created_at", orderBy: "desc" });

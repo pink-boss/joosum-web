@@ -59,6 +59,7 @@ export default function SelectLinkBook({
     <div className="relative" data-testid="link-book-selector" ref={ref}>
       <button
         data-testid="open-button"
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
           "flex items-center justify-between gap-0.5 px-3 text-start text-sm text-gray-dim",
@@ -81,10 +82,12 @@ export default function SelectLinkBook({
           )}
         >
           <div className="mini-scroll h-full">
-            <div className="flex flex-col gap-2 p-3">
+            <div role="list" className="flex flex-col gap-2 p-3">
               {linkBookOptions?.map(({ label, value }) => (
                 <button
                   key={`reassign-to-${label}`}
+                  role="listitem"
+                  type="button"
                   className="text-single-line h-6 text-start"
                   onClick={() => handleClick(label, value)}
                 >

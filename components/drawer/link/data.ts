@@ -2,7 +2,7 @@ import { CreateFormState } from "@/types/link.types";
 
 export const defaultValues: CreateFormState = {
   title: "",
-  linkBookId: undefined,
+  linkBookId: "",
   tags: [],
   thumbnailURL: undefined,
   url: undefined,

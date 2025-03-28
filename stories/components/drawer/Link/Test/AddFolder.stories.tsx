@@ -22,9 +22,9 @@ export const TestSelectFolder: Story = {
     const canvas = within(canvasElement);
     await userEvent.click(await canvas.findByTestId("open-button"));
     await waitFor(async () => {
-      await userEvent.click(
-        canvas.getByRole("button", { name: "디자인 영감" }),
-      );
+      const linkBook = canvas.queryByText("디자인 영감");
+      expect(linkBook).toBeInTheDocument();
+      await userEvent.click(linkBook!);
     });
 
     expect(canvas.getByTestId("selected")).toHaveTextContent("디자인 영감");

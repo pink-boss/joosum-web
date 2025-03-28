@@ -9,6 +9,7 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 import { MutateLinkBookDialog } from "@/components/dialog/dynamic";
 import { http, HttpResponse } from "msw";
 import { mockRespone } from "@/stories/mocks/linkBook.mocks";
+import { ToastProvider } from "@/components/notification/ToastProvider";
 
 const meta = {
   title: "Component/Drawer/Link/Save",
@@ -19,10 +20,10 @@ const meta = {
       useOpenDrawerStore.setState({ isLinkSaveDrawerOpen: true });
     }, []);
     return (
-      <>
-        {isMutateLinkBookOpen && <MutateLinkBookDialog />}
+      <ToastProvider>
         <Story />
-      </>
+        {isMutateLinkBookOpen && <MutateLinkBookDialog />}
+      </ToastProvider>
     );
   },
   parameters: {

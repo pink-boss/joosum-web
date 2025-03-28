@@ -1,14 +1,27 @@
-import * as test from "@storybook/test";
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, waitFor, within } from "@storybook/test";
+import {
+  expect,
+  screen,
+  spyOn,
+  userEvent,
+  waitFor,
+  within,
+} from "@storybook/test";
 
 import { http, HttpResponse } from "msw";
 
 import LinkList from "@/app/link-book/[title]/LinkList";
 import { ReassignLinkBookDialog } from "@/app/link-book/dialog/dynamic";
 import { DeleteLinkDialog } from "@/components/dialog/dynamic";
-import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
-import { LinkSortState } from "@/store/useLinkSortStore";
+import {
+  defaultValues as filterDefaultValues,
+  useLinkFilterStore,
+} from "@/store/useLinkFilterStore";
+import {
+  defaultValues as sortDefaultValues,
+  LinkSortState,
+  useLinkSortStore,
+} from "@/store/useLinkSortStore";
 
 import { mockLinks } from "../../../mocks/link.mocks";
 import { mockLinkBooks } from "../../../mocks/linkBook.mocks";
@@ -60,8 +73,10 @@ const testMeta = {
     },
   },
   beforeEach: () => {
-    useLinkFilterStore.setState(defaultValues);
+    useLinkFilterStore.setState(filterDefaultValues);
+    useLinkSortStore.setState(sortDefaultValues);
     queryClient.clear();
+    capturedRequest = null;
   },
 } satisfies Meta<typeof LinkList>;
 
@@ -124,14 +139,13 @@ const testRequestURI = async ({
   );
 
   await waitFor(async () => {
-    if (capturedRequest) {
-      const url = new URL(capturedRequest.url);
-      expect(url.pathname).toBe(
-        `/api/link-books/${mockLinkBooks[2].linkBookId}/links`,
-      );
-      expect(url.searchParams.get("sort")).toBe(sort);
-      expect(url.searchParams.get("order")).toBe(orderBy);
-    }
+    expect(capturedRequest).not.toBeNull();
+    const url = new URL(capturedRequest!.url);
+    expect(url.pathname).toBe(
+      `/api/link-books/${mockLinkBooks[2].linkBookId}/links`,
+    );
+    expect(url.searchParams.get("sort")).toBe(sort);
+    expect(url.searchParams.get("order")).toBe(orderBy);
   });
 
   capturedRequest = null;
@@ -251,7 +265,7 @@ let invalidateQuerySpy: any;
 export const TestReassignLinkBook: Story = {
   args: { defaultEditMode: true },
   decorators: (Story) => {
-    invalidateQuerySpy = test.spyOn(queryClient, "invalidateQueries");
+    invalidateQuerySpy = spyOn(queryClient, "invalidateQueries");
     return (
       <>
         <Story />
@@ -273,14 +287,15 @@ export const TestReassignLinkBook: Story = {
     });
 
     await waitFor(async function HanldeReassignLinkBooks() {
-      const dialog = within(canvas.queryByRole("dialog")!);
-      await userEvent.click(dialog.getByTestId("open-button"));
-      const linkBook = dialog.queryByRole("button", {
-        name: mockLinkBooks[4].title,
-      });
+      const dialog = canvas.queryByRole("dialog");
+      expect(dialog).toBeInTheDocument();
+      await userEvent.click(within(dialog!).getByTestId("open-button"));
+      const linkBook = within(dialog!).queryByText(mockLinkBooks[4].title);
       expect(linkBook).toBeInTheDocument();
       await userEvent.click(linkBook!);
-      await userEvent.click(dialog.getByRole("button", { name: "이동" }));
+      await userEvent.click(
+        within(dialog!).getByRole("button", { name: "이동" }),
+      );
     });
 
     await waitFor(async function VerifyChanges() {

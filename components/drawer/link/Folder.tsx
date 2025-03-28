@@ -1,6 +1,5 @@
 import { SelectLinkBook } from "@/app/link-book/dialog/dynamic";
 import { Button } from "@/app/my-folder/CreateDialogButton";
-import { useLinkInputStore } from "@/store/useLinkInputStore";
 import { LinkBook } from "@/types/linkBook.types";
 import Image from "next/image";
 

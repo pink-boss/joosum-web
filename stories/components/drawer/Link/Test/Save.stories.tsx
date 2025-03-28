@@ -6,7 +6,7 @@ import { queryClient } from "@/stories/mocks/store.mocks";
 import { http, HttpResponse } from "msw";
 import { CreateFormState } from "@/types/link.types";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
-import { expect, userEvent, waitFor, within } from "@storybook/test";
+import { expect, screen, userEvent, waitFor, within } from "@storybook/test";
 import OpenLinkSaveDrawerButton from "@/components/drawer/link/OpenSaveDrawerButton";
 
 let capturedRequest: {
@@ -25,7 +25,6 @@ const testMeta = {
         http.post("/api/links/thumbnail", async ({ request }) => {
           capturedRequest.getThumbnail = request.clone();
           const { url } = (await request.json()) as { url: string };
-          console.log("msw: " + url);
           return HttpResponse.json({
             thumbnailURL: "https://nextjs.org/static/twitter-cards/home.jpg",
             title: "Next JS",
@@ -183,4 +182,68 @@ export const TestClearTitleOnLinkUpdate: Story = {
   },
 };
 
-// TODO: submit 제대로 되는지
+export const TestSubmit: Story = {
+  args: {
+    _defaultValues: {
+      url: "",
+      title: "",
+      linkBookId: "",
+      tags: [],
+      thumbnailURL: "",
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("url", async () => {
+      const linkInput = await canvas.findByTestId("url");
+      await userEvent.type(linkInput, "https://nextjs.org{Enter}");
+    });
+
+    await step("title", async () => {
+      await waitFor(async () => {
+        expect(canvas.getByTestId("title")).toHaveValue("Next JS");
+      });
+    });
+
+    await step("linkBook", async () => {
+      await waitFor(async () => {
+        const linkBookSelector = canvas.queryByTestId("link-book-selector");
+        expect(linkBookSelector).not.toBeNull();
+        await userEvent.click(
+          linkBookSelector!.firstElementChild as HTMLElement,
+        );
+        const linkBookList = within(
+          linkBookSelector!.lastElementChild as HTMLElement,
+        ).queryByRole("list");
+        expect(linkBookList).not.toBeNull();
+        const linkBook = await within(linkBookList!).findByText(
+          "주간 독서 목록",
+        );
+        await userEvent.click(linkBook);
+      });
+    });
+
+    await step("tags", async () => {
+      await step("tags", async () => {
+        const tagInput = await canvas.findByTestId("tag-input"); // 🔥 findBy는 기다려줌
+        await userEvent.type(tagInput, "frontend framework{Enter}");
+      });
+    });
+
+    await step("submit", async () => {
+      await expect(canvas.queryByRole("dialog")).toBeInTheDocument();
+      await userEvent.click(canvas.getByRole("button", { name: "저장" }));
+    });
+
+    await step("feedback", async () => {
+      await waitFor(async function OpenToast() {
+        const toastPopup = screen.queryByRole("alertdialog");
+        expect(toastPopup).toBeInTheDocument();
+        expect(
+          within(toastPopup!).getByText("링크가 저장되었습니다."),
+        ).toBeInTheDocument();
+      });
+    });
+  },
+};

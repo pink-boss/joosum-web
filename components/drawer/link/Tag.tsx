@@ -1,7 +1,7 @@
 import { toast } from "@/components/notification/toast";
 import { useLinkInputStore } from "@/store/useLinkInputStore";
 import clsx from "clsx";
-import { MouseEvent as ReactMouseEvent } from "react";
+import { KeyboardEvent, MouseEvent as ReactMouseEvent } from "react";
 
 import { ReactNode, useEffect, useRef, useState } from "react";
 
@@ -28,8 +28,9 @@ export default function Tag({ tags, setTags, disabled }: InputProps) {
     }
   };
 
-  const handleTypeInput = (value: string) => {
-    if (["Enter", " "].includes(value)) {
+  const handleTypeInput = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (["Enter", " "].includes(e.key)) {
+      e.preventDefault();
       handleSubmit();
     }
   };
@@ -96,7 +97,7 @@ export default function Tag({ tags, setTags, disabled }: InputProps) {
               autoFocus
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyUp={(e) => handleTypeInput(e.key)}
+              onKeyUp={(e) => handleTypeInput(e)}
               placeholder={!tags.length ? "태그를 추가해보세요." : undefined}
               onFocus={() => setIsActive(true)}
               onBlur={() => setIsActive(false)}
