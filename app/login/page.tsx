@@ -16,7 +16,7 @@ export default function Login() {
 
       <div className="flex w-[335px] flex-col gap-4">
         <AppleOAuthHandler />
-        {/* <GoogleOAuthHandler /> */}
+        <GoogleOAuthHandler />
       </div>
 
       {/* <button>카카오로 시작하기</button> */}

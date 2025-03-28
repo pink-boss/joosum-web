@@ -4,7 +4,6 @@ import type { NextRequest } from "next/server";
 import { defaultPath, protectedPaths, publicOnlyPaths } from "./utils/path";
 
 export function middleware(request: NextRequest) {
-  const accessToken = request.cookies.get("accessToken"); // TODO: 서버에도 로그인되어 있는지 확인
   const { pathname } = request.nextUrl;
 
   // 특정 경로는 미들웨어 처리에서 제외
@@ -22,6 +21,8 @@ export function middleware(request: NextRequest) {
     pathname.startsWith(path),
   );
   const isPublicOnlyPath = publicOnlyPaths.includes(pathname);
+
+  const accessToken = request.cookies.get("accessToken");
 
   // 로그인 상태에 따른 리다이렉션
   if (accessToken) {
