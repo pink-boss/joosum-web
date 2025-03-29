@@ -28,3 +28,14 @@ export type CreateFormState = Partial<Omit<MutateLink, "tags">> &
   Pick<MutateLink, "tags">;
 
 export type UpdateFormState = MutateLink;
+
+export type SaveLink = Pick<
+  Link,
+  "linkBookId" | "tags" | "thumbnailURL" | "title" | "url"
+>;
+
+export type SaveFormState = Partial<Omit<SaveLink, "tags">> &
+  Pick<SaveLink, "tags">;
+
+export type TQueryThumbnailArgs = Pick<Link, "url">;
+export type TQueryThumbnail = Pick<Link, "thumbnailURL" | "title" | "url">;

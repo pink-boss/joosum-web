@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
 
 import DeleteFolderDialog from "@/app/my-folder/DeleteDialog";
@@ -7,8 +6,6 @@ import MutateDialog from "@/app/my-folder/mutate/MutateDialog";
 import Page from "@/app/my-folder/page";
 
 import { mockRespone } from "../../mocks/linkBook.mocks";
-
-const queryClient = new QueryClient();
 
 const meta = {
   title: "Page/MyFolder/Page",
@@ -21,12 +18,11 @@ const meta = {
     },
   },
   decorators: (Story) => (
-    <QueryClientProvider client={queryClient}>
+    <>
       <Story />
-      <div id="modal-root" />
       <MutateDialog />
       <DeleteFolderDialog />
-    </QueryClientProvider>
+    </>
   ),
 } satisfies Meta<typeof Page>;
 

@@ -10,11 +10,10 @@ import { usePathname } from "next/navigation";
 import DynamicOpenDialogs from "@/components/dialog/DynamicOpenDialogs";
 import Sidebar from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
-import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { publicOnlyPaths } from "@/utils/path";
 
-import { MutateLinkDrawer } from "./link-book/drawer/dynamic";
-import { UserDrawer } from "@/components/drawer/dynamic";
+import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
+import { ToastProvider } from "@/components/notification/ToastProvider";
 
 const queryClient = new QueryClient();
 
@@ -33,8 +32,6 @@ export default function RootLayout({
   const pathname = usePathname();
   const isPublicOnlyPath = publicOnlyPaths.includes(pathname);
 
-  const { isLinkDrawerOpen, isUserDrawerOpen } = useOpenDrawerStore();
-
   return (
     <html lang="ko">
       <head>
@@ -50,17 +47,18 @@ export default function RootLayout({
           <Component className="justify-center">{children}</Component>
         ) : (
           <QueryClientProvider client={queryClient}>
-            <Sidebar>
-              <Component>
-                <Topbar />
-                {children}
-                <div id="drawer-root" />
-                <div id="modal-root" />
-                {isLinkDrawerOpen && <MutateLinkDrawer />}
-                {isUserDrawerOpen && <UserDrawer />}
-                <DynamicOpenDialogs />
-              </Component>
-            </Sidebar>
+            <ToastProvider>
+              <Sidebar>
+                <Component>
+                  <Topbar />
+                  {children}
+                  <div id="drawer-root" />
+                  <div id="modal-root" />
+                  <DynamicOpenDrawers />
+                  <DynamicOpenDialogs />
+                </Component>
+              </Sidebar>
+            </ToastProvider>
             <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         )}

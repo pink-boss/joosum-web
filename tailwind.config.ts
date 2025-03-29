@@ -13,7 +13,10 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
+          200: "#DFD9FF",
+          400: "#6B5FDE",
           500: "#392A95",
+          600: "#2E2277",
           lavender: "#DFD9FF",
         },
         secondary: "#6B5FDE",
@@ -28,6 +31,8 @@ const config: Config = {
           dim: "#6C6C6C",
         },
         paperabovebg: "#5242BF",
+        inputactivebg: "#EFECFF",
+        error: "#E34C4B",
       },
       fontFamily: {
         pretendard: ["var(--font-pretendard)"],

@@ -51,7 +51,7 @@ export default function LinkCard({ link }: InputProps) {
       <div className="flex min-w-0 grow flex-col">
         <div className="truncate text-lg font-bold">{link.title}</div>
         <div className="truncate text-gray-ink">
-          {link.tags.reduce((result, tag) => result + ` #${tag}`, "")}
+          {link.tags?.reduce((result, tag) => result + ` #${tag}`, "")}
         </div>
         <div className="mt-auto flex gap-1 text-gray-dim">
           <div className="flex-none">{link.url}</div>|
