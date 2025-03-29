@@ -14,50 +14,58 @@ export default testMeta;
 type Story = StoryObj<typeof testMeta>;
 
 export const TestPickDate: Story = {
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const selectBox = canvas.getByTestId("open-button");
     await userEvent.click(selectBox);
 
-    // 이전 달 선택
     const today = new Date();
-    await userEvent.click(canvas.getByAltText("month-left"));
-    expect(canvas.getByText(`${today.getFullYear()}년 ${today.getMonth()}월`));
 
-    // 27 ~ 다음 달 1일 선택
-    const start = "11";
-    const end = "19";
-    waitFor(async () => {
-      await userEvent.click(canvas.getByText(start));
+    await step("이전 달 선택", async () => {
+      await userEvent.click(canvas.getByAltText("month-left"));
+      expect(
+        canvas.getByText(`${today.getFullYear()}년 ${today.getMonth()}월`),
+      );
     });
-    await userEvent.click(canvas.getByText(end));
-    const prevMonth = new Date();
-    prevMonth.setMonth(today.getMonth() - 1);
-    const year = prevMonth.getFullYear();
-    const month = `${prevMonth.getMonth() + 1}`.padStart(2, "0");
-    expect(selectBox).toHaveTextContent(
-      `${year}. ${month}. ${start} ~ ${year}. ${month}. ${end}`,
-    );
 
-    // 초기화 버튼 선택
-    await userEvent.click(canvas.getByText("초기화"));
-    expect(selectBox.textContent).toBe("");
+    await step("27 ~ 다음 달 1일 선택", async () => {
+      const start = "11";
+      const end = "19";
+      waitFor(async () => {
+        await userEvent.click(canvas.getByText(start));
+      });
+      await userEvent.click(canvas.getByText(end));
+      const prevMonth = new Date();
+      prevMonth.setMonth(today.getMonth() - 1);
+      const year = prevMonth.getFullYear();
+      const month = `${prevMonth.getMonth()}`.padStart(2, "0");
+      expect(selectBox).toHaveTextContent(
+        `${year}. ${month}. ${start} ~ ${year}. ${month}. ${end}`,
+      );
+    });
 
-    // 전 주 버튼 선택
-    await userEvent.click(canvas.getByText("최근 1주"));
-    const aWeekAgo = new Date();
-    aWeekAgo.setDate(today.getDate() - 7);
-    expect(selectBox).toHaveTextContent(
-      `${dateFormatter(aWeekAgo, "numeric")} ~ ${dateFormatter(today, "numeric")}`,
-    );
+    await step("초기화 버튼 선택", async () => {
+      await userEvent.click(canvas.getByText("초기화"));
+      expect(selectBox.textContent).toBe("");
+    });
 
-    // 3개월 전 버튼 선택
-    await userEvent.click(canvas.getByText("최근 3개월"));
-    const threeMonthAgo = new Date();
-    threeMonthAgo.setMonth(today.getMonth() - 3);
-    expect(selectBox).toHaveTextContent(
-      `${dateFormatter(threeMonthAgo, "numeric")} ~ ${dateFormatter(today, "numeric")}`,
-    );
+    await step("전 주 버튼 선택", async () => {
+      await userEvent.click(canvas.getByText("최근 1주"));
+      const aWeekAgo = new Date();
+      aWeekAgo.setDate(today.getDate() - 7);
+      expect(selectBox).toHaveTextContent(
+        `${dateFormatter(aWeekAgo, "numeric")} ~ ${dateFormatter(today, "numeric")}`,
+      );
+    });
+
+    await step("3개월 전 버튼 선택", async () => {
+      await userEvent.click(canvas.getByText("최근 3개월"));
+      const threeMonthAgo = new Date();
+      threeMonthAgo.setMonth(today.getMonth() - 3);
+      expect(selectBox).toHaveTextContent(
+        `${dateFormatter(threeMonthAgo, "numeric")} ~ ${dateFormatter(today, "numeric")}`,
+      );
+    });
   },
 };
 

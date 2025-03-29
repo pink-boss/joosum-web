@@ -19,6 +19,7 @@ import Buttons from "./Buttons";
 import Image from "next/image";
 import OpenShareButton from "@/app/link-book/OpenShareButton";
 import TitleInput from "./TitleInput";
+import LinkInput from "./LinkInput";
 
 type ToastDefaultValues = {
   isOpen: boolean;
@@ -111,42 +112,43 @@ export default function MutateLinkDrawer() {
           }
           right={<OpenShareButton link={link} />}
         />
-        <div className="flex flex-col gap-4 px-10">
-          <div className="relative h-[260px] w-[414px] flex-none">
+        <div className="flex flex-col gap-6 px-10">
+          <div className="relative w-[414px] flex-none">
             <ImageWithFallback
               src={link.thumbnailURL}
               alt="thumbnail"
               unoptimized
             />
           </div>
-          <div>
-            <div className="flex flex-col gap-6">
-              <TitleInput
-                value={formState.title}
-                setValue={(value) => {
-                  setFormState((prev) => ({
-                    ...prev,
-                    title: value,
-                  }));
-                }}
-              />
-              <Folder
-                linkBookId={formState.linkBookId}
-                setLinkBookId={(linkBookName, linkBookId) =>
-                  setFormState((prev) => ({
-                    ...prev,
-                    linkBookName,
-                    linkBookId,
-                  }))
-                }
-                disabled={false}
-              />
-              <Tag
-                tags={formState.tags}
-                setTags={(tags) => setFormState((prev) => ({ ...prev, tags }))}
-              />
-            </div>
-          </div>
+          <LinkInput
+            value={formState.url}
+            setFormState={setFormState}
+            disabled={true}
+          />
+          <TitleInput
+            value={formState.title}
+            setValue={(value) => {
+              setFormState((prev) => ({
+                ...prev,
+                title: value,
+              }));
+            }}
+          />
+          <Folder
+            linkBookId={formState.linkBookId}
+            setLinkBookId={(linkBookName, linkBookId) =>
+              setFormState((prev) => ({
+                ...prev,
+                linkBookName,
+                linkBookId,
+              }))
+            }
+            disabled={false}
+          />
+          <Tag
+            tags={formState.tags}
+            setTags={(tags) => setFormState((prev) => ({ ...prev, tags }))}
+          />
           <div className="mt-10 flex gap-1 text-xs text-gray-slate">
             <span>{krDateFormatter(link.createdAt)}에 주섬주섬</span>
             <span>|</span>

@@ -28,6 +28,7 @@ export default function FormItem({
         className={clsx(
           "mt-1 h-[48px] w-full p-3",
           "rounded-lg border border-gray-ghost bg-gray-ghost",
+          inputProps?.disabled && "text-gray-slate",
         )}
         {...inputProps}
       />

@@ -31,6 +31,7 @@ export const TestSelectFolder: Story = {
   },
 };
 
+// TODO: 새 폴더로 생성한 폴더 자동으로 선택되게
 export const TestAddFolder: Story = {
   parameters: {
     msw: {

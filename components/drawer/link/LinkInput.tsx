@@ -16,11 +16,13 @@ type InputProps = {
   value?: string;
   titleInput?: HTMLInputElement | null;
   setFormState: Dispatch<SetStateAction<SaveFormState>>;
+  disabled?: boolean;
 };
 export default function LinkInput({
   value,
   titleInput,
   setFormState,
+  disabled,
 }: InputProps) {
   const queryThumbnail = useQueryThumbnail();
   const { setIsValid } = useLinkInputStore();
@@ -75,6 +77,7 @@ export default function LinkInput({
         required: true,
         type: "url",
         autoFocus: !value,
+        disabled: disabled,
         onBlur: (e) => handleValidURL(e.currentTarget),
         onKeyDown: handlePressKey,
         onChange: handleChangeValue,

@@ -93,30 +93,44 @@ export const TestOpenCloseDrawer: Story = {
 };
 
 export const TestRenderFormData: Story = {
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      expect(
-        canvas
-          .queryByAltText("thumbnail")
-          ?.getAttribute("src")
-          ?.startsWith(mockLink.thumbnailURL),
-      ).toBeTruthy();
+      await step("thumbnail", () => {
+        expect(
+          canvas
+            .queryByAltText("thumbnail")
+            ?.getAttribute("src")
+            ?.startsWith(mockLink.thumbnailURL),
+        ).toBeTruthy();
+      });
 
-      expect(canvas.getByDisplayValue(mockLink.title)).toBeInTheDocument();
+      await step("url", () => {
+        const linkInput = canvas.getByDisplayValue(mockLink.url);
+        expect(linkInput).toBeInTheDocument();
+        expect(linkInput).toHaveProperty("disabled", true);
+      });
 
-      expect(
-        within(canvas.getByTestId("link-book-selector")).getByText(
-          mockLink.linkBookName,
-        ),
-      ).toBeInTheDocument();
+      await step("title", () => {
+        expect(canvas.getByDisplayValue(mockLink.title)).toBeInTheDocument();
+      });
 
-      const tagInput = within(canvas.getByTestId("tags-input"));
-      expect(tagInput.getAllByRole("listitem").length).toBe(3);
-      for (const tag of mockLink.tags) {
-        expect(canvas.getByText(tag)).toBeInTheDocument();
-      }
+      await step("folder", () => {
+        expect(
+          within(canvas.getByTestId("open-button")).getByText(
+            mockLink.linkBookName,
+          ),
+        ).toBeInTheDocument();
+      });
+
+      await step("tags", () => {
+        const tagInput = within(canvas.getByTestId("tags-input"));
+        expect(tagInput.getAllByRole("listitem").length).toBe(3);
+        for (const tag of mockLink.tags) {
+          expect(canvas.getByText(tag)).toBeInTheDocument();
+        }
+      });
     });
   },
 };
