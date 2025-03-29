@@ -93,6 +93,7 @@ export const TestUpdateTag: Story = {
 
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    const tagList = within(await canvas.findByTestId("tag-list"));
 
     // 엔터키
     const targetForEnterKey = await canvas.findByText("생산성");
@@ -107,7 +108,7 @@ export const TestUpdateTag: Story = {
 
     await verifyTestAPI(capturedRequest, `/api/settings/tags`, "POST");
 
-    expect(canvas.getByText("맛집")).toBeTruthy();
+    expect(await tagList.findByText("맛집")).toBeTruthy();
     capturedRequest = null;
 
     // 스페이스바
@@ -124,7 +125,7 @@ export const TestUpdateTag: Story = {
 
     await verifyTestAPI(capturedRequest, `/api/settings/tags`, "POST");
 
-    expect(canvas.getByText("견문")).toBeTruthy();
+    expect(await tagList.findByText("견문")).toBeTruthy();
     capturedRequest = null;
   },
 };

@@ -23,9 +23,6 @@ import { mockLink, mockLinks } from "@/stories/mocks/link.mocks";
 import { mockLinkBooks } from "@/stories/mocks/linkBook.mocks";
 import { queryClient } from "@/stories/mocks/store.mocks";
 
-// TODO: 코드 정리
-// TODO: 태그 추가 부분 점검
-
 let capturedRequest: {
   updateLink?: Request;
   updateLinkBook?: Request;
@@ -184,24 +181,26 @@ export const TestUpdateLink: Story = {
     await userEvent.click(canvas.getByText("수정"));
 
     await step("request 확인", async () => {
-      if (capturedRequest.updateLink) {
-        const url = new URL(capturedRequest.updateLink.url);
-        expect(url.pathname).toBe(`/api/links/${mockLink.linkId}`);
-        if (!capturedRequest.updateLink.bodyUsed) {
-          const body = await capturedRequest.updateLink.json();
-          expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
-          expect(body.title).toBe(NEW_TITLE);
-          expect(body.linkBookId).toBe(NEW_FOLDER_ID);
-          expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
-        } else expect(null).toBe("이미 사용된 bodyUsed");
-      } else expect(null).toBe("updateLink request X");
+      await waitFor(() => {
+        expect(capturedRequest.updateLink).not.toBeNull();
+      });
+      const linkUrl = new URL(capturedRequest.updateLink!.url);
+      expect(linkUrl.pathname).toBe(`/api/links/${mockLink.linkId}`);
+      if (!capturedRequest.updateLink!.bodyUsed) {
+        const body = await capturedRequest.updateLink!.json();
+        expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
+        expect(body.title).toBe(NEW_TITLE);
+        expect(body.linkBookId).toBe(NEW_FOLDER_ID);
+        expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
+      } else expect(null).toBe("이미 사용된 bodyUsed");
 
-      if (capturedRequest.updateLinkBook) {
-        const url = new URL(capturedRequest.updateLinkBook.url);
-        expect(url.pathname).toBe(
-          `/api/links/${mockLink.linkId}/link-book-id/${NEW_FOLDER_ID}`,
-        );
-      } else expect(null).toBe("updateLinkBook request X");
+      await waitFor(() => {
+        expect(capturedRequest.updateLinkBook).not.toBeNull();
+      });
+      const linkBookUrl = new URL(capturedRequest.updateLinkBook!.url);
+      expect(linkBookUrl.pathname).toBe(
+        `/api/links/${mockLink.linkId}/link-book-id/${NEW_FOLDER_ID}`,
+      );
     });
 
     await step("feedback", async () => {
@@ -214,44 +213,41 @@ export const TestUpdateLink: Story = {
       });
     });
 
-    // 링크 리스트 캐시 확인
     expect(invalidateQuerySpy).toHaveBeenCalled();
   },
 };
 
 export const TestDeleteLink: Story = {
-  play: async ({ canvasElement }) => {
-    const queryKey = getLinkListQueryKey(mockLink.linkBookId);
-    queryClient.setQueryData(queryKey, () =>
+  beforeEach: () => {
+    queryClient.setQueryData(getLinkListQueryKey(mockLink.linkBookId), () =>
       mockLinks.filter((link) => link.linkBookId === mockLink.linkBookId),
     );
-
+  },
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      await userEvent.click(canvas.getByRole("button", { name: "삭제" }));
+    await userEvent.click(await canvas.findByRole("button", { name: "삭제" }));
+
+    const dialog = await canvas.findByTestId("delete-dialog");
+    await userEvent.click(within(dialog).getByText("삭제"));
+
+    await step("request 확인", () => {
+      if (capturedRequest.deleteLink) {
+        const url = new URL(capturedRequest.deleteLink.url);
+        expect(url.pathname).toBe(`/api/links/${mockLink.linkId}`);
+        expect(capturedRequest.deleteLink.method).toBe("DELETE");
+      }
     });
 
-    await waitFor(async () => {
-      const dialog = canvas.getByTestId("delete-dialog");
-      await userEvent.click(within(dialog).getByText("삭제"));
+    await step("cache 업데이트 확인", () => {
+      const links = queryClient.getQueryData(
+        getLinkListQueryKey(mockLink.linkBookId),
+      ) as Link[];
+      const deleteLink = links.find((link) => link.linkId === mockLink.linkId);
+      expect(deleteLink).toBeUndefined();
     });
 
-    // request
-    if (capturedRequest.deleteLink) {
-      const url = new URL(capturedRequest.deleteLink.url);
-      expect(url.pathname).toBe(`/api/links/${mockLink.linkId}`);
-      expect(capturedRequest.deleteLink.method).toBe("DELETE");
-    }
-
-    // update cache
-    const links = queryClient.getQueryData(queryKey) as Link[];
-    const deleteLink = links.find((link) => link.linkId === mockLink.linkId);
-    expect(deleteLink).toBeUndefined();
-
-    // close drawer
-    const deleteDialog = canvas.queryByTestId("dialog");
-    expect(deleteDialog).toBeNull();
+    expect(dialog).not.toBeInTheDocument();
   },
 };
 
@@ -271,22 +267,20 @@ export const TestShareLink: Story = {
     queryClient.setQueryData(getLinkListQueryKey(), () => mockLinks);
     return <Story />;
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await waitFor(async () => {
-      await userEvent.click(canvas.getByAltText("share"));
-    });
+    await userEvent.click(await canvas.findByAltText("share"));
 
-    // 링크 복사
-    await waitFor(async () => {
-      await userEvent.click(canvas.getByAltText("copy-link"));
-      expect(mockClipboard.writeText).toHaveBeenCalledWith(mockLinks[0].url);
+    await step("링크 복사", async () => {
+      await waitFor(async () => {
+        await userEvent.click(canvas.getByAltText("copy-link"));
+        expect(mockClipboard.writeText).toHaveBeenCalledWith(mockLinks[0].url);
+      });
     });
 
     // TODO: 카카오톡
 
-    // 닫기
     await userEvent.click(canvas.getByRole("button", { name: "취소" }));
   },
 };
