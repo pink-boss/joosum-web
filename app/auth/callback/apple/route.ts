@@ -29,15 +29,15 @@ export async function POST(request: NextRequest) {
     let data = await response.json();
 
     // 데이터 없으면 회원가입(온보딩)
-    if (!data.accessToken) {
-      cookies().set("idToken", idToken, {
-        httpOnly: true,
-        maxAge: 60 * 10, // 10분
-        secure: true,
-      });
+    // if (!data.accessToken) {
+    //   (await cookies()).set("idToken", idToken, {
+    //     httpOnly: true,
+    //     maxAge: 60 * 10, // 10분
+    //     secure: true,
+    //   });
 
-      return redirect("/onboarding");
-    }
+    //   return redirect("/onboarding");
+    // }
 
     // 결과 받아서 세션이나 쿠키에 저장
     cookies().set({

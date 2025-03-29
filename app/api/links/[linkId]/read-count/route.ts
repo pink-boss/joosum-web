@@ -6,8 +6,9 @@ export async function GET(
   request: NextRequest,
   context: { params: { linkId: string } },
 ) {
+  const { linkId } = context.params;
   return serverApi({
-    path: `api/links/${context.params.linkId}/read-count`,
+    path: `api/links/${linkId}/read-count`,
     method: "PUT",
   });
 }

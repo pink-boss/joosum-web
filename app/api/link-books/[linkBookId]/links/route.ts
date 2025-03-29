@@ -8,7 +8,7 @@ export async function GET(
 ) {
   const searchParams = request.nextUrl.searchParams;
   const queryString = `sort=${searchParams.get("sort")}&order=${searchParams.get("order")}`;
-  const linkBookId = context.params.linkBookId;
+  const { linkBookId } = context.params;
 
   return serverApi({
     path: `api/link-books/${linkBookId}/links`,

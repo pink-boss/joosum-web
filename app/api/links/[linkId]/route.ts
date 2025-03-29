@@ -7,8 +7,9 @@ export async function PUT(
   context: { params: { linkId: string } },
 ) {
   const body = await request.json();
+  const { linkId } = context.params;
   return serverApi({
-    path: `api/links/${context.params.linkId}`,
+    path: `api/links/${linkId}`,
     method: "PUT",
     body,
   });
@@ -18,8 +19,9 @@ export async function DELETE(
   request: NextRequest,
   context: { params: { linkId: string } },
 ) {
+  const { linkId } = context.params;
   return serverApi({
-    path: `api/links/${context.params.linkId}`,
+    path: `api/links/${linkId}`,
     method: "DELETE",
   });
 }
