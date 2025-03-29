@@ -158,17 +158,7 @@ export default function MutateLinkDrawer() {
           </div>
         </div>
       </div>
-      <div className="mt-auto flex flex-col gap-5 px-10">
-        {toast.isOpen && (
-          <div
-            data-testid="feedback-toast"
-            className="rounded-lg bg-primary-lavender py-[10px] text-center text-sm font-semibold text-white"
-            style={{ backgroundColor: toast.bgColor, color: toast.textColor }}
-          >
-            {toast.message}
-          </div>
-        )}
-
+      <div className="mt-auto px-10">
         <Buttons
           title={formState.title}
           closeBtnName="삭제"

@@ -70,7 +70,6 @@ export const TestUncheckTags: Story = {
     expect(canvas.getByText("2/10"));
 
     // 선택된 태그 1개 제거
-
     await userEvent.click(checkboxes[4].firstElementChild as HTMLElement);
     expect(selectedTags.queryByText(mockTags[4])).toBeNull();
     expect(canvas.getByText("1/10"));

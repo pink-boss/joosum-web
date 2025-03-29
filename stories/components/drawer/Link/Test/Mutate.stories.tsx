@@ -1,5 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn, spyOn, userEvent, waitFor, within } from "@storybook/test";
+import {
+  expect,
+  fn,
+  screen,
+  spyOn,
+  userEvent,
+  waitFor,
+  within,
+} from "@storybook/test";
 import { http, HttpResponse } from "msw";
 
 import DrawerButton from "@/app/link-book/[title]/DrawerButton";
@@ -164,44 +172,46 @@ export const TestUpdateLink: Story = {
       await userEvent.click(folderSelector.firstElementChild as HTMLElement);
       await userEvent.click(within(folderSelector).getByText(NEW_FOLDER_NAME));
     });
-    // tag 수정
-    // await waitFor(async () => {
-    //   await userEvent.click(canvas.getByTestId("edit-tags-button"));
-    // });
 
-    // await waitFor(async () => {
-    //   const tagSelector = within(canvas.getByTestId("tag-selector"));
-    //   await userEvent.click(tagSelector.getByTestId("open-button"));
-    //   await userEvent.click(tagSelector.getByText(NEW_TAG));
-    // });
+    await step("tag 수정", async () => {
+      const tagsInput = within(canvas.getByTestId("tags-input"));
+      await userEvent.type(tagsInput.getByRole("textbox"), `${NEW_TAG}{Enter}`);
+      expect(
+        within(tagsInput.getByRole("list")).getByText(NEW_TAG),
+      ).toBeInTheDocument();
+    });
 
     await userEvent.click(canvas.getByText("수정"));
 
-    // request 확인
-    if (capturedRequest.updateLink) {
-      const url = new URL(capturedRequest.updateLink.url);
-      expect(url.pathname).toBe(`/api/links/${mockLink.linkId}`);
-      if (!capturedRequest.updateLink.bodyUsed) {
-        const body = await capturedRequest.updateLink.json();
-        expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
-        expect(body.title).toBe(NEW_TITLE);
-        expect(body.linkBookId).toBe(NEW_FOLDER_ID);
-        // expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
-      } else expect(null).toBe("이미 사용된 bodyUsed");
-    } else expect(null).toBe("updateLink request X");
+    await step("request 확인", async () => {
+      if (capturedRequest.updateLink) {
+        const url = new URL(capturedRequest.updateLink.url);
+        expect(url.pathname).toBe(`/api/links/${mockLink.linkId}`);
+        if (!capturedRequest.updateLink.bodyUsed) {
+          const body = await capturedRequest.updateLink.json();
+          expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
+          expect(body.title).toBe(NEW_TITLE);
+          expect(body.linkBookId).toBe(NEW_FOLDER_ID);
+          expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
+        } else expect(null).toBe("이미 사용된 bodyUsed");
+      } else expect(null).toBe("updateLink request X");
 
-    if (capturedRequest.updateLinkBook) {
-      const url = new URL(capturedRequest.updateLinkBook.url);
-      expect(url.pathname).toBe(
-        `/api/links/${mockLink.linkId}/link-book-id/${NEW_FOLDER_ID}`,
-      );
-    } else expect(null).toBe("updateLinkBook request X");
+      if (capturedRequest.updateLinkBook) {
+        const url = new URL(capturedRequest.updateLinkBook.url);
+        expect(url.pathname).toBe(
+          `/api/links/${mockLink.linkId}/link-book-id/${NEW_FOLDER_ID}`,
+        );
+      } else expect(null).toBe("updateLinkBook request X");
+    });
 
-    // toast
-    await waitFor(async () => {
-      const toast = canvas.queryByTestId("feedback-toast");
-      expect(toast).toBeInTheDocument();
-      expect(toast).toHaveTextContent("수정되었습니다.");
+    await step("feedback", async () => {
+      await waitFor(async () => {
+        const toastPopup = screen.queryByRole("alertdialog");
+        expect(toastPopup).toBeInTheDocument();
+        expect(
+          within(toastPopup!).getByText("링크가 저장되었습니다."),
+        ).toBeInTheDocument();
+      });
     });
 
     // 링크 리스트 캐시 확인
