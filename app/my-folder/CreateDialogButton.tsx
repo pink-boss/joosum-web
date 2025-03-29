@@ -10,9 +10,15 @@ type InputProps = {
   children: ReactNode;
   className: string;
   onClickCallback?: () => void;
+  disabled?: boolean;
 };
 
-export function Button({ children, className, onClickCallback }: InputProps) {
+export function Button({
+  children,
+  className,
+  onClickCallback,
+  disabled,
+}: InputProps) {
   const { openMutateLinkBook } = useOpenDialogStore();
   const { clearLinkBook } = useSelectLinkBook();
 
@@ -27,8 +33,10 @@ export function Button({ children, className, onClickCallback }: InputProps) {
   return (
     <button
       data-testid="create-folder-dialog-button"
+      type="button"
       className={className}
       onClick={handleClick}
+      disabled={disabled}
     >
       {children}
     </button>

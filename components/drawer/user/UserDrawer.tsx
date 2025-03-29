@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Image from "next/image";
 
-import Drawer from "@/components/Drawer";
+import Drawer from "@/components/drawer/Drawer";
 
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 

@@ -19,6 +19,14 @@ const DeleteLinkDialog = dynamic(() => import("@/app/link-book/DeleteDialog"), {
   ssr: false,
 });
 
+const DeleteDrawerLinkDialog = dynamic(
+  () => import("@/components/dialog/link/DeleteDrawerLinkDialog"),
+  {
+    loading: () => null,
+    ssr: false,
+  },
+);
+
 const AccountDialog = dynamic(() => import("./auth/AccountDialog"), {
   loading: () => null,
   ssr: false,
@@ -62,6 +70,7 @@ export {
   MutateLinkBookDialog,
   DeleteLinkBookDialog,
   DeleteLinkDialog,
+  DeleteDrawerLinkDialog,
   AccountDialog,
   DeleteAccountDialog,
   LogoutDialog,

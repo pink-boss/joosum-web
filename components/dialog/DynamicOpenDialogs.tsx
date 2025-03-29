@@ -2,12 +2,13 @@ import {
   ReassignLinkBookDialog,
   ShareLinkDialog,
 } from "@/app/link-book/dialog/dynamic";
-import { DeleteDrawerLinkDialog } from "@/app/link-book/drawer/dynamic";
+
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import {
   AccountDialog,
   DeleteAccountDialog,
+  DeleteDrawerLinkDialog,
   DeleteLinkBookDialog,
   DeleteLinkDialog,
   DeleteTagConfirmDialog,
