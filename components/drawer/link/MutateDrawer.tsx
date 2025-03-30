@@ -60,33 +60,14 @@ export default function MutateLinkDrawer() {
     });
   };
 
-  const mutation = useUpdateLink(handleMutateSuccessCallback);
+  const updateLink = useUpdateLink(handleMutateSuccessCallback);
   const handleSubmit = async () => {
-    mutation.mutate(formState as Required<CreateFormState>, {
-      onError: (error: Error) => {
-        setToast({
-          isOpen: true,
-          bgColor: "#fecaca",
-          textColor: "#DC2626",
-          message: error.message,
-        });
-      },
-    });
+    updateLink.mutate(formState as Required<CreateFormState>);
   };
 
   const handleDelete = () => {
     openDeleteDrawerLink(true);
   };
-
-  useEffect(() => {
-    if (toast.isOpen) {
-      const timer = setTimeout(() => {
-        setToast(toastDefaultValues);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [toast.isOpen]);
 
   useEffect(() => {
     setFormState(link ?? defaultValues);
