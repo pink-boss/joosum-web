@@ -1,4 +1,4 @@
-import { Field } from "@/store/useLinkSortStore";
+import { Field } from "@/store/link-sort/useFolderStore";
 
 export const WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 

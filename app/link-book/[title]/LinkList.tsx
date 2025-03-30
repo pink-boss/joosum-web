@@ -9,10 +9,10 @@ import useCheckLink from "@/hooks/link/useCheckLink";
 import { useQueryLinks } from "@/hooks/link/useQueryLinks";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
-import { useLinkSortStore } from "@/store/useLinkSortStore";
 
 import { sortOptions } from "../constants";
 import LinkComponent from "./LinkCard";
+import { LinkSortState } from "@/store/link-sort/schema";
 
 type ButtonInputProps = {
   children: ReactNode;
@@ -38,9 +38,12 @@ function Button({
   );
 }
 
-type InputProps = { defaultEditMode?: boolean };
-export default function LinkList({ defaultEditMode = false }: InputProps) {
-  const linkSort = useLinkSortStore(); // TODO: 검색이랑 폴더 분리
+type InputProps = { defaultEditMode?: boolean; linkSort: LinkSortState };
+
+export default function LinkList({
+  defaultEditMode = false,
+  linkSort,
+}: InputProps) {
   const { unread } = useFolderLinkFilterStore();
 
   const { openDeleteLink, openReassignLinkBook } = useOpenDialogStore();

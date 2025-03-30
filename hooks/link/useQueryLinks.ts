@@ -3,7 +3,7 @@ import { ApiError } from "next/dist/server/api-utils";
 import { useEffect, useMemo } from "react";
 
 import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
-import { useLinkSortStore } from "@/store/useLinkSortStore";
+import { useFolderLinkSortStore } from "@/store/link-sort/useFolderStore";
 import { Link } from "@/types/link.types";
 import { isBetween } from "@/utils/date";
 import { getLinkListQueryKey } from "@/utils/queryKey";
@@ -13,7 +13,7 @@ import useLinkBookFromTitle from "./useLinkBookFromTitle";
 export function useQueryLinks() {
   const linkBook = useLinkBookFromTitle();
 
-  const linkSort = useLinkSortStore();
+  const linkSort = useFolderLinkSortStore();
   const { unread, dateRange, tags } = useFolderLinkFilterStore();
 
   const pathname = linkBook

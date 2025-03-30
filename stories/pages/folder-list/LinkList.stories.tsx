@@ -3,16 +3,25 @@ import { http, HttpResponse } from "msw";
 
 import LinkList from "@/app/link-book/[title]/LinkList";
 import {
-  defaultValues,
+  defaultValues as filterDefaultValues,
   useFolderLinkFilterStore,
 } from "@/store/link-filter/useFolderStore";
 
 import { mockLinks } from "../../mocks/link.mocks";
 import { mockLinkBooks } from "../../mocks/linkBook.mocks";
+import {
+  defaultValues as sortDefaulValues,
+  useFolderLinkSortStore,
+} from "@/store/link-sort/useFolderStore";
+
+const Wrapper = ({ defaultEditMode }: { defaultEditMode?: boolean }) => {
+  const linkSort = useFolderLinkSortStore();
+  return <LinkList defaultEditMode={defaultEditMode} linkSort={linkSort} />;
+};
 
 const meta = {
   title: "Page/FolderList/LinkList",
-  component: LinkList,
+  component: Wrapper,
   parameters: {
     nextjs: {
       navigation: {
@@ -28,9 +37,10 @@ const meta = {
     },
   },
   beforeEach: () => {
-    useFolderLinkFilterStore.setState(defaultValues);
+    useFolderLinkFilterStore.setState(filterDefaultValues);
+    useFolderLinkSortStore.setState(sortDefaulValues);
   },
-} satisfies Meta<typeof LinkList>;
+} satisfies Meta<typeof Wrapper>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

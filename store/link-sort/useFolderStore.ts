@@ -1,24 +1,9 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { defaultValues, LinkSortState } from "./schema";
+export { defaultValues } from "./schema";
 
-export type Field = "lastest" | "oldest" | "title" | "mostViewd";
-type Sort = "created_at" | "title";
-type OrderBy = "asc" | "desc";
-
-export const defaultValues: Omit<LinkSortState, "setField"> = {
-  field: "lastest",
-  sort: "created_at",
-  orderBy: "desc",
-};
-
-export interface LinkSortState {
-  field: Field;
-  sort: Sort;
-  orderBy: OrderBy;
-  setField: (field: Field) => void;
-}
-
-export const useLinkSortStore = create<LinkSortState>()(
+export const useFolderLinkSortStore = create<LinkSortState>()(
   persist(
     (set) => ({
       ...defaultValues,
@@ -33,7 +18,7 @@ export const useLinkSortStore = create<LinkSortState>()(
       },
     }),
     {
-      name: "link-sort-params",
+      name: "folder-link-sort",
       partialize: (state) => ({
         field: state.field,
         sort: state.sort,

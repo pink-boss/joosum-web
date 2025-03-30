@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 
-import DatePicker from "@/app/link-book/[title]/date-picker";
 import { dateFormatter } from "@/utils/date";
 import meta from "../DatePicker.stories";
+import React from "react";
 
 const testMeta = {
   ...meta,
   title: "Page/FolderList/DatePicker",
-} satisfies Meta<typeof DatePicker>;
+} satisfies Meta<typeof React.Component>;
 
 export default testMeta;
 type Story = StoryObj<typeof testMeta>;

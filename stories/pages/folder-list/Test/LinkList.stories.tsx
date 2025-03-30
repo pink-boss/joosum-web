@@ -12,14 +12,15 @@ import {
 } from "@/store/link-filter/useFolderStore";
 import {
   defaultValues as sortDefaultValues,
-  LinkSortState,
-  useLinkSortStore,
-} from "@/store/useLinkSortStore";
+  useFolderLinkSortStore,
+} from "@/store/link-sort/useFolderStore";
 
 import { mockLinks } from "../../../mocks/link.mocks";
 import { mockLinkBooks } from "../../../mocks/linkBook.mocks";
 import { queryClient } from "@/stories/mocks/store.mocks";
 import meta from "../LinkList.stories";
+import React from "react";
+import { LinkSortState } from "@/store/link-sort/schema";
 
 let capturedRequest: Request | null = null;
 
@@ -67,11 +68,11 @@ const testMeta = {
   },
   beforeEach: () => {
     useFolderLinkFilterStore.setState(filterDefaultValues);
-    useLinkSortStore.setState(sortDefaultValues);
+    useFolderLinkSortStore.setState(sortDefaultValues);
     queryClient.clear();
     capturedRequest = null;
   },
-} satisfies Meta<typeof LinkList>;
+} satisfies Meta<typeof React.Component>;
 
 export default testMeta;
 type Story = StoryObj<typeof testMeta>;

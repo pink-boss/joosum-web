@@ -9,12 +9,15 @@ import {
   defaultValues,
   useSearchLinkFilterStore,
 } from "@/store/link-filter/useSearchStore";
+import { useSearchLinkSortStore } from "@/store/link-sort/useSearchStore";
 
 export default function Search() {
   const { title, setTitle } = useSearchBarStore();
   const { isPending, error, data } = useQueryLinkBooks("created_at");
 
   const linkFilter = useSearchLinkFilterStore();
+  const linkSort = useSearchLinkSortStore();
+
   return (
     <div className="flex min-h-0 w-full flex-1 flex-col gap-[25px] px-10">
       <div className="text-[32px] font-extrabold leading-10 text-gray-ink">
@@ -22,7 +25,7 @@ export default function Search() {
       </div>
       <LinkBookFilter linkBookList={data?.linkBooks ?? []} />
       <Filter defaultValues={defaultValues} {...linkFilter} />
-      <LinkList />
+      <LinkList linkSort={linkSort} />
     </div>
   );
 }
