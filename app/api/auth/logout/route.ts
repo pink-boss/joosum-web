@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 import { trimTrailingSlash } from "@/utils/envUri";
+import { logout } from "@/utils/auth/auth";
 
 export async function POST() {
   const token = (await cookies()).get("accessToken");
@@ -22,7 +23,7 @@ export async function POST() {
   );
 
   if (response.ok) {
-    cookies().delete("accessToken");
+    logout();
     return NextResponse.json({ data: "로그아웃 되었습니다." });
   } else {
     return NextResponse.json({ error: "로그아웃에 실패했습니다." });

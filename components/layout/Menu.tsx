@@ -10,19 +10,7 @@ import { useLayoutStore } from "@/store/useLayoutStore";
 
 import LinkToPage from "../link-book/LinkToPage";
 import Loading from "../Loading";
-
-interface LinkBook {
-  linkBookId: string;
-  title: string;
-  backgroundColor: string;
-  titleColor: string;
-  illustration: null | string;
-  createdAt: string;
-  lastSavedAt: string;
-  userId: string;
-  linkCount: number;
-  isDefault: "y" | "n";
-}
+import { LinkBook } from "@/types/linkBook.types";
 
 type LinkBookMenuProps = {
   linkBook: LinkBook;

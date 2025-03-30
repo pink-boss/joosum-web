@@ -1,63 +1,22 @@
-import { useEffect } from "react";
+import { trimTrailingSlash } from "@/utils/envUri";
+import { useRouter } from "next/navigation";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH_GOOGLE_ID;
-const GOOGLE_SCOPE = "email profile";
+const GOOGLE_REDIRECT_URI = `${trimTrailingSlash(process.env.NEXT_PUBLIC_JOOSUM_WEB_URI)}/auth/callback/google`;
 
 const GoogleOAuthHandler = () => {
-  useEffect(() => {
-    const initializeGoogleAuth = async () => {
-      window.google?.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: handleCredentialResponse,
-        auto_select: false,
-      });
-    };
-
-    initializeGoogleAuth();
-  }, []);
+  const router = useRouter();
 
   const handleGoogleLogin = () => {
-    // prompt 옵션을 사용하여 구글 로그인 팝업을 직접 띄웁니다
-    window.google?.accounts.id.prompt((notification: any) => {
-      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-        // 팝업이 차단되었거나 사용자가 건너뛴 경우
-        console.error("Google sign-in popup was blocked or skipped");
-      }
-    });
-  };
+    const authUrl =
+      `https://accounts.google.com/o/oauth2/v2/auth?` +
+      `client_id=${GOOGLE_CLIENT_ID}` +
+      `&redirect_uri=${encodeURIComponent(GOOGLE_REDIRECT_URI)}` +
+      `&response_type=code` +
+      `&scope=email profile` +
+      `&state=${encodeURIComponent(Math.random().toString(36).substring(2, 15))}`;
 
-  const handleCredentialResponse = async (response: any) => {
-    console.log(response);
-    if (response.credential) {
-      // credential이 JWT 형식의 ID 토큰입니다
-      // try {
-      //   const backendResponse = await fetch('YOUR_BACKEND_URL/auth/google', {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //     body: JSON.stringify({
-      //       idToken: response.credential  // 이것이 ey로 시작하는 ID 토큰입니다
-      //     }),
-      //   });
-      //   if (!backendResponse.ok) {
-      //     const errorData = await backendResponse.json();
-      //     throw new Error(errorData.error || 'Backend verification failed');
-      //   }
-      //   const data = await backendResponse.json();
-      //   // 토큰 저장 및 리다이렉트 처리
-      //   if (data.accessToken) {
-      //     localStorage.setItem('accessToken', data.accessToken);
-      //     localStorage.setItem('refreshToken', data.refreshToken);
-      //     window.location.href = '/dashboard';
-      //   } else {
-      //     window.location.href = '/register';
-      //   }
-      // } catch (error) {
-      //   console.error('Authentication error:', error);
-      //   alert('로그인 처리 중 오류가 발생했습니다: ' + error.message);
-      // }
-    }
+    router.push(authUrl);
   };
 
   return (

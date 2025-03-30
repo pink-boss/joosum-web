@@ -1,23 +1,29 @@
-import { parse } from "querystring";
-
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
 import { trimTrailingSlash } from "@/utils/envUri";
+
 import { handleAuthToken } from "@/utils/auth/auth";
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const formData = parse(await request.text());
-    const idToken = formData["id_token"] as string;
+    const url = new URL(request.url);
+    const code = url.searchParams.get("code");
+
+    if (!code) {
+      console.error("code가 없습니다.");
+      return new Response("Unauthorized: Missing code", { status: 401 });
+    }
+
     const body = JSON.stringify({
-      idToken,
+      idToken: code,
     });
 
+    console.log("-------------------------------0");
+    console.log(code);
     // 서버에 로그인 요청 보내기
     const response = await fetch(
-      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/auth/apple`,
+      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/auth/google`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -27,11 +33,19 @@ export async function POST(request: NextRequest) {
       },
     );
 
-    let data = await response.json();
+    console.log("-------------------------------1");
+    console.log(response);
 
-    // 데이터 없으면 회원가입(온보딩)
+    let data = await response.json();
+    if (data.error) {
+      new Error(data.error);
+    }
+    console.log("-------------------------------3");
+    console.log(data);
+
+    // // 데이터 없으면 회원가입(온보딩)
     // if (!data.accessToken) {
-    //   (await cookies()).set("idToken", idToken, {
+    //   cookies().set("code", code, {
     //     httpOnly: true,
     //     maxAge: 60 * 10, // 10분
     //     secure: true,
