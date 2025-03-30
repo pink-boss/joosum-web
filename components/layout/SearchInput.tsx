@@ -25,9 +25,9 @@ export default function SearchInput({ _defaulValue = "" }: InputProps) {
     <div className="relative w-fit">
       <input
         type="text"
-        placeholder="제목으로 검색해보세요."
+        placeholder="링크 제목으로 검색해보세요."
         className={clsx(
-          "h-[48px] min-w-[480px] max-w-[720px] rounded-lg border pl-3",
+          "h-[48px] min-w-[360px] max-w-[720px] rounded-lg border pl-3 pr-20",
           "focus:bg-inputactivebg",
         )}
         onKeyDown={handleKeyDown}

@@ -8,8 +8,14 @@ type InputProps = {
 
 export default function LinkBookFilter({ linkBookList = [] }: InputProps) {
   const [selected, setSelected] = useState<string | undefined>(undefined);
+
   return (
     <div className="scrollbar-hide flex flex-nowrap gap-3 overflow-x-auto">
+      <Card
+        isSelected={!!selected === false}
+        title="전체"
+        onClick={() => setSelected(undefined)}
+      />
       {linkBookList.map(({ linkBookId, title }) => {
         return (
           <Card

@@ -89,3 +89,8 @@ export const mockRespone: TQueryLinkBooks = {
   linkBooks: mockLinkBooks,
   totalLinkCount: mockLinkBooks.length,
 };
+
+export const mockEmptyRespone: TQueryLinkBooks = {
+  linkBooks: [],
+  totalLinkCount: 0,
+};
