@@ -6,14 +6,14 @@ import { ChangeEvent, useState } from "react";
 
 import Checkbox from "@/components/Checkbox";
 import { useClearDropdown } from "@/hooks/useClearDropdown";
-import { LinkFilterState } from "@/store/link-filter/useFolderStore";
+import { FolderLinkFilterState } from "@/store/link-filter/useFolderStore";
 import { removeItem } from "@/utils/array";
 
 import { SelectBox } from "./SelectBox";
 import SelectedTags from "./SelectedTags";
 import ResetButton from "../ResetButton";
 
-export type InputProps = Pick<LinkFilterState, "tags" | "setTags"> & {
+export type InputProps = Pick<FolderLinkFilterState, "tags" | "setTags"> & {
   className?: string;
   selectBoxClassName?: string;
 };

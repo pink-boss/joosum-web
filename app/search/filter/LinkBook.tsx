@@ -1,20 +1,21 @@
+import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 import { LinkBook } from "@/types/linkBook.types";
 import clsx from "clsx";
-import { useState } from "react";
 
 type InputProps = {
   linkBookList: LinkBook[];
 };
 
 export default function LinkBookFilter({ linkBookList = [] }: InputProps) {
-  const [selected, setSelected] = useState<string | undefined>(undefined);
+  const { linkBookId: selected, setLinkBookId: setSelected } =
+    useSearchLinkFilterStore();
 
   return (
     <div className="scrollbar-hide flex flex-nowrap gap-3 overflow-x-auto">
       <Card
         isSelected={!!selected === false}
         title="전체"
-        onClick={() => setSelected(undefined)}
+        onClick={() => setSelected("")}
       />
       {linkBookList.map(({ linkBookId, title }) => {
         return (

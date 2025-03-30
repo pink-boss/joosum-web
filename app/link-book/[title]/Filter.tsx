@@ -1,18 +1,23 @@
 import { useMemo } from "react";
 
-import {
-  defaultValues,
-  useFolderLinkFilterStore,
-} from "@/store/link-filter/useFolderStore";
-
 import DatePicker from "./date-picker";
 import ResetButton from "./ResetButton";
 import TagSelector from "./tag-selector";
+import { LinkFilterState, LinkFilterValues } from "@/store/link-filter/schema";
 
-export default function Filter() {
-  const { unread, dateRange, tags, setUnread, setDateRange, setTags } =
-    useFolderLinkFilterStore();
+type InputProps = LinkFilterState & {
+  defaultValues: LinkFilterValues;
+};
 
+export default function Filter({
+  unread,
+  dateRange,
+  tags,
+  setUnread,
+  setDateRange,
+  setTags,
+  defaultValues,
+}: InputProps) {
   const visibleReset = useMemo(() => {
     return unread || dateRange.length || tags.length;
   }, [unread, dateRange.length, tags.length]);
@@ -44,7 +49,7 @@ export default function Filter() {
           읽지 않음
         </label>
       </div>
-      <DatePicker />
+      <DatePicker dateRange={dateRange} setDateRange={setDateRange} />
       <TagSelector className="w-[305px]" tags={tags} setTags={setTags} />
       {visibleReset ? (
         <ResetButton handleClick={handleResetParams} />

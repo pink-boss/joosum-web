@@ -3,7 +3,6 @@ import clsx from "clsx";
 import { useState } from "react";
 
 import { useClearDropdown } from "@/hooks/useClearDropdown";
-import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
 import { getCalendarDate } from "@/utils/date";
 
 import ChangeMonth from "./ChangeMonth";
@@ -12,15 +11,17 @@ import RenderDate from "./RenderDate";
 import { SelectBox } from "./SelectBox";
 import ResetButton from "../ResetButton";
 import RenderWeek from "./RenderWeek";
+import { DateRange } from "@/types/date.types";
 
 export type InputProps = {
   open?: boolean;
+  dateRange?: DateRange;
+  setDateRange: (dateRange: DateRange) => void;
 };
 
-const DatePicker = ({ open }: InputProps) => {
+const DatePicker = ({ open, dateRange = [], setDateRange }: InputProps) => {
   const ref = useClearDropdown(() => setIsOpen(false));
   const [isOpen, setIsOpen] = useState(open);
-  const { dateRange, setDateRange } = useFolderLinkFilterStore();
   const [tmpSelectedDate, setTmpSelectedDate] = useState<Date | null>(null);
   const today = new Date(new Date().toDateString());
   const [renderMonth, setRenderMonth] = useState(today);
@@ -45,12 +46,14 @@ const DatePicker = ({ open }: InputProps) => {
               <LastPeriodButton
                 period="1w"
                 setTmpSelectedDate={setTmpSelectedDate}
+                setDateRange={setDateRange}
               >
                 최근 1주
               </LastPeriodButton>
               <LastPeriodButton
                 period="3m"
                 setTmpSelectedDate={setTmpSelectedDate}
+                setDateRange={setDateRange}
               >
                 최근 3개월
               </LastPeriodButton>
@@ -71,6 +74,8 @@ const DatePicker = ({ open }: InputProps) => {
                     dateObj={dateObj}
                     tmpSelectedDate={tmpSelectedDate}
                     setTmpSelectedDate={setTmpSelectedDate}
+                    dateRange={dateRange}
+                    setDateRange={setDateRange}
                   />
                 ),
               )}

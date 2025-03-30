@@ -1,6 +1,10 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { defaultValues, LinkFilterState, LinkFilterValues } from "./schema";
+import {
+  defaultValues as _defaultValues,
+  LinkFilterState,
+  LinkFilterValues,
+} from "./schema";
 
 export type SearchLinkFilterState = LinkFilterState & {
   linkBookId?: string;
@@ -10,15 +14,15 @@ export type SearchLinkFilterState = LinkFilterState & {
 type SearchLinkFilterValues = LinkFilterValues &
   Pick<SearchLinkFilterState, "linkBookId">;
 
-export const searchDefaultValues: SearchLinkFilterValues = {
-  ...defaultValues,
+export const defaultValues: SearchLinkFilterValues = {
+  ..._defaultValues,
   linkBookId: "",
 };
 
 export const useSearchLinkFilterStore = create<SearchLinkFilterState>()(
   persist(
     (set) => ({
-      ...searchDefaultValues,
+      ...defaultValues,
       setUnread: (unread) => set({ unread }),
       setDateRange: (dateRange) => set({ dateRange }),
       setTags: (tags = []) => {

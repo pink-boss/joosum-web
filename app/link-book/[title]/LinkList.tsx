@@ -39,9 +39,8 @@ function Button({
 }
 
 type InputProps = { defaultEditMode?: boolean };
-
 export default function LinkList({ defaultEditMode = false }: InputProps) {
-  const linkSort = useLinkSortStore();
+  const linkSort = useLinkSortStore(); // TODO: 검색이랑 폴더 분리
   const { unread } = useFolderLinkFilterStore();
 
   const { openDeleteLink, openReassignLinkBook } = useOpenDialogStore();

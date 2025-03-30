@@ -10,6 +10,7 @@ import {
 
 import { mockTags } from "../../mocks/tag.mocks";
 
+// TODO: 태그 비었을 때 # 나옴
 const meta = {
   title: "Page/FolderList/TagSelector",
   component: TagSelector,

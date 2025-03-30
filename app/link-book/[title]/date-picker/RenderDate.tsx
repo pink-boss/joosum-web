@@ -1,12 +1,13 @@
 import clsx from "clsx";
 
-import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
-import { RenderDateType } from "@/types/date.types";
+import { DateRange, RenderDateType } from "@/types/date.types";
 import { isAfter, isBefore, isBetween, isSameDate } from "@/utils/date";
 
 type InputProps = RenderDateType & {
   tmpSelectedDate: Date | null;
   setTmpSelectedDate: (tmpSelectedDate: Date | null) => void;
+  dateRange: DateRange;
+  setDateRange: (dateRange: DateRange) => void;
 };
 
 const RenderDate = ({
@@ -16,8 +17,9 @@ const RenderDate = ({
   dateObj,
   tmpSelectedDate,
   setTmpSelectedDate,
+  dateRange,
+  setDateRange,
 }: InputProps) => {
-  const { dateRange, setDateRange } = useFolderLinkFilterStore();
   const today = new Date(new Date().toDateString());
   const startDate = dateRange[0] ? new Date(dateRange[0]) : undefined;
   const endDate = dateRange[1] ? new Date(dateRange[1]) : undefined;
