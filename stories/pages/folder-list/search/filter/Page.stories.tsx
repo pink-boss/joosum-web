@@ -4,7 +4,10 @@ import { http, HttpResponse } from "msw";
 import Page from "@/app/search/page";
 import { mockLinks } from "@/stories/mocks/link.mocks";
 import { mockTags } from "@/stories/mocks/tag.mocks";
-import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
+import {
+  defaultValues,
+  useFolderLinkFilterStore,
+} from "@/store/link-filter/useFolderStore";
 import Topbar from "@/components/layout/Topbar";
 import { mockEmptyRespone, mockRespone } from "@/stories/mocks/linkBook.mocks";
 
@@ -31,7 +34,7 @@ const meta = {
     </>
   ),
   beforeEach: () => {
-    useLinkFilterStore.setState(defaultValues);
+    useFolderLinkFilterStore.setState(defaultValues);
   },
 } satisfies Meta<typeof Page>;
 

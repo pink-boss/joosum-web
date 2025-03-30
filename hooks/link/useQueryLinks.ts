@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ApiError } from "next/dist/server/api-utils";
 import { useEffect, useMemo } from "react";
 
-import { useLinkFilterStore } from "@/store/useLinkFilterStore";
+import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
 import { useLinkSortStore } from "@/store/useLinkSortStore";
 import { Link } from "@/types/link.types";
 import { isBetween } from "@/utils/date";
@@ -14,7 +14,7 @@ export function useQueryLinks() {
   const linkBook = useLinkBookFromTitle();
 
   const linkSort = useLinkSortStore();
-  const { unread, dateRange, tags } = useLinkFilterStore();
+  const { unread, dateRange, tags } = useFolderLinkFilterStore();
 
   const pathname = linkBook
     ? `link-books/${linkBook.linkBookId}/links`

@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useState } from "react";
 
 import { useClearDropdown } from "@/hooks/useClearDropdown";
-import { useLinkFilterStore } from "@/store/useLinkFilterStore";
+import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
 import { getCalendarDate } from "@/utils/date";
 
 import ChangeMonth from "./ChangeMonth";
@@ -20,7 +20,7 @@ export type InputProps = {
 const DatePicker = ({ open }: InputProps) => {
   const ref = useClearDropdown(() => setIsOpen(false));
   const [isOpen, setIsOpen] = useState(open);
-  const { dateRange, setDateRange } = useLinkFilterStore();
+  const { dateRange, setDateRange } = useFolderLinkFilterStore();
   const [tmpSelectedDate, setTmpSelectedDate] = useState<Date | null>(null);
   const today = new Date(new Date().toDateString());
   const [renderMonth, setRenderMonth] = useState(today);

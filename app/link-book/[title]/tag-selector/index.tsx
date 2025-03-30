@@ -6,7 +6,7 @@ import { ChangeEvent, useState } from "react";
 
 import Checkbox from "@/components/Checkbox";
 import { useClearDropdown } from "@/hooks/useClearDropdown";
-import { LinkFilterState } from "@/store/useLinkFilterStore";
+import { LinkFilterState } from "@/store/link-filter/useFolderStore";
 import { removeItem } from "@/utils/array";
 
 import { SelectBox } from "./SelectBox";

@@ -1,6 +1,9 @@
 import { useMemo } from "react";
 
-import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
+import {
+  defaultValues,
+  useFolderLinkFilterStore,
+} from "@/store/link-filter/useFolderStore";
 
 import DatePicker from "./date-picker";
 import ResetButton from "./ResetButton";
@@ -8,7 +11,7 @@ import TagSelector from "./tag-selector";
 
 export default function Filter() {
   const { unread, dateRange, tags, setUnread, setDateRange, setTags } =
-    useLinkFilterStore();
+    useFolderLinkFilterStore();
 
   const visibleReset = useMemo(() => {
     return unread || dateRange.length || tags.length;

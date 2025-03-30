@@ -3,7 +3,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { http, HttpResponse } from "msw";
 
 import TagSelector from "@/app/link-book/[title]/tag-selector";
-import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
+import {
+  defaultValues,
+  useFolderLinkFilterStore,
+} from "@/store/link-filter/useFolderStore";
 
 import { mockTags } from "../../mocks/tag.mocks";
 
@@ -17,7 +20,7 @@ const meta = {
   },
   args: { tags: defaultValues.tags, setTags: test.fn() },
   beforeEach: () => {
-    useLinkFilterStore.setState({ tags: defaultValues.tags });
+    useFolderLinkFilterStore.setState({ tags: defaultValues.tags });
   },
 } satisfies Meta<typeof TagSelector>;
 

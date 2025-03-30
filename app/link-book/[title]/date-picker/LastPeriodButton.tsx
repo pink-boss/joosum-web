@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { useLinkFilterStore } from "@/store/useLinkFilterStore";
+import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
 
 type InputProps = {
   period: "1w" | "3m";
@@ -13,7 +13,7 @@ export default function LastPeriodButton({
   setTmpSelectedDate,
   children,
 }: InputProps) {
-  const { setDateRange } = useLinkFilterStore();
+  const { setDateRange } = useFolderLinkFilterStore();
   const today = new Date(new Date().toDateString());
 
   const handleClickLastPeriod = () => {

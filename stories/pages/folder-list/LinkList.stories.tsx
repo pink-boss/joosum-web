@@ -2,7 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { http, HttpResponse } from "msw";
 
 import LinkList from "@/app/link-book/[title]/LinkList";
-import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
+import {
+  defaultValues,
+  useFolderLinkFilterStore,
+} from "@/store/link-filter/useFolderStore";
 
 import { mockLinks } from "../../mocks/link.mocks";
 import { mockLinkBooks } from "../../mocks/linkBook.mocks";
@@ -25,7 +28,7 @@ const meta = {
     },
   },
   beforeEach: () => {
-    useLinkFilterStore.setState(defaultValues);
+    useFolderLinkFilterStore.setState(defaultValues);
   },
 } satisfies Meta<typeof LinkList>;
 

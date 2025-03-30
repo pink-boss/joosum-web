@@ -1,12 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import {
-  expect,
-  screen,
-  spyOn,
-  userEvent,
-  waitFor,
-  within,
-} from "@storybook/test";
+import { expect, spyOn, userEvent, waitFor, within } from "@storybook/test";
 
 import { http, HttpResponse } from "msw";
 
@@ -15,8 +8,8 @@ import { ReassignLinkBookDialog } from "@/app/link-book/dialog/dynamic";
 import { DeleteLinkDialog } from "@/components/dialog/dynamic";
 import {
   defaultValues as filterDefaultValues,
-  useLinkFilterStore,
-} from "@/store/useLinkFilterStore";
+  useFolderLinkFilterStore,
+} from "@/store/link-filter/useFolderStore";
 import {
   defaultValues as sortDefaultValues,
   LinkSortState,
@@ -73,7 +66,7 @@ const testMeta = {
     },
   },
   beforeEach: () => {
-    useLinkFilterStore.setState(filterDefaultValues);
+    useFolderLinkFilterStore.setState(filterDefaultValues);
     useLinkSortStore.setState(sortDefaultValues);
     queryClient.clear();
     capturedRequest = null;

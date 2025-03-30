@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import { LinkFilterState } from "@/store/useLinkFilterStore";
+import { LinkFilterState } from "@/store/link-filter/useFolderStore";
 import { removeItem } from "@/utils/array";
 
 type BadgeInputProps = {

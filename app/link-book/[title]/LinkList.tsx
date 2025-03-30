@@ -8,7 +8,7 @@ import Loading from "@/components/Loading";
 import useCheckLink from "@/hooks/link/useCheckLink";
 import { useQueryLinks } from "@/hooks/link/useQueryLinks";
 import { useOpenDialogStore } from "@/store/useDialogStore";
-import { useLinkFilterStore } from "@/store/useLinkFilterStore";
+import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
 import { useLinkSortStore } from "@/store/useLinkSortStore";
 
 import { sortOptions } from "../constants";
@@ -42,7 +42,7 @@ type InputProps = { defaultEditMode?: boolean };
 
 export default function LinkList({ defaultEditMode = false }: InputProps) {
   const linkSort = useLinkSortStore();
-  const { unread } = useLinkFilterStore();
+  const { unread } = useFolderLinkFilterStore();
 
   const { openDeleteLink, openReassignLinkBook } = useOpenDialogStore();
   const [editMode, setEditMode] = useState(defaultEditMode);
