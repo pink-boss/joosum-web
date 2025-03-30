@@ -2,25 +2,41 @@ import { useSearchBarStore } from "@/store/useSearchBarStore";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { KeyboardEvent, useState } from "react";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
 
 type InputProps = {
-  _defaulValue?: string;
+  inputDelay?: number;
 };
 
-export default function SearchInput({ _defaulValue = "" }: InputProps) {
+export default function SearchInput({ inputDelay = 1000 }: InputProps) {
   const router = useRouter();
-  const { setTitle } = useSearchBarStore();
-  const [value, setValue] = useState(_defaulValue);
-  const handleSubmit = () => {
+  const { title, setTitle } = useSearchBarStore();
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [inputValue, setInputValue] = useState(title);
+
+  const handleChangeSearchState = (value: string) => {
     setTitle(value);
     router.push("search");
+    // router.push(`search/${value}`); TODO: dynamic route로 전환
   };
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.code === "Enter") {
-      handleSubmit();
+      handleChangeSearchState(e.currentTarget.value);
     }
   };
+
+  useEffect(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+
+    timerRef.current = setTimeout(() => {
+      handleChangeSearchState(inputValue);
+    }, inputDelay);
+
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [inputValue]);
   return (
     <div className="relative w-fit">
       <input
@@ -31,20 +47,20 @@ export default function SearchInput({ _defaulValue = "" }: InputProps) {
           "focus:bg-inputactivebg",
         )}
         onKeyDown={handleKeyDown}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
       />
       <div
         className={clsx(
           "absolute right-3 top-1/2 -translate-y-1/2",
-          "flex cursor-pointer items-center justify-center gap-2 p-2",
+          "flex items-center justify-center gap-2 p-2",
         )}
-        onClick={handleSubmit}
       >
-        {value && (
+        {inputValue && (
           <button
+            data-testid="clear-button"
             type="button"
-            // onClick={() => removeTag(index)}
+            onClick={() => setInputValue("")}
             className={clsx(
               "size-5 rounded-full bg-gray-silver",
               "flex items-center justify-center pb-0.5 text-white",
@@ -53,12 +69,19 @@ export default function SearchInput({ _defaulValue = "" }: InputProps) {
             &times;
           </button>
         )}
-        <Image
-          src="/icons/icon-search.png"
-          alt="search"
-          width={22}
-          height={22}
-        />
+        <button
+          data-testid="search-button"
+          type="button"
+          className="cursor-pointer"
+          onClick={() => handleChangeSearchState(inputValue)}
+        >
+          <Image
+            src="/icons/icon-search.png"
+            alt="search"
+            width={22}
+            height={22}
+          />
+        </button>
       </div>
     </div>
   );

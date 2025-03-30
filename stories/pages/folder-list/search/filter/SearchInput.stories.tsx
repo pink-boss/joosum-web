@@ -1,10 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import SearchInput from "@/components/layout/SearchInput";
 import { useEffect, useRef } from "react";
+import { useSearchBarStore } from "@/store/useSearchBarStore";
 
 const meta = {
   title: "Page/FolderList/Search/SearchInput",
   component: SearchInput,
+  beforeEach: () => {
+    useSearchBarStore.getState().setTitle("");
+  },
 } satisfies Meta<typeof SearchInput>;
 
 export default meta;
@@ -30,5 +34,7 @@ export const FocusInput: Story = {
 };
 
 export const RenderClearButton: Story = {
-  args: { _defaulValue: "피그마" },
+  beforeEach: () => {
+    useSearchBarStore.getState().setTitle("피그마");
+  },
 };
