@@ -1,42 +1,18 @@
-import clsx from "clsx";
-import { ChangeEvent, ReactNode, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 import Checkbox from "@/components/Checkbox";
-import Dropdown from "@/components/Dropdown";
 import EmptyLinks from "@/components/EmptyLinks";
 import Loading from "@/components/Loading";
 import useCheckLink from "@/hooks/link/useCheckLink";
 import { useQueryLinks } from "@/hooks/link/useQueryLinks";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
-import { sortOptions } from "../constants";
 import LinkComponent from "./LinkCard";
 import { LinkSortState } from "@/store/link-sort/schema";
 import { LinkFilterState } from "@/store/link-filter/schema";
-
-type ButtonInputProps = {
-  children: ReactNode;
-  isPrimary?: boolean;
-  handleClick: () => void;
-};
-
-function Button({
-  children,
-  isPrimary = false,
-  handleClick,
-}: ButtonInputProps) {
-  return (
-    <button
-      className={clsx(
-        "rounded border border-gray-vapor px-9 py-1.5 text-xs",
-        isPrimary ? "bg-gray-black text-white" : "bg-white text-black",
-      )}
-      onClick={handleClick}
-    >
-      {children}
-    </button>
-  );
-}
+import ViewToolbar from "./ViewToolbar";
+import EditToolbar from "./EditToolbar";
+import EditHeader from "./EditHeader";
 
 type InputProps = Pick<LinkFilterState, "unread"> & {
   defaultEditMode?: boolean;
@@ -53,9 +29,8 @@ export default function LinkList({
   const { cachedLinks, setCachedLink, setAllLinks } = useCheckLink();
   const { data, isPending } = useQueryLinks();
   const totalCount = data.length;
-  const hasAllChecked = totalCount === cachedLinks.size;
 
-  const handleChangeEditMode = () => {
+  const handleChangeToolbarMode = () => {
     setEditMode((prev) => !prev);
   };
 
@@ -86,39 +61,23 @@ export default function LinkList({
             <div className="text-lg font-semibold text-gray-ink">
               {totalCount}개 주섬
             </div>
-            <div className="ml-auto flex items-center gap-2">
-              <Dropdown
-                options={sortOptions}
-                selected={linkSort.field}
-                setSelected={linkSort.setField}
-              />
-              <Button isPrimary handleClick={handleChangeEditMode}>
-                편집
-              </Button>
-            </div>
+            <ViewToolbar
+              linkSort={linkSort}
+              handleChangeMode={handleChangeToolbarMode}
+            />
           </>
         ) : (
           <>
-            <div className="flex items-center gap-3 text-lg text-gray-ink">
-              <div className="flex items-center gap-2 font-semibold">
-                <Checkbox
-                  onChange={handleAllCheckLinks}
-                  checked={hasAllChecked}
-                  id="allCheckbox"
-                />
-                <label htmlFor="allCheckbox">모두 선택</label>
-              </div>
-              <div>
-                {cachedLinks.size}/{totalCount}개
-              </div>
-            </div>
-            <div className="ml-auto flex gap-2">
-              <Button handleClick={handleDeleteLinks}>삭제</Button>
-              <Button handleClick={handleChangeFolder}>폴더이동</Button>
-              <Button isPrimary handleClick={handleChangeEditMode}>
-                편집종료
-              </Button>
-            </div>
+            <EditHeader
+              totalCount={totalCount}
+              cachedLinks={cachedLinks}
+              handleAllCheckLinks={handleAllCheckLinks}
+            />
+            <EditToolbar
+              handleDeleteLinks={handleDeleteLinks}
+              handleChangeFolder={handleChangeFolder}
+              handleChangeMode={handleChangeToolbarMode}
+            />
           </>
         )}
       </div>

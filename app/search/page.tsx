@@ -2,7 +2,7 @@
 
 import { useSearchBarStore } from "@/store/useSearchBarStore";
 import Filter from "../link-book/[title]/Filter";
-import LinkList from "../link-book/[title]/LinkList";
+import LinkList from "../link-book/[title]/link-list/LinkList";
 import LinkBookFilter from "./filter/LinkBook";
 import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import {
@@ -29,5 +29,4 @@ export default function Search() {
     </div>
   );
 }
-// TODO: LinkList 컴포넌트를 기능 단위로 나누어 리팩토링
 // TODO: Search Page 테스트

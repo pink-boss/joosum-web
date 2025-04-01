@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { http, HttpResponse } from "msw";
 
-import LinkList from "@/app/link-book/[title]/LinkList";
+import LinkList from "@/app/link-book/[title]/link-list/LinkList";
 import {
   defaultValues as filterDefaultValues,
   useFolderLinkFilterStore,

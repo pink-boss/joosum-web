@@ -3,7 +3,7 @@ import { expect, spyOn, userEvent, waitFor, within } from "@storybook/test";
 
 import { http, HttpResponse } from "msw";
 
-import LinkList from "@/app/link-book/[title]/LinkList";
+import LinkList from "@/app/link-book/[title]/link-list/LinkList";
 import { ReassignLinkBookDialog } from "@/app/link-book/dialog/dynamic";
 import { DeleteLinkDialog } from "@/components/dialog/dynamic";
 import {

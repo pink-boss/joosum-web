@@ -3,7 +3,7 @@
 import useLinkBookFromTitle from "@/hooks/link/useLinkBookFromTitle";
 
 import Filter from "./Filter";
-import LinkList from "./LinkList";
+import LinkList from "./link-list/LinkList";
 import {
   defaultValues,
   useFolderLinkFilterStore,

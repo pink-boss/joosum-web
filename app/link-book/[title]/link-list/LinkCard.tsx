@@ -6,8 +6,8 @@ import useIncrementViewCount from "@/hooks/link/useIncrementViewCount";
 import { Link } from "@/types/link.types";
 import { dateFormatter } from "@/utils/date";
 
-import DrawerButton from "./DrawerButton";
-import OpenShareButton from "../OpenShareButton";
+import DrawerButton from "../DrawerButton";
+import OpenShareButton from "../../OpenShareButton";
 
 type FolderLinkInputProps = { linkBookName: string };
 
