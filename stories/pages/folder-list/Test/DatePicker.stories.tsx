@@ -40,7 +40,7 @@ export const TestPickDate: Story = {
       const prevMonth = new Date();
       prevMonth.setMonth(today.getMonth() - 1);
       const year = prevMonth.getFullYear();
-      const month = `${prevMonth.getMonth()}`.padStart(2, "0");
+      const month = `${prevMonth.getMonth() + 1}`.padStart(2, "0");
       await waitFor(async () => {
         expect(selectBox).toHaveTextContent(
           `${year}. ${month}. ${start} ~ ${year}. ${month}. ${end}`,

@@ -16,7 +16,14 @@ import {
 
 const Wrapper = ({ defaultEditMode }: { defaultEditMode?: boolean }) => {
   const linkSort = useFolderLinkSortStore();
-  return <LinkList defaultEditMode={defaultEditMode} linkSort={linkSort} />;
+  const linkFilter = useFolderLinkFilterStore();
+  return (
+    <LinkList
+      defaultEditMode={defaultEditMode}
+      linkSort={linkSort}
+      unread={linkFilter.unread}
+    />
+  );
 };
 
 const meta = {

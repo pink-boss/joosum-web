@@ -21,7 +21,7 @@ export default function FolderDetail() {
         {linkBook ? linkBook.title : "전체"}
       </div>
       <Filter defaultValues={defaultValues} {...linkFilter} />
-      <LinkList linkSort={linkSort} />
+      <LinkList linkSort={linkSort} unread={linkFilter.unread} />
     </div>
   );
 }

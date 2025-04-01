@@ -8,11 +8,11 @@ import Loading from "@/components/Loading";
 import useCheckLink from "@/hooks/link/useCheckLink";
 import { useQueryLinks } from "@/hooks/link/useQueryLinks";
 import { useOpenDialogStore } from "@/store/useDialogStore";
-import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
 
 import { sortOptions } from "../constants";
 import LinkComponent from "./LinkCard";
 import { LinkSortState } from "@/store/link-sort/schema";
+import { LinkFilterState } from "@/store/link-filter/schema";
 
 type ButtonInputProps = {
   children: ReactNode;
@@ -38,14 +38,16 @@ function Button({
   );
 }
 
-type InputProps = { defaultEditMode?: boolean; linkSort: LinkSortState };
+type InputProps = Pick<LinkFilterState, "unread"> & {
+  defaultEditMode?: boolean;
+  linkSort: LinkSortState;
+};
 
 export default function LinkList({
   defaultEditMode = false,
   linkSort,
+  unread,
 }: InputProps) {
-  const { unread } = useFolderLinkFilterStore();
-
   const { openDeleteLink, openReassignLinkBook } = useOpenDialogStore();
   const [editMode, setEditMode] = useState(defaultEditMode);
   const { cachedLinks, setCachedLink, setAllLinks } = useCheckLink();
