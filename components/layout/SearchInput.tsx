@@ -20,9 +20,8 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
   const handleChangeSearchState = useCallback(
     (value: string) => {
       setTitle(value);
-      router.push("search");
+      router.push("/search");
       setField("relevance");
-      // router.push(`search/${value}`); TODO: dynamic route로 전환
     },
     [setTitle, setField, router],
   );

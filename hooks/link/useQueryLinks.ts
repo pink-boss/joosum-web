@@ -28,11 +28,19 @@ export function useQueryLinks({
     useQueryLinkBooks("created_at"); // queryLink가 먼저 실행되는 걸 방지
   const { title: searchKeyword } = useSearchBarStore();
 
-  const pathname = linkBookId ? `link-books/${linkBookId}/links` : `links`;
+  const queryOptions: Record<string, unknown> & {
+    queryKey: readonly unknown[];
+  } = {
+    pathname: linkBookId ? `link-books/${linkBookId}/links` : `links`,
+    queryString: `sort=${linkSort.sort}&order=${linkSort.orderBy}`,
+    queryKey: getLinkListQueryKey(linkBookId),
+  };
 
-  let queryString = `sort=${linkSort.sort}&order=${linkSort.orderBy}`;
-  if (searchKeyword && ["title", "relevance"].includes(linkSort.field))
-    queryString += `&search=${searchKeyword}`;
+  if (searchKeyword && ["title", "relevance"].includes(linkSort.field)) {
+    queryOptions.queryString += `&search=${searchKeyword}`;
+    queryOptions.pathname = "links";
+    queryOptions.queryKey = ["search"];
+  }
 
   const {
     data = [],
@@ -40,9 +48,9 @@ export function useQueryLinks({
     ...others
   } = useQuery<Link[], ApiError>({
     enabled: !!isCompleteQueryLinkBook,
-    queryKey: getLinkListQueryKey(linkBookId),
+    queryKey: queryOptions.queryKey,
     queryFn: () =>
-      fetch(`/api/${pathname}?${queryString}`, {
+      fetch(`/api/${queryOptions.pathname}?${queryOptions.queryString}`, {
         method: "GET",
       })
         .then((res) => res.json())
