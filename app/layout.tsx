@@ -8,12 +8,12 @@ import localFont from "next/font/local";
 import { usePathname } from "next/navigation";
 
 import DynamicOpenDialogs from "@/components/dialog/DynamicOpenDialogs";
+import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
 import Sidebar from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
+import { ToastProvider } from "@/components/notification/ToastProvider";
 import { publicOnlyPaths } from "@/utils/path";
 
-import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
-import { ToastProvider } from "@/components/notification/ToastProvider";
 
 const queryClient = new QueryClient();
 

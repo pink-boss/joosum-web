@@ -1,13 +1,12 @@
-import Image from "next/image";
-import Dialog from "../Dialog";
-import { useOpenDialogStore } from "@/store/useDialogStore";
-
 import clsx from "clsx";
-import { Tag, TagList as TagListType } from "@/types/tags.types";
-
-import TagMore from "./TagMore";
+import Image from "next/image";
 
 import useUpsertTags from "@/hooks/settings/useUpsertTags";
+import { useOpenDialogStore } from "@/store/useDialogStore";
+import { Tag, TagList as TagListType } from "@/types/tags.types";
+
+import Dialog from "../Dialog";
+import TagMore from "./TagMore";
 
 export default function TagSettingDialog() {
   const { isTagSettingOpen: isOpen, openTagSetting: open } =
@@ -80,8 +79,8 @@ function TagList({ tagList }: TagListProps) {
           data-testid="tag-list"
           className="mini-scroll h-60 w-full overflow-scroll px-5"
         >
-          {tagList.map((tag) => (
-            <TagCard tag={tag} />
+          {tagList.map((tag, index) => (
+            <TagCard key={index} tag={tag} />
           ))}
         </div>
       ) : (

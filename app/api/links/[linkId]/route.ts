@@ -4,10 +4,10 @@ import { serverApi } from "@/utils/api";
 
 export async function PUT(
   request: NextRequest,
-  context: { params: { linkId: string } },
+  { params }: { params: { linkId: string } },
 ) {
   const body = await request.json();
-  const { linkId } = context.params;
+  const { linkId } = await params;
   return serverApi({
     path: `api/links/${linkId}`,
     method: "PUT",
@@ -17,9 +17,9 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  context: { params: { linkId: string } },
+  { params }: { params: { linkId: string } },
 ) {
-  const { linkId } = context.params;
+  const { linkId } = await params;
   return serverApi({
     path: `api/links/${linkId}`,
     method: "DELETE",

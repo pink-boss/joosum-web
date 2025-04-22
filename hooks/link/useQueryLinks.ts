@@ -2,31 +2,45 @@ import { useQuery } from "@tanstack/react-query";
 import { ApiError } from "next/dist/server/api-utils";
 import { useEffect, useMemo } from "react";
 
-import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
-import { useFolderLinkSortStore } from "@/store/link-sort/useFolderStore";
 import { Link } from "@/types/link.types";
 import { isBetween } from "@/utils/date";
 import { getLinkListQueryKey } from "@/utils/queryKey";
 
-import useLinkBookFromTitle from "./useLinkBookFromTitle";
+import { useSearchBarStore } from "@/store/useSearchBarStore";
+import { LinkSortState } from "@/store/link-sort/schema";
+import { LinkFilterValues } from "@/store/link-filter/schema";
+import { LinkBook } from "@/types/linkBook.types";
+import { sortByKeywordPosition } from "@/utils/sort";
+import useQueryLinkBooks from "../my-folder/useQueryLinkBooks";
 
-export function useQueryLinks() {
-  const linkBook = useLinkBookFromTitle();
+type InputProps = {
+  linkSort: LinkSortState;
+  linkFilter: LinkFilterValues;
+  linkBookId?: LinkBook["linkBookId"];
+};
 
-  const linkSort = useFolderLinkSortStore();
-  const { unread, dateRange, tags } = useFolderLinkFilterStore();
+export function useQueryLinks({
+  linkSort,
+  linkFilter,
+  linkBookId,
+}: InputProps) {
+  const { isSuccess: isCompleteQueryLinkBook } =
+    useQueryLinkBooks("created_at"); // queryLink가 먼저 실행되는 걸 방지
+  const { title: searchKeyword } = useSearchBarStore();
 
-  const pathname = linkBook
-    ? `link-books/${linkBook.linkBookId}/links`
-    : `links`;
-  const queryString = `sort=${linkSort.sort}&order=${linkSort.orderBy}`;
+  const pathname = linkBookId ? `link-books/${linkBookId}/links` : `links`;
+
+  let queryString = `sort=${linkSort.sort}&order=${linkSort.orderBy}`;
+  if (searchKeyword && ["title", "relevance"].includes(linkSort.field))
+    queryString += `&search=${searchKeyword}`;
 
   const {
     data = [],
     refetch,
     ...others
   } = useQuery<Link[], ApiError>({
-    queryKey: getLinkListQueryKey(linkBook?.linkBookId),
+    enabled: !!isCompleteQueryLinkBook,
+    queryKey: getLinkListQueryKey(linkBookId),
     queryFn: () =>
       fetch(`/api/${pathname}?${queryString}`, {
         method: "GET",
@@ -37,6 +51,8 @@ export function useQueryLinks() {
             return [...data].sort(
               (prev, next) => next.readCount - prev.readCount,
             );
+          } else if (linkSort.field === "relevance") {
+            return sortByKeywordPosition(data, searchKeyword);
           }
           return data;
         }),
@@ -44,22 +60,22 @@ export function useQueryLinks() {
 
   const linkList = useMemo(() => {
     return data.filter(({ readCount, createdAt, tags: linkTags }) => {
-      const unreadFlag = unread ? !readCount : true;
-      const datePickerFlag = dateRange.length
-        ? dateRange.length == 2 &&
+      const unreadFlag = linkFilter.unread ? !readCount : true;
+      const datePickerFlag = linkFilter.dateRange.length
+        ? linkFilter.dateRange.length == 2 &&
           isBetween(
             new Date(createdAt),
-            new Date(dateRange[0]),
-            new Date(dateRange[1]),
+            new Date(linkFilter.dateRange[0]),
+            new Date(linkFilter.dateRange[1]),
             true,
           )
         : true;
-      const tagFlag = tags.length
-        ? tags.some((tag) => linkTags.includes(tag))
+      const tagFlag = linkFilter.tags.length
+        ? linkFilter.tags.some((tag) => linkTags.includes(tag))
         : true;
       return unreadFlag && datePickerFlag && tagFlag;
     });
-  }, [data, dateRange, unread, tags]);
+  }, [data, linkFilter.dateRange, linkFilter.unread, linkFilter.tags]);
 
   useEffect(() => {
     if (linkSort.field) {

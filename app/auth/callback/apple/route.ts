@@ -4,8 +4,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
-import { trimTrailingSlash } from "@/utils/envUri";
 import { handleAuthToken } from "@/utils/auth/auth";
+import { trimTrailingSlash } from "@/utils/envUri";
 
 export async function POST(request: NextRequest) {
   try {

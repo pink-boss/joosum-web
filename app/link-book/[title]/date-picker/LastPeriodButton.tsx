@@ -1,5 +1,6 @@
-import { DateRange } from "@/types/date.types";
 import { ReactNode } from "react";
+
+import { DateRange } from "@/types/date.types";
 
 type InputProps = {
   period: "1w" | "3m";

@@ -11,7 +11,7 @@ export default function useLinkBookFromTitle() {
 
   if (!title) return undefined;
 
-  return data?.linkBooks.find(
+  return data?.linkBooks?.find(
     (linkBook) => linkBook.title === replaceDashWithSpaces(title),
   );
 }

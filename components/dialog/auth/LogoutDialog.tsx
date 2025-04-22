@@ -1,8 +1,9 @@
-import ConfirmDialog from "../ConfirmDialog";
 import clsx from "clsx";
 
-import { useOpenDialogStore } from "@/store/useDialogStore";
 import useLogout from "@/hooks/auth/useLogout";
+import { useOpenDialogStore } from "@/store/useDialogStore";
+
+import ConfirmDialog from "../ConfirmDialog";
 
 export default function LogoutDialog() {
   const { isLogoutOpen: isOpen, openLogout: open } = useOpenDialogStore();

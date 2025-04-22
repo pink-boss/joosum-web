@@ -1,5 +1,6 @@
-import { trimTrailingSlash } from "@/utils/envUri";
 import { useRouter } from "next/navigation";
+
+import { trimTrailingSlash } from "@/utils/envUri";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH_GOOGLE_ID;
 const GOOGLE_REDIRECT_URI = `${trimTrailingSlash(process.env.NEXT_PUBLIC_JOOSUM_WEB_URI)}/auth/callback/google`;

@@ -4,11 +4,11 @@ import { serverApi } from "@/utils/api";
 
 export async function GET(
   request: NextRequest,
-  context: { params: { linkBookId: string } },
+  { params }: { params: { linkBookId: string } },
 ) {
   const searchParams = request.nextUrl.searchParams;
   const queryString = `sort=${searchParams.get("sort")}&order=${searchParams.get("order")}`;
-  const { linkBookId } = context.params;
+  const { linkBookId } = await params;
 
   return serverApi({
     path: `api/link-books/${linkBookId}/links`,

@@ -4,9 +4,9 @@ import { serverApi } from "@/utils/api";
 
 export async function PUT(
   request: NextRequest,
-  context: { params: { linkId: string; linkBookId: string } },
+  { params }: { params: { linkId: string; linkBookId: string } },
 ) {
-  const { linkId, linkBookId } = context.params;
+  const { linkId, linkBookId } = await params;
 
   return serverApi({
     path: `api/links/${linkId}/link-book-id/${linkBookId}`,

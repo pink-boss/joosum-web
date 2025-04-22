@@ -5,16 +5,27 @@ import Page from "@/app/search/page";
 import { mockLinks } from "@/stories/mocks/link.mocks";
 import { mockTags } from "@/stories/mocks/tag.mocks";
 import {
-  defaultValues,
-  useFolderLinkFilterStore,
-} from "@/store/link-filter/useFolderStore";
+  defaultValues as filterDefaultValues,
+  useSearchLinkFilterStore,
+} from "@/store/link-filter/useSearchStore";
+import {
+  defaultValues as sortDefaulValues,
+  useSearchLinkSortStore,
+} from "@/store/link-sort/useSearchStore";
 import Topbar from "@/components/layout/Topbar";
 import { mockEmptyRespone, mockRespone } from "@/stories/mocks/linkBook.mocks";
+import { useSearchBarStore } from "@/store/useSearchBarStore";
 
 const meta = {
   title: "Page/FolderList/Search/Page",
   component: Page,
   parameters: {
+    nextjs: {
+      appDirectory: true,
+      navigation: {
+        pathname: "/search",
+      },
+    },
     msw: {
       handlers: [
         http.get("/api/links", () => {
@@ -34,7 +45,9 @@ const meta = {
     </>
   ),
   beforeEach: () => {
-    useFolderLinkFilterStore.setState(defaultValues);
+    useSearchLinkFilterStore.setState(filterDefaultValues);
+    useSearchLinkSortStore.setState(sortDefaulValues);
+    useSearchBarStore.setState({ title: "" });
   },
 } satisfies Meta<typeof Page>;
 
@@ -58,3 +71,5 @@ export const EmptyData: Story = {
     },
   },
 };
+
+// TODO: 페이지 마다 데이터 있는 경우, 없는 경우, 로딩 ui 만들기

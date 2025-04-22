@@ -1,13 +1,15 @@
 import Image from "next/image";
 import NextLink from "next/link";
+import { usePathname } from "next/navigation";
 
 import ImageWithFallback from "@/components/ImageWithFallback";
 import useIncrementViewCount from "@/hooks/link/useIncrementViewCount";
+import { useSearchBarStore } from "@/store/useSearchBarStore";
 import { Link } from "@/types/link.types";
 import { dateFormatter } from "@/utils/date";
 
-import DrawerButton from "../DrawerButton";
 import OpenShareButton from "../../OpenShareButton";
+import DrawerButton from "../DrawerButton";
 
 type FolderLinkInputProps = { linkBookName: string };
 
@@ -28,7 +30,9 @@ function FolderLink({ linkBookName }: FolderLinkInputProps) {
 type InputProps = { link: Link };
 
 export default function LinkCard({ link }: InputProps) {
+  const pathname = usePathname();
   const mutation = useIncrementViewCount(link);
+  const { title: highlightKeyword } = useSearchBarStore();
 
   const handleOpenLink = () => {
     mutation.mutate();
@@ -49,7 +53,21 @@ export default function LinkCard({ link }: InputProps) {
         />
       </div>
       <div className="flex min-w-0 grow flex-col">
-        <div className="truncate text-lg font-bold">{link.title}</div>
+        <div className="truncate text-lg font-bold">
+          {pathname.startsWith("/search") && highlightKeyword
+            ? link.title
+                .split(new RegExp(`(${highlightKeyword})`, "gi"))
+                .map((part, i) =>
+                  part.toLowerCase() === highlightKeyword.toLowerCase() ? (
+                    <span key={i} className="text-primary-400">
+                      {part}
+                    </span>
+                  ) : (
+                    <span key={i}>{part}</span>
+                  ),
+                )
+            : link.title}
+        </div>
         <div className="truncate text-gray-ink">
           {link.tags?.reduce((result, tag) => result + ` #${tag}`, "")}
         </div>

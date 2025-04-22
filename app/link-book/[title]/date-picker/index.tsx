@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { useState } from "react";
 
 import { useClearDropdown } from "@/hooks/useClearDropdown";
+import { DateRange } from "@/types/date.types";
 import { getCalendarDate } from "@/utils/date";
 
 import ChangeMonth from "./ChangeMonth";
@@ -11,7 +12,6 @@ import RenderDate from "./RenderDate";
 import { SelectBox } from "./SelectBox";
 import ResetButton from "../ResetButton";
 import RenderWeek from "./RenderWeek";
-import { DateRange } from "@/types/date.types";
 
 export type InputProps = {
   open?: boolean;

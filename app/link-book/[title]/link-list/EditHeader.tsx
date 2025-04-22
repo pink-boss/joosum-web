@@ -1,5 +1,6 @@
-import Checkbox from "@/components/Checkbox";
 import { ChangeEvent } from "react";
+
+import Checkbox from "@/components/Checkbox";
 
 type InputProps = {
   totalCount: number;

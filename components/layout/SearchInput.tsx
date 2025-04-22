@@ -1,8 +1,10 @@
-import { useSearchBarStore } from "@/store/useSearchBarStore";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
+
+import { useSearchLinkSortStore } from "@/store/link-sort/useSearchStore";
+import { useSearchBarStore } from "@/store/useSearchBarStore";
 
 type InputProps = {
   inputDelay?: number;
@@ -13,18 +15,26 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
   const { title, setTitle } = useSearchBarStore();
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [inputValue, setInputValue] = useState(title);
+  const { setField } = useSearchLinkSortStore();
 
-  const handleChangeSearchState = (value: string) => {
-    setTitle(value);
-    router.push("search");
-    // router.push(`search/${value}`); TODO: dynamic route로 전환
-  };
+  const handleChangeSearchState = useCallback(
+    (value: string) => {
+      setTitle(value);
+      router.push("search");
+      setField("relevance");
+      // router.push(`search/${value}`); TODO: dynamic route로 전환
+    },
+    [setTitle, setField, router],
+  );
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === "Enter") {
-      handleChangeSearchState(e.currentTarget.value);
-    }
-  };
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.code === "Enter") {
+        handleChangeSearchState(e.currentTarget.value);
+      }
+    },
+    [handleChangeSearchState],
+  );
 
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -36,9 +46,9 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [inputValue]);
+  }, [inputValue, inputDelay, handleChangeSearchState]);
   return (
-    <div className="relative w-fit">
+    <div className="relative w-fit" data-testid="search-link">
       <input
         type="text"
         placeholder="링크 제목으로 검색해보세요."

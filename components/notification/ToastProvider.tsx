@@ -4,6 +4,7 @@ import { createContext, useState, useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 import { ToastNotification, ToastNotify } from "@/types/notification.types";
+
 import Notification from "./Notification";
 
 type ToastMetaData = Omit<ToastNotification, "visible"> &

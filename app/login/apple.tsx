@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-import { trimTrailingSlash } from "@/utils/envUri";
 import { sanitizeRedirectUrl } from "@/utils/auth/oauth";
+import { trimTrailingSlash } from "@/utils/envUri";
 
 const APPLE_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH_APPLE_ID;
 

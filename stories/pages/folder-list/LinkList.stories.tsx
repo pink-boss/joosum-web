@@ -13,15 +13,20 @@ import {
   defaultValues as sortDefaulValues,
   useFolderLinkSortStore,
 } from "@/store/link-sort/useFolderStore";
+import useLinkBookFromTitle from "@/hooks/link/useLinkBookFromTitle";
+import { queryClient } from "@/stories/mocks/store.mocks";
 
 const Wrapper = ({ defaultEditMode }: { defaultEditMode?: boolean }) => {
   const linkSort = useFolderLinkSortStore();
   const linkFilter = useFolderLinkFilterStore();
+  const linkBook = useLinkBookFromTitle();
+
   return (
     <LinkList
       defaultEditMode={defaultEditMode}
       linkSort={linkSort}
-      unread={linkFilter.unread}
+      linkFilter={linkFilter}
+      linkBookId={linkBook?.linkBookId}
     />
   );
 };
@@ -37,8 +42,23 @@ const meta = {
     },
     msw: {
       handlers: [
-        http.get("/api/links", ({ request }) => {
+        http.get("/api/links", () => {
           return HttpResponse.json(mockLinks);
+        }),
+        http.get("/api/link-books?sort=created_at", ({ request }) => {
+          return HttpResponse.json({
+            linkBooks: mockLinkBooks,
+            totalLinkCount: mockLinkBooks.length,
+          });
+        }),
+        http.get("/api/link-books/:linkBookId/links", ({ request, params }) => {
+          return HttpResponse.json(
+            params.linkBookId
+              ? mockLinks.filter(
+                  (link) => params.linkBookId === link.linkBookId,
+                )
+              : mockLinks,
+          );
         }),
       ],
     },
@@ -46,6 +66,7 @@ const meta = {
   beforeEach: () => {
     useFolderLinkFilterStore.setState(filterDefaultValues);
     useFolderLinkSortStore.setState(sortDefaulValues);
+    queryClient.clear();
   },
 } satisfies Meta<typeof Wrapper>;
 

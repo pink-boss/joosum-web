@@ -1,6 +1,7 @@
-import { useOpenDialogStore } from "@/store/useDialogStore";
 import clsx from "clsx";
 import Image from "next/image";
+
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 type MenuInputProps = {
   title: string;

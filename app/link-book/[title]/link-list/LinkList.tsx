@@ -5,29 +5,37 @@ import EmptyLinks from "@/components/EmptyLinks";
 import Loading from "@/components/Loading";
 import useCheckLink from "@/hooks/link/useCheckLink";
 import { useQueryLinks } from "@/hooks/link/useQueryLinks";
-import { useOpenDialogStore } from "@/store/useDialogStore";
-
-import LinkComponent from "./LinkCard";
+import { LinkFilterValues } from "@/store/link-filter/schema";
 import { LinkSortState } from "@/store/link-sort/schema";
-import { LinkFilterState } from "@/store/link-filter/schema";
-import ViewToolbar from "./ViewToolbar";
-import EditToolbar from "./EditToolbar";
-import EditHeader from "./EditHeader";
+import { useOpenDialogStore } from "@/store/useDialogStore";
+import { LinkBook } from "@/types/linkBook.types";
 
-type InputProps = Pick<LinkFilterState, "unread"> & {
+import EditHeader from "./EditHeader";
+import EditToolbar from "./EditToolbar";
+import LinkComponent from "./LinkCard";
+import ViewToolbar from "./ViewToolbar";
+
+type InputProps = {
   defaultEditMode?: boolean;
   linkSort: LinkSortState;
+  linkFilter: LinkFilterValues;
+  linkBookId?: LinkBook["linkBookId"];
 };
 
 export default function LinkList({
   defaultEditMode = false,
   linkSort,
-  unread,
+  linkFilter,
+  linkBookId,
 }: InputProps) {
   const { openDeleteLink, openReassignLinkBook } = useOpenDialogStore();
   const [editMode, setEditMode] = useState(defaultEditMode);
   const { cachedLinks, setCachedLink, setAllLinks } = useCheckLink();
-  const { data, isPending } = useQueryLinks();
+  const { data, isPending } = useQueryLinks({
+    linkSort,
+    linkFilter,
+    linkBookId,
+  });
   const totalCount = data.length;
 
   const handleChangeToolbarMode = () => {
@@ -35,7 +43,7 @@ export default function LinkList({
   };
 
   const handleAllCheckLinks = (e: ChangeEvent<HTMLInputElement>) => {
-    setAllLinks(!!e.target.checked);
+    setAllLinks(!!e.target.checked, data);
   };
 
   const handleCheckLink = (e: ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +115,7 @@ export default function LinkList({
           ))}
         </div>
       ) : (
-        <EmptyLinks unread={unread} />
+        <EmptyLinks unread={linkFilter.unread} />
       )}
     </div>
   );

@@ -1,13 +1,15 @@
 import Image from "next/image";
-import Dialog from "./Dialog";
-import { useOpenDialogStore } from "@/store/useDialogStore";
-import Toggle from "../Toggle";
+
 import { useQueryNotificationSetting } from "@/hooks/settings/useQueryNotificationSetting";
 import useUpdateNotificationSetting from "@/hooks/settings/useUpdateNotificationSetting";
+import { useOpenDialogStore } from "@/store/useDialogStore";
 import {
   UpdateFormState,
   UpdateNotificationType,
 } from "@/types/notification.types";
+
+import Toggle from "../Toggle";
+import Dialog from "./Dialog";
 
 export default function NotificationSettingDialog() {
   const { isNotificationSettingOpen: isOpen, openNotificationSetting: open } =
@@ -62,7 +64,7 @@ export default function NotificationSettingDialog() {
           <div className="flex flex-col gap-1">
             <div className="text-lg font-semibold">읽지 않은 링크</div>
             <div className="text-sm text-gray-dim">
-              '읽지 않음' 상태의 링크 알림
+              &apos;읽지 않음&apos; 상태의 링크 알림
             </div>
           </div>
           <Toggle
@@ -80,7 +82,7 @@ export default function NotificationSettingDialog() {
           <div className="flex flex-col gap-1">
             <div className="text-lg font-semibold">분류되지 않은 링크</div>
             <div className="text-sm text-gray-dim">
-              '기본' 폴더에 분류된 링크 알림
+              &apos;기본&apos; 폴더에 분류된 링크 알림
             </div>
           </div>
           <Toggle

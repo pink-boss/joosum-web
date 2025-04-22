@@ -1,7 +1,3 @@
-import useQueryThumbnail from "@/hooks/link/useQueryThumbnail";
-import FormItem from "./FormItem";
-import { SaveFormState } from "@/types/link.types";
-import { useLinkInputStore } from "@/store/useLinkInputStore";
 import {
   ChangeEvent,
   Dispatch,
@@ -9,8 +5,14 @@ import {
   SetStateAction,
   useState,
 } from "react";
+
 import { toast } from "@/components/notification/toast";
+import useQueryThumbnail from "@/hooks/link/useQueryThumbnail";
+import { useLinkInputStore } from "@/store/useLinkInputStore";
+import { SaveFormState } from "@/types/link.types";
 import { isApiError } from "@/utils/error";
+
+import FormItem from "./FormItem";
 
 type InputProps = {
   value?: string;

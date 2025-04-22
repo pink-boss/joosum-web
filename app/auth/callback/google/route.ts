@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
+import { handleAuthToken } from "@/utils/auth/auth";
 import { trimTrailingSlash } from "@/utils/envUri";
 
-import { handleAuthToken } from "@/utils/auth/auth";
 
 export async function GET(request: NextRequest) {
   try {
