@@ -19,11 +19,8 @@ export async function GET(request: NextRequest) {
       idToken: code,
     });
 
-    console.log("-------------------------------0");
-    console.log(code);
-    // 서버에 로그인 요청 보내기
     const response = await fetch(
-      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/auth/google`,
+      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/auth/google/web`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -33,15 +30,10 @@ export async function GET(request: NextRequest) {
       },
     );
 
-    console.log("-------------------------------1");
-    console.log(response);
-
     let data = await response.json();
     if (data.error) {
       new Error(data.error);
     }
-    console.log("-------------------------------3");
-    console.log(data);
 
     // // 데이터 없으면 회원가입(온보딩)
     // if (!data.accessToken) {
