@@ -13,7 +13,7 @@ const GoogleOAuthHandler = () => {
       `client_id=${GOOGLE_CLIENT_ID}` +
       `&redirect_uri=${encodeURIComponent(GOOGLE_REDIRECT_URI)}` +
       `&response_type=code` +
-      `&scope=email profile` +
+      `&scope=openid email profile` +
       `&state=${encodeURIComponent(Math.random().toString(36).substring(2, 15))}`;
 
     router.push(authUrl);
