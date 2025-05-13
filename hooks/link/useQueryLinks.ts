@@ -28,19 +28,23 @@ export function useQueryLinks({
     useQueryLinkBooks("created_at"); // queryLink가 먼저 실행되는 걸 방지
   const { title: searchKeyword } = useSearchBarStore();
 
-  const queryOptions: Record<string, unknown> & {
-    queryKey: readonly unknown[];
-  } = {
-    pathname: linkBookId ? `link-books/${linkBookId}/links` : `links`,
-    queryString: `sort=${linkSort.sort}&order=${linkSort.orderBy}`,
-    queryKey: getLinkListQueryKey(linkBookId),
-  };
+  const queryOptions = useMemo<
+    Record<string, unknown> & {
+      queryKey: readonly unknown[];
+    }
+  >(() => {
+    let pathname = linkBookId ? `link-books/${linkBookId}/links` : `links`;
+    let queryString = `sort=${linkSort.sort}&order=${linkSort.orderBy}`;
+    let queryKey = getLinkListQueryKey(linkBookId);
 
-  if (searchKeyword && ["title", "relevance"].includes(linkSort.field)) {
-    queryOptions.queryString += `&search=${searchKeyword}`;
-    queryOptions.pathname = "links";
-    queryOptions.queryKey = ["search"];
-  }
+    if (searchKeyword) {
+      queryString += `&search=${searchKeyword}`;
+      queryKey = ["search", "linkList"];
+      if (linkBookId) queryKey.push(linkBookId);
+    }
+
+    return { pathname, queryString, queryKey };
+  }, [linkBookId, linkSort.sort, linkSort.orderBy, searchKeyword]);
 
   const {
     data = [],

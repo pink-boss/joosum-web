@@ -72,7 +72,7 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
             onClick={() => setInputValue("")}
             className={clsx(
               "size-5 rounded-full bg-gray-silver",
-              "flex items-center justify-center pb-0.5 text-white",
+              "flex items-center justify-center text-lg text-white",
             )}
           >
             &times;
