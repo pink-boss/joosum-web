@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import clsx from "clsx";
 import localFont from "next/font/local";
 import { usePathname } from "next/navigation";
+import { Suspense, useState } from "react";
 
 import DynamicOpenDialogs from "@/components/dialog/DynamicOpenDialogs";
 import Sidebar from "@/components/layout/Sidebar";
@@ -15,8 +16,7 @@ import { publicOnlyPaths } from "@/utils/path";
 import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
 import { ToastProvider } from "@/components/notification/ToastProvider";
 import PublicPathHeader from "@/components/PublicPathHeader";
-
-const queryClient = new QueryClient();
+import Loading from "@/components/Loading";
 
 const pretendard = localFont({
   src: "../public/fonts/PretendardVariable.woff2",
@@ -25,6 +25,42 @@ const pretendard = localFont({
   variable: "--font-pretendard",
 });
 
+// QueryClient 최적화 설정
+function makeQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 5 * 60 * 1000, // 5분
+        gcTime: 10 * 60 * 1000, // 10분 (구 cacheTime)
+        retry: (failureCount, error) => {
+          // 4xx 에러는 재시도하지 않음
+          if (error instanceof Error && error.message.includes("4")) {
+            return false;
+          }
+          return failureCount < 3;
+        },
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: "always",
+      },
+      mutations: {
+        retry: 1,
+      },
+    },
+  });
+}
+
+let browserQueryClient: QueryClient | undefined = undefined;
+
+function getQueryClient() {
+  if (typeof window === "undefined") {
+    return makeQueryClient();
+  } else {
+    if (!browserQueryClient) browserQueryClient = makeQueryClient();
+    return browserQueryClient;
+  }
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -32,6 +68,7 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const isPublicOnlyPath = publicOnlyPaths.includes(pathname);
+  const [queryClient] = useState(() => getQueryClient());
 
   return (
     <html lang="ko">
@@ -47,7 +84,7 @@ export default function RootLayout({
         {isPublicOnlyPath ? (
           <Component className="justify-center">
             <PublicPathHeader />
-            {children}
+            <Suspense fallback={<Loading />}>{children}</Suspense>
           </Component>
         ) : (
           <QueryClientProvider client={queryClient}>
@@ -55,7 +92,7 @@ export default function RootLayout({
               <Sidebar>
                 <Component>
                   <Topbar />
-                  {children}
+                  <Suspense fallback={<Loading />}>{children}</Suspense>
                   <div id="drawer-root" />
                   <div id="modal-root" />
                   <DynamicOpenDrawers />
@@ -63,7 +100,9 @@ export default function RootLayout({
                 </Component>
               </Sidebar>
             </ToastProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
+            {process.env.NODE_ENV === "development" && (
+              <ReactQueryDevtools initialIsOpen={false} />
+            )}
           </QueryClientProvider>
         )}
       </body>
