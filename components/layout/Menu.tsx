@@ -60,7 +60,7 @@ export default function Menu() {
       <Link href="/home" onClick={closeDialog}>
         <div className="flex items-center gap-4 px-10 py-3">
           <Image src="/icons/home.png" width={24} height={24} alt="home" />
-          <div className="text-lg font-bold">홈</div>
+          <div className="text-lg font-bold text-gray-ink">홈</div>
         </div>
       </Link>
       <Link href="/my-folder" legacyBehavior>
@@ -71,7 +71,7 @@ export default function Menu() {
             height={24}
             alt="folder"
           />
-          <div className="text-lg font-bold">내 폴더</div>
+          <div className="text-lg font-bold text-gray-ink">내 폴더</div>
           <div className="ml-auto" onClick={handleOpenMenu}>
             <Image
               src={`/icons/icon-down.png`}

@@ -7,6 +7,7 @@ import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 
 import {
   AccountDialog,
+  AppDownloadDialog,
   DeleteAccountDialog,
   DeleteDrawerLinkDialog,
   DeleteLinkBookDialog,
@@ -31,6 +32,7 @@ export default function DynamicOpenDialogs() {
     isLogoutOpen,
     isNotificationSettingOpen,
     isTagSettingOpen,
+    isAppDownloadOpen,
   } = useOpenDialogStore();
 
   const { isDeleteTagConfirmOpen } = useOpenSubDialogStore();
@@ -47,6 +49,7 @@ export default function DynamicOpenDialogs() {
       {isLogoutOpen && <LogoutDialog />}
       {isNotificationSettingOpen && <NotificationSettingDialog />}
       {isTagSettingOpen && <TagSettingDialog />}
+      {isAppDownloadOpen && <AppDownloadDialog />}
 
       {isDeleteTagConfirmOpen && <DeleteTagConfirmDialog />}
     </>
