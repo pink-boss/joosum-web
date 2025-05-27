@@ -2,8 +2,8 @@ import {
   ReassignLinkBookDialog,
   ShareLinkDialog,
 } from "@/app/link-book/dialog/dynamic";
-
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 
 import {
   AccountDialog,
@@ -17,7 +17,6 @@ import {
   NotificationSettingDialog,
   TagSettingDialog,
 } from "./dynamic";
-import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 
 export default function DynamicOpenDialogs() {
   const {

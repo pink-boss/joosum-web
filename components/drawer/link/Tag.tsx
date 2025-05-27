@@ -1,8 +1,15 @@
-import { toast } from "@/components/notification/toast";
 import clsx from "clsx";
-import { KeyboardEvent, MouseEvent as ReactMouseEvent, RefObject } from "react";
+import {
+  KeyboardEvent,
+  MouseEvent as ReactMouseEvent,
+  RefObject,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { toast } from "@/components/notification/toast";
 
 type InputProps = {
   tags: string[];
@@ -164,7 +171,7 @@ function TagWrapper({
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [setIsActive]);
 
   return (
     <div ref={wrapperRef} onClick={handleClick}>

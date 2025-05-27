@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import Image from "next/image";
 
+import useDelete from "@/hooks/auth/useDelete";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import Dialog from "../Dialog";
-import useDelete from "@/hooks/auth/useDelete";
 
 type InputProps = {};
 
@@ -96,7 +96,7 @@ export default function DeleteAccountDialog({}: InputProps) {
               type="radio"
               id="agreement"
               name="agreement"
-              className="h-6 w-6"
+              className="size-6"
               required
               onInvalid={(e) =>
                 (e.target as HTMLInputElement).setCustomValidity(

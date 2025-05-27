@@ -4,7 +4,10 @@ import { serverApi } from "@/utils/api";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const queryString = `sort=${searchParams.get("sort")}&order=${searchParams.get("order")}`;
+  let queryString = `sort=${searchParams.get("sort")}&order=${searchParams.get("order")}`;
+  if (searchParams.get("search")) {
+    queryString += `&search=${searchParams.get("search")}`;
+  }
 
   return serverApi({
     path: "api/links",

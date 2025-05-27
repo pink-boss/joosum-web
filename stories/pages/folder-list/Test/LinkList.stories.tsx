@@ -1,32 +1,29 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import {
-  expect,
-  screen,
-  spyOn,
-  userEvent,
-  waitFor,
-  within,
-} from "@storybook/test";
+import { expect, spyOn, userEvent, waitFor, within } from "@storybook/test";
 
 import { http, HttpResponse } from "msw";
 
-import LinkList from "@/app/link-book/[title]/LinkList";
 import { ReassignLinkBookDialog } from "@/app/link-book/dialog/dynamic";
 import { DeleteLinkDialog } from "@/components/dialog/dynamic";
 import {
   defaultValues as filterDefaultValues,
-  useLinkFilterStore,
-} from "@/store/useLinkFilterStore";
+  useFolderLinkFilterStore,
+} from "@/store/link-filter/useFolderStore";
 import {
   defaultValues as sortDefaultValues,
-  LinkSortState,
-  useLinkSortStore,
-} from "@/store/useLinkSortStore";
+  useFolderLinkSortStore,
+} from "@/store/link-sort/useFolderStore";
 
-import { mockLinks } from "../../../mocks/link.mocks";
+import { mockLinks, mockRelevanceOptionLinks } from "../../../mocks/link.mocks";
 import { mockLinkBooks } from "../../../mocks/linkBook.mocks";
 import { queryClient } from "@/stories/mocks/store.mocks";
 import meta from "../LinkList.stories";
+import React from "react";
+import { LinkSortState, searchDefaultValues } from "@/store/link-sort/schema";
+import LinkList from "@/app/link-book/[title]/link-list/LinkList";
+import { useSearchLinkSortStore } from "@/store/link-sort/useSearchStore";
+import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
+import { useSearchBarStore } from "@/store/useSearchBarStore";
 
 let capturedRequest: Request | null = null;
 
@@ -73,12 +70,12 @@ const testMeta = {
     },
   },
   beforeEach: () => {
-    useLinkFilterStore.setState(filterDefaultValues);
-    useLinkSortStore.setState(sortDefaultValues);
+    useFolderLinkFilterStore.setState(filterDefaultValues);
+    useFolderLinkSortStore.setState(sortDefaultValues);
     queryClient.clear();
     capturedRequest = null;
   },
-} satisfies Meta<typeof LinkList>;
+} satisfies Meta<typeof React.Component>;
 
 export default testMeta;
 type Story = StoryObj<typeof testMeta>;
@@ -103,9 +100,9 @@ export const TestCheckStatement: Story = {
           name: "모두 선택",
         }),
       );
-      checkboxList.forEach(async (checkbox) => {
+      for (let checkbox of checkboxList) {
         await expect(checkbox.firstChild).toBeChecked();
-      });
+      }
 
       // 모두 해제
       await userEvent.click(
@@ -113,9 +110,9 @@ export const TestCheckStatement: Story = {
           name: "모두 선택",
         }),
       );
-      checkboxList.forEach(async (checkbox) => {
+      for (let checkbox of checkboxList) {
         await expect(checkbox.firstChild).not.toBeChecked();
-      });
+      }
     });
   },
 };
@@ -221,22 +218,27 @@ export const TestDeleteLinks: Story = {
     return (
       <>
         <Story />
-        <div id="modal-root" />
         <DeleteLinkDialog />
       </>
     );
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    const linkList = await canvas.findByTestId("link-list");
+
+    const checkboxList = within(linkList).getAllByRole("checkbox");
 
     await waitFor(async () => {
-      const checkboxList = canvas.queryAllByRole("listitem");
-
-      await userEvent.click(within(checkboxList[0]).getByRole("checkbox"));
-      await userEvent.click(within(checkboxList[2]).getByRole("checkbox"));
-
-      await userEvent.click(canvas.getByRole("button", { name: "삭제" }));
+      expect(checkboxList.length).toBe(4);
     });
+
+    await userEvent.click(checkboxList[0]);
+    await userEvent.click(checkboxList[2]);
+
+    await waitFor(async () => {
+      expect(checkboxList[0]).toBeChecked();
+    });
+    await userEvent.click(canvas.getByRole("button", { name: "삭제" }));
 
     await waitFor(async () => {
       const dialog = within(canvas.queryByRole("dialog")!);
@@ -315,6 +317,56 @@ export const TestReassignLinkBook: Story = {
 
     await waitFor(async () => {
       expect(invalidateQuerySpy).toHaveBeenCalled();
+    });
+  },
+};
+
+const SearchWrapper = () => {
+  const linkSort = useSearchLinkSortStore();
+  const linkFilter = useSearchLinkFilterStore();
+  return (
+    <LinkList
+      defaultEditMode={false}
+      linkSort={linkSort}
+      linkFilter={linkFilter}
+    />
+  );
+};
+// 제목 필터는 서버라서 테스트 불가
+export const TestRelevanceOption: Story = {
+  render: () => <SearchWrapper />,
+  beforeEach: () => {
+    testMeta.beforeEach();
+    useSearchLinkFilterStore.setState(filterDefaultValues);
+    useSearchLinkSortStore.setState(searchDefaultValues);
+    useSearchBarStore.getState().setTitle("공식 문서");
+  },
+  parameters: {
+    nextjs: {
+      navigation: {
+        pathname: "/search",
+      },
+    },
+    msw: {
+      handlers: [
+        http.get("/api/links", ({ request }) => {
+          capturedRequest = request;
+          return HttpResponse.json(mockRelevanceOptionLinks);
+        }),
+      ],
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      const listElement = await canvas.findByTestId("link-list");
+      expect(listElement).toBeInTheDocument();
+
+      const items = within(listElement).getAllByRole("listitem");
+      expect(items[0].textContent).toMatch(/공식\s?문서.*피그마/);
+      expect(items[1].textContent).toMatch(/공식\s?문서.*스토리북/);
+      expect(items[2].textContent).toMatch(/React\s?공식\s?문서\s?\(17\)/);
     });
   },
 };

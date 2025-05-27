@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import { LinkFilterState } from "@/store/useLinkFilterStore";
+import { FolderLinkFilterState } from "@/store/link-filter/useFolderStore";
 import { removeItem } from "@/utils/array";
 
 type BadgeInputProps = {
@@ -42,7 +42,7 @@ export function TagBadge({ tags, setTags }: BadgeInputProps) {
   );
 }
 
-type InputProps = Pick<LinkFilterState, "tags" | "setTags">;
+type InputProps = Pick<FolderLinkFilterState, "tags" | "setTags">;
 
 export default function SelectedTags({ tags, setTags }: InputProps) {
   return (

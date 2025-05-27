@@ -1,7 +1,9 @@
 import { clearTimeout, setTimeout } from "timers";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import OpenShareButton from "@/app/link-book/OpenShareButton";
 import Drawer from "@/components/drawer/Drawer";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import useUpdateLink from "@/hooks/link/useUpdateLink";
@@ -10,16 +12,13 @@ import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { CreateFormState } from "@/types/link.types";
 import { krDateFormatter } from "@/utils/date";
 
-import Header from "./Header";
-import Tag from "./Tag";
+import Buttons from "./Buttons";
 import { defaultValues } from "./data";
 import Folder from "./Folder";
-
-import Buttons from "./Buttons";
-import Image from "next/image";
-import OpenShareButton from "@/app/link-book/OpenShareButton";
-import TitleInput from "./TitleInput";
+import Header from "./Header";
 import LinkInput from "./LinkInput";
+import Tag from "./Tag";
+import TitleInput from "./TitleInput";
 
 type ToastDefaultValues = {
   isOpen: boolean;
@@ -60,33 +59,14 @@ export default function MutateLinkDrawer() {
     });
   };
 
-  const mutation = useUpdateLink(handleMutateSuccessCallback);
+  const updateLink = useUpdateLink(handleMutateSuccessCallback);
   const handleSubmit = async () => {
-    mutation.mutate(formState as Required<CreateFormState>, {
-      onError: (error: Error) => {
-        setToast({
-          isOpen: true,
-          bgColor: "#fecaca",
-          textColor: "#DC2626",
-          message: error.message,
-        });
-      },
-    });
+    updateLink.mutate(formState as Required<CreateFormState>);
   };
 
   const handleDelete = () => {
     openDeleteDrawerLink(true);
   };
-
-  useEffect(() => {
-    if (toast.isOpen) {
-      const timer = setTimeout(() => {
-        setToast(toastDefaultValues);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [toast.isOpen]);
 
   useEffect(() => {
     setFormState(link ?? defaultValues);

@@ -66,14 +66,14 @@ export const TestInsertTag: Story = {
     await userEvent.type(input, "블록체인{enter}");
     await verifyTestAPI(capturedRequest, `/api/settings/tags`, "POST");
 
-    expect(canvas.queryByText("블록체인")).toBeTruthy();
+    expect(await canvas.findByText("블록체인")).toBeTruthy();
     capturedRequest = null;
 
     // 스페이스바
     await userEvent.type(input, "양자컴퓨터 ");
     await verifyTestAPI(capturedRequest, `/api/settings/tags`, "POST");
 
-    expect(canvas.queryByText("양자컴퓨터")).toBeTruthy();
+    expect(await canvas.findByText("양자컴퓨터")).toBeTruthy();
     capturedRequest = null;
   },
 };
@@ -176,8 +176,9 @@ export const TestDeleteTag: Story = {
 
     await verifyTestAPI(capturedRequest, `/api/settings/tags/AI`, "DELETE");
 
+    const tagList = within(canvas.getByTestId("tag-list"));
     await waitFor(() => {
-      expect(canvas.queryByText("AI")).not.toBeInTheDocument();
+      expect(tagList.queryByText("AI")).not.toBeInTheDocument();
     });
     capturedRequest = null;
   },

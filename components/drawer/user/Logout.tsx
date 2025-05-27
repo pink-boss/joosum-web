@@ -1,5 +1,6 @@
-import { useOpenDialogStore } from "@/store/useDialogStore";
 import Image from "next/image";
+
+import { useOpenDialogStore } from "@/store/useDialogStore";
 
 export default function Logout() {
   const { openLogout } = useOpenDialogStore();

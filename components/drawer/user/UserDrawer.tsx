@@ -2,13 +2,12 @@ import clsx from "clsx";
 import Image from "next/image";
 
 import Drawer from "@/components/drawer/Drawer";
-
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 
-import Support from "./Support";
-import Setting from "./Setting";
 import Account from "./Account";
 import Logout from "./Logout";
+import Setting from "./Setting";
+import Support from "./Support";
 
 export default function UserDrawer() {
   const { isUserDrawerOpen: isOpen, openUserDrawer: open } =

@@ -7,10 +7,10 @@ import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useLayoutStore } from "@/store/useLayoutStore";
+import { LinkBook } from "@/types/linkBook.types";
 
 import LinkToPage from "../link-book/LinkToPage";
 import Loading from "../Loading";
-import { LinkBook } from "@/types/linkBook.types";
 
 type LinkBookMenuProps = {
   linkBook: LinkBook;

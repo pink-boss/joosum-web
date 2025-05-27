@@ -4,10 +4,11 @@ import { serverApi } from "@/utils/api";
 
 export async function GET(
   request: NextRequest,
-  context: { params: { linkId: string } },
+  { params }: { params: { linkId: string } },
 ) {
+  const { linkId } = await params;
   return serverApi({
-    path: `api/links/${context.params.linkId}/read-count`,
+    path: `api/links/${linkId}/read-count`,
     method: "PUT",
   });
 }

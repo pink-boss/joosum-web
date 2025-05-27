@@ -1,39 +1,24 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { LinkSortState, searchDefaultValues } from "./schema";
+export { searchDefaultValues as defaultValues } from "./schema";
 
-export type Field = "lastest" | "oldest" | "title" | "mostViewd";
-type Sort = "created_at" | "title";
-type OrderBy = "asc" | "desc";
-
-export const defaultValues: Omit<LinkSortState, "setField"> = {
-  field: "lastest",
-  sort: "created_at",
-  orderBy: "desc",
-};
-
-export interface LinkSortState {
-  field: Field;
-  sort: Sort;
-  orderBy: OrderBy;
-  setField: (field: Field) => void;
-}
-
-export const useLinkSortStore = create<LinkSortState>()(
+export const useSearchLinkSortStore = create<LinkSortState>()(
   persist(
     (set) => ({
-      ...defaultValues,
+      ...searchDefaultValues,
       setField: (field) => {
         if (field === "lastest")
           set({ field, sort: "created_at", orderBy: "desc" });
         else if (field === "oldest")
           set({ field, sort: "created_at", orderBy: "asc" });
-        else if (field === "title")
+        else if (["title", "relevance"].includes(field))
           set({ field, sort: "title", orderBy: "asc" });
         else set({ field, sort: "title", orderBy: "desc" }); // refech를 위한 상태 변경
       },
     }),
     {
-      name: "link-sort-params",
+      name: "search-link-sort",
       partialize: (state) => ({
         field: state.field,
         sort: state.sort,

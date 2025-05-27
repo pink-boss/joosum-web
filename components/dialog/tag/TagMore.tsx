@@ -1,13 +1,11 @@
 "use client";
 
 import clsx from "clsx";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-import { useClearDropdown } from "@/hooks/useClearDropdown";
-
-import Image from "next/image";
-
 import useUpsertTags from "@/hooks/settings/useUpsertTags";
+import { useClearDropdown } from "@/hooks/useClearDropdown";
 import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 
 export type InputProps = {

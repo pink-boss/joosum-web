@@ -1,48 +1,26 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-
 import { Link } from "@/types/link.types";
-import { getLinkListQueryKey } from "@/utils/queryKey";
 
-import useLinkBookFromTitle from "./useLinkBookFromTitle";
-
-const queryKey = ["link", "checkedId"];
+import { useCheckLinkStore } from "@/store/useCheckLinkStore";
 
 export default function useCheckLink() {
-  const queryClient = useQueryClient();
-  const linkBook = useLinkBookFromTitle();
-
-  const { data } = useQuery({
-    queryKey,
-    enabled:
-      queryClient.getQueryState(getLinkListQueryKey(linkBook?.linkBookId))
-        ?.status === "success",
-    queryFn: () => queryClient.getQueryData<string[]>(queryKey) ?? [],
-    staleTime: Infinity,
-  });
+  const { links, setLinks, clearLinks } = useCheckLinkStore();
 
   const setCachedLink = (linkId: string) => {
-    const newSet = new Set(data);
-    if (newSet.has(linkId)) {
-      newSet.delete(linkId);
+    if (links.has(linkId)) {
+      links.delete(linkId);
     } else {
-      newSet.add(linkId);
+      links.add(linkId);
     }
-    queryClient.setQueryData(queryKey, [...newSet]);
+    setLinks([...links]);
   };
 
-  const setAllLinks = (isAllChecked: boolean) => {
-    const allLinks = queryClient.getQueryData<Link[]>(
-      getLinkListQueryKey(linkBook?.linkBookId),
-    );
-    queryClient.setQueryData(
-      queryKey,
-      isAllChecked ? allLinks?.map((link) => link.linkId) : null,
-    );
+  const setAllLinks = (isAllChecked: boolean, allLinks: Link[]) => {
+    if (isAllChecked) {
+      setLinks(allLinks?.map((link) => link.linkId));
+    } else {
+      clearLinks();
+    }
   };
 
-  const clearLinks = () => {
-    queryClient.setQueryData(queryKey, null);
-  };
-
-  return { cachedLinks: new Set(data), setCachedLink, setAllLinks, clearLinks };
+  return { cachedLinks: links, setCachedLink, setAllLinks, clearLinks };
 }

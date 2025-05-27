@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { trimTrailingSlash } from "@/utils/envUri";
 import { logout } from "@/utils/auth/auth";
+import { trimTrailingSlash } from "@/utils/envUri";
 
 export async function POST() {
   const token = (await cookies()).get("accessToken");
