@@ -14,6 +14,7 @@ import { publicOnlyPaths } from "@/utils/path";
 
 import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
 import { ToastProvider } from "@/components/notification/ToastProvider";
+import PublicPathHeader from "@/components/PublicPathHeader";
 
 const queryClient = new QueryClient();
 
@@ -42,9 +43,12 @@ export default function RootLayout({
         ></script>
         <script src="https://accounts.google.com/gsi/client" async></script>
       </head>
-      <body className={clsx(pretendard.variable, "bg-white font-pretendard")}>
+      <body className={clsx(pretendard.variable, "font-pretendard")}>
         {isPublicOnlyPath ? (
-          <Component className="justify-center">{children}</Component>
+          <Component className="justify-center">
+            <PublicPathHeader />
+            {children}
+          </Component>
         ) : (
           <QueryClientProvider client={queryClient}>
             <ToastProvider>
@@ -77,7 +81,7 @@ function Component({
   return (
     <main
       className={clsx(
-        "relative flex h-screen w-full flex-col items-center",
+        "relative flex h-screen w-full flex-col items-center bg-white text-black",
         className && className,
       )}
     >

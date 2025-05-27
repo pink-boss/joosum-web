@@ -5,7 +5,7 @@ import { trimTrailingSlash } from "@/utils/envUri";
 import { logout } from "@/utils/auth/auth";
 
 export async function POST() {
-  const token = cookies().get("accessToken");
+  const token = (await cookies()).get("accessToken");
 
   if (!token?.value) {
     return NextResponse.json({ error: "정상적으로 로그인되어 있지 않습니다." });
