@@ -6,6 +6,7 @@ import {
   isExist,
   storeAuthTokenForOnboarding,
   storeAccessToken,
+  storePreviousLoginProvider,
 } from "@/utils/auth/auth";
 
 export async function GET(request: NextRequest) {
@@ -48,6 +49,8 @@ export async function GET(request: NextRequest) {
     if (data.accessToken) {
       await storeAccessToken(data.accessToken);
     }
+
+    await storePreviousLoginProvider("google");
 
     return redirect("/");
   } catch (e) {

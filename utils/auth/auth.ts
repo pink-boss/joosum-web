@@ -1,4 +1,4 @@
-import { LoginResult } from "@/types/auth.types";
+import { LoginResult, PreviousLoginProvider } from "@/types/auth.types";
 import { cookies } from "next/headers";
 
 export function handleAuthToken(result: LoginResult) {
@@ -58,6 +58,19 @@ export async function storeAccessToken(accessToken: string) {
     path: "/",
     maxAge: 60 * 60 * 365 * 10, // 10년
   });
+}
+
+export async function storePreviousLoginProvider(
+  provider: PreviousLoginProvider,
+) {
+  if (provider) {
+    const cookieStore = await cookies();
+    cookieStore.set({
+      name: "previousLoginProvider",
+      value: provider,
+      maxAge: 60 * 60 * 365 * 100, // 100년
+    });
+  }
 }
 
 export async function logout() {

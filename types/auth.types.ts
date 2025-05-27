@@ -13,3 +13,5 @@ export type LogoutResult = {
   upsertedCount: number;
   upsertedID: string;
 };
+
+export type PreviousLoginProvider = "apple" | "google" | null;

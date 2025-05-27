@@ -2,7 +2,10 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 import { trimTrailingSlash } from "@/utils/envUri";
-import { storeAccessToken } from "@/utils/auth/auth";
+import {
+  storeAccessToken,
+  storePreviousLoginProvider,
+} from "@/utils/auth/auth";
 
 export async function POST(request: NextRequest) {
   try {
@@ -61,6 +64,8 @@ export async function POST(request: NextRequest) {
     if (data.accessToken) {
       await storeAccessToken(data.accessToken);
     }
+
+    await storePreviousLoginProvider(social);
 
     return responseWithCookie;
   } catch (error) {

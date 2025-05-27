@@ -8,6 +8,7 @@ import {
   isExist,
   storeAuthTokenForOnboarding,
   storeAccessToken,
+  storePreviousLoginProvider,
 } from "@/utils/auth/auth";
 
 export async function POST(request: NextRequest) {
@@ -49,6 +50,8 @@ export async function POST(request: NextRequest) {
     if (data.accessToken) {
       await storeAccessToken(data.accessToken);
     }
+
+    await storePreviousLoginProvider("apple");
 
     return redirect("/");
   } catch (e) {

@@ -1,9 +1,14 @@
-"use client";
+import { cookies } from "next/headers";
 
 import AppleOAuthHandler from "./apple";
 import GoogleOAuthHandler from "./google";
+import { PreviousLoginProvider } from "@/types/auth.types";
 
-export default function Login() {
+export default async function Login() {
+  const cookieStore = await cookies();
+  const previousLoginProvider = cookieStore.get("previousLoginProvider")
+    ?.value as PreviousLoginProvider;
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-col gap-4 pb-5 text-center">
@@ -15,8 +20,8 @@ export default function Login() {
       </div>
 
       <div className="flex w-[335px] flex-col gap-4">
-        <AppleOAuthHandler />
-        <GoogleOAuthHandler />
+        <AppleOAuthHandler previousLoginProvider={previousLoginProvider} />
+        <GoogleOAuthHandler previousLoginProvider={previousLoginProvider} />
       </div>
 
       {/* <button>카카오로 시작하기</button> */}
