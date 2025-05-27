@@ -3,9 +3,9 @@ import Image from "next/image";
 
 import useQueryAccount from "@/hooks/useQueryAccount";
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import { formatNumber } from "@/utils/number";
 
 import Dialog from "../Dialog";
-import { formatNumber } from "@/utils/number";
 
 type InputProps = {};
 
@@ -68,7 +68,7 @@ export default function AccountDialog({}: InputProps) {
                 height={24}
               />
             </div>
-            <span className="overflow-hidden text-ellipsis whitespace-nowrap text-xl font-bold text-gray-black">
+            <span className="truncate text-xl font-bold text-gray-black">
               {data?.user.email}
             </span>
           </div>

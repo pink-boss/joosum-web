@@ -1,8 +1,9 @@
-import ConfirmDialog from "../ConfirmDialog";
 import clsx from "clsx";
 
-import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 import useDeleteTagsSetting from "@/hooks/settings/useDeleteTagSetting";
+import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
+
+import ConfirmDialog from "../ConfirmDialog";
 
 export default function DeleteConfirmDialog() {
   const {

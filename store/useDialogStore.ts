@@ -34,6 +34,10 @@ interface OpenDialogState {
   // tag
   isTagSettingOpen: boolean;
   openTagSetting: (isOpen: boolean) => void;
+
+  // appDownload
+  isAppDownloadOpen: boolean;
+  openAppDownload: (isOpen: boolean) => void;
 }
 
 export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
@@ -76,4 +80,8 @@ export const useOpenDialogStore = create<OpenDialogState>()((set) => ({
   // tag
   isTagSettingOpen: false,
   openTagSetting: (isOpen) => set({ isTagSettingOpen: isOpen }),
+
+  // appDownload
+  isAppDownloadOpen: false,
+  openAppDownload: (isOpen) => set({ isAppDownloadOpen: isOpen }),
 }));

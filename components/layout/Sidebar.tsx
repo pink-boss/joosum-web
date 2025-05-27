@@ -11,10 +11,14 @@ type InputProps = {
 };
 
 export default function Sidebar({ children }: InputProps) {
-  const { openMutateLinkBook } = useOpenDialogStore();
+  const { openMutateLinkBook, openAppDownload } = useOpenDialogStore();
 
   const closeDialog = () => {
     openMutateLinkBook(false);
+  };
+
+  const openAppDownloadDialog = () => {
+    openAppDownload(true);
   };
   return (
     <div className="flex h-screen">
@@ -52,12 +56,12 @@ export default function Sidebar({ children }: InputProps) {
           <Menu />
         </div>
         <div
-          className="ml-[22px] flex w-[236px] cursor-not-allowed items-center px-4 py-3"
-          onClick={() => {
-            closeDialog();
-          }}
+          className="ml-[22px] flex w-[236px] cursor-pointer items-center px-4 py-3"
+          onClick={openAppDownloadDialog}
         >
-          <div className="font-semibold">주섬 앱 다운로드</div>
+          <div className="font-semibold text-gray-graphite">
+            주섬 앱 다운로드
+          </div>
           <Image
             src="/icons/icon-right.png"
             width={28}

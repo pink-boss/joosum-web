@@ -1,7 +1,8 @@
+import Image from "next/image";
+
 import { SelectLinkBook } from "@/app/link-book/dialog/dynamic";
 import { Button } from "@/app/my-folder/CreateDialogButton";
 import { LinkBook } from "@/types/linkBook.types";
-import Image from "next/image";
 
 type InputProps = {
   linkBookId?: LinkBook["linkBookId"];

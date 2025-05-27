@@ -2,7 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 
 import TagSelector from "@/app/link-book/[title]/tag-selector";
-import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
+import {
+  defaultValues,
+  useFolderLinkFilterStore,
+} from "@/store/link-filter/useFolderStore";
 
 import { mockTags } from "../../../mocks/tag.mocks";
 import meta from "../TagSelector.stories";
@@ -12,11 +15,11 @@ const testMeta = {
   ...meta,
   title: "Page/FolderList/TagSelector",
   decorators: (Story) => {
-    const { tags, setTags } = useLinkFilterStore();
+    const { tags, setTags } = useFolderLinkFilterStore();
     return <Story args={{ tags, setTags, className: "w-[305px]" }} />;
   },
   beforeEach: () => {
-    useLinkFilterStore.setState({ tags: defaultValues.tags });
+    useFolderLinkFilterStore.setState({ tags: defaultValues.tags });
     queryClient.clear();
   },
 } satisfies Meta<typeof TagSelector>;
@@ -50,7 +53,7 @@ export const TestCheckTags: Story = {
 
 export const TestUncheckTags: Story = {
   beforeEach: () => {
-    useLinkFilterStore.setState({
+    useFolderLinkFilterStore.setState({
       tags: [mockTags[0], mockTags[2], mockTags[4]],
     });
     queryClient.clear();

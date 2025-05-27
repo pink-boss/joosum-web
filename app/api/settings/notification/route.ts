@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 
 import { serverApi } from "@/utils/api";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   return serverApi({
     path: "api/settings/notification",
   });

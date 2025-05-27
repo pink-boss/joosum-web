@@ -1,6 +1,7 @@
-import { InputError } from "@/types/form.types";
 import clsx from "clsx";
 import { InputHTMLAttributes } from "react";
+
+import { InputError } from "@/types/form.types";
 
 type InputProps = {
   label: string;

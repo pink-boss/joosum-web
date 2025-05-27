@@ -38,8 +38,7 @@ export const mockLinks: Link[] = [
     lastReadAt: "2024-03-21T15:30:00Z",
     readCount: 5,
     tags: ["생산성", "공부", "인공지능"],
-    title:
-      "React 공식 문서 - 가나다라마바사아자차카타파하 아야어요우유 테스트 자료",
+    title: "React 공식 문서",
     updatedAt: "2024-03-21T15:30:00Z",
     url: "https://react.dev",
   },
@@ -60,6 +59,52 @@ export const mockLinks: Link[] = [
     title: "읽은 횟수 최다",
     updatedAt: "2024-03-22T15:30:00Z",
     url: "https://python.org",
+  },
+].map((link, index) => ({
+  ...link,
+  linkBookId: `lb_00${index % mockLinkBooks.length}`,
+  linkBookName: mockLinkBooks[index % mockLinkBooks.length].title,
+  linkId: `link-${index + 1}`,
+  userId: userId,
+  thumbnailURL: `https://picsum.photos/374/${(index % 10) + 1}`,
+}));
+
+export const mockRelevanceOptionLinks: Link[] = [
+  {
+    createdAt: "2024-03-21T09:00:00Z",
+    lastReadAt: "2024-03-21T15:30:00Z",
+    readCount: 15,
+    tags: ["생산성", "공부"],
+    title: "React 공식 문서 (18+)",
+    updatedAt: "2024-03-21T15:30:00Z",
+    url: "https://react.dev",
+  },
+  {
+    createdAt: "2024-03-21T09:00:00Z",
+    lastReadAt: "2024-03-21T15:30:00Z",
+    readCount: 15,
+    tags: ["생산성", "공부"],
+    title: "React 공식 문서 (17)",
+    updatedAt: "2024-03-21T15:30:00Z",
+    url: "https://legacy.reactjs.org/",
+  },
+  {
+    createdAt: "2024-08-22T09:00:00Z",
+    lastReadAt: "",
+    readCount: 11,
+    tags: ["디자인", "기획"],
+    title: "공식 문서 - 스토리북",
+    updatedAt: "2024-03-22T15:30:00Z",
+    url: "https://help.figma.com/hc/en-us",
+  },
+  {
+    createdAt: "2024-08-22T09:00:00Z",
+    lastReadAt: "",
+    readCount: 1,
+    tags: ["디자인", "기획"],
+    title: "공식 문서 - 피그마",
+    updatedAt: "2024-03-22T15:30:00Z",
+    url: "https://help.figma.com/hc/en-us",
   },
 ].map((link, index) => ({
   ...link,

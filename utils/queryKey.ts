@@ -1,8 +1,7 @@
 const QUERY_KEYS = {
   linkList: {
-    all: ["linkList"] as const,
-    byLinkBookId: (linkBookId: string) =>
-      [...QUERY_KEYS.linkList.all, linkBookId] as const,
+    all: ["linkList"],
+    byLinkBookId: (linkBookId: string) => ["linkList", linkBookId],
   },
 };
 

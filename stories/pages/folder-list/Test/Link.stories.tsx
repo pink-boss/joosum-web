@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { http, HttpResponse } from "msw";
 
-import LinkCard from "@/app/link-book/[title]/LinkCard";
+import LinkCard from "@/app/link-book/[title]/link-list/LinkCard";
 
 import { mockLink } from "../../../mocks/link.mocks";
 import meta from "../Link.stories";

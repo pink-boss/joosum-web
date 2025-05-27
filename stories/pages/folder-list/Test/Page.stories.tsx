@@ -2,7 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 
 import Page from "@/app/link-book/[title]/page";
-import { defaultValues, useLinkFilterStore } from "@/store/useLinkFilterStore";
+import {
+  defaultValues,
+  useFolderLinkFilterStore,
+} from "@/store/link-filter/useFolderStore";
 
 import meta from "../Page.stories";
 import { queryClient } from "@/stories/mocks/store.mocks";
@@ -12,7 +15,7 @@ const testMeta = {
   title: "Page/FolderList/Page",
   beforeEach: () => {
     queryClient.clear();
-    useLinkFilterStore.setState(defaultValues);
+    useFolderLinkFilterStore.setState(defaultValues);
   },
 } satisfies Meta<typeof Page>;
 
@@ -40,7 +43,7 @@ export const TestFilterStatement_DatePicker: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    useLinkFilterStore.setState({
+    useFolderLinkFilterStore.setState({
       dateRange: [new Date("2024.03.22"), new Date("2024.03.24")],
     });
     await waitFor(() => {

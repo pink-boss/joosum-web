@@ -1,19 +1,20 @@
 import { ReactNode } from "react";
 
-import { useLinkFilterStore } from "@/store/useLinkFilterStore";
+import { DateRange } from "@/types/date.types";
 
 type InputProps = {
   period: "1w" | "3m";
   setTmpSelectedDate: (tmpSelectedDate: Date | null) => void;
   children: ReactNode;
+  setDateRange: (dateRange: DateRange) => void;
 };
 
 export default function LastPeriodButton({
   period,
   setTmpSelectedDate,
   children,
+  setDateRange,
 }: InputProps) {
-  const { setDateRange } = useLinkFilterStore();
   const today = new Date(new Date().toDateString());
 
   const handleClickLastPeriod = () => {

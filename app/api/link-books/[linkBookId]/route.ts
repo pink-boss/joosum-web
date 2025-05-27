@@ -4,9 +4,9 @@ import { serverApi } from "@/utils/api";
 
 export async function PUT(
   request: NextRequest,
-  context: { params: { linkId: string; linkBookId: string } },
+  { params }: { params: { linkId: string; linkBookId: string } },
 ) {
-  const { linkBookId } = context.params;
+  const { linkBookId } = await params;
   const body = await request.json();
 
   return serverApi({
@@ -18,9 +18,9 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  context: { params: { linkBookId: string } },
+  { params }: { params: { linkBookId: string } },
 ) {
-  const { linkBookId } = context.params;
+  const { linkBookId } = await params;
 
   return serverApi({
     path: `api/link-books/${linkBookId}`,

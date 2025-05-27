@@ -6,6 +6,7 @@ import { http, passthrough } from "msw";
 import { QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import { queryClient } from "../stories/mocks/store.mocks";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 initialize({
   serviceWorker: {
@@ -20,6 +21,7 @@ const preview: Preview = {
         <Story />
         <div id="drawer-root" />
         <div id="modal-root" />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     ),
   ],

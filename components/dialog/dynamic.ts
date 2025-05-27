@@ -66,6 +66,11 @@ const DeleteTagConfirmDialog = dynamic(
   },
 );
 
+const AppDownloadDialog = dynamic(() => import("./AppDownloadDialog"), {
+  loading: () => null,
+  ssr: false,
+});
+
 export {
   MutateLinkBookDialog,
   DeleteLinkBookDialog,
@@ -77,4 +82,5 @@ export {
   NotificationSettingDialog,
   TagSettingDialog,
   DeleteTagConfirmDialog,
+  AppDownloadDialog,
 };

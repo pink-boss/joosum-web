@@ -1,19 +1,33 @@
 import { parse } from "querystring";
 
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
 import { trimTrailingSlash } from "@/utils/envUri";
-import { handleAuthToken } from "@/utils/auth/auth";
+import {
+  isExist,
+  storeAuthTokenForOnboarding,
+  storeAccessToken,
+  storePreviousLoginProvider,
+} from "@/utils/auth/auth";
 
 export async function POST(request: NextRequest) {
   try {
     const formData = parse(await request.text());
-    const idToken = formData["id_token"] as string;
-    const body = JSON.stringify({
-      idToken,
-    });
+    const idToken = formData["id_token"] as string | undefined;
+
+    if (!idToken) {
+      console.error("idToken이 없습니다.");
+      return new Response("Unauthorized: Missing idToken", { status: 401 });
+    }
+    // 사용자 존재 여부 확인
+    const userExists = await isExist(idToken, "apple");
+
+    if (!userExists) {
+      // 신규 사용자 - 온보딩으로 리다이렉트
+      await storeAuthTokenForOnboarding(idToken, "apple");
+      return redirect("/onboarding");
+    }
 
     // 서버에 로그인 요청 보내기
     const response = await fetch(
@@ -23,24 +37,21 @@ export async function POST(request: NextRequest) {
           "Content-Type": "application/json",
         },
         method: "POST",
-        body,
+        body: JSON.stringify({
+          idToken,
+        }),
       },
     );
 
+    // 기존 사용자 - 로그인 처리
     let data = await response.json();
 
-    // 데이터 없으면 회원가입(온보딩)
-    // if (!data.accessToken) {
-    //   cookies().set("idToken", idToken, {
-    //     httpOnly: true,
-    //     maxAge: 60 * 10, // 10분
-    //     secure: true,
-    //   });
+    // 토큰을 쿠키에 저장
+    if (data.accessToken) {
+      await storeAccessToken(data.accessToken);
+    }
 
-    //   return redirect("/onboarding");
-    // }
-
-    handleAuthToken(data);
+    await storePreviousLoginProvider("apple");
 
     return redirect("/");
   } catch (e) {

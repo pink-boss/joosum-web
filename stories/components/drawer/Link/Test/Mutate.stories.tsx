@@ -247,7 +247,9 @@ export const TestDeleteLink: Story = {
       expect(deleteLink).toBeUndefined();
     });
 
-    expect(dialog).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(dialog).not.toBeInTheDocument();
+    });
   },
 };
 
