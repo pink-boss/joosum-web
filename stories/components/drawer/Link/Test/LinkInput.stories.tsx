@@ -26,7 +26,7 @@ export const TestRequired: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const form = canvasElement.querySelector("form");
-    const button = canvas.getByRole("button");
+    const button = canvas.getByRole("button", { name: "submit" });
 
     await userEvent.click(button);
     expect(form?.checkValidity()).toBe(false);
@@ -38,7 +38,7 @@ export const TestValidationWithForm: Story = {
     const canvas = within(canvasElement);
     const input = canvas.getByTestId("url");
     const form = canvasElement.querySelector("form");
-    const button = canvas.getByRole("button");
+    const button = canvas.getByRole("button", { name: "submit" });
 
     await userEvent.type(input, "invalid.org");
     await userEvent.click(button);

@@ -8,13 +8,15 @@ import { ToastProvider } from "@/components/notification/ToastProvider";
 const meta = {
   title: "Component/Notification",
   component: Notification,
-  decorators: (Story) => {
-    return (
-      <ToastProvider>
-        <Story />
-      </ToastProvider>
-    );
-  },
+  decorators: [
+    (Story) => {
+      return (
+        <ToastProvider>
+          <Story />
+        </ToastProvider>
+      );
+    },
+  ],
 } satisfies Meta<typeof Notification>;
 
 export default meta;
@@ -60,10 +62,12 @@ function useDelayToast(delay: number) {
 }
 
 export const MultiToast: StoryObj = {
-  decorators: (Story) => {
-    useDelayToast(0);
-    useDelayToast(600);
-    useDelayToast(1200);
-    return <Story />;
-  },
+  decorators: [
+    (Story) => {
+      useDelayToast(0);
+      useDelayToast(600);
+      useDelayToast(1200);
+      return <Story />;
+    },
+  ],
 };

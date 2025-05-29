@@ -6,7 +6,7 @@ import Dropdown from "@/components/Dropdown";
 import { options } from "../mocks/filter.mocks";
 
 const DropdownWrapper = () => {
-  const [selected, setSelected] = useState<Value>("created_at");
+  const [selected, setSelected] = useState<string>("created_at");
 
   return (
     <Dropdown selected={selected} setSelected={setSelected} options={options} />
