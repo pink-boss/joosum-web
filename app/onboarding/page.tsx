@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import PublicPathHeader from "@/components/PublicPathHeader";
+import CompletionScreen from "@/components/onboarding/CompletionScreen";
 import TermsAgreement from "@/components/onboarding/TermsAgreement";
 import UserInfoForm from "@/components/onboarding/UserInfoForm";
-import CompletionScreen from "@/components/onboarding/CompletionScreen";
+import PublicPathHeader from "@/components/PublicPathHeader";
 
 const today = new Date();
 

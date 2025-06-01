@@ -4,7 +4,6 @@ import { LinkSortState } from "@/store/link-sort/schema";
 
 import ToolbarButton from "./ToolbarButton";
 
-
 type InputProps = {
   linkSort: LinkSortState;
   handleChangeMode: () => void;

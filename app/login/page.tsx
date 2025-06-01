@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
 
+import { PreviousLoginProvider } from "@/types/auth.types";
+
 import AppleOAuthHandler from "./apple";
 import GoogleOAuthHandler from "./google";
-import { PreviousLoginProvider } from "@/types/auth.types";
 
 export default async function Login() {
   const cookieStore = await cookies();

@@ -49,7 +49,7 @@ const preview: Preview = {
             totalLinkCount: 0,
           });
         }),
-        http.get("/api/tags", () => {
+        http.get("/api/settings/tags", () => {
           return HttpResponse.json([]);
         }),
         http.get("https://picsum.photos/*", () => {

@@ -38,7 +38,7 @@ const meta = {
         http.get("/api/link-books?sort=created_at", () => {
           return HttpResponse.json(mockRespone);
         }),
-        http.get("/api/tags", () => {
+        http.get("/api/settings/tags", () => {
           return HttpResponse.json(mockTags);
         }),
       ],

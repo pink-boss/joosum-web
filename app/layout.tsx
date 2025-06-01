@@ -9,14 +9,13 @@ import { usePathname } from "next/navigation";
 import { Suspense, useState } from "react";
 
 import DynamicOpenDialogs from "@/components/dialog/DynamicOpenDialogs";
+import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
 import Sidebar from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
-import { publicOnlyPaths } from "@/utils/path";
-
-import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
+import Loading from "@/components/Loading";
 import { ToastProvider } from "@/components/notification/ToastProvider";
 import PublicPathHeader from "@/components/PublicPathHeader";
-import Loading from "@/components/Loading";
+import { publicOnlyPaths } from "@/utils/path";
 
 const pretendard = localFont({
   src: "../public/fonts/PretendardVariable.woff2",

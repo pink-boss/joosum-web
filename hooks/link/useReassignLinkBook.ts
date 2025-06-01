@@ -7,7 +7,6 @@ import { getLinkListQueryKey } from "@/utils/queryKey";
 import useCheckLink from "./useCheckLink";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
 
-
 interface ReassignParams {
   toLinkBookId: LinkBook["linkBookId"];
   linkIds: string[];

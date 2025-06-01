@@ -14,7 +14,6 @@ import LinkInput from "./LinkInput";
 import Tag from "./Tag";
 import TitleInput from "./TitleInput";
 
-
 type InputProps = {
   _defaultValues?: SaveLink;
 };

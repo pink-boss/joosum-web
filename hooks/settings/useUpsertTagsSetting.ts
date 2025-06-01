@@ -15,7 +15,15 @@ export default function useUpsertTagsSetting() {
       ).json();
     },
     onSuccess: ([newTags]) => {
-      queryClient.setQueryData(["settings", "tags"], () => newTags);
+      const prevTags =
+        queryClient.getQueryCache().find<TagList>({
+          queryKey: ["settings", "tags"],
+        })?.state.data || [];
+
+      queryClient.setQueryData(["settings", "tags"], () => [
+        newTags,
+        ...prevTags,
+      ]);
     },
   });
 }

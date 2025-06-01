@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-import { trimTrailingSlash } from "@/utils/envUri";
 import {
   storeAccessToken,
   storePreviousLoginProvider,
 } from "@/utils/auth/auth";
+import { trimTrailingSlash } from "@/utils/envUri";
 
 export async function POST(request: NextRequest) {
   try {

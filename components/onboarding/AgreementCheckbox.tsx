@@ -18,7 +18,7 @@ export default function AgreementCheckbox({
   return (
     <div className="flex items-center justify-between">
       <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>
-        <div className="flex h-6 w-6 items-center justify-center">
+        <div className="flex size-6 items-center justify-center">
           {isChecked && (
             <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
               <path

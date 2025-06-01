@@ -3,13 +3,13 @@ import { parse } from "querystring";
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
-import { trimTrailingSlash } from "@/utils/envUri";
 import {
   isExist,
   storeAuthTokenForOnboarding,
   storeAccessToken,
   storePreviousLoginProvider,
 } from "@/utils/auth/auth";
+import { trimTrailingSlash } from "@/utils/envUri";
 
 export async function POST(request: NextRequest) {
   try {

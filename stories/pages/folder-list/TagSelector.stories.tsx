@@ -16,7 +16,9 @@ const meta = {
   component: TagSelector,
   parameters: {
     msw: {
-      handlers: [http.get("/api/tags", () => HttpResponse.json(mockTags))],
+      handlers: [
+        http.get("/api/settings/tags", () => HttpResponse.json(mockTags)),
+      ],
     },
   },
   args: { tags: defaultValues.tags, setTags: test.fn() },

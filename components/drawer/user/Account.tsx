@@ -4,7 +4,6 @@ import Image from "next/image";
 import useQueryAccount from "@/hooks/useQueryAccount";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
-
 export default function Account() {
   const { openAccount: openAccountDialog } = useOpenDialogStore();
 

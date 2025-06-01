@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 
-import { trimTrailingSlash } from "@/utils/envUri";
-import { sanitizeRedirectUrl } from "@/utils/auth/oauth";
 import PreviousProviderBubble from "@/components/PreviousProviderBubble";
 import { PreviousLoginProvider } from "@/types/auth.types";
+import { sanitizeRedirectUrl } from "@/utils/auth/oauth";
+import { trimTrailingSlash } from "@/utils/envUri";
 
 const APPLE_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH_APPLE_ID;
 
