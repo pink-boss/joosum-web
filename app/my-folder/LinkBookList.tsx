@@ -22,7 +22,7 @@ export default function LinkBookList({
           isDefault: "y",
         }}
       />
-      {linkBooks.map((linkBook) => (
+      {linkBooks?.map((linkBook) => (
         <Folder key={linkBook.linkBookId} linkBook={linkBook} />
       ))}
     </div>

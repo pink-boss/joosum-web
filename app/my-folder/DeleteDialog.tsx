@@ -11,7 +11,7 @@ export default function DeleteDialog() {
     openDeleteLinkBook: open,
     key,
   } = useOpenDialogStore();
-  const { clearLinkBook } = useSelectLinkBook(key);
+  const { clearLinkBook, linkBook } = useSelectLinkBook(key);
 
   const onClose = () => {
     clearLinkBook();
@@ -36,7 +36,12 @@ export default function DeleteDialog() {
     >
       <div className="text-center text-gray-ink">
         <p>폴더 내의 모든 링크가 삭제됩니다.</p>
-        <p>폴더를 삭제하시겠습니까?</p>
+        <p>
+          <span className="text-lg font-bold text-primary-400">
+            {linkBook?.title}
+          </span>{" "}
+          폴더를 삭제하시겠습니까?
+        </p>
       </div>
     </ConfirmDialog>
   );

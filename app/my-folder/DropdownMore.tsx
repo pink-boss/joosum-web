@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 
@@ -24,25 +25,33 @@ const DropdownItem = ({ title, handleClick }: DropdownItemProps) => {
 
 type InputProps = {
   linkBook: LinkBook;
+  isLayout?: boolean;
 };
 
-const DropdownMore = ({ linkBook }: InputProps) => {
+const DropdownMore = ({ linkBook, isLayout = false }: InputProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const onClose = () => setIsOpen(false);
+  const onCloseDropdown = () => setIsOpen(false);
 
-  const ref = useClearDropdown(onClose);
+  const ref = useClearDropdown(onCloseDropdown);
 
   const { openMutateLinkBook, openDeleteLinkBook } = useOpenDialogStore();
   useSelectLinkBook(linkBook.title);
 
+  const closeDialog = () => {
+    openMutateLinkBook(false);
+    openDeleteLinkBook(false);
+  };
+
   const handleModify = () => {
+    closeDialog();
     openMutateLinkBook(true, linkBook.title);
-    onClose();
+    onCloseDropdown();
   };
   const handleDelete = () => {
+    closeDialog();
     openDeleteLinkBook(true, linkBook.title);
-    onClose();
+    onCloseDropdown();
   };
 
   const onOpen = useCallback(() => {
@@ -61,18 +70,22 @@ const DropdownMore = ({ linkBook }: InputProps) => {
     >
       <button
         onClick={onOpen}
-        className="flex size-12 items-center justify-center rounded-full bg-white/80"
+        className={clsx(
+          "flex items-center justify-center rounded-full",
+          !isLayout && "size-12 bg-white/80",
+          isLayout && "size-5",
+        )}
       >
         <Image
           src="/icons/icon-more-vertical.png"
           alt="more"
-          width={26.4}
-          height={26.4}
+          width={isLayout ? 20 : 26.4}
+          height={isLayout ? 20 : 26.4}
         />
       </button>
 
       {isOpen && (
-        <div className="absolute z-20 mt-1 flex w-[110px] flex-col rounded-lg border border-gray-ghost bg-white py-4 shadow-lg">
+        <div className="fixed z-20 mt-1 flex w-[110px] flex-col rounded-lg border border-gray-ghost bg-white py-4 shadow-lg">
           <DropdownItem title="폴더 수정" handleClick={handleModify} />
           <DropdownItem title="폴더 삭제" handleClick={handleDelete} />
         </div>
