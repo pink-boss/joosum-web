@@ -17,6 +17,12 @@ type InputProps = {
   disabled?: boolean;
 };
 
+// 한글(완성형+자음+모음), 영문, 숫자, 언더스코어만 허용하는 정규식
+const isValidTag = (tag: string): boolean => {
+  const regex = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_]+$/;
+  return regex.test(tag);
+};
+
 export default function Tag({ tags, setTags, disabled = false }: InputProps) {
   const [isActive, setIsActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -24,13 +30,27 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
   const [input, setInput] = useState<string>("");
 
   const handleSubmit = () => {
+    const trimmedInput = input.trim();
+
     if (tags.length == 10) {
       toast({
         message: "태그는 10개까지 선택할 수 있어요.",
         status: "warning",
       });
-    } else if (input) {
-      setTags([...tags, input.trim()]);
+    } else if (!trimmedInput) {
+      return; // 빈 문자열은 무시
+    } else if (!isValidTag(trimmedInput)) {
+      toast({
+        message: "태그는 한글, 영문, 숫자, 언더스코어(_)만 사용할 수 있어요.",
+        status: "warning",
+      });
+    } else if (tags.includes(trimmedInput)) {
+      toast({
+        message: "이미 추가된 태그입니다.",
+        status: "warning",
+      });
+    } else {
+      setTags([...tags, trimmedInput]);
       setInput("");
     }
   };
