@@ -49,6 +49,11 @@ body {
     scrollbar-width: none; /* Firefox */
   }
 
+  /* 배너 애니메이션 */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out;
+  }
+
   /* 모바일 제한 화면 애니메이션 */
   .mobile-restriction-fade-in {
     animation: fadeIn 0.5s ease-in-out;
@@ -73,6 +78,17 @@ body {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

@@ -14,7 +14,7 @@ import { sortByKeywordPosition } from "@/utils/sort";
 import useQueryLinkBooks from "../my-folder/useQueryLinkBooks";
 
 type InputProps = {
-  linkSort: LinkSortState;
+  linkSort: Omit<LinkSortState, "setField">;
   linkFilter: LinkFilterValues;
   linkBookId?: LinkBook["linkBookId"];
 };

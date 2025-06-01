@@ -1,15 +1,13 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import NextLink from "next/link";
 import { useState } from "react";
 
 import EmptyLinks from "@/components/EmptyLinks";
-import { Link } from "@/types/link.types";
-import { getLinkListQueryKey } from "@/utils/queryKey";
 
 import LinkCard from "./LinkCard";
+import { useQueryLinks } from "@/hooks/link/useQueryLinks";
 
 export default function LinkCardList() {
   const [isAllLinks, setIsAllLinks] = useState(false);
@@ -19,19 +17,19 @@ export default function LinkCardList() {
     isPending,
     error,
     data = [],
-  } = useQuery<Link[], ApiError>({
-    queryKey: getLinkListQueryKey(),
-    queryFn: () =>
-      fetch(`/api/links?sort=created_at&order=desc`, {
-        method: "GET",
-      }).then((res) => res.json()),
+  } = useQueryLinks({
+    linkFilter: { unread: false, tags: [], dateRange: [] },
+    linkSort: {
+      field: "lastest",
+      sort: "created_at",
+      orderBy: "desc",
+    },
+    linkBookId: undefined,
   });
 
   const handleFilter = (e: any) => {
     setFilter(e.target.value);
   };
-  const filteredLinks =
-    filter === "unread" ? data.filter(({ readCount }) => !readCount) : data;
 
   return (
     <div className="flex h-full flex-1 flex-col gap-8 overflow-hidden">
@@ -71,26 +69,21 @@ export default function LinkCardList() {
           </div>
         </NextLink>
       </div>
-      {filteredLinks.length ? (
+      {data.length ? (
         <div className="flex flex-col items-start gap-8 overflow-auto">
           <div className="flex flex-wrap gap-x-[22px] gap-y-5">
-            {filteredLinks
-              .slice(0, isAllLinks ? undefined : 29)
-              .map((link, index) => (
-                <LinkCard key={index} link={link} />
-              ))}
+            {data.slice(0, isAllLinks ? undefined : 29).map((link, index) => (
+              <LinkCard key={index} link={link} />
+            ))}
           </div>
-          {filteredLinks.length > 30 && !isAllLinks && (
+          {data.length > 30 && !isAllLinks && (
             <div
               className="flex cursor-pointer self-center rounded-lg py-4"
               onClick={() => setIsAllLinks(true)}
             >
               <span className="text-lg font-bold text-gray-dim">
                 {filter === "latest" ? "저장한" : "읽지 않은"} 링크{" "}
-                {filteredLinks.length - 30 > 999
-                  ? "999+"
-                  : filteredLinks.length - 30}
-                개 모두 보기
+                {data.length - 30 > 999 ? "999+" : data.length - 30}개 모두 보기
               </span>
               <Image
                 src="/icons/icon-right.png"
