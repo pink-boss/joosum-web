@@ -3,6 +3,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 
+import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 import { useSearchLinkSortStore } from "@/store/link-sort/useSearchStore";
 import { useSearchBarStore } from "@/store/useSearchBarStore";
 
@@ -16,6 +17,7 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [inputValue, setInputValue] = useState(title);
   const { setField } = useSearchLinkSortStore();
+  const { resetLinkBookId } = useSearchLinkFilterStore();
 
   const handleChangeSearchState = useCallback(
     (value: string) => {
@@ -52,8 +54,10 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
   useEffect(() => {
     if (pathname !== "/search") {
       setInputValue("");
+      setTitle("");
+      resetLinkBookId();
     }
-  }, [pathname]);
+  }, [pathname, resetLinkBookId, setInputValue, setTitle]);
 
   return (
     <div className="relative" data-testid="search-link">

@@ -9,6 +9,7 @@ import {
 export type SearchLinkFilterState = LinkFilterState & {
   linkBookId?: string;
   setLinkBookId: (linkBookId: string) => void;
+  resetLinkBookId: () => void;
 };
 
 type SearchLinkFilterValues = LinkFilterValues &
@@ -31,6 +32,7 @@ export const useSearchLinkFilterStore = create<SearchLinkFilterState>()(
         }
       },
       setLinkBookId: (linkBookId) => set({ linkBookId }),
+      resetLinkBookId: () => set({ linkBookId: undefined, ...defaultValues }),
     }),
     {
       name: "search-link-filter",

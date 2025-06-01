@@ -22,6 +22,9 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
   const { isLinkSaveDrawerOpen: isOpen, openLinkSaveDrawer: open } =
     useOpenDrawerStore();
   const { isValid } = useLinkInputStore();
+  const [formState, setFormState] = useState<SaveFormState>(
+    _defaultValues ?? defaultValues,
+  );
   const titleRef = useRef<HTMLInputElement>(null);
 
   const onClose = () => {
@@ -31,22 +34,9 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget as HTMLFormElement);
 
-    const rawFormData = {
-      url: formData.get("url"),
-      title: formData.get("title"),
-      linkBookId: formData.get("linkBookId") ?? defaultValues.linkBookId,
-      tags: formData.get("tags"),
-      thumbnail: formData.get("thumbnail"),
-    } as unknown as SaveFormState;
-
-    saveLink.mutate(rawFormData);
+    saveLink.mutate(formState);
   };
-
-  const [formState, setFormState] = useState<SaveFormState>(
-    _defaultValues ?? defaultValues,
-  );
   return (
     <Drawer open={isOpen} onCloseCallback={onClose}>
       <div className="flex flex-1 flex-col gap-10">
@@ -96,14 +86,6 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
               }))
             }
             disabled={!isValid}
-          />
-          <input
-            data-testid="thumbnailURL"
-            id="thumbnailURL"
-            name="thumbnailURL"
-            className="hidden"
-            value={formState.thumbnailURL}
-            readOnly
           />
 
           <Buttons

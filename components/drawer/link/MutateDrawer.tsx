@@ -1,5 +1,3 @@
-import { clearTimeout, setTimeout } from "timers";
-
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -20,20 +18,6 @@ import LinkInput from "./LinkInput";
 import Tag from "./Tag";
 import TitleInput from "./TitleInput";
 
-type ToastDefaultValues = {
-  isOpen: boolean;
-  bgColor: string;
-  textColor: string;
-  message: string;
-};
-
-const toastDefaultValues = {
-  isOpen: false,
-  bgColor: "#DFD9FF",
-  textColor: "#2E2277",
-  message: "수정되었습니다.",
-};
-
 export default function MutateLinkDrawer() {
   const {
     link,
@@ -43,25 +27,16 @@ export default function MutateLinkDrawer() {
   const { openDeleteDrawerLink } = useOpenDialogStore();
 
   const [formState, setFormState] = useState<CreateFormState>(defaultValues);
-  const [toast, setToast] = useState<ToastDefaultValues>(toastDefaultValues);
 
   const onClose = () => {
     setFormState(defaultValues);
     open(false);
   };
 
-  const handleMutateSuccessCallback = () => {
-    setToast({
-      isOpen: true,
-      bgColor: toastDefaultValues.bgColor,
-      textColor: toastDefaultValues.textColor,
-      message: toastDefaultValues.message,
-    });
-  };
-
-  const updateLink = useUpdateLink(handleMutateSuccessCallback);
+  const updateLink = useUpdateLink();
   const handleSubmit = async () => {
     updateLink.mutate(formState as Required<CreateFormState>);
+    onClose();
   };
 
   const handleDelete = () => {
@@ -126,7 +101,7 @@ export default function MutateLinkDrawer() {
             disabled={false}
           />
           <Tag
-            tags={formState.tags}
+            tags={formState.tags ?? []}
             setTags={(tags) => setFormState((prev) => ({ ...prev, tags }))}
           />
           <div className="mt-10 flex gap-1 text-xs text-gray-slate">

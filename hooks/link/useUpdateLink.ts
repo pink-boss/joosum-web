@@ -6,12 +6,16 @@ import { getLinkListQueryKey } from "@/utils/queryKey";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
 import { toast } from "@/components/notification/toast";
 import { isApiError } from "@/utils/error";
+import { useSearchBarStore } from "@/store/useSearchBarStore";
+import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 
 type SuccessResult = [Link, { status: 204 }];
 
-export default function useUpdateLink(onSuccessCallback: () => void) {
+export default function useUpdateLink() {
   const prevLinkBook = useLinkBookFromTitle();
+  const { linkBookId: searchLinkBookId } = useSearchLinkFilterStore();
   const queryClient = useQueryClient();
+  const { title: searchKeyword } = useSearchBarStore();
 
   return useMutation<boolean, Error, UpdateFormState>({
     mutationFn: async (state) => {
@@ -52,7 +56,20 @@ export default function useUpdateLink(onSuccessCallback: () => void) {
       queryClient.invalidateQueries({
         queryKey: getLinkListQueryKey(prevLinkBook?.linkBookId),
       });
-      onSuccessCallback();
+      queryClient.invalidateQueries({
+        queryKey: getLinkListQueryKey(),
+      });
+
+      if (searchKeyword) {
+        queryClient.invalidateQueries({
+          queryKey: ["search", "linkList"],
+        });
+        if (searchLinkBookId) {
+          queryClient.invalidateQueries({
+            queryKey: ["search", "linkList", searchLinkBookId],
+          });
+        }
+      }
     },
   });
 }
