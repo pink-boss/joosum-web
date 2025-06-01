@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import Dialog from "./Dialog";
+import { AndroidDownload, IOSDownload } from "../app-download";
 
 export default function AppDownloadDialog() {
   const { isAppDownloadOpen: isOpen, openAppDownload: open } =
@@ -36,18 +37,7 @@ export default function AppDownloadDialog() {
               height={124}
               className="bg-gray-ghost"
             />
-            <a
-              href="https://apps.apple.com/kr/app/%EC%A3%BC%EC%84%AC-joosum/id6455258212"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Image
-                src="/app-store.png"
-                alt="app store"
-                width={124}
-                height={39}
-              />
-            </a>
+            <IOSDownload />
           </div>
           <div className="flex flex-col items-center gap-2">
             <Image
@@ -57,18 +47,7 @@ export default function AppDownloadDialog() {
               height={124}
               className="bg-gray-ghost"
             />
-            <a
-              href="https://play.google.com/store/apps/details?id=com.joosum.app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Image
-                src="/google-play.png"
-                alt="google play"
-                width={124}
-                height={39}
-              />
-            </a>
+            <AndroidDownload />
           </div>
         </div>
 
