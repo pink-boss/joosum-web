@@ -2,6 +2,7 @@ import clsx from "clsx";
 import Image from "next/image";
 
 import Drawer from "@/components/drawer/Drawer";
+import useQueryAccount from "@/hooks/useQueryAccount";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 
 import Account from "./Account";
@@ -10,6 +11,7 @@ import Setting from "./Setting";
 import Support from "./Support";
 
 export default function UserDrawer() {
+  const { data } = useQueryAccount();
   const { isUserDrawerOpen: isOpen, openUserDrawer: open } =
     useOpenDrawerStore();
 
@@ -29,10 +31,10 @@ export default function UserDrawer() {
           />
         </button>
         <div className={clsx("flex flex-col gap-5", "text-lg text-gray-dim")}>
-          <Account />
+          <Account email={data?.user.email ?? ""} />
           <Setting />
           <div className={clsx("border-t border-gray-silver")} />
-          <Support />
+          <Support email={data?.user.email ?? ""} />
           <div className={clsx("border-t border-gray-silver")} />
           <Logout />
         </div>
