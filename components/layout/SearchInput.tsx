@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import { useSearchLinkSortStore } from "@/store/link-sort/useSearchStore";
@@ -36,6 +36,7 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
   );
 
   useEffect(() => {
+    if (inputValue.length === 0) return;
     if (timerRef.current) clearTimeout(timerRef.current);
 
     timerRef.current = setTimeout(() => {
@@ -46,13 +47,24 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, [inputValue, inputDelay, handleChangeSearchState]);
+
+  const pathname = usePathname();
+  useEffect(() => {
+    if (pathname !== "/search") {
+      setInputValue("");
+    }
+  }, [pathname]);
+
   return (
-    <div className="relative w-fit" data-testid="search-link">
+    <div className="relative" data-testid="search-link">
       <input
         type="text"
         placeholder="링크 제목으로 검색해보세요."
         className={clsx(
-          "h-[48px] min-w-[360px] max-w-[720px] rounded-lg border pl-3 pr-20",
+          "h-[48px] rounded-lg border pl-3 pr-20",
+          "w-[360px]",
+          "lg:w-[540px]",
+          "pc:w-[720px]",
           "focus:bg-inputactivebg",
         )}
         onKeyDown={handleKeyDown}

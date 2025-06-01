@@ -4,9 +4,9 @@ import OpenUserDrawerButton from "../drawer/user/OpenDrawerButton";
 
 export default function Topbar() {
   return (
-    <div className="mb-8 flex h-[104px] w-full items-center justify-between border bg-paperabovebg px-10 py-7">
+    <div className="mb-8 flex h-[104px] w-full items-center justify-between gap-12 bg-paperabovebg px-10 py-7">
       <SearchInput />
-      <div className="flex gap-[20px]">
+      <div className="flex flex-none gap-[20px]">
         <OpenLinkSaveDrawerButton />
         <OpenUserDrawerButton />
       </div>
