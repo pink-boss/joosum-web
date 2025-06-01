@@ -35,8 +35,9 @@ export default function Sidebar({ children }: InputProps) {
               <Image
                 src="/logo/joosum-text.png"
                 width={88}
-                height={31}
+                height={18}
                 alt="joosum"
+                className="py-3"
               />
             </Link>
             <div

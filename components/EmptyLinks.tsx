@@ -20,6 +20,7 @@ export default function EmptyLinks({ unread }: InputProps) {
             alt="empty-links"
             width={188.4}
             height={141.6}
+            priority
           />
           <div>
             <p>저장된 링크가 없어요.</p>
@@ -33,6 +34,7 @@ export default function EmptyLinks({ unread }: InputProps) {
             alt="read-links"
             width={139.2}
             height={142.8}
+            priority
           />
           <div>
             <p>저장된 링크를 모두 다 읽었어요!</p>

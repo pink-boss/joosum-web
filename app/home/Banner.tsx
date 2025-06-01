@@ -62,6 +62,7 @@ export default function BannerCard({}: InputProps) {
           alt="banner"
           width={193}
           height={129}
+          priority
         />
       </div>
     </Link>

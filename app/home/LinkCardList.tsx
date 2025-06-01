@@ -5,9 +5,9 @@ import NextLink from "next/link";
 import { useState } from "react";
 
 import EmptyLinks from "@/components/EmptyLinks";
+import { useQueryLinks } from "@/hooks/link/useQueryLinks";
 
 import LinkCard from "./LinkCard";
-import { useQueryLinks } from "@/hooks/link/useQueryLinks";
 
 export default function LinkCardList() {
   const [isAllLinks, setIsAllLinks] = useState(false);
