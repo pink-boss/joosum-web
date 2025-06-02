@@ -83,9 +83,11 @@ export function useQueryLinks({
             true,
           )
         : true;
-      const tagFlag = linkFilter.tags.length
-        ? linkFilter.tags.some((tag) => linkTags.includes(tag))
-        : true;
+
+      const tagFlag =
+        linkFilter.tags.length && linkTags
+          ? linkFilter.tags.some((tag) => linkTags.includes(tag))
+          : true;
       return unreadFlag && datePickerFlag && tagFlag;
     });
   }, [data, linkFilter.dateRange, linkFilter.unread, linkFilter.tags]);

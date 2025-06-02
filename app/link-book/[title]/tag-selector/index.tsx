@@ -93,11 +93,8 @@ const TagSelector = ({
               ))}
             </div>
           </div>
-          <div className="flex gap-4">
+          <div className="flex justify-end gap-4">
             <ResetButton handleClick={handleResetTags} />
-            <button className="h-[40px] flex-1 rounded-lg bg-primary-500 text-sm font-bold text-white">
-              확인
-            </button>
           </div>
         </div>
       )}

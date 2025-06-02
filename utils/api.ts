@@ -7,7 +7,7 @@ interface FetchParams {
   path: string;
   method?: "GET" | "POST" | "PUT" | "DELETE";
   queryString?: string | null;
-  body?: Pick<RequestInit, "body">;
+  body?: Record<string, any> | Array<any> | string | number | boolean | null;
 }
 
 export async function serverApi({

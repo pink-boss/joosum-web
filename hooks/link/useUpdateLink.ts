@@ -8,8 +8,7 @@ import { toast } from "@/components/notification/toast";
 import { isApiError } from "@/utils/error";
 import { useSearchBarStore } from "@/store/useSearchBarStore";
 import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
-
-type SuccessResult = [Link, { status: 204 }];
+import { isSuccessfullLinkResponse } from "@/utils/link";
 
 export default function useUpdateLink() {
   const prevLinkBook = useLinkBookFromTitle();
@@ -41,15 +40,24 @@ export default function useUpdateLink() {
         work.push(linkBookUpdateResult);
       }
 
-      const result = await Promise.all(work);
-
-      if (!isSuccessfulResponse(result)) {
-        console.error(result.find((item) => isApiError(item)));
-        toast({ status: "fail", message: "링크 수정을 실패했습니다." });
-        return false;
+      if (state.tags.length) {
+        const tagsResult: Promise<{ status: number } | ApiError> = (
+          await fetch(`/api/settings/tags`, {
+            method: "POST",
+            body: JSON.stringify(state.tags),
+          })
+        ).json();
+        work.push(tagsResult);
       }
 
-      toast({ status: "success", message: "링크가 저장되었습니다." });
+      const result = await Promise.all(work);
+
+      if (!isSuccessfullLinkResponse(result)) {
+        const error = result.find((item) => isApiError(item));
+        console.error(error);
+        throw new Error("링크 수정에 실패했습니다.");
+      }
+
       return true;
     },
     onSuccess: () => {
@@ -70,12 +78,15 @@ export default function useUpdateLink() {
           });
         }
       }
+
+      queryClient.invalidateQueries({
+        queryKey: ["tags"],
+      });
+
+      toast({ status: "success", message: "링크가 저장되었습니다." });
+    },
+    onError: (error) => {
+      toast({ status: "fail", message: error.message });
     },
   });
 }
-
-const isSuccessfulResponse = (
-  response: (Link | ApiError | { status: number })[],
-): response is SuccessResult => {
-  return response.every((item) => !("error" in item));
-};
