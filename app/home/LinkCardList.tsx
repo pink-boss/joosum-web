@@ -18,7 +18,7 @@ export default function LinkCardList() {
     error,
     data = [],
   } = useQueryLinks({
-    linkFilter: { unread: false, tags: [], dateRange: [] },
+    linkFilter: { unread: filter === "unread", tags: [], dateRange: [] },
     linkSort: {
       field: "lastest",
       sort: "created_at",
