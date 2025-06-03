@@ -1,8 +1,9 @@
 import clsx from "clsx";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 
+import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 import { useSearchLinkSortStore } from "@/store/link-sort/useSearchStore";
 import { useSearchBarStore } from "@/store/useSearchBarStore";
 
@@ -16,6 +17,7 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [inputValue, setInputValue] = useState(title);
   const { setField } = useSearchLinkSortStore();
+  const { resetLinkBookId } = useSearchLinkFilterStore();
 
   const handleChangeSearchState = useCallback(
     (value: string) => {
@@ -36,6 +38,7 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
   );
 
   useEffect(() => {
+    if (inputValue.length === 0) return;
     if (timerRef.current) clearTimeout(timerRef.current);
 
     timerRef.current = setTimeout(() => {
@@ -46,13 +49,29 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, [inputValue, inputDelay, handleChangeSearchState]);
+
+  const pathname = usePathname();
+  useEffect(() => {
+    if (pathname !== "/search") {
+      setInputValue("");
+      setTitle("");
+      resetLinkBookId();
+    }
+  }, [pathname, resetLinkBookId, setInputValue, setTitle]);
+
   return (
-    <div className="relative w-fit" data-testid="search-link">
+    <div
+      className={clsx(
+        "relative inline-block w-full",
+        "max-w-[360px] lg:max-w-[540px] pc:max-w-[720px]",
+      )}
+      data-testid="search-link"
+    >
       <input
         type="text"
         placeholder="링크 제목으로 검색해보세요."
         className={clsx(
-          "h-[48px] min-w-[360px] max-w-[720px] rounded-lg border pl-3 pr-20",
+          "h-[48px] w-full rounded-lg border pl-3 pr-20",
           "focus:bg-inputactivebg",
         )}
         onKeyDown={handleKeyDown}
@@ -71,8 +90,9 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
             type="button"
             onClick={() => setInputValue("")}
             className={clsx(
-              "size-5 rounded-full bg-gray-silver",
-              "flex items-center justify-center text-lg text-white",
+              "size-5 rounded-full",
+              "bg-gray-silver text-lg text-white",
+              "flex items-center justify-center",
             )}
           >
             &times;

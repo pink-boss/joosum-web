@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import PublicPathHeader from "@/components/PublicPathHeader";
+import CompletionScreen from "@/components/onboarding/CompletionScreen";
 import TermsAgreement from "@/components/onboarding/TermsAgreement";
 import UserInfoForm from "@/components/onboarding/UserInfoForm";
-import CompletionScreen from "@/components/onboarding/CompletionScreen";
+import PublicPathHeader from "@/components/PublicPathHeader";
+
+const today = new Date();
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -17,7 +19,9 @@ export default function OnboardingPage() {
   });
   const [showNextScreen, setShowNextScreen] = useState(false);
   const [selectedGender, setSelectedGender] = useState<string>("");
-  const [selectedYear, setSelectedYear] = useState<string>("2022년");
+  const [selectedYear, setSelectedYear] = useState<string>(
+    `${today.getFullYear() - 24}년`,
+  );
   const [showFinalScreen, setShowFinalScreen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -69,7 +73,7 @@ export default function OnboardingPage() {
 
       // 연도에서 숫자만 추출하여 나이 계산
       const birthYear = parseInt(selectedYear.replace("년", ""));
-      const age = 2024 - birthYear;
+      const age = today.getFullYear() - birthYear;
 
       const response = await fetch("/api/auth/signup", {
         method: "POST",

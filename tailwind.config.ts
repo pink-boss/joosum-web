@@ -8,6 +8,7 @@ const config: Config = {
   theme: {
     screens: {
       tablet: "822px",
+      lg: "1024px",
       pc: "1240px",
     },
     extend: {

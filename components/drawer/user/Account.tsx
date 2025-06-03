@@ -3,12 +3,12 @@ import Image from "next/image";
 
 import useQueryAccount from "@/hooks/useQueryAccount";
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import { Account as AccountType } from "@/types/account.types";
 
+type InputProps = Pick<AccountType, "email">;
 
-export default function Account() {
+export default function Account({ email }: InputProps) {
   const { openAccount: openAccountDialog } = useOpenDialogStore();
-
-  const { data } = useQueryAccount();
 
   const onOpenMyAccount = () => {
     openAccountDialog(true);
@@ -26,7 +26,7 @@ export default function Account() {
           className="flex justify-between"
           onClick={onOpenMyAccount}
         >
-          <span className="font-bold text-gray-black">{data?.user.email}</span>
+          <span className="font-bold text-gray-black">{email}</span>
           <Image
             src="/icons/icon-chevron-right.png"
             alt="open"

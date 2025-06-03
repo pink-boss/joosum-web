@@ -74,7 +74,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           <div
             id="notification-root"
             data-testid="notification-root"
-            className="fixed right-4 top-10 z-50 flex flex-col items-end"
+            className="fixed right-4 top-28 z-50 flex flex-col items-end"
           >
             {toasts.map((toast) => (
               <Notification {...toast} key={toast.id} />

@@ -23,7 +23,7 @@ export default function Folder({
       <div className="flex justify-between px-2">
         <label className="text-lg font-semibold">폴더</label>
         <Button
-          className="flex font-semibold text-primary-500"
+          className="flex items-center font-semibold text-primary-500"
           disabled={disabled}
         >
           <Image

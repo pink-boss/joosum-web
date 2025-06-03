@@ -1,16 +1,24 @@
+import clsx from "clsx";
+
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 
 export default function OpenLinkSaveDrawerButton() {
-  const { openLinkSaveDrawer } = useOpenDrawerStore();
+  const { openLinkDrawer } = useOpenDrawerStore();
   const handleClick = () => {
-    openLinkSaveDrawer(true);
+    openLinkDrawer(true, "save");
   };
   return (
     <button
-      className="h-[48px] w-[200px] rounded-xl bg-black text-xl font-bold text-white"
+      className={clsx(
+        "h-[48px] w-auto rounded-xl bg-black font-bold text-white",
+        "min-w-[120px] px-4 text-sm",
+        "sm:min-w-[160px] sm:text-lg",
+        "lg:min-w-[200px] lg:text-xl",
+      )}
       onClick={handleClick}
     >
-      링크 저장
+      <span className="sm:inline hidden">링크 저장</span>
+      <span className="sm:hidden">저장</span>
     </button>
   );
 }

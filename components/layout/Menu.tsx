@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MouseEvent } from "react";
 
+import DropdownMore from "@/app/my-folder/DropdownMore";
 import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import { useOpenDialogStore } from "@/store/useDialogStore";
@@ -21,14 +22,22 @@ function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
   return (
     <LinkToPage linkBook={linkBook} onClickCallback={closeDialog}>
       <div className={clsx("h-[48px] py-3 pl-12 pr-5")}>
-        <div className="flex gap-2">
+        <div className="relative flex items-center gap-2">
           <div
             className={clsx("size-5 rounded-full border border-white")}
             style={{ backgroundColor: linkBook.backgroundColor }}
           />
-          <div className="font-semibold text-gray-graphite">
+          <div className="w-36 truncate font-semibold text-gray-graphite">
             {linkBook.title}
           </div>
+          {linkBook.isDefault !== "y" && (
+            <div
+              className="absolute right-0"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <DropdownMore linkBook={linkBook} isLayout />
+            </div>
+          )}
         </div>
       </div>
     </LinkToPage>

@@ -30,7 +30,7 @@ const Dropdown = ({ selected, setSelected, options }: InputProps) => {
 
       {isOpen && (
         <div
-          className="absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border border-gray-ghost bg-white py-4 shadow-lg"
+          className="absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border border-gray-ghost bg-white py-4 shadow-xl"
           data-testid="dropdown-content"
         >
           {options.map((item) => (
@@ -42,7 +42,7 @@ const Dropdown = ({ selected, setSelected, options }: InputProps) => {
                 setIsOpen(false);
               }}
               className={clsx(
-                "w-full px-5 py-1 leading-5",
+                "w-full px-5 py-1 text-left leading-5",
                 selected === item.value
                   ? "font-bold text-gray-black"
                   : "text-gray-dim",

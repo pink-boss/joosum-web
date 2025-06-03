@@ -5,6 +5,7 @@ import Image from "next/image";
 import Dialog from "@/components/dialog/Dialog";
 import useLinkCache from "@/hooks/link/useLinkCache";
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import { toast } from "@/components/notification/toast";
 
 export default function ShareLinkDialog() {
   const {
@@ -21,6 +22,7 @@ export default function ShareLinkDialog() {
   async function handleCopyLink() {
     if (link?.url) {
       await navigator.clipboard.writeText(link?.url);
+      toast({ status: "success", message: "링크가 복사되었습니다." });
     }
   }
   async function handleShareToKakao() {}

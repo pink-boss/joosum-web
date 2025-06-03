@@ -74,7 +74,7 @@ export default function LinkCard({ link }: LinkCardProps) {
         />
       </div>
       <div className="flex flex-col gap-2">
-        <div className="truncate text-lg font-bold">{link.title}</div>
+        <div className="w-[374px] truncate text-lg font-bold">{link.title}</div>
         <div className="flex flex-wrap gap-2">
           {visibleTags.map((tag, index) => (
             <div

@@ -1,21 +1,24 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
-import { Tag, TagList } from "@/types/tags.types";
+import useUpdateTagsCache from "./useUpdateTagsCache";
+import { toast } from "@/components/notification/toast";
+import { apiCall } from "@/utils/error";
 
-export default function useDeleteTagsSetting(onSuccessCallback: () => void) {
-  const queryClient = useQueryClient();
+export default function useDeleteTagSetting() {
+  const updateCache = useUpdateTagsCache();
 
-  return useMutation<[TagList], Error, Tag>({
-    mutationFn: async (state: Tag) => {
-      return (
-        await fetch(`/api/settings/tags/${state}`, {
-          method: "DELETE",
-        })
-      ).json();
+  return useMutation<undefined, Error, string>({
+    mutationFn: async (id: string) => {
+      return apiCall(`/api/settings/tags/${id}`, {
+        method: "DELETE",
+      });
     },
-    onSuccess: ([newTags]) => {
-      queryClient.setQueryData(["settings", "tags"], () => newTags);
-      onSuccessCallback();
+    onSuccess: () => {
+      updateCache();
+      toast({ status: "success", message: "태그가 삭제되었습니다." });
+    },
+    onError: (error) => {
+      toast({ status: "fail", message: error.message });
     },
   });
 }

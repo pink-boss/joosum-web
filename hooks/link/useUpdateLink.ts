@@ -1,19 +1,21 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Link, UpdateFormState } from "@/types/link.types";
-import { getLinkListQueryKey } from "@/utils/queryKey";
 
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
 import { toast } from "@/components/notification/toast";
 import { isApiError } from "@/utils/error";
 
-type SuccessResult = [Link, { status: 204 }];
+import { isSuccessfullLinkResponse } from "@/utils/link";
+import useUpdateLinkCache from "./useUpdateLinkCache";
 
-export default function useUpdateLink(onSuccessCallback: () => void) {
+export default function useUpdateLink() {
   const prevLinkBook = useLinkBookFromTitle();
   const queryClient = useQueryClient();
 
-  return useMutation<boolean, Error, UpdateFormState>({
+  const updateCache = useUpdateLinkCache();
+
+  return useMutation<undefined, Error, UpdateFormState>({
     mutationFn: async (state) => {
       const work: Promise<Link | ApiError | { status: number }>[] = [];
 
@@ -37,28 +39,34 @@ export default function useUpdateLink(onSuccessCallback: () => void) {
         work.push(linkBookUpdateResult);
       }
 
-      const result = await Promise.all(work);
-
-      if (!isSuccessfulResponse(result)) {
-        console.error(result.find((item) => isApiError(item)));
-        toast({ status: "fail", message: "링크 수정을 실패했습니다." });
-        return false;
+      if (state.tags.length) {
+        const tagsResult: Promise<{ status: number } | ApiError> = (
+          await fetch(`/api/settings/tags`, {
+            method: "POST",
+            body: JSON.stringify(state.tags),
+          })
+        ).json();
+        work.push(tagsResult);
       }
 
-      toast({ status: "success", message: "링크가 저장되었습니다." });
-      return true;
+      const result = await Promise.all(work);
+
+      if (!isSuccessfullLinkResponse(result)) {
+        const error = result.find((item) => isApiError(item));
+        console.error(error);
+        throw new Error("링크 수정에 실패했습니다.");
+      }
     },
     onSuccess: () => {
+      updateCache(prevLinkBook?.linkBookId);
       queryClient.invalidateQueries({
-        queryKey: getLinkListQueryKey(prevLinkBook?.linkBookId),
+        queryKey: ["tags"],
       });
-      onSuccessCallback();
+
+      toast({ status: "success", message: "링크가 저장되었습니다." });
+    },
+    onError: (error) => {
+      toast({ status: "fail", message: error.message });
     },
   });
 }
-
-const isSuccessfulResponse = (
-  response: (Link | ApiError | { status: number })[],
-): response is SuccessResult => {
-  return response.every((item) => !("error" in item));
-};

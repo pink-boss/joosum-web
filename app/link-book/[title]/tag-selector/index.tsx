@@ -34,7 +34,7 @@ const TagSelector = ({
   } = useQuery<string[]>({
     queryKey: ["tags"],
     queryFn: () =>
-      fetch(`/api/tags`, {
+      fetch(`/api/settings/tags`, {
         method: "GET",
       }).then((res) => res.json()),
     staleTime: 60 * 60 * 1000,
@@ -78,8 +78,8 @@ const TagSelector = ({
               role="list"
               className="mini-scroll flex h-[222px] w-[258px] flex-col gap-[10px] overflow-auto border border-gray-ghost p-3"
             >
-              {totalTags.map((tag) => (
-                <div key={`total-tag-${tag}`} className="flex gap-2">
+              {totalTags.map((tag, index) => (
+                <div key={`total-tag-${index}`} className="flex gap-2">
                   <Checkbox
                     id={`tag-${tag}`}
                     checked={tags.includes(tag)}
@@ -93,11 +93,8 @@ const TagSelector = ({
               ))}
             </div>
           </div>
-          <div className="flex gap-4">
+          <div className="flex justify-end gap-4">
             <ResetButton handleClick={handleResetTags} />
-            <button className="h-[40px] flex-1 rounded-lg bg-primary-500 text-sm font-bold text-white">
-              확인
-            </button>
           </div>
         </div>
       )}

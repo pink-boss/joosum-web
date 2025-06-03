@@ -9,6 +9,8 @@ import { CreateLinkBook, EntireFolderProps } from "@/types/linkBook.types";
 
 import DropdownMore from "./DropdownMore";
 
+const TITLE_PLACEHOLDER = "폴더명을 입력해주세요.";
+
 type FolderBookInputProps = Partial<CreateLinkBook> & {
   children?: ReactNode;
   isPreview?: boolean;
@@ -35,21 +37,21 @@ export function FolderBook({
     >
       <div
         className={clsx(
-          "absolute left-[13.2px] h-full bg-black opacity-10",
-          isPreview ? "w-0.5" : "w-[3.3px]",
+          "absolute h-full bg-black opacity-10",
+          isPreview ? "left-[9px] w-0.5" : "left-[13.2px] w-[3.3px]",
         )}
       ></div>
       <div
         data-testid="folder-book-title"
         className={clsx(
-          "truncate font-bold",
+          "line-clamp-2 break-keep font-bold",
           isPreview
-            ? "ml-[22px] mt-4 w-[94px] text-base"
+            ? "ml-[22px] mt-4 w-[94px] text-sm"
             : "ml-[33px] mt-[19.8px] w-[121px] text-lg",
         )}
         style={{ color: titleColor }}
       >
-        {title}
+        {title || (isPreview && TITLE_PLACEHOLDER)}
       </div>
       {illustration && (
         <div

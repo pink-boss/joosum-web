@@ -17,7 +17,11 @@ const meta = {
   decorators: (Story) => {
     const { isMutateLinkBookOpen } = useOpenDialogStore();
     React.useEffect(() => {
-      useOpenDrawerStore.setState({ isLinkSaveDrawerOpen: true });
+      useOpenDrawerStore.setState({
+        isLinkDrawerOpen: true,
+        mode: "save",
+        link: undefined,
+      });
     }, []);
     return (
       <ToastProvider>

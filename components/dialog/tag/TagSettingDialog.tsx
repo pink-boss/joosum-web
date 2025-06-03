@@ -15,7 +15,7 @@ export default function TagSettingDialog() {
   const onClose = () => {
     open(false);
   };
-  const { handleInput, inputRef, tags } = useUpsertTags();
+  const { handleInput, handleButtonClick, inputRef, tags } = useUpsertTags();
 
   return (
     <Dialog
@@ -55,6 +55,7 @@ export default function TagSettingDialog() {
               "bg-primary-500 font-bold text-white",
               "h-14 w-full rounded-lg",
             )}
+            onClick={handleButtonClick}
           >
             저장
           </button>

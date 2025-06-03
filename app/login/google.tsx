@@ -1,9 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import PreviousProviderBubble from "@/components/PreviousProviderBubble";
 import { PreviousLoginProvider } from "@/types/auth.types";
 import { trimTrailingSlash } from "@/utils/envUri";
-import { useRouter } from "next/navigation";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH_GOOGLE_ID;
 const GOOGLE_REDIRECT_URI = `${trimTrailingSlash(process.env.NEXT_PUBLIC_JOOSUM_WEB_URI)}/auth/callback/google`;

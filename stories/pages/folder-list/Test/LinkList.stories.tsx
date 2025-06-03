@@ -149,6 +149,10 @@ const testRequestURI = async ({
 };
 
 export const TestSortRequestURI_Lastest: Story = {
+  beforeEach: () => {
+    useFolderLinkSortStore.setState(sortDefaultValues);
+    capturedRequest = null;
+  },
   play: async ({ canvasElement }) => {
     await testRequestURI({
       canvasElement,
@@ -160,6 +164,10 @@ export const TestSortRequestURI_Lastest: Story = {
 };
 
 export const TestSortRequestURI_Oldest: Story = {
+  beforeEach: () => {
+    useFolderLinkSortStore.setState(sortDefaultValues);
+    capturedRequest = null;
+  },
   play: async ({ canvasElement }) => {
     await testRequestURI({
       canvasElement,
@@ -171,6 +179,10 @@ export const TestSortRequestURI_Oldest: Story = {
 };
 
 export const TestSortRequestURI_Title: Story = {
+  beforeEach: () => {
+    useFolderLinkSortStore.setState(sortDefaultValues);
+    capturedRequest = null;
+  },
   play: async ({ canvasElement }) => {
     await testRequestURI({
       canvasElement,

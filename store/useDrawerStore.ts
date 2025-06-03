@@ -3,19 +3,16 @@ import { create } from "zustand";
 import { Link } from "@/types/link.types";
 
 type LinkDrawerInputState =
-  | { isLinkDrawerOpen: false; link: undefined }
-  | { isLinkDrawerOpen: true; link: Link };
+  | { isLinkDrawerOpen: false; link: undefined; mode: undefined }
+  | { isLinkDrawerOpen: true; link: Link; mode: "mutate" }
+  | { isLinkDrawerOpen: true; link: Link | undefined; mode: "save" };
 
 type LinkDrawerState = LinkDrawerInputState & {
   openLinkDrawer: {
-    (isOpen: true, link: Link): void;
+    (isOpen: true, mode: "mutate", link: Link): void;
+    (isOpen: true, mode: "save", link?: Link): void;
     (isOpen: false): void;
   };
-};
-
-type LinkSaveDrawerState = {
-  isLinkSaveDrawerOpen: boolean;
-  openLinkSaveDrawer: (isOpen: boolean) => void;
 };
 
 type UserDrawerState = {
@@ -23,28 +20,25 @@ type UserDrawerState = {
   openUserDrawer: (isOpen: boolean) => void;
 };
 
-type Drawerstate = LinkDrawerState & LinkSaveDrawerState & UserDrawerState;
+type DrawerState = LinkDrawerState & UserDrawerState;
 
-export const useOpenDrawerStore = create<Drawerstate>()((set) => ({
-  // 링크 상세정보
+export const useOpenDrawerStore = create<DrawerState>()((set) => ({
+  // 통합 링크 drawer
   isLinkDrawerOpen: false,
   link: undefined,
-
-  openLinkDrawer: ((isOpen, link) => {
-    if (isOpen && !link) {
-      throw new Error("Link must be provided when opening drawer");
+  mode: undefined,
+  openLinkDrawer: ((isOpen: boolean, mode?: "mutate" | "save", link?: Link) => {
+    if (isOpen && mode === "mutate" && !link) {
+      throw new Error("Link must be provided when opening mutate mode");
     }
     set({
       isLinkDrawerOpen: isOpen,
+      mode: isOpen ? mode : undefined,
       link: isOpen ? link : undefined,
     } as LinkDrawerState);
   }) as LinkDrawerState["openLinkDrawer"],
 
-  // 링크 저장
-  isLinkSaveDrawerOpen: false,
-  openLinkSaveDrawer: (isOpen) => set({ isLinkSaveDrawerOpen: isOpen }),
-
-  // 내정보
+  // 내정보 drawer
   isUserDrawerOpen: false,
-  openUserDrawer: (isOpen) => set({ isUserDrawerOpen: isOpen }),
+  openUserDrawer: (isOpen: boolean) => set({ isUserDrawerOpen: isOpen }),
 }));

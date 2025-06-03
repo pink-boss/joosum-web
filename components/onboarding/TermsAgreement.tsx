@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+
 import AgreementCheckbox from "./AgreementCheckbox";
 
 interface TermsAgreementProps {
@@ -23,7 +24,7 @@ export default function TermsAgreement({
   isStartButtonEnabled,
 }: TermsAgreementProps) {
   return (
-    <main className="mx-auto flex h-full w-full max-w-[1280px] flex-col justify-center gap-8 px-20">
+    <main className="mx-auto flex size-full max-w-[1280px] flex-col justify-center gap-8 px-20">
       {/* 제목 섹션 */}
       <div className="text-center">
         <h1 className="mb-4 text-2xl font-bold leading-8 text-black">
@@ -47,7 +48,7 @@ export default function TermsAgreement({
             >
               <div className="flex items-center gap-2">
                 <div
-                  className={`flex h-6 w-6 items-center justify-center rounded-full border-2 ${
+                  className={`flex size-6 items-center justify-center rounded-full border-2 ${
                     agreements.all
                       ? "border-primary-500 bg-primary-500"
                       : "border-gray-300 bg-white"

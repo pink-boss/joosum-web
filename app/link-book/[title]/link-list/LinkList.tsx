@@ -39,6 +39,9 @@ export default function LinkList({
   const totalCount = data.length;
 
   const handleChangeToolbarMode = () => {
+    if (cachedLinks.size) {
+      setAllLinks(false);
+    }
     setEditMode((prev) => !prev);
   };
 

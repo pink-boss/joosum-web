@@ -10,7 +10,9 @@ const meta = {
   component: Filter,
   parameters: {
     msw: {
-      handlers: [http.get("/api/tags", () => HttpResponse.json(mockTags))],
+      handlers: [
+        http.get("/api/settings/tags", () => HttpResponse.json(mockTags)),
+      ],
     },
   },
 } satisfies Meta<typeof Filter>;

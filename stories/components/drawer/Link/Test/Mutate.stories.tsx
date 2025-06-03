@@ -64,7 +64,10 @@ const testMeta = {
   beforeEach: () => {
     capturedRequest = {};
     queryClient.clear();
-    useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
+    useOpenDrawerStore.setState({
+      link: mockLink,
+      isMutateLinkDrawerOpen: true,
+    });
   },
 } satisfies Meta<typeof MutateLinkDrawer>;
 
@@ -73,7 +76,10 @@ type Story = StoryObj<typeof testMeta>;
 
 export const TestOpenCloseDrawer: Story = {
   beforeEach: () => {
-    useOpenDrawerStore.setState({ link: undefined, isLinkDrawerOpen: false });
+    useOpenDrawerStore.setState({
+      link: undefined,
+      isMutateLinkDrawerOpen: false,
+    });
   },
   decorators: (Story) => {
     return (
@@ -184,20 +190,31 @@ export const TestUpdateLink: Story = {
       await waitFor(() => {
         expect(capturedRequest.updateLink).not.toBeNull();
       });
-      const linkUrl = new URL(capturedRequest.updateLink!.url);
+
+      if (!capturedRequest.updateLink) {
+        throw new Error("updateLink request is null");
+      }
+
+      const linkUrl = new URL(capturedRequest.updateLink.url);
       expect(linkUrl.pathname).toBe(`/api/links/${mockLink.linkId}`);
-      if (!capturedRequest.updateLink!.bodyUsed) {
-        const body = await capturedRequest.updateLink!.json();
-        expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
-        expect(body.title).toBe(NEW_TITLE);
-        expect(body.linkBookId).toBe(NEW_FOLDER_ID);
-        expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
-      } else expect(null).toBe("이미 사용된 bodyUsed");
+
+      // Request body를 안전하게 읽기 위해 새로운 clone 생성
+      const requestClone = capturedRequest.updateLink.clone();
+      const body = await requestClone.json();
+      expect(body.thumbnailURL).toBe(mockLink.thumbnailURL);
+      expect(body.title).toBe(NEW_TITLE);
+      expect(body.linkBookId).toBe(NEW_FOLDER_ID);
+      expect(body.tags).toEqual([...mockLink.tags, NEW_TAG]);
 
       await waitFor(() => {
         expect(capturedRequest.updateLinkBook).not.toBeNull();
       });
-      const linkBookUrl = new URL(capturedRequest.updateLinkBook!.url);
+
+      if (!capturedRequest.updateLinkBook) {
+        throw new Error("updateLinkBook request is null");
+      }
+
+      const linkBookUrl = new URL(capturedRequest.updateLinkBook.url);
       expect(linkBookUrl.pathname).toBe(
         `/api/links/${mockLink.linkId}/link-book-id/${NEW_FOLDER_ID}`,
       );
@@ -263,7 +280,10 @@ export const TestShareLink: Story = {
       value: mockClipboard,
       writable: true,
     });
-    useOpenDrawerStore.setState({ link: mockLinks[0], isLinkDrawerOpen: true });
+    useOpenDrawerStore.setState({
+      link: mockLinks[0],
+      isMutateLinkDrawerOpen: true,
+    });
   },
   decorators: (Story) => {
     queryClient.setQueryData(getLinkListQueryKey(), () => mockLinks);

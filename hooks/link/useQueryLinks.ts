@@ -14,11 +14,12 @@ import { sortByKeywordPosition } from "@/utils/sort";
 import useQueryLinkBooks from "../my-folder/useQueryLinkBooks";
 
 type InputProps = {
-  linkSort: LinkSortState;
+  linkSort: Omit<LinkSortState, "setField">;
   linkFilter: LinkFilterValues;
   linkBookId?: LinkBook["linkBookId"];
 };
 
+// TODO: 검색에서 링크북 선택하면 검색이 적용안됨
 export function useQueryLinks({
   linkSort,
   linkFilter,
@@ -82,9 +83,11 @@ export function useQueryLinks({
             true,
           )
         : true;
-      const tagFlag = linkFilter.tags.length
-        ? linkFilter.tags.some((tag) => linkTags.includes(tag))
-        : true;
+
+      const tagFlag =
+        linkFilter.tags.length && linkTags
+          ? linkFilter.tags.some((tag) => linkTags.includes(tag))
+          : true;
       return unreadFlag && datePickerFlag && tagFlag;
     });
   }, [data, linkFilter.dateRange, linkFilter.unread, linkFilter.tags]);

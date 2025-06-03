@@ -34,7 +34,7 @@ export default function SelectLinkBook({
 
   const linkBookOptions: OptionItem<string>[] = useMemo(() => {
     const linkBooks = fromLinkBookId
-      ? data?.linkBooks.filter(
+      ? data?.linkBooks?.filter(
           (linkBook) => linkBook.linkBookId !== fromLinkBookId,
         )
       : data?.linkBooks;
@@ -69,8 +69,7 @@ export default function SelectLinkBook({
         disabled={disabled}
       >
         <span data-testid="selected" className="text-single-line w-64">
-          {linkBookOptions?.find(({ value }) => value === linkBookId)?.label ??
-            (linkBookOptions.length && linkBookOptions[0].label)}
+          {linkBookOptions?.find(({ value }) => value === linkBookId)?.label}
         </span>
         <Image src="/icons/icon-down3.png" alt="down" width={20} height={20} />
       </button>
@@ -78,7 +77,7 @@ export default function SelectLinkBook({
       {isOpen && (
         <div
           className={clsx(
-            "absolute z-10 mt-1 h-[214px] w-full",
+            "absolute z-10 mt-1 max-h-[214px] w-full overflow-y-auto",
             "rounded-lg border border-gray-ghost bg-white p-6 shadow-lg",
           )}
         >

@@ -9,14 +9,14 @@ import { usePathname } from "next/navigation";
 import { Suspense, useState } from "react";
 
 import DynamicOpenDialogs from "@/components/dialog/DynamicOpenDialogs";
+import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
 import Sidebar from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
-import { publicOnlyPaths } from "@/utils/path";
-
-import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
+import Loading from "@/components/Loading";
 import { ToastProvider } from "@/components/notification/ToastProvider";
 import PublicPathHeader from "@/components/PublicPathHeader";
-import Loading from "@/components/Loading";
+import ScreenSizeWrapper from "@/components/ScreenSizeWrapper";
+import { publicOnlyPaths } from "@/utils/path";
 
 const pretendard = localFont({
   src: "../public/fonts/PretendardVariable.woff2",
@@ -81,30 +81,32 @@ export default function RootLayout({
         <script src="https://accounts.google.com/gsi/client" async></script>
       </head>
       <body className={clsx(pretendard.variable, "font-pretendard")}>
-        {isPublicOnlyPath ? (
-          <Component className="justify-center">
-            <PublicPathHeader />
-            <Suspense fallback={<Loading />}>{children}</Suspense>
-          </Component>
-        ) : (
-          <QueryClientProvider client={queryClient}>
-            <ToastProvider>
-              <Sidebar>
-                <Component>
-                  <Topbar />
-                  <Suspense fallback={<Loading />}>{children}</Suspense>
-                  <div id="drawer-root" />
-                  <div id="modal-root" />
-                  <DynamicOpenDrawers />
-                  <DynamicOpenDialogs />
-                </Component>
-              </Sidebar>
-            </ToastProvider>
-            {process.env.NODE_ENV === "development" && (
-              <ReactQueryDevtools initialIsOpen={false} />
-            )}
-          </QueryClientProvider>
-        )}
+        <ScreenSizeWrapper>
+          {isPublicOnlyPath ? (
+            <Component className="justify-center">
+              <PublicPathHeader />
+              <Suspense fallback={<Loading />}>{children}</Suspense>
+            </Component>
+          ) : (
+            <QueryClientProvider client={queryClient}>
+              <ToastProvider>
+                <Sidebar>
+                  <Component>
+                    <Topbar />
+                    <Suspense fallback={<Loading />}>{children}</Suspense>
+                    <div id="drawer-root" />
+                    <div id="modal-root" />
+                    <DynamicOpenDrawers />
+                    <DynamicOpenDialogs />
+                  </Component>
+                </Sidebar>
+              </ToastProvider>
+              {process.env.NODE_ENV === "development" && (
+                <ReactQueryDevtools initialIsOpen={false} />
+              )}
+            </QueryClientProvider>
+          )}
+        </ScreenSizeWrapper>
       </body>
     </html>
   );
@@ -120,7 +122,7 @@ function Component({
   return (
     <main
       className={clsx(
-        "relative flex h-screen w-full flex-col items-center bg-white text-black",
+        "relative flex h-screen flex-1 flex-col items-center bg-white text-black",
         className && className,
       )}
     >

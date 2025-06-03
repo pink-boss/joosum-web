@@ -20,7 +20,7 @@ const meta = {
         http.get("/api/links", () => {
           return HttpResponse.json(mockLinks);
         }),
-        http.get("/api/tags", () => HttpResponse.json(mockTags)),
+        http.get("/api/settings/tags", () => HttpResponse.json(mockTags)),
         http.get("/api/link-books", () => {
           return HttpResponse.json(mockLinkBooks);
         }),
@@ -44,7 +44,7 @@ export const EmptyData: Story = {
         http.get("/api/links", () => {
           return HttpResponse.json([]);
         }),
-        http.get("/api/tags", () => HttpResponse.json([])),
+        http.get("/api/settings/tags", () => HttpResponse.json([])),
         http.get("/api/link-books", () => {
           return HttpResponse.json(mockLinkBooks);
         }),

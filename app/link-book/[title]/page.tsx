@@ -16,7 +16,7 @@ export default function FolderDetail() {
   const linkSort = useFolderLinkSortStore();
 
   return (
-    <div className="flex min-h-0 w-full flex-1 flex-col gap-[25px] px-10">
+    <div className="flex min-h-0 w-full flex-1 flex-col gap-[25px] px-10 pb-8">
       <div className="text-[32px] font-extrabold leading-10 text-gray-ink">
         {linkBook ? linkBook.title : "전체"}
       </div>

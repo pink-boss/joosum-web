@@ -11,11 +11,15 @@ export default function DeleteDialog() {
   const { cachedLinks, clearLinks } = useCheckLink();
 
   const onClose = () => {
-    clearLinks();
     open(false);
   };
 
-  const mutation = useDeleteLink(onClose, [...cachedLinks]);
+  const onSuccessCallback = () => {
+    clearLinks();
+    onClose();
+  };
+
+  const mutation = useDeleteLink(onSuccessCallback, [...cachedLinks]);
 
   async function handleSubmit() {
     mutation.mutate();

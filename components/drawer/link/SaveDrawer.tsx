@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Drawer from "@/components/drawer/Drawer";
 import useSaveLink from "@/hooks/link/useSaveLink";
@@ -14,40 +14,44 @@ import LinkInput from "./LinkInput";
 import Tag from "./Tag";
 import TitleInput from "./TitleInput";
 
-
 type InputProps = {
   _defaultValues?: SaveLink;
 };
 
 export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
-  const { isLinkSaveDrawerOpen: isOpen, openLinkSaveDrawer: open } =
-    useOpenDrawerStore();
+  const {
+    link,
+    isLinkDrawerOpen: isOpen,
+    openLinkDrawer: open,
+    mode,
+  } = useOpenDrawerStore();
   const { isValid } = useLinkInputStore();
+  const [formState, setFormState] = useState<SaveFormState>(
+    _defaultValues ?? defaultValues,
+  );
   const titleRef = useRef<HTMLInputElement>(null);
 
   const onClose = () => {
     open(false);
   };
-  const saveLink = useSaveLink(onClose);
+  const saveLinkMutation = useSaveLink(onClose);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget as HTMLFormElement);
 
-    const rawFormData = {
-      url: formData.get("url"),
-      title: formData.get("title"),
-      linkBookId: formData.get("linkBookId") ?? defaultValues.linkBookId,
-      tags: formData.get("tags"),
-      thumbnail: formData.get("thumbnail"),
-    } as unknown as SaveFormState;
-
-    saveLink.mutate(rawFormData);
+    saveLinkMutation.mutate(formState);
   };
 
-  const [formState, setFormState] = useState<SaveFormState>(
-    _defaultValues ?? defaultValues,
-  );
+  useEffect(() => {
+    setFormState((state) => ({
+      ...state,
+      linkBookId: link?.linkBookId,
+      linkBookName: link?.title,
+    }));
+  }, [link, link?.linkBookId, setFormState]);
+
+  if (mode !== "save") return null;
+
   return (
     <Drawer open={isOpen} onCloseCallback={onClose}>
       <div className="flex flex-1 flex-col gap-10">
@@ -97,14 +101,6 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
               }))
             }
             disabled={!isValid}
-          />
-          <input
-            data-testid="thumbnailURL"
-            id="thumbnailURL"
-            name="thumbnailURL"
-            className="hidden"
-            value={formState.thumbnailURL}
-            readOnly
           />
 
           <Buttons

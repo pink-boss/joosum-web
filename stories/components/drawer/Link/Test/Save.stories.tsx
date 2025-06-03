@@ -56,7 +56,7 @@ type Story = StoryObj<typeof testMeta>;
 export const TestOpenCloseDrawer: Story = {
   beforeEach: () => {
     useOpenDrawerStore.setState({
-      isLinkSaveDrawerOpen: false,
+      isSaveLinkDrawerOpen: false,
     });
     queryClient.clear();
   },
@@ -83,6 +83,9 @@ export const TestOpenCloseDrawer: Story = {
 };
 
 export const TestGetThumbnail: Story = {
+  beforeEach: () => {
+    capturedRequest = {};
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -92,10 +95,18 @@ export const TestGetThumbnail: Story = {
       await userEvent.type(inputElement!, "https://nextjs.org{enter}");
     });
 
+    // 썸네일 요청이 캡처될 때까지 기다림
+    await waitFor(
+      () => {
+        expect(capturedRequest.getThumbnail).toBeDefined();
+      },
+      { timeout: 5000 },
+    );
+
     if (capturedRequest.getThumbnail) {
       const url = new URL(capturedRequest.getThumbnail.url);
       expect(url.pathname).toBe(`/api/links/thumbnail`);
-    } else expect(null).toBe("썸네일 가져오기 에러");
+    }
 
     await waitFor(function setFormData() {
       expect(canvas.queryByTestId("title")).toHaveValue("Next JS");

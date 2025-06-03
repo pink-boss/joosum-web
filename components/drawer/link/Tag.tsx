@@ -10,6 +10,7 @@ import {
 } from "react";
 
 import { toast } from "@/components/notification/toast";
+import { isValidName } from "@/utils/regexp";
 
 type InputProps = {
   tags: string[];
@@ -24,13 +25,27 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
   const [input, setInput] = useState<string>("");
 
   const handleSubmit = () => {
+    const trimmedInput = input.trim();
+
     if (tags.length == 10) {
       toast({
         message: "태그는 10개까지 선택할 수 있어요.",
         status: "warning",
       });
-    } else if (input) {
-      setTags([...tags, input.trim()]);
+    } else if (!trimmedInput) {
+      return; // 빈 문자열은 무시
+    } else if (!isValidName(trimmedInput)) {
+      toast({
+        message: "태그는 한글, 영문, 숫자, 언더스코어(_)만 사용할 수 있어요.",
+        status: "warning",
+      });
+    } else if (tags.includes(trimmedInput)) {
+      toast({
+        message: "이미 추가된 태그입니다.",
+        status: "warning",
+      });
+    } else {
+      setTags([...tags, trimmedInput]);
       setInput("");
     }
   };

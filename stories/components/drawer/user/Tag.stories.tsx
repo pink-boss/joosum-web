@@ -38,7 +38,7 @@ export const OpenDialogWithEmptyData: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get("/api/settings/tag", async () => {
+        http.get("/api/settings/tags", async () => {
           return HttpResponse.json([]);
         }),
       ],

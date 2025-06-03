@@ -20,7 +20,7 @@ export default function UserInfoForm({
   onSkip,
 }: UserInfoFormProps) {
   return (
-    <main className="mx-auto flex h-full w-full max-w-[1280px] flex-col justify-center gap-8 px-20">
+    <main className="mx-auto flex size-full max-w-[1280px] flex-col justify-center gap-8 px-20">
       {/* 제목 섹션 */}
       <div className="text-center">
         <h1 className="mb-4 text-2xl font-bold leading-8 text-black">
@@ -122,7 +122,7 @@ export default function UserInfoForm({
           >
             {isLoading ? (
               <>
-                <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-200 border-t-white"></div>
+                <div className="size-5 animate-spin rounded-full border-2 border-gray-200 border-t-white"></div>
                 <span>처리중...</span>
               </>
             ) : (
