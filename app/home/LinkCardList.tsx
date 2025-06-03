@@ -70,8 +70,8 @@ export default function LinkCardList() {
           </div>
         </NextLink>
       </div>
-      {/* {data.length ? ( */}
-      {false ? (
+      {/* {false ? ( */}
+      {data.length ? (
         <div className="flex flex-col items-start gap-8 overflow-auto">
           <div className="flex flex-wrap gap-x-[22px] gap-y-5">
             {data.slice(0, isAllLinks ? undefined : 29).map((link, index) => (
