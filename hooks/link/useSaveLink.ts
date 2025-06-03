@@ -1,18 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Link, SaveFormState } from "@/types/link.types";
-import { getLinkListQueryKey } from "@/utils/queryKey";
+
 import { isApiError } from "@/utils/error";
 import { toast } from "@/components/notification/toast";
-import { useSearchBarStore } from "@/store/useSearchBarStore";
-import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
+
 import { isSuccessfullLinkResponse } from "@/utils/link";
+import useUpdateLinkCache from "./useUpdateLinkCache";
 
 export default function useSaveLink(onClose: () => void) {
   const queryClient = useQueryClient();
-  const { title: searchKeyword } = useSearchBarStore();
-
-  const { linkBookId: searchLinkBookId } = useSearchLinkFilterStore();
+  const updateCache = useUpdateLinkCache();
 
   return useMutation<Link, Error, SaveFormState>({
     mutationFn: async (state) => {
@@ -47,23 +45,7 @@ export default function useSaveLink(onClose: () => void) {
       return result[0] as Link;
     },
     onSuccess: (result) => {
-      queryClient.invalidateQueries({
-        queryKey: getLinkListQueryKey(result.linkBookId),
-      });
-      queryClient.invalidateQueries({
-        queryKey: getLinkListQueryKey(),
-      });
-
-      if (searchKeyword) {
-        queryClient.invalidateQueries({
-          queryKey: ["search", "linkList"],
-        });
-        if (searchLinkBookId) {
-          queryClient.invalidateQueries({
-            queryKey: ["search", "linkList", searchLinkBookId],
-          });
-        }
-      }
+      updateCache(result.linkBookId);
 
       queryClient.invalidateQueries({
         queryKey: ["tags"],

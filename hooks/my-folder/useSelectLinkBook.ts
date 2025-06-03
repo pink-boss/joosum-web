@@ -25,7 +25,7 @@ export default function useSelectLinkBook(_title?: string) {
 
       if (!linkBookList) return undefined;
 
-      const found = linkBookList.linkBooks.find((linkBook) => {
+      const found = linkBookList.linkBooks?.find((linkBook) => {
         return linkBook.title === title;
       });
       if (found) {

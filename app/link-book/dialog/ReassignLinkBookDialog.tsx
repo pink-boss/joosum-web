@@ -21,11 +21,15 @@ export default function ReassignLinkBookDialog() {
   const fromLinkBook = useLinkBookFromTitle();
 
   const onClose = () => {
-    clearLinks();
     open(false);
   };
 
-  const mutation = useReassignLinkBook(onClose);
+  const onSuccessCallback = () => {
+    clearLinks();
+    onClose();
+  };
+
+  const mutation = useReassignLinkBook(onSuccessCallback);
 
   async function handleSubmit() {
     if (toLinkBookId && cachedLinks.size) {

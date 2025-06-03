@@ -6,6 +6,9 @@ import { getLinkListQueryKey } from "@/utils/queryKey";
 
 import useCheckLink from "./useCheckLink";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
+import { toast } from "@/components/notification/toast";
+import { useSearchBarStore } from "@/store/useSearchBarStore";
+import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 
 interface ReassignParams {
   toLinkBookId: LinkBook["linkBookId"];
@@ -25,6 +28,8 @@ interface BatchResult {
 export default function useReassignLinkBook(onSuccessCallback: () => void) {
   const { cachedLinks } = useCheckLink();
   const fromLinkBook = useLinkBookFromTitle();
+  const { title: searchKeyword } = useSearchBarStore();
+  const { linkBookId: searchLinkBookId } = useSearchLinkFilterStore();
   const queryClient = useQueryClient();
 
   return useMutation<ReassignResponse, Error, ReassignParams>({
@@ -70,20 +75,34 @@ export default function useReassignLinkBook(onSuccessCallback: () => void) {
 
       return { toLinkBookId };
     },
-    onSuccess: ({ toLinkBookId }) => {
-      queryClient.setQueriesData<Link[]>(
-        { queryKey: getLinkListQueryKey(fromLinkBook?.linkBookId) },
-        (prevLinks) =>
-          prevLinks?.filter((link) => !cachedLinks.has(link.linkId)),
-      );
-      queryClient.invalidateQueries({
-        queryKey: getLinkListQueryKey(toLinkBookId),
+    onSuccess: () => {
+      if (searchKeyword) {
+        queryClient.invalidateQueries({
+          queryKey: ["search", "linkList"],
+        });
+        if (searchLinkBookId) {
+          queryClient.invalidateQueries({
+            queryKey: ["search", "linkList", searchLinkBookId],
+          });
+        }
+      } else {
+        queryClient.invalidateQueries({
+          queryKey: getLinkListQueryKey(fromLinkBook?.linkBookId),
+        });
+      }
+
+      toast({
+        status: "success",
+        message: "폴더이동이 완료되었습니다.",
       });
 
       onSuccessCallback();
     },
     onError: ({ message }) => {
-      alert(message);
+      toast({
+        status: "fail",
+        message,
+      });
     },
   });
 }

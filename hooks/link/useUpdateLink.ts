@@ -1,20 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Link, UpdateFormState } from "@/types/link.types";
-import { getLinkListQueryKey } from "@/utils/queryKey";
 
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
 import { toast } from "@/components/notification/toast";
 import { isApiError } from "@/utils/error";
-import { useSearchBarStore } from "@/store/useSearchBarStore";
-import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
+
 import { isSuccessfullLinkResponse } from "@/utils/link";
+import useUpdateLinkCache from "./useUpdateLinkCache";
 
 export default function useUpdateLink() {
   const prevLinkBook = useLinkBookFromTitle();
-  const { linkBookId: searchLinkBookId } = useSearchLinkFilterStore();
   const queryClient = useQueryClient();
-  const { title: searchKeyword } = useSearchBarStore();
+
+  const updateCache = useUpdateLinkCache();
 
   return useMutation<boolean, Error, UpdateFormState>({
     mutationFn: async (state) => {
@@ -61,23 +60,7 @@ export default function useUpdateLink() {
       return true;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: getLinkListQueryKey(prevLinkBook?.linkBookId),
-      });
-      queryClient.invalidateQueries({
-        queryKey: getLinkListQueryKey(),
-      });
-
-      if (searchKeyword) {
-        queryClient.invalidateQueries({
-          queryKey: ["search", "linkList"],
-        });
-        if (searchLinkBookId) {
-          queryClient.invalidateQueries({
-            queryKey: ["search", "linkList", searchLinkBookId],
-          });
-        }
-      }
+      updateCache(prevLinkBook?.linkBookId);
 
       queryClient.invalidateQueries({
         queryKey: ["tags"],
