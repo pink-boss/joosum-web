@@ -52,7 +52,7 @@ export default function MutateLinkDrawer() {
 
   return (
     <Drawer open={isOpen} onCloseCallback={onClose}>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-1 flex-col gap-10">
         <Header
           onClose={onClose}
           center={

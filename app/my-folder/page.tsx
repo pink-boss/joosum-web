@@ -15,7 +15,7 @@ export default function MyFolder() {
 
   const { isPending, error, data } = useQueryLinkBooks(sort);
   return (
-    <div className="flex w-full flex-1 flex-col gap-8 overflow-hidden px-10">
+    <div className="flex w-full flex-1 flex-col gap-8 overflow-hidden px-10 pb-8">
       <div className="flex items-center justify-end gap-3">
         <Dropdown selected={sort} setSelected={setSort} options={sortOptions} />
         <CreateButton />

@@ -19,7 +19,7 @@ export default function CompletionScreen({ onGoHome }: CompletionScreenProps) {
           </div>
 
           {/* 메인 이미지 */}
-          <div className="mb-8">
+          <div className="mb-12">
             <Image
               src="/img-join.svg"
               alt="회원가입 완료"

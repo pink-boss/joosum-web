@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function PublicPathHeader() {
   return (
-    <header className="fixed left-0 top-0 z-50 h-[82px] w-full border-b border-gray-100 bg-white">
+    <header className="fixed left-0 top-0 z-50 h-[82px] w-full bg-white">
       <div className="flex h-full items-center px-20">
         <Link href="/" className="flex items-center gap-2">
           <div className="relative">

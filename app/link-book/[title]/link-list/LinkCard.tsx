@@ -18,7 +18,7 @@ function FolderLink({ linkBookName }: FolderLinkInputProps) {
     <NextLink
       data-testid="folder-link"
       href={`/link-book/${linkBookName}`}
-      className="ml-5 flex flex-none items-center gap-1 text-sm"
+      className="flex flex-none items-center gap-1 text-sm"
       onClick={(e) => e.stopPropagation()}
     >
       <Image src="/icons/folder.png" alt="folder" width={16} height={16} />
@@ -53,7 +53,7 @@ export default function LinkCard({ link }: InputProps) {
         />
       </div>
       <div className="flex min-w-0 grow flex-col">
-        <div className="truncate text-lg font-bold">
+        <div className="w-2/3 truncate text-lg font-bold">
           {pathname.startsWith("/search") && highlightKeyword
             ? link.title
                 .split(new RegExp(`(${highlightKeyword})`, "gi"))
@@ -68,17 +68,20 @@ export default function LinkCard({ link }: InputProps) {
                 )
             : link.title}
         </div>
-        <div className="truncate text-gray-ink">
+        <div className="w-2/3 truncate text-gray-ink">
           {link.tags?.reduce((result, tag) => result + ` #${tag}`, "")}
         </div>
-        <div className="mt-auto flex gap-1 text-gray-dim">
-          <div className="flex-none">{link.url}</div>|
-          <div className="flex-none">
-            {dateFormatter(link.createdAt, "2-digit")}
-          </div>
-          |
-          <div className="flex-none">
-            {link.readCount ? `${link.readCount}회 읽음` : `읽지 않음`}
+        <div className="mt-auto flex justify-between gap-1 text-gray-dim">
+          <div className="flex min-w-0 gap-1">
+            {/* TODO: 너비 조정 */}
+            <div className="truncate">{link.url}</div>|
+            <div className="flex-none">
+              {dateFormatter(link.createdAt, "2-digit")}
+            </div>
+            |
+            <div className="flex-none">
+              {link.readCount ? `${link.readCount}회 읽음` : `읽지 않음`}
+            </div>
           </div>
           <FolderLink linkBookName={link.linkBookName} />
         </div>

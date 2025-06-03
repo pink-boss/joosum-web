@@ -14,7 +14,7 @@ export default function useCheckLink() {
     setLinks([...links]);
   };
 
-  const setAllLinks = (isAllChecked: boolean, allLinks: Link[]) => {
+  const setAllLinks = (isAllChecked: boolean, allLinks?: Link[]) => {
     if (isAllChecked) {
       setLinks(allLinks?.map((link) => link.linkId));
     } else {

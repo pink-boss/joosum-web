@@ -60,8 +60,8 @@ export default function AppDownloadDialog() {
         <div className="w-full pt-4">
           <button
             className={clsx(
-              "bg-primary-500 font-bold text-white",
-              "h-14 w-full rounded-lg transition-colors hover:bg-primary-600",
+              "bg-gray-silver font-bold text-white",
+              "h-14 w-full rounded-lg transition-colors hover:bg-gray-slate",
             )}
             onClick={onClose}
           >

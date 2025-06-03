@@ -78,8 +78,8 @@ const TagSelector = ({
               role="list"
               className="mini-scroll flex h-[222px] w-[258px] flex-col gap-[10px] overflow-auto border border-gray-ghost p-3"
             >
-              {totalTags.map((tag) => (
-                <div key={`total-tag-${tag}`} className="flex gap-2">
+              {totalTags.map((tag, index) => (
+                <div key={`total-tag-${index}`} className="flex gap-2">
                   <Checkbox
                     id={`tag-${tag}`}
                     checked={tags.includes(tag)}
