@@ -60,15 +60,18 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
   }, [pathname, resetLinkBookId, setInputValue, setTitle]);
 
   return (
-    <div className="relative" data-testid="search-link">
+    <div
+      className={clsx(
+        "relative inline-block w-full",
+        "max-w-[360px] lg:max-w-[540px] pc:max-w-[720px]",
+      )}
+      data-testid="search-link"
+    >
       <input
         type="text"
         placeholder="링크 제목으로 검색해보세요."
         className={clsx(
-          "h-[48px] rounded-lg border pl-3 pr-20",
-          "w-[360px]",
-          "lg:w-[540px]",
-          "pc:w-[720px]",
+          "h-[48px] w-full rounded-lg border pl-3 pr-20",
           "focus:bg-inputactivebg",
         )}
         onKeyDown={handleKeyDown}
@@ -87,8 +90,9 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
             type="button"
             onClick={() => setInputValue("")}
             className={clsx(
-              "size-5 rounded-full bg-gray-silver",
-              "flex items-center justify-center text-lg text-white",
+              "size-5 rounded-full",
+              "bg-gray-silver text-lg text-white",
+              "flex items-center justify-center",
             )}
           >
             &times;
