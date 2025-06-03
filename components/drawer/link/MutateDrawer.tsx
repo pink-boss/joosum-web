@@ -23,6 +23,7 @@ export default function MutateLinkDrawer() {
     link,
     isLinkDrawerOpen: isOpen,
     openLinkDrawer: open,
+    mode,
   } = useOpenDrawerStore();
   const { openDeleteDrawerLink } = useOpenDialogStore();
 
@@ -45,9 +46,9 @@ export default function MutateLinkDrawer() {
 
   useEffect(() => {
     setFormState(link ?? defaultValues);
-  }, [link, link?.linkBookId]);
+  }, [link, link?.linkBookId, setFormState]);
 
-  if (!link) return null;
+  if (mode !== "mutate" || !link) return null;
 
   return (
     <Drawer open={isOpen} onCloseCallback={onClose}>

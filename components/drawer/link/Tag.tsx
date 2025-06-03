@@ -10,17 +10,12 @@ import {
 } from "react";
 
 import { toast } from "@/components/notification/toast";
+import { isValidName } from "@/utils/regexp";
 
 type InputProps = {
   tags: string[];
   setTags: (tags: string[]) => void;
   disabled?: boolean;
-};
-
-// 한글(완성형+자음+모음), 영문, 숫자, 언더스코어만 허용하는 정규식
-const isValidTag = (tag: string): boolean => {
-  const regex = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_]+$/;
-  return regex.test(tag);
 };
 
 export default function Tag({ tags, setTags, disabled = false }: InputProps) {
@@ -39,7 +34,7 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
       });
     } else if (!trimmedInput) {
       return; // 빈 문자열은 무시
-    } else if (!isValidTag(trimmedInput)) {
+    } else if (!isValidName(trimmedInput)) {
       toast({
         message: "태그는 한글, 영문, 숫자, 언더스코어(_)만 사용할 수 있어요.",
         status: "warning",

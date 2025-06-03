@@ -5,6 +5,7 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 import useSelectLinkBook from "./useSelectLinkBook";
 import useUpdateLinkBookCache from "./useUpdateLinkBookCache";
 import { toast } from "@/components/notification/toast";
+import { apiCall } from "@/utils/error";
 
 export default function useDeleteLinkBook(onSuccessCallback: () => void) {
   const { key } = useOpenDialogStore();
@@ -13,13 +14,9 @@ export default function useDeleteLinkBook(onSuccessCallback: () => void) {
 
   return useMutation<undefined, Error>({
     mutationFn: async () => {
-      const result = await fetch(`/api/link-books/${linkBook?.linkBookId}`, {
+      return apiCall(`/api/link-books/${linkBook?.linkBookId}`, {
         method: "DELETE",
       });
-
-      if (!result.ok) {
-        throw new Error("링크북 삭제에 실패했습니다.");
-      }
     },
     onSuccess: () => {
       updateCache();

@@ -54,7 +54,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Open: Story = {
   decorators: (Story) => {
-    useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
+    useOpenDrawerStore.setState({
+      isLinkDrawerOpen: true,
+      mode: "mutate",
+      link: mockLink,
+    });
     return <Story />;
   },
 };

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Drawer from "@/components/drawer/Drawer";
 import useSaveLink from "@/hooks/link/useSaveLink";
@@ -19,8 +19,12 @@ type InputProps = {
 };
 
 export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
-  const { isLinkSaveDrawerOpen: isOpen, openLinkSaveDrawer: open } =
-    useOpenDrawerStore();
+  const {
+    link,
+    isLinkDrawerOpen: isOpen,
+    openLinkDrawer: open,
+    mode,
+  } = useOpenDrawerStore();
   const { isValid } = useLinkInputStore();
   const [formState, setFormState] = useState<SaveFormState>(
     _defaultValues ?? defaultValues,
@@ -30,13 +34,24 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
   const onClose = () => {
     open(false);
   };
-  const saveLink = useSaveLink(onClose);
+  const saveLinkMutation = useSaveLink(onClose);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    saveLink.mutate(formState);
+    saveLinkMutation.mutate(formState);
   };
+
+  useEffect(() => {
+    setFormState((state) => ({
+      ...state,
+      linkBookId: link?.linkBookId,
+      linkBookName: link?.title,
+    }));
+  }, [link, link?.linkBookId, setFormState]);
+
+  if (mode !== "save") return null;
+
   return (
     <Drawer open={isOpen} onCloseCallback={onClose}>
       <div className="flex flex-1 flex-col gap-10">

@@ -3,6 +3,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { CreateFormState, LinkBook } from "@/types/linkBook.types";
+import { Link } from "@/types/link.types";
+import { apiCall } from "@/utils/error";
 
 import useSelectLinkBook from "./useSelectLinkBook";
 import useUpdateLinkBookCache from "./useUpdateLinkBookCache";
@@ -18,16 +20,24 @@ export default function useMutateLinkBook(onSuccessCallback: () => void) {
     link: drawerLink,
     isLinkDrawerOpen,
     openLinkDrawer,
+    mode,
   } = useOpenDrawerStore();
 
   const updateDrawerLink = (result: LinkBook) => {
-    if (isLinkDrawerOpen) {
-      openLinkDrawer(true, {
+    if (isLinkDrawerOpen && mode === "mutate") {
+      openLinkDrawer(true, "mutate", {
         ...drawerLink,
         linkBookId: result.linkBookId,
         linkBookName: result.title,
         updatedAt: new Date().toISOString(),
-      });
+      } as Link);
+    }
+
+    if (isLinkDrawerOpen && mode === "save") {
+      openLinkDrawer(true, "save", {
+        linkBookId: result.linkBookId,
+        linkBookName: result.title,
+      } as Link);
     }
   };
 
@@ -37,16 +47,10 @@ export default function useMutateLinkBook(onSuccessCallback: () => void) {
 
   return useMutation<LinkBook, Error, CreateFormState>({
     mutationFn: async (state) => {
-      const result = await fetch(pathname, {
+      return apiCall<LinkBook>(pathname, {
         method: linkBook ? "PUT" : "POST",
         body: JSON.stringify(state),
       });
-
-      if (!result.ok) {
-        throw new Error(`링크북 ${TYPE}에 실패했습니다.`);
-      }
-
-      return result.json();
     },
     onSuccess: (result) => {
       updateCache();

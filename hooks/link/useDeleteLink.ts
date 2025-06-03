@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
-
 import useUpdateLinkCache from "./useUpdateLinkCache";
 import { toast } from "@/components/notification/toast";
+import { apiCall } from "@/utils/error";
 
 export default function useDeleteLink(
   onSuccessCallback: () => void,
@@ -14,14 +14,10 @@ export default function useDeleteLink(
 
   return useMutation<unknown, Error>({
     mutationFn: async () => {
-      const result = await fetch(`/api/links`, {
+      return apiCall(`/api/links`, {
         method: "DELETE",
         body: JSON.stringify({ linkIds }),
       });
-
-      if (!result.ok) {
-        throw new Error("링크 삭제에 실패했습니다.");
-      }
     },
     onSuccess: () => {
       updateCache(linkBook?.linkBookId);

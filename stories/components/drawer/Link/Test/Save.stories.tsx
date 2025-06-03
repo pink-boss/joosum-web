@@ -56,7 +56,7 @@ type Story = StoryObj<typeof testMeta>;
 export const TestOpenCloseDrawer: Story = {
   beforeEach: () => {
     useOpenDrawerStore.setState({
-      isLinkSaveDrawerOpen: false,
+      isSaveLinkDrawerOpen: false,
     });
     queryClient.clear();
   },

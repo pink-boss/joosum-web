@@ -15,7 +15,7 @@ export default function useUpdateLink() {
 
   const updateCache = useUpdateLinkCache();
 
-  return useMutation<boolean, Error, UpdateFormState>({
+  return useMutation<undefined, Error, UpdateFormState>({
     mutationFn: async (state) => {
       const work: Promise<Link | ApiError | { status: number }>[] = [];
 
@@ -56,12 +56,9 @@ export default function useUpdateLink() {
         console.error(error);
         throw new Error("링크 수정에 실패했습니다.");
       }
-
-      return true;
     },
     onSuccess: () => {
       updateCache(prevLinkBook?.linkBookId);
-
       queryClient.invalidateQueries({
         queryKey: ["tags"],
       });

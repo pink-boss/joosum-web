@@ -8,7 +8,7 @@ type InputProps = { link: Link };
 export default function DrawerButton({ link }: InputProps) {
   const { openLinkDrawer } = useOpenDrawerStore();
   const handleOpenMutateLinkDrawer = () => {
-    openLinkDrawer(true, link);
+    openLinkDrawer(true, "mutate", link);
   };
   return (
     <button onClick={handleOpenMutateLinkDrawer}>

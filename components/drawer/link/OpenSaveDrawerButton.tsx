@@ -1,9 +1,9 @@
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 
 export default function OpenLinkSaveDrawerButton() {
-  const { openLinkSaveDrawer } = useOpenDrawerStore();
+  const { openLinkDrawer } = useOpenDrawerStore();
   const handleClick = () => {
-    openLinkSaveDrawer(true);
+    openLinkDrawer(true, "save");
   };
   return (
     <button

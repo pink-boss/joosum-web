@@ -4,10 +4,12 @@ import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
+import { toast } from "@/components/notification/toast";
 import useMutateLinkBook from "@/hooks/my-folder/useMutateLinkBook";
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { CreateFormState } from "@/types/linkBook.types";
+import { isValidName } from "@/utils/regexp";
 
 import FolderSettingEditor from "./FolderSettingEditor";
 import { pickBackgroundColors, pickTitleColors } from "../constants";
@@ -37,6 +39,13 @@ export default function MutateDialog() {
 
   const mutation = useMutateLinkBook(onClose);
   async function handleSubmit() {
+    if (!isValidName(formState.title!)) {
+      toast({
+        message: "폴더명은 한글, 영문, 숫자, 언더스코어(_)만 사용할 수 있어요.",
+        status: "warning",
+      });
+      return;
+    }
     mutation.mutate(formState);
   }
 

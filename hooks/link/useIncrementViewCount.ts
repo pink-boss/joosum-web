@@ -4,18 +4,16 @@ import { Link } from "@/types/link.types";
 
 import { toast } from "@/components/notification/toast";
 import useUpdateLinkCache from "./useUpdateLinkCache";
+import { apiCall } from "@/utils/error";
 
 export default function useIncrementViewCount(link: Link) {
   const updateCache = useUpdateLinkCache();
 
   const mutation = useMutation<undefined, Error>({
     mutationFn: async () => {
-      const result = await fetch(`/api/links/${link.linkId}/read-count`, {
+      return apiCall(`/api/links/${link.linkId}/read-count`, {
         method: "PUT",
       });
-      if (!result.ok) {
-        throw new Error("조회수 업데이트에 실패했습니다.");
-      }
     },
     onSuccess: () => {
       updateCache();

@@ -1,31 +1,29 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import { Link } from "@/types/link.types";
-import { getLinkListQueryKey } from "@/utils/queryKey";
+import { useMutation } from "@tanstack/react-query";
 
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
+import { apiCall } from "@/utils/error";
+import useUpdateLinkCache from "./useUpdateLinkCache";
+import { toast } from "@/components/notification/toast";
 
 export default function useDeleteDrawerLink(
   onSuccessCallback: () => void,
   linkId: string,
 ) {
   const linkBook = useLinkBookFromTitle();
+  const updateCache = useUpdateLinkCache();
 
-  const queryClient = useQueryClient();
-  return useMutation<unknown, Error>({
+  return useMutation<undefined, Error>({
     mutationFn: async () =>
-      (
-        await fetch(`/api/links/${linkId}`, {
-          method: "DELETE",
-        })
-      ).json(),
+      apiCall(`/api/links/${linkId}`, {
+        method: "DELETE",
+      }),
     onSuccess: () => {
-      queryClient.setQueriesData<Link[]>(
-        { queryKey: getLinkListQueryKey(linkBook?.linkBookId) },
-        (prevLinks) =>
-          prevLinks?.filter((link) => ![linkId].includes(link.linkId)),
-      );
+      updateCache(linkBook?.linkBookId);
+      toast({ status: "success", message: "링크가 삭제되었습니다." });
       onSuccessCallback();
+    },
+    onError: (error) => {
+      toast({ status: "fail", message: error.message });
     },
   });
 }

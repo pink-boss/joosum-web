@@ -3,20 +3,17 @@ import { useMutation } from "@tanstack/react-query";
 import { TagList } from "@/types/tags.types";
 import useUpdateTagsCache from "./useUpdateTagsCache";
 import { toast } from "@/components/notification/toast";
+import { apiCall } from "@/utils/error";
 
 export default function useUpsertTagsSetting() {
   const updateCache = useUpdateTagsCache();
 
   return useMutation<undefined, Error, TagList>({
     mutationFn: async (state: TagList) => {
-      const result = await fetch(`/api/settings/tags`, {
+      return apiCall(`/api/settings/tags`, {
         method: "POST",
         body: JSON.stringify(state),
       });
-
-      if (!result.ok) {
-        throw new Error("태그 생성에 실패했습니다.");
-      }
     },
     onSuccess: () => {
       updateCache();

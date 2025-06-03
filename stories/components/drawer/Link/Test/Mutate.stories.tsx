@@ -64,7 +64,10 @@ const testMeta = {
   beforeEach: () => {
     capturedRequest = {};
     queryClient.clear();
-    useOpenDrawerStore.setState({ link: mockLink, isLinkDrawerOpen: true });
+    useOpenDrawerStore.setState({
+      link: mockLink,
+      isMutateLinkDrawerOpen: true,
+    });
   },
 } satisfies Meta<typeof MutateLinkDrawer>;
 
@@ -73,7 +76,10 @@ type Story = StoryObj<typeof testMeta>;
 
 export const TestOpenCloseDrawer: Story = {
   beforeEach: () => {
-    useOpenDrawerStore.setState({ link: undefined, isLinkDrawerOpen: false });
+    useOpenDrawerStore.setState({
+      link: undefined,
+      isMutateLinkDrawerOpen: false,
+    });
   },
   decorators: (Story) => {
     return (
@@ -274,7 +280,10 @@ export const TestShareLink: Story = {
       value: mockClipboard,
       writable: true,
     });
-    useOpenDrawerStore.setState({ link: mockLinks[0], isLinkDrawerOpen: true });
+    useOpenDrawerStore.setState({
+      link: mockLinks[0],
+      isMutateLinkDrawerOpen: true,
+    });
   },
   decorators: (Story) => {
     queryClient.setQueryData(getLinkListQueryKey(), () => mockLinks);
