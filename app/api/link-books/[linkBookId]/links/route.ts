@@ -4,7 +4,7 @@ import { serverApi } from "@/utils/api";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { linkBookId: string } },
+  { params }: { params: Promise<{ linkBookId: string }> },
 ) {
   const searchParams = request.nextUrl.searchParams;
   const queryString = `sort=${searchParams.get("sort")}&order=${searchParams.get("order")}`;

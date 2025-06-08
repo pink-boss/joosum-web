@@ -4,7 +4,7 @@ import { serverApi } from "@/utils/api";
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { tag: string } },
+  { params }: { params: Promise<{ tag: string }> },
 ) {
   const { tag } = await params;
 

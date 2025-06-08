@@ -71,7 +71,7 @@ export default function LinkCard({ link }: InputProps) {
         <div className="w-2/3 truncate text-gray-ink">
           {link.tags?.reduce((result, tag) => result + ` #${tag}`, "")}
         </div>
-        <div className="mt-auto flex justify-between gap-1 text-gray-dim">
+        <div className="mt-auto flex gap-4 text-gray-dim">
           <div className="flex min-w-0 gap-1">
             {/* TODO: 너비 조정 */}
             <div className="truncate">{link.url}</div>|
