@@ -4,7 +4,7 @@ import { serverApi } from "@/utils/api";
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { linkId: string; linkBookId: string } },
+  { params }: { params: Promise<{ linkId: string; linkBookId: string }> },
 ) {
   const { linkBookId } = await params;
   const body = await request.json();
@@ -18,7 +18,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { linkBookId: string } },
+  { params }: { params: Promise<{ linkBookId: string }> },
 ) {
   const { linkBookId } = await params;
 

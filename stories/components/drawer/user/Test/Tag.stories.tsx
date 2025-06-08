@@ -137,7 +137,7 @@ export const TestDeleteTag: Story = {
         ...meta.parameters.msw.handlers,
         http.delete("/api/settings/tags/:tag", async ({ request, params }) => {
           capturedRequest = request.clone();
-          const { tag: target } = params;
+          const { tag: target } = await (params as any);
           const index = mockTags.indexOf(target as string);
           const tags = [
             ...mockTags.slice(0, index),

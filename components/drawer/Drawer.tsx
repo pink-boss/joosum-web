@@ -51,7 +51,7 @@ export default function Drawer({
           "border border-gray-ghost",
           "bg-white pb-20 pt-5",
           "flex flex-col gap-10",
-          "h-full overflow-y-auto",
+          "overflow-y-auto",
           className && className,
         )}
         aria-modal

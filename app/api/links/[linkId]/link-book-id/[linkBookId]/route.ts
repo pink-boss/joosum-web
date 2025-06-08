@@ -4,7 +4,7 @@ import { serverApi } from "@/utils/api";
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { linkId: string; linkBookId: string } },
+  { params }: { params: Promise<{ linkId: string; linkBookId: string }> },
 ) {
   const { linkId, linkBookId } = await params;
 

@@ -10,7 +10,7 @@ export default function Home() {
   //     }).then((res) => res.json()),
   // });
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-12 px-10 pb-8">
+    <div className="flex min-h-0 w-full flex-1 flex-col gap-12 px-10 pb-8">
       <BannerCard data={[]} />
       <LinkCardList />
     </div>

@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import Image from "next/image";
 
-import useQueryAccount from "@/hooks/useQueryAccount";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { Account as AccountType } from "@/types/account.types";
 
@@ -26,7 +25,7 @@ export default function Account({ email }: InputProps) {
           className="flex justify-between"
           onClick={onOpenMyAccount}
         >
-          <span className="font-bold text-gray-black">{email}</span>
+          <span className="font-bold text-gray-black">{email || " "}</span>
           <Image
             src="/icons/icon-chevron-right.png"
             alt="open"

@@ -2,9 +2,9 @@ import { NextRequest } from "next/server";
 
 import { serverApi } from "@/utils/api";
 
-export async function GET(
+export async function PUT(
   request: NextRequest,
-  { params }: { params: { linkId: string } },
+  { params }: { params: Promise<{ linkId: string }> },
 ) {
   const { linkId } = await params;
   return serverApi({
