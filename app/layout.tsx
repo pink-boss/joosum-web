@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import clsx from "clsx";
 import localFont from "next/font/local";
 import { usePathname } from "next/navigation";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { Suspense, useState } from "react";
 
 import DynamicOpenDialogs from "@/components/dialog/DynamicOpenDialogs";
@@ -90,6 +91,7 @@ export default function RootLayout({
         ></script>
       </head>
       <body className={clsx(pretendard.variable, "font-pretendard")}>
+        <GoogleTagManager gtmId="GTM-K4FXLG7Z" />
         <ScreenSizeWrapper>
           {isPublicOnlyPath ? (
             <Component className="justify-center">
