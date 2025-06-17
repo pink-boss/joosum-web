@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import Drawer from "@/components/drawer/Drawer";
 import useSaveLink from "@/hooks/link/useSaveLink";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
-import { useLinkInputStore } from "@/store/useLinkInputStore";
 import { SaveFormState, SaveLink } from "@/types/link.types";
 
 import Buttons from "./Buttons";
@@ -25,7 +24,6 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
     openLinkDrawer: open,
     mode,
   } = useOpenDrawerStore();
-  const { isValid } = useLinkInputStore();
   const [formState, setFormState] = useState<SaveFormState>(
     _defaultValues ?? defaultValues,
   );
@@ -79,7 +77,6 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 title: value,
               }));
             }}
-            disabled={!isValid}
             inputRef={titleRef}
           />
           <Folder
@@ -90,7 +87,6 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 linkBookId,
               }))
             }
-            disabled={!isValid}
           />
           <Tag
             tags={formState.tags}
@@ -100,7 +96,6 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 tags,
               }))
             }
-            disabled={!isValid}
           />
 
           <Buttons

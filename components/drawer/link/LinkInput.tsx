@@ -8,7 +8,6 @@ import {
 
 import { toast } from "@/components/notification/toast";
 import useQueryThumbnail from "@/hooks/link/useQueryThumbnail";
-import { useLinkInputStore } from "@/store/useLinkInputStore";
 import { SaveFormState } from "@/types/link.types";
 import { isApiError } from "@/utils/error";
 
@@ -27,11 +26,13 @@ export default function LinkInput({
   disabled,
 }: InputProps) {
   const queryThumbnail = useQueryThumbnail();
-  const { setIsValid } = useLinkInputStore();
   const [isError, setIsError] = useState(false);
 
   const handleValidURL = async (input: HTMLInputElement) => {
-    const isValidURL = (url: string) => /^https?:\/\/.{3,}$/.test(url);
+    const isValidURL = (url: string) => {
+      if (!url) return false;
+      return /^(?:https?:\/\/)?.{3,}$/.test(url);
+    };
 
     if (isValidURL(input.value)) {
       const result = await queryThumbnail.mutateAsync({ url: input.value });
@@ -47,11 +48,9 @@ export default function LinkInput({
       }));
 
       setIsError(false);
-      setIsValid(true);
       if (titleInput) titleInput.focus();
     } else {
       setIsError(true);
-      setIsValid(false);
     }
   };
 
