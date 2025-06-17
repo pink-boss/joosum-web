@@ -43,12 +43,12 @@ export default function useReassignLinkBook(onSuccessCallback: () => void) {
           batch.map(async (linkId) => {
             try {
               const response = await fetch(
-                `/api/links/${linkIds}/link-book-id/${toLinkBookId}`,
+                `/api/links/${linkId}/link-book-id/${toLinkBookId}`,
                 {
                   method: "PUT",
                   body: JSON.stringify({
                     linkBookId: toLinkBookId,
-                    linkIds,
+                    linkId,
                   }),
                 },
               );
