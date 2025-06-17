@@ -24,9 +24,11 @@ export default function ShareLinkDialog() {
     if (kakaoAppKey) {
       window.Kakao.init(kakaoAppKey);
     } else {
-      console.error(
-        "카카오 앱 키가 설정되지 않았습니다. NEXT_PUBLIC_KAKAO_APP_KEY 환경변수를 설정해주세요.",
-      );
+      toast({
+        status: "fail",
+        message:
+          "카카오 앱 키가 설정되지 않았습니다. NEXT_PUBLIC_KAKAO_APP_KEY 환경변수를 설정해주세요.",
+      });
     }
   }, []);
 

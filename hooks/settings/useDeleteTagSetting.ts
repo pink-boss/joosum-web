@@ -4,7 +4,7 @@ import useUpdateTagsCache from "./useUpdateTagsCache";
 import { toast } from "@/components/notification/toast";
 import { apiCall } from "@/utils/error";
 
-export default function useDeleteTagSetting() {
+export default function useDeleteTagSetting(callback?: () => void) {
   const updateCache = useUpdateTagsCache();
 
   return useMutation<undefined, Error, string>({
@@ -16,6 +16,7 @@ export default function useDeleteTagSetting() {
     onSuccess: () => {
       updateCache();
       toast({ status: "success", message: "태그가 삭제되었습니다." });
+      callback?.();
     },
     onError: (error) => {
       toast({ status: "fail", message: error.message });

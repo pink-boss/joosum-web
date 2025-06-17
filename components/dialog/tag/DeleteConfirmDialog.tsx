@@ -4,6 +4,7 @@ import useDeleteTagsSetting from "@/hooks/settings/useDeleteTagSetting";
 import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 
 import ConfirmDialog from "../ConfirmDialog";
+import { toast } from "@/components/notification/toast";
 
 export default function DeleteConfirmDialog() {
   const {
@@ -22,7 +23,7 @@ export default function DeleteConfirmDialog() {
     if (key) {
       deleteTag.mutate(key);
     } else {
-      console.error("태그를 찾을 수 없습니다.");
+      toast({ status: "fail", message: "태그를 찾을 수 없습니다." });
     }
   }
 

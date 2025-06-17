@@ -38,7 +38,7 @@ export default function useSaveLink(onClose: () => void) {
 
       if (!isSuccessfullLinkResponse(result)) {
         const error = result.find((item) => isApiError(item));
-        console.error(error);
+        console.log(error);
         throw new Error("링크 저장에 실패했습니다.");
       }
 

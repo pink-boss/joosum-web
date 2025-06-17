@@ -47,7 +47,7 @@ export async function serverApi({
 
     return NextResponse.json(data);
   } catch (error) {
-    console.error("Error:", error);
+    console.log("Error:", error);
     return NextResponse.json(
       { error: "서버 요청 중 오류가 발생했습니다." },
       { status: 500 },
