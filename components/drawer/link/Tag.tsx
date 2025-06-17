@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import { isValidName } from "@/utils/regexp";
 
 type InputProps = {

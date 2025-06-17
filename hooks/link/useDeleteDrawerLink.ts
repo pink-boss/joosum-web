@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
 import { apiCall } from "@/utils/error";
 import useUpdateLinkCache from "./useUpdateLinkCache";
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 
 export default function useDeleteDrawerLink(
   onSuccessCallback: () => void,

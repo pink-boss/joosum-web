@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import useMutateLinkBook from "@/hooks/my-folder/useMutateLinkBook";
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import { useOpenDialogStore } from "@/store/useDialogStore";

@@ -4,7 +4,7 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import useSelectLinkBook from "./useSelectLinkBook";
 import useUpdateLinkBookCache from "./useUpdateLinkBookCache";
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import { apiCall } from "@/utils/error";
 
 export default function useDeleteLinkBook(onSuccessCallback: () => void) {

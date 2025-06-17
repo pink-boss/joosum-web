@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, UpdateFormState } from "@/types/link.types";
 
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import { isApiError } from "@/utils/error";
 
 import { isSuccessfullLinkResponse } from "@/utils/link";

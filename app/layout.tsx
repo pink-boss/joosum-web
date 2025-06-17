@@ -14,7 +14,7 @@ import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
 import Sidebar from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
 import Loading from "@/components/Loading";
-import { ToastProvider } from "@/components/notification/ToastProvider";
+import { ToastProvider } from "@/components/notification/toast/ToastProvider";
 import PublicPathHeader from "@/components/PublicPathHeader";
 import ScreenSizeWrapper from "@/components/ScreenSizeWrapper";
 import { publicOnlyPaths } from "@/utils/path";

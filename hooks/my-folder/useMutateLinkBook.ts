@@ -8,7 +8,7 @@ import { apiCall } from "@/utils/error";
 
 import useSelectLinkBook from "./useSelectLinkBook";
 import useUpdateLinkBookCache from "./useUpdateLinkBookCache";
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 
 export default function useMutateLinkBook(onSuccessCallback: () => void) {
   const { key } = useOpenDialogStore();

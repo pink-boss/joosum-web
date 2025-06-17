@@ -3,7 +3,7 @@ import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { http, HttpResponse } from "msw";
 
 import { NotificationSettingDialog } from "@/components/dialog/dynamic";
-import meta from "../Notification.stories";
+import meta from "../NotificationSetting.stories";
 import { queryClient } from "@/stories/mocks/store.mocks";
 
 let capturedRequest: {
@@ -12,7 +12,7 @@ let capturedRequest: {
 
 const testMeta = {
   ...meta,
-  title: "Component/Drawer/User/Notification",
+  title: "Component/Drawer/User/NotificationSetting",
   parameters: {
     msw: {
       handlers: [

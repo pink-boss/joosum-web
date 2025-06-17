@@ -6,7 +6,7 @@ import { getLinkListQueryKey } from "@/utils/queryKey";
 
 import useCheckLink from "./useCheckLink";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import { useSearchBarStore } from "@/store/useSearchBarStore";
 import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 

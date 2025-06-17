@@ -1,10 +1,10 @@
 import clsx from "clsx";
 
-import { ToastNotification } from "@/types/notification.types";
+import { NotificationToast } from "@/types/notification/toast.types";
 
-type InputProps = ToastNotification;
+type InputProps = NotificationToast;
 
-export default function Notification({
+export default function NotificationToast({
   message,
   status,
   visible = false,
@@ -23,7 +23,7 @@ export default function Notification({
         "mb-4",
       )}
       aria-modal
-      aria-labelledby="notification"
+      aria-labelledby="notification-toast"
       aria-keyshortcuts="Escape"
       onClick={(e) => e.stopPropagation()}
       data-visible={visible}

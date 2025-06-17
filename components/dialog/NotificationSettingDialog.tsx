@@ -5,8 +5,8 @@ import useUpdateNotificationSetting from "@/hooks/settings/useUpdateNotification
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import {
   UpdateFormState,
-  UpdateNotificationType,
-} from "@/types/notification.types";
+  UpdateNotificationSettingType,
+} from "@/types/notification/settings.types";
 
 import Toggle from "../Toggle";
 import Dialog from "./Dialog";
@@ -19,14 +19,15 @@ export default function NotificationSettingDialog() {
     open(false);
   };
 
-  const { data: notification } = useQueryNotificationSetting();
+  const { data } = useQueryNotificationSetting();
+  const { isReadAgree, isClassifyAgree } = data ?? {};
 
   const updateNotificationSetting = useUpdateNotificationSetting();
 
-  const handleSetting = (updateType: UpdateNotificationType) => {
+  const handleSetting = (updateType: UpdateNotificationSettingType) => {
     const state: UpdateFormState = {
-      isReadAgree: !!notification?.isReadAgree,
-      isClassifyAgree: !!notification?.isClassifyAgree,
+      isReadAgree: !!isReadAgree,
+      isClassifyAgree: !!isClassifyAgree,
     };
     if (updateType === "read") state.isReadAgree = !state.isReadAgree;
     if (updateType === "classify")
@@ -67,10 +68,7 @@ export default function NotificationSettingDialog() {
               &apos;읽지 않음&apos; 상태의 링크 알림
             </div>
           </div>
-          <Toggle
-            isOn={!!notification?.isReadAgree}
-            onUpdate={() => handleSetting("read")}
-          />
+          <Toggle isOn={!!isReadAgree} onUpdate={() => handleSetting("read")} />
         </div>
         <div className="w-full">
           <div className="w-full border-t border-gray-silver" />
@@ -86,7 +84,7 @@ export default function NotificationSettingDialog() {
             </div>
           </div>
           <Toggle
-            isOn={!!notification?.isClassifyAgree}
+            isOn={!!isClassifyAgree}
             onUpdate={() => handleSetting("classify")}
           />
         </div>

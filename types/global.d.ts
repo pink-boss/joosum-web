@@ -1,8 +1,8 @@
-import { ToastNotificationProps } from "@/types/notification.types";
+import { ToastNotify } from "./notification/toast.types";
 
 declare global {
   interface Window {
-    __notify?: (props: ToastNotificationProps) => void;
+    __notify?: (props: ToastNotify) => void;
     Kakao: any;
   }
 }

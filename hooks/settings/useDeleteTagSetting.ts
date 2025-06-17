@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import useUpdateTagsCache from "./useUpdateTagsCache";
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import { apiCall } from "@/utils/error";
 
 export default function useDeleteTagSetting(callback?: () => void) {

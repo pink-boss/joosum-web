@@ -15,7 +15,7 @@ import { mockRespone } from "../../../mocks/linkBook.mocks";
 import { mockTags } from "../../../mocks/tag.mocks";
 import { MutateLinkDrawer } from "@/components/drawer/dynamic";
 import { queryClient } from "@/stories/mocks/store.mocks";
-import { ToastProvider } from "@/components/notification/ToastProvider";
+import { ToastProvider } from "@/components/notification/toast/ToastProvider";
 
 const meta = {
   title: "Component/Drawer/Link/Mutate",

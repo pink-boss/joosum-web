@@ -4,7 +4,7 @@ import { expect, userEvent, waitFor, within } from "@storybook/test";
 import meta from "../AddTag.stories";
 import { Wrapper } from "../AddFolder.stories";
 import { mockTags } from "@/stories/mocks/tag.mocks";
-import { ToastProvider } from "@/components/notification/ToastProvider";
+import { ToastProvider } from "@/components/notification/toast/ToastProvider";
 import { screen } from "@storybook/test";
 
 const testMeta = {

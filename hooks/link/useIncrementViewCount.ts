@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { Link } from "@/types/link.types";
 
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import useUpdateLinkCache from "./useUpdateLinkCache";
 import { apiCall } from "@/utils/error";
 

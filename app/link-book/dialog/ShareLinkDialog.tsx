@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 
 import Dialog from "@/components/dialog/Dialog";
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import useLinkCache from "@/hooks/link/useLinkCache";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 

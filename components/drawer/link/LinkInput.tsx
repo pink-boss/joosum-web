@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import useQueryThumbnail from "@/hooks/link/useQueryThumbnail";
 import { SaveFormState } from "@/types/link.types";
 import { isApiError } from "@/utils/error";
