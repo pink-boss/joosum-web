@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import useCheckLink from "@/hooks/link/useCheckLink";
@@ -10,8 +10,10 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 import { LinkBook } from "@/types/linkBook.types";
 
 import SelectLinkBook from "./SelectLinkBook";
+import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 
 export default function ReassignLinkBookDialog() {
+  const { data: linkBooks } = useQueryLinkBooks("created_at");
   const { isReassignLinkBookOpen: isOpen, openReassignLinkBook: open } =
     useOpenDialogStore();
   const [toLinkBookId, setToLinkBookId] = useState<
@@ -39,6 +41,11 @@ export default function ReassignLinkBookDialog() {
       });
     }
   }
+  useEffect(() => {
+    if (linkBooks) {
+      setToLinkBookId(linkBooks.linkBooks?.[0]?.linkBookId);
+    }
+  }, [linkBooks]);
 
   return (
     <ConfirmDialog
