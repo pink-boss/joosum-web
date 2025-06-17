@@ -29,6 +29,11 @@ export default function LinkInput({
   const [isError, setIsError] = useState(false);
 
   const handleValidURL = async (input: HTMLInputElement) => {
+    setFormState((prev) => ({
+      ...prev,
+      url: input.value,
+    }));
+
     const isValidURL = (url: string) => {
       if (!url) return false;
       return /^(?:https?:\/\/)?.{3,}$/.test(url);
@@ -37,6 +42,7 @@ export default function LinkInput({
     if (isValidURL(input.value)) {
       const result = await queryThumbnail.mutateAsync({ url: input.value });
 
+      console.log("result", result);
       if (isApiError(result)) {
         toast({ status: "fail", message: "링크 불러오기를 실패했습니다." });
         return;
@@ -44,7 +50,7 @@ export default function LinkInput({
 
       setFormState((prev) => ({
         ...prev,
-        ...result,
+        thumbnailURL: result.thumbnailURL,
       }));
 
       setIsError(false);

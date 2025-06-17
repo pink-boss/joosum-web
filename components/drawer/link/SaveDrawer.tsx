@@ -12,6 +12,7 @@ import Header from "./Header";
 import LinkInput from "./LinkInput";
 import Tag from "./Tag";
 import TitleInput from "./TitleInput";
+import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 
 type InputProps = {
   _defaultValues?: SaveLink;
@@ -24,6 +25,9 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
     openLinkDrawer: open,
     mode,
   } = useOpenDrawerStore();
+  const { data } = useQueryLinkBooks("created_at");
+  const defaultLinkBookId = data?.linkBooks?.[0]?.linkBookId;
+
   const [formState, setFormState] = useState<SaveFormState>(
     _defaultValues ?? defaultValues,
   );
@@ -43,10 +47,10 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
   useEffect(() => {
     setFormState((state) => ({
       ...state,
-      linkBookId: link?.linkBookId,
+      linkBookId: link?.linkBookId || defaultLinkBookId,
       linkBookName: link?.title,
     }));
-  }, [link, link?.linkBookId, setFormState]);
+  }, [link, link?.linkBookId, setFormState, defaultLinkBookId]);
 
   if (mode !== "save") return null;
 

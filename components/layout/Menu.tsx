@@ -61,6 +61,7 @@ export default function Menu() {
 
   const handleOpenMenu = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
+    e.preventDefault();
     setOpenSideMenu(!openSideMenu);
   };
 
@@ -72,7 +73,7 @@ export default function Menu() {
           <div className="text-lg font-bold text-gray-ink">홈</div>
         </div>
       </Link>
-      <Link href="/my-folder" legacyBehavior>
+      <Link href="/my-folder">
         <div className="flex cursor-pointer items-center gap-4 px-10 py-3">
           <Image
             src="/icons/icon-folder.png"
