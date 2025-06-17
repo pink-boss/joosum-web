@@ -19,7 +19,7 @@ type InputProps = {
   linkBookId?: LinkBook["linkBookId"];
 };
 
-// TODO: 검색에서 링크북 선택하면 검색이 적용안됨
+// TODO: 검색에서 폴더 선택하면 검색이 적용안됨
 export function useQueryLinks({
   linkSort,
   linkFilter,

@@ -51,7 +51,7 @@ export default function useEditorTabs(
     {
       title: "폴더명",
       component: (
-        <FormItem label="링크북명">
+        <FormItem label="폴더명">
           <input
             data-testid="link-book-title"
             name="title"

@@ -20,7 +20,7 @@ export default function useDeleteLinkBook(onSuccessCallback: () => void) {
     },
     onSuccess: () => {
       updateCache();
-      toast({ status: "success", message: "링크북이 삭제되었습니다." });
+      toast({ status: "success", message: "폴더가 삭제되었습니다." });
       onSuccessCallback();
     },
     onError: (error) => {

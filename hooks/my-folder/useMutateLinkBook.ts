@@ -55,7 +55,7 @@ export default function useMutateLinkBook(onSuccessCallback: () => void) {
     onSuccess: (result) => {
       updateCache();
       updateDrawerLink(result);
-      toast({ status: "success", message: `링크북이 ${TYPE}되었습니다.` });
+      toast({ status: "success", message: `폴더가 ${TYPE}되었습니다.` });
       onSuccessCallback();
     },
     onError: (error) => {
