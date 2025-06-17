@@ -12,7 +12,7 @@ export async function POST() {
   }
 
   const response = await fetch(
-    `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/auth/logout`,
+    `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/auth/logout`,
     {
       headers: {
         "Content-Type": "application/json",

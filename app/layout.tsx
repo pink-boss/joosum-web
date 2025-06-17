@@ -67,7 +67,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  const isPublicOnlyPath = publicOnlyPaths.includes(pathname);
+  const isPublicOnlyPath = publicOnlyPaths.some((path) =>
+    pathname.startsWith(path),
+  );
+
   const [queryClient] = useState(() => getQueryClient());
 
   return (
