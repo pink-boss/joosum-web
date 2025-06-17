@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import LinkCard from "@/app/home/LinkCard";
+import LinkCard from "@/app/dashboard/LinkCard";
 
 import { mockLink } from "../../mocks/link.mocks";
 

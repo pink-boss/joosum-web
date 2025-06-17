@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import LinkCardList from "@/app/home/LinkCardList";
+import LinkCardList from "@/app/dashboard/LinkCardList";
 import { getLinkListQueryKey } from "@/utils/queryKey";
 
 import { mockLinks } from "../../mocks/link.mocks";
