@@ -74,6 +74,12 @@ const testMeta = {
       isLinkDrawerOpen: true,
       mode: "mutate",
     });
+    if (!window.Kakao) window.Kakao = {};
+    window.Kakao.cleanup = () => {};
+    window.Kakao.init = () => {};
+    window.Kakao.Share = {
+      sendDefault: () => {},
+    };
   },
 } satisfies Meta<typeof MutateLinkDrawer>;
 
@@ -98,7 +104,7 @@ export const TestOpenCloseDrawer: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole("button"));
+    await userEvent.click(canvas.getByTestId("drawer-button"));
 
     await waitFor(() => {
       expect(canvas.queryByRole("dialog")).toBeInTheDocument();
@@ -296,6 +302,11 @@ export const TestShareLink: Story = {
       isLinkDrawerOpen: true,
       mode: "mutate",
     });
+    if (!window.Kakao) window.Kakao = {};
+    if (!window.navigator.clipboard)
+      (window.navigator as any).clipboard = {
+        writeText: () => Promise.resolve(),
+      };
   },
   decorators: (Story) => {
     queryClient.setQueryData(getLinkListQueryKey(), () => mockLinks);
