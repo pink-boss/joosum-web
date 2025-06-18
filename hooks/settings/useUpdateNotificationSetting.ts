@@ -11,7 +11,11 @@ import {
 export default function useUpdateNotificationSetting() {
   const queryClient = useQueryClient();
 
-  return useMutation<UpdateFormResult | ApiError, Error, UpdateFormState>({
+  return useMutation<
+    UpdateFormResult | ApiError | undefined,
+    Error,
+    UpdateFormState
+  >({
     mutationFn: async (notification) => {
       return apiCall(`/api/settings/notification`, {
         method: "PUT",

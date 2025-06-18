@@ -9,7 +9,7 @@ export default function useQueryThumbnail() {
     mutationFn: async (state) => {
       const timeout = 2000;
       return Promise.race<
-        [Promise<TQueryThumbnail | ApiError>, Promise<never>]
+        [Promise<TQueryThumbnail | ApiError | undefined>, Promise<never>]
       >([
         apiCall(`/api/links/thumbnail`, {
           method: "POST",
