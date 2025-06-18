@@ -27,6 +27,7 @@ let capturedRequest: {
   updateLink?: Request;
   updateLinkBook?: Request;
   deleteLink?: Request;
+  updateTags?: Request;
 } = {};
 let invalidateQuerySpy: any;
 
@@ -58,6 +59,10 @@ const testMeta = {
           capturedRequest.deleteLink = request.clone();
           return HttpResponse.json({ status: 204 });
         }),
+        http.post("/api/settings/tags", ({ request }) => {
+          capturedRequest.updateTags = request.clone();
+          return HttpResponse.json({ status: 200 });
+        }),
       ],
     },
   },
@@ -66,7 +71,8 @@ const testMeta = {
     queryClient.clear();
     useOpenDrawerStore.setState({
       link: mockLink,
-      isMutateLinkDrawerOpen: true,
+      isLinkDrawerOpen: true,
+      mode: "mutate",
     });
   },
 } satisfies Meta<typeof MutateLinkDrawer>;
@@ -78,7 +84,8 @@ export const TestOpenCloseDrawer: Story = {
   beforeEach: () => {
     useOpenDrawerStore.setState({
       link: undefined,
-      isMutateLinkDrawerOpen: false,
+      isLinkDrawerOpen: false,
+      mode: undefined,
     });
   },
   decorators: (Story) => {
@@ -189,10 +196,14 @@ export const TestUpdateLink: Story = {
     await step("request 확인", async () => {
       await waitFor(() => {
         expect(capturedRequest.updateLink).not.toBeNull();
+        expect(capturedRequest.updateTags).not.toBeNull();
       });
 
       if (!capturedRequest.updateLink) {
         throw new Error("updateLink request is null");
+      }
+      if (!capturedRequest.updateTags) {
+        throw new Error("updateTags request is null");
       }
 
       const linkUrl = new URL(capturedRequest.updateLink.url);
@@ -282,7 +293,8 @@ export const TestShareLink: Story = {
     });
     useOpenDrawerStore.setState({
       link: mockLinks[0],
-      isMutateLinkDrawerOpen: true,
+      isLinkDrawerOpen: true,
+      mode: "mutate",
     });
   },
   decorators: (Story) => {
