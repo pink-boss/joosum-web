@@ -1,10 +1,10 @@
 import clsx from "clsx";
 
+import { toast } from "@/components/notification/toast/toast";
 import useDeleteTagsSetting from "@/hooks/settings/useDeleteTagSetting";
 import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 
 import ConfirmDialog from "../ConfirmDialog";
-import { toast } from "@/components/notification/toast/toast";
 
 export default function DeleteConfirmDialog() {
   const {

@@ -1,12 +1,12 @@
 "use client";
 
 import "./globals.css";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import clsx from "clsx";
 import localFont from "next/font/local";
 import { usePathname } from "next/navigation";
-import { GoogleTagManager } from "@next/third-parties/google";
 import { Suspense, useState } from "react";
 
 import DynamicOpenDialogs from "@/components/dialog/DynamicOpenDialogs";
