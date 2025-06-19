@@ -27,6 +27,8 @@ import { useSearchBarStore } from "@/store/useSearchBarStore";
 
 let capturedRequest: Request | null = null;
 
+let mockLinkBookLinks = [...mockLinks];
+
 const testMeta = {
   ...meta,
   title: "Page/FolderList/LinkList",
@@ -42,10 +44,10 @@ const testMeta = {
           capturedRequest = request;
           return HttpResponse.json(
             params.linkBookId
-              ? mockLinks.filter(
+              ? mockLinkBookLinks.filter(
                   (link) => params.linkBookId === link.linkBookId,
                 )
-              : mockLinks,
+              : mockLinkBookLinks,
           );
         }),
         http.get("/api/link-books?sort=created_at", ({ request }) => {
@@ -60,9 +62,13 @@ const testMeta = {
           return HttpResponse.json({ status: 200 });
         }),
         http.put(
-          "/api/links/:linkIds/link-book-id/:linkBookId",
-          ({ request }) => {
+          "/api/links/:linkId/link-book-id/:linkBookId",
+          async ({ request, params }) => {
             capturedRequest = request;
+            const { linkId } = params;
+            mockLinkBookLinks = mockLinkBookLinks.filter(
+              (link) => link.linkId !== linkId,
+            );
             return HttpResponse.json({ status: 204 });
           },
         ),
@@ -74,6 +80,7 @@ const testMeta = {
     useFolderLinkSortStore.setState(sortDefaultValues);
     queryClient.clear();
     capturedRequest = null;
+    mockLinkBookLinks = [...mockLinks];
   },
 } satisfies Meta<typeof React.Component>;
 

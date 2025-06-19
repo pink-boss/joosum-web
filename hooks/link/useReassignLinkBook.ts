@@ -26,7 +26,6 @@ interface BatchResult {
 }
 
 export default function useReassignLinkBook(onSuccessCallback: () => void) {
-  const { cachedLinks } = useCheckLink();
   const fromLinkBook = useLinkBookFromTitle();
   const { title: searchKeyword } = useSearchBarStore();
   const { linkBookId: searchLinkBookId } = useSearchLinkFilterStore();
