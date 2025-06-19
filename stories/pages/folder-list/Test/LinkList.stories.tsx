@@ -57,8 +57,12 @@ const testMeta = {
             totalLinkCount: mockLinkBooks.length,
           });
         }),
-        http.delete("/api/links", ({ request }) => {
+        http.delete("/api/links", async ({ request }) => {
           capturedRequest = request;
+          const { linkIds } = (await request.json()) as { linkIds: string[] };
+          mockLinkBookLinks = mockLinkBookLinks.filter(
+            (link) => !linkIds.includes(link.linkId),
+          );
           return HttpResponse.json({ status: 200 });
         }),
         http.put(
