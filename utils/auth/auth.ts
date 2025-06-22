@@ -1,5 +1,7 @@
 import { LoginResult, PreviousLoginProvider } from "@/types/auth.types";
+import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
+import { handleApiResponse } from "../error";
 
 export function handleAuthToken(result: LoginResult) {
   if ("error" in result) {
@@ -26,8 +28,17 @@ export async function isExist(
   authToken: string,
   social: "apple" | "google",
 ): Promise<boolean> {
-  // TODO: 실제 사용자 존재 여부 확인 로직 구현
-  return true;
+  try {
+    const { email } = jwtDecode(authToken) as { email: string };
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_JOOSUM_WEB_URI}/api/auth/signup-check?email=${email}`,
+    );
+    await handleApiResponse(response);
+    return true;
+  } catch (error) {
+    console.error("Error:", error);
+    return false;
+  }
 }
 
 export async function storeAuthTokenForOnboarding(

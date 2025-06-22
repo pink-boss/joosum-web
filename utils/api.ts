@@ -8,6 +8,7 @@ interface FetchParams {
   method?: "GET" | "POST" | "PUT" | "DELETE";
   queryString?: string | null;
   body?: Record<string, any> | Array<any> | string | number | boolean | null;
+  Authorization?: string;
 }
 
 export async function serverApi({
@@ -15,6 +16,7 @@ export async function serverApi({
   method,
   queryString,
   body,
+  Authorization,
 }: FetchParams) {
   const token = (await cookies()).get("accessToken");
 
@@ -26,7 +28,7 @@ export async function serverApi({
     const requestInit: RequestInit = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token.value}`,
+        Authorization: Authorization ?? `Bearer ${token.value}`,
       },
       method: method ?? "GET",
     };
