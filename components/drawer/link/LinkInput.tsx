@@ -26,7 +26,7 @@ export default function LinkInput({
   disabled,
 }: InputProps) {
   const queryThumbnail = useQueryThumbnail();
-  const [isError, setIsError] = useState(false);
+  // const [isError, setIsError] = useState(false);
 
   const handleValidURL = async (input: HTMLInputElement) => {
     setFormState((prev) => ({
@@ -42,7 +42,6 @@ export default function LinkInput({
     if (isValidURL(input.value)) {
       const result = await queryThumbnail.mutateAsync({ url: input.value });
 
-      console.log("result", result);
       if (isApiError(result)) {
         toast({ status: "fail", message: "링크 불러오기를 실패했습니다." });
         return;
@@ -50,15 +49,15 @@ export default function LinkInput({
 
       setFormState((prev) => ({
         ...prev,
-        thumbnailURL: result.thumbnailURL,
-        title: result.title,
-        url: result.url,
+        thumbnailURL: result?.thumbnailURL,
+        title: result?.title,
+        url: result?.url,
       }));
 
-      setIsError(false);
+      // setIsError(false);
       if (titleInput) titleInput.focus();
     } else {
-      setIsError(true);
+      // setIsError(true);
     }
   };
 
@@ -84,14 +83,13 @@ export default function LinkInput({
         value: value,
         placeholder: "URL을 입력하거나 붙여넣어주세요.",
         required: true,
-        type: "url",
         autoFocus: !value,
         disabled: disabled,
         onBlur: (e) => handleValidURL(e.currentTarget),
         onKeyDown: handlePressKey,
         onChange: handleChangeValue,
       }}
-      error={{ status: isError, message: "유효한 링크를 입력해주세요." }}
+      // error={{ status: isError, message: "유효한 링크를 입력해주세요." }}
     />
   );
 }

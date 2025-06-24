@@ -5,23 +5,24 @@ import { apiCall } from "@/utils/error";
 import { toast } from "@/components/notification/toast/toast";
 
 export default function useQueryThumbnail() {
-  return useMutation<TQueryThumbnail | ApiError, Error, TQueryThumbnailArgs>({
+  return useMutation<
+    TQueryThumbnail | ApiError | undefined,
+    Error,
+    TQueryThumbnailArgs
+  >({
     mutationFn: async (state) => {
       const timeout = 2000;
       return Promise.race<
-        [Promise<TQueryThumbnail | ApiError | undefined>, Promise<never>]
+        [Promise<TQueryThumbnail | ApiError | undefined>, Promise<ApiError>]
       >([
         apiCall(`/api/links/thumbnail`, {
           method: "POST",
           body: JSON.stringify(state),
         }),
-        new Promise<never>((_, reject) =>
-          setTimeout(
-            () => reject(new Error("썸네일 불러오기를 실패했습니다.")),
-            timeout,
-          ),
+        new Promise<ApiError>((_, reject) =>
+          setTimeout(() => reject("응답이 없습니다."), timeout),
         ),
-      ]) as Promise<TQueryThumbnail | ApiError>;
+      ]);
     },
     onError: (error) => {
       console.log(error);

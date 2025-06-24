@@ -9,7 +9,7 @@ type InputProps = {
   inputProps?: InputHTMLAttributes<HTMLInputElement> & {
     ref?: React.ForwardedRef<HTMLInputElement>;
   };
-  error: InputError;
+  error?: InputError;
 };
 export default function FormItem({
   label,
@@ -33,7 +33,7 @@ export default function FormItem({
         )}
         {...inputProps}
       />
-      {error.status === true && (
+      {error?.status === true && (
         <div className="mt-0.5 pl-1 text-xs text-error">{error.message}</div>
       )}
     </div>
