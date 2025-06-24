@@ -1,19 +1,28 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import { apiCall } from "@/utils/error";
+import {
+  UpdateFormResult,
+  UpdateFormState,
+} from "@/types/notification/settings.types";
 
+// TODO: 알림 기본 설정 변경 요청
 export default function useUpdateNotificationSetting() {
   const queryClient = useQueryClient();
 
-  return useMutation<undefined, Error, boolean>({
-    mutationFn: async (state: boolean) => {
+  return useMutation<
+    UpdateFormResult | ApiError | undefined,
+    Error,
+    UpdateFormState
+  >({
+    mutationFn: async (notification) => {
       return apiCall(`/api/settings/notification`, {
-        method: "POST",
-        body: JSON.stringify({ notification: state }),
+        method: "PUT",
+        body: JSON.stringify(notification),
       });
     },
-    onSuccess: () => {
+    onSuccess: (result) => {
       queryClient.invalidateQueries({
         queryKey: ["settings", "notification"],
       });

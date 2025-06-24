@@ -9,12 +9,12 @@ export const useSearchLinkSortStore = create<LinkSortState>()(
       ...searchDefaultValues,
       setField: (field) => {
         if (field === "lastest")
-          set({ field, sort: "created_at", orderBy: "desc" });
+          set({ field, sort: "created_at", order: "desc" });
         else if (field === "oldest")
-          set({ field, sort: "created_at", orderBy: "asc" });
+          set({ field, sort: "created_at", order: "asc" });
         else if (["title", "relevance"].includes(field))
-          set({ field, sort: "title", orderBy: "asc" });
-        else set({ field, sort: "title", orderBy: "desc" }); // refech를 위한 상태 변경
+          set({ field, sort: "title", order: "asc" });
+        else set({ field, sort: "title", order: "desc" }); // refech를 위한 상태 변경
       },
     }),
     {
@@ -22,7 +22,7 @@ export const useSearchLinkSortStore = create<LinkSortState>()(
       partialize: (state) => ({
         field: state.field,
         sort: state.sort,
-        orderBy: state.orderBy,
+        order: state.order,
       }),
     },
   ),

@@ -6,7 +6,7 @@ import { getLinkListQueryKey } from "@/utils/queryKey";
 
 import useCheckLink from "./useCheckLink";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import { useSearchBarStore } from "@/store/useSearchBarStore";
 import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 
@@ -26,7 +26,6 @@ interface BatchResult {
 }
 
 export default function useReassignLinkBook(onSuccessCallback: () => void) {
-  const { cachedLinks } = useCheckLink();
   const fromLinkBook = useLinkBookFromTitle();
   const { title: searchKeyword } = useSearchBarStore();
   const { linkBookId: searchLinkBookId } = useSearchLinkFilterStore();
@@ -43,12 +42,12 @@ export default function useReassignLinkBook(onSuccessCallback: () => void) {
           batch.map(async (linkId) => {
             try {
               const response = await fetch(
-                `/api/links/${linkIds}/link-book-id/${toLinkBookId}`,
+                `/api/links/${linkId}/link-book-id/${toLinkBookId}`,
                 {
                   method: "PUT",
                   body: JSON.stringify({
                     linkBookId: toLinkBookId,
-                    linkIds,
+                    linkId,
                   }),
                 },
               );

@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { expect, waitFor } from "@storybook/test";
-import Notification from "@/components/notification/Notification";
-import { toast } from "@/components/notification/toast";
+import NotificationToast from "@/components/notification/toast/NotificationToast";
+import { toast } from "@/components/notification/toast/toast";
 
 import { screen } from "@storybook/test";
-import meta, { Success } from "../Notification.stories";
+import meta, { Success } from "../NotificationToast.stories";
 
 const testMeta = {
   ...meta,
-  title: "Component/Notification",
-} satisfies Meta<typeof Notification>;
+  title: "Component/NotificationToast",
+} satisfies Meta<typeof NotificationToast>;
 
 export default testMeta;
 

@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
 import useUpdateLinkCache from "./useUpdateLinkCache";
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import { apiCall } from "@/utils/error";
 
 export default function useDeleteLink(

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import BannerCard from "@/app/home/Banner";
+import BannerCard from "@/app/dashboard/Banner";
 
 import { mockBanners } from "../../mocks/banner.mocks";
 

@@ -19,7 +19,7 @@ type InputProps = {
   linkBookId?: LinkBook["linkBookId"];
 };
 
-// TODO: 검색에서 링크북 선택하면 검색이 적용안됨
+// TODO: 검색에서 폴더 선택하면 검색이 적용안됨
 export function useQueryLinks({
   linkSort,
   linkFilter,
@@ -35,7 +35,7 @@ export function useQueryLinks({
     }
   >(() => {
     let pathname = linkBookId ? `link-books/${linkBookId}/links` : `links`;
-    let queryString = `sort=${linkSort.sort}&order=${linkSort.orderBy}`;
+    let queryString = `sort=${linkSort.sort}&order=${linkSort.order}`;
     let queryKey = getLinkListQueryKey(linkBookId);
 
     if (searchKeyword) {
@@ -45,7 +45,7 @@ export function useQueryLinks({
     }
 
     return { pathname, queryString, queryKey };
-  }, [linkBookId, linkSort.sort, linkSort.orderBy, searchKeyword]);
+  }, [linkBookId, linkSort.sort, linkSort.order, searchKeyword]);
 
   const {
     data = [],

@@ -1,5 +1,6 @@
 import clsx from "clsx";
 
+import { toast } from "@/components/notification/toast/toast";
 import useDeleteTagsSetting from "@/hooks/settings/useDeleteTagSetting";
 import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 
@@ -22,7 +23,7 @@ export default function DeleteConfirmDialog() {
     if (key) {
       deleteTag.mutate(key);
     } else {
-      console.error("태그를 찾을 수 없습니다.");
+      toast({ status: "fail", message: "태그를 찾을 수 없습니다." });
     }
   }
 
@@ -32,18 +33,14 @@ export default function DeleteConfirmDialog() {
       open={isOpen}
       onCloseCallback={onClose}
       closeProps={{
-        className:
-          "w-[165px] h-[56px] rounded-lg bg-gray-silver font-bold text-white",
         children: "취소",
         onClick: onClose,
       }}
       submitProps={{
-        className: clsx([
-          ["h-[56px] w-[165px] rounded-lg bg-primary-500 font-bold text-white"],
-        ]),
         children: "확인",
         onClick: handleDelete,
       }}
+      submitLoading={deleteTag.isPending}
     >
       <span className="text-2xl font-bold">삭제 하시겠습니까?</span>
       <div className="mt-4 text-gray-ink">

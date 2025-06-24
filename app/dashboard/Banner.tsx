@@ -12,14 +12,14 @@ type InputProps = {
 
 const bannerData = [
   {
-    clickURL: "https://example.com/1",
+    clickURL: "https://www.notion.so/45776b3736494e29b182375cbaa50056?pvs=25",
     id: "banner1",
     imageURL: "/banner-image.png",
     title: "주섬주섬 담은 링크",
     subtitle: "알아보기 쉽게 정리해보세요.",
   },
   {
-    clickURL: "https://example.com/2",
+    clickURL: "https://www.notion.so/a694027a091c44dc87db37c63ae37611?pvs=25",
     id: "banner2",
     imageURL: "/banner-image.png",
     title: "지금 볼 시간이 없다면?",

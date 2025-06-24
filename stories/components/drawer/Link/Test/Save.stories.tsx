@@ -9,7 +9,7 @@ import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { expect, screen, userEvent, waitFor, within } from "@storybook/test";
 import OpenLinkSaveDrawerButton from "@/components/drawer/link/OpenSaveDrawerButton";
 
-// TODO: 링크북 변경해도 기본으로 계속 저장됨.
+// TODO: 폴더 변경해도 기본으로 계속 저장됨.
 // TODO: drawer 스크롤 가능하게
 let capturedRequest: {
   getThumbnail?: Request;
@@ -56,7 +56,8 @@ type Story = StoryObj<typeof testMeta>;
 export const TestOpenCloseDrawer: Story = {
   beforeEach: () => {
     useOpenDrawerStore.setState({
-      isSaveLinkDrawerOpen: false,
+      isLinkDrawerOpen: false,
+      mode: undefined,
     });
     queryClient.clear();
   },

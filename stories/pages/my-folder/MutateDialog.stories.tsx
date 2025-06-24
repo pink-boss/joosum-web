@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import CreateButton from "@/app/my-folder/CreateDialogButton";
+import CreateButton from "@/app/my-folder/CreateDialogOpenButton";
 import MutateDialog from "@/app/my-folder/mutate/MutateDialog";
 
 const meta = {

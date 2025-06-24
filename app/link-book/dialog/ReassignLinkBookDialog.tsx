@@ -1,17 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import useCheckLink from "@/hooks/link/useCheckLink";
 import useLinkBookFromTitle from "@/hooks/link/useLinkBookFromTitle";
 import useReassignLinkBook from "@/hooks/link/useReassignLinkBook";
+import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { LinkBook } from "@/types/linkBook.types";
 
 import SelectLinkBook from "./SelectLinkBook";
 
 export default function ReassignLinkBookDialog() {
+  const { data: linkBooks } = useQueryLinkBooks("created_at");
   const { isReassignLinkBookOpen: isOpen, openReassignLinkBook: open } =
     useOpenDialogStore();
   const [toLinkBookId, setToLinkBookId] = useState<
@@ -39,6 +41,11 @@ export default function ReassignLinkBookDialog() {
       });
     }
   }
+  useEffect(() => {
+    if (linkBooks) {
+      setToLinkBookId(linkBooks.linkBooks?.[0]?.linkBookId);
+    }
+  }, [linkBooks]);
 
   return (
     <ConfirmDialog
@@ -50,6 +57,7 @@ export default function ReassignLinkBookDialog() {
         onClick: handleSubmit,
         disabled: !toLinkBookId,
       }}
+      submitLoading={mutation.isPending}
     >
       <div className="flex flex-col gap-4 text-center">
         <div className="text-center text-gray-ink">

@@ -6,5 +6,5 @@ type OptionItem<T = Value> = {
 };
 
 interface ApiError {
-  error: "string";
+  error: string;
 }

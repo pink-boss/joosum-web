@@ -24,18 +24,14 @@ export default function LogoutDialog() {
       open={isOpen}
       onCloseCallback={onClose}
       closeProps={{
-        className:
-          "w-[165px] h-[56px] rounded-lg bg-gray-silver font-bold text-white",
         children: "취소",
         onClick: onClose,
       }}
       submitProps={{
-        className: clsx([
-          ["h-[56px] w-[165px] rounded-lg bg-primary-500 font-bold text-white"],
-        ]),
         children: "확인",
         onClick: handleLogout,
       }}
+      submitLoading={logout.isPending}
     >
       <span className="text-2xl font-bold">로그아웃 하시겠습니까?</span>
     </ConfirmDialog>

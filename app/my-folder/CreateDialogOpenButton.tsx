@@ -43,7 +43,7 @@ export function Button({
   );
 }
 
-export default function CreateDialogButton() {
+export default function CreateDialogOpenButton() {
   return (
     <Button className="flex rounded bg-primary-500 py-[6px] pl-2 pr-3 font-semibold text-white">
       <Image

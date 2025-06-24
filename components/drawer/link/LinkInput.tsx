@@ -6,9 +6,8 @@ import {
   useState,
 } from "react";
 
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import useQueryThumbnail from "@/hooks/link/useQueryThumbnail";
-import { useLinkInputStore } from "@/store/useLinkInputStore";
 import { SaveFormState } from "@/types/link.types";
 import { isApiError } from "@/utils/error";
 
@@ -27,11 +26,18 @@ export default function LinkInput({
   disabled,
 }: InputProps) {
   const queryThumbnail = useQueryThumbnail();
-  const { setIsValid } = useLinkInputStore();
-  const [isError, setIsError] = useState(false);
+  // const [isError, setIsError] = useState(false);
 
   const handleValidURL = async (input: HTMLInputElement) => {
-    const isValidURL = (url: string) => /^https?:\/\/.{3,}$/.test(url);
+    setFormState((prev) => ({
+      ...prev,
+      url: input.value,
+    }));
+
+    const isValidURL = (url: string) => {
+      if (!url) return false;
+      return /^(?:https?:\/\/)?.{3,}$/.test(url);
+    };
 
     if (isValidURL(input.value)) {
       const result = await queryThumbnail.mutateAsync({ url: input.value });
@@ -43,15 +49,15 @@ export default function LinkInput({
 
       setFormState((prev) => ({
         ...prev,
-        ...result,
+        thumbnailURL: result?.thumbnailURL,
+        title: result?.title,
+        url: result?.url,
       }));
 
-      setIsError(false);
-      setIsValid(true);
+      // setIsError(false);
       if (titleInput) titleInput.focus();
     } else {
-      setIsError(true);
-      setIsValid(false);
+      // setIsError(true);
     }
   };
 
@@ -77,14 +83,13 @@ export default function LinkInput({
         value: value,
         placeholder: "URL을 입력하거나 붙여넣어주세요.",
         required: true,
-        type: "url",
         autoFocus: !value,
         disabled: disabled,
         onBlur: (e) => handleValidURL(e.currentTarget),
         onKeyDown: handlePressKey,
         onChange: handleChangeValue,
       }}
-      error={{ status: isError, message: "유효한 링크를 입력해주세요." }}
+      // error={{ status: isError, message: "유효한 링크를 입력해주세요." }}
     />
   );
 }

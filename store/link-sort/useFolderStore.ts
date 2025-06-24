@@ -9,12 +9,11 @@ export const useFolderLinkSortStore = create<LinkSortState>()(
       ...defaultValues,
       setField: (field) => {
         if (field === "lastest")
-          set({ field, sort: "created_at", orderBy: "desc" });
+          set({ field, sort: "created_at", order: "desc" });
         else if (field === "oldest")
-          set({ field, sort: "created_at", orderBy: "asc" });
-        else if (field === "title")
-          set({ field, sort: "title", orderBy: "asc" });
-        else set({ field, sort: "title", orderBy: "desc" }); // refech를 위한 상태 변경
+          set({ field, sort: "created_at", order: "asc" });
+        else if (field === "title") set({ field, sort: "title", order: "asc" });
+        else set({ field, sort: "title", order: "desc" }); // refech를 위한 상태 변경
       },
     }),
     {
@@ -22,7 +21,7 @@ export const useFolderLinkSortStore = create<LinkSortState>()(
       partialize: (state) => ({
         field: state.field,
         sort: state.sort,
-        orderBy: state.orderBy,
+        order: state.order,
       }),
     },
   ),

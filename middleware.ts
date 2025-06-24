@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import { defaultPath, protectedPaths, publicOnlyPaths } from "./utils/path";
+import { cookies } from "next/headers";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 특정 경로는 미들웨어 처리에서 제외
@@ -20,7 +21,9 @@ export function middleware(request: NextRequest) {
   const isProtectedPath = protectedPaths.some((path) =>
     pathname.startsWith(path),
   );
-  const isPublicOnlyPath = publicOnlyPaths.includes(pathname);
+  const isPublicOnlyPath = publicOnlyPaths.some((path) =>
+    pathname.startsWith(path),
+  );
 
   const accessToken = request.cookies.get("accessToken");
 

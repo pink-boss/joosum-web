@@ -2,15 +2,16 @@ import { useEffect, useRef, useState } from "react";
 
 import Drawer from "@/components/drawer/Drawer";
 import useSaveLink from "@/hooks/link/useSaveLink";
+import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
-import { useLinkInputStore } from "@/store/useLinkInputStore";
 import { SaveFormState, SaveLink } from "@/types/link.types";
 
-import Buttons from "./Buttons";
 import { defaultValues } from "./data";
 import Folder from "./Folder";
 import Header from "./Header";
 import LinkInput from "./LinkInput";
+import { PrimaryUIButton } from "./PrimaryButton";
+import SecondaryButton from "./SecondaryButton";
 import Tag from "./Tag";
 import TitleInput from "./TitleInput";
 
@@ -25,7 +26,9 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
     openLinkDrawer: open,
     mode,
   } = useOpenDrawerStore();
-  const { isValid } = useLinkInputStore();
+  const { data } = useQueryLinkBooks("created_at");
+  const defaultLinkBookId = data?.linkBooks?.[0]?.linkBookId;
+
   const [formState, setFormState] = useState<SaveFormState>(
     _defaultValues ?? defaultValues,
   );
@@ -45,10 +48,10 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
   useEffect(() => {
     setFormState((state) => ({
       ...state,
-      linkBookId: link?.linkBookId,
+      linkBookId: link?.linkBookId || defaultLinkBookId,
       linkBookName: link?.title,
     }));
-  }, [link, link?.linkBookId, setFormState]);
+  }, [link, link?.linkBookId, setFormState, defaultLinkBookId]);
 
   if (mode !== "save") return null;
 
@@ -79,7 +82,6 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 title: value,
               }));
             }}
-            disabled={!isValid}
             inputRef={titleRef}
           />
           <Folder
@@ -90,7 +92,6 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 linkBookId,
               }))
             }
-            disabled={!isValid}
           />
           <Tag
             tags={formState.tags}
@@ -100,15 +101,23 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 tags,
               }))
             }
-            disabled={!isValid}
           />
+          <div className="mt-auto flex justify-center gap-3">
+            <SecondaryButton
+              loading={saveLinkMutation.isPending}
+              onClick={onClose}
+            >
+              취소
+            </SecondaryButton>
 
-          <Buttons
-            title={formState.title}
-            closeBtnName="취소"
-            onCloseCallback={onClose}
-            submitBtnName="저장"
-          />
+            <PrimaryUIButton
+              type="submit"
+              loading={saveLinkMutation.isPending}
+              disabled={!formState.title}
+            >
+              저장
+            </PrimaryUIButton>
+          </div>
         </form>
       </div>
     </Drawer>

@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import { isValidName } from "@/utils/regexp";
 
 type InputProps = {
@@ -23,6 +23,7 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [input, setInput] = useState<string>("");
+  const [isComposing, setIsComposing] = useState(false);
 
   const handleSubmit = () => {
     const trimmedInput = input.trim();
@@ -51,6 +52,7 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
   };
 
   const handleTypeInput = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (isComposing) return; // 조합 중이면 무시
     if (["Enter", " "].includes(e.key)) {
       e.preventDefault();
       handleSubmit();
@@ -123,11 +125,14 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => handleTypeInput(e)}
+              onKeyDown={handleTypeInput}
               placeholder={!tags?.length ? "태그를 추가해보세요." : undefined}
               onFocus={() => setIsActive(true)}
               onBlur={() => setIsActive(false)}
               disabled={disabled}
+              maxLength={10}
+              onCompositionStart={() => setIsComposing(true)}
+              onCompositionEnd={() => setIsComposing(false)}
             />
           </div>
           {input && (

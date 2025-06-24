@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 import useMutateLinkBook from "@/hooks/my-folder/useMutateLinkBook";
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import { useOpenDialogStore } from "@/store/useDialogStore";
@@ -59,24 +59,17 @@ export default function MutateDialog() {
       onCloseCallback={onClose}
       className="w-[792px]"
       closeProps={{
-        className:
-          "w-[220.5px] h-[56px] rounded-lg bg-gray-silver font-bold text-white",
+        className: "w-[220.5px] h-[56px] bg-gray-silver",
         children: "닫기",
         onClick: onClose,
       }}
       submitProps={{
-        className: clsx([
-          [
-            "h-[56px] w-[220.5px] rounded-lg font-bold text-white",
-            !formState.title
-              ? "cursor-not-allowed bg-gray-vapor"
-              : "bg-primary-500",
-          ],
-        ]),
+        className: clsx(["h-[56px] w-[220.5px]"]),
         children: linkBook ? "완료" : "생성",
         onClick: handleSubmit,
         disabled: !formState.title,
       }}
+      submitLoading={mutation.isPending || !formState.title}
     >
       <div className="my-5 text-center text-2xl font-bold">
         폴더 {linkBook ? "수정" : "생성"}

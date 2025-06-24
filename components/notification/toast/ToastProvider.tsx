@@ -3,20 +3,24 @@
 import { createContext, useState, useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
 
-import { ToastNotification, ToastNotify } from "@/types/notification.types";
+import {
+  NotificationToast as NotificationToastType,
+  ToastNotify,
+} from "@/types/notification/toast.types";
 
-import Notification from "./Notification";
+import NotificationToast from "./NotificationToast";
 
-type ToastMetaData = Omit<ToastNotification, "visible"> &
-  Required<Pick<ToastNotification, "visible">> & {
+type ToastMetaData = Omit<NotificationToastType, "visible"> &
+  Required<Pick<NotificationToastType, "visible">> & {
     id: string;
   };
 
-type NotificationContextType = {
+type NotificationToastContextType = {
   notify: (props: ToastNotify) => void;
 };
 
-const NotificationContext = createContext<NotificationContextType | null>(null);
+const NotificationToastContext =
+  createContext<NotificationToastContextType | null>(null);
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<ToastMetaData[]>([]);
@@ -67,21 +71,21 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   }, [notify]);
 
   return (
-    <NotificationContext.Provider value={{ notify }}>
+    <NotificationToastContext.Provider value={{ notify }}>
       {children}
       {mounted &&
         createPortal(
           <div
-            id="notification-root"
-            data-testid="notification-root"
+            id="notification-toast-root"
+            data-testid="notification-toast-root"
             className="fixed right-4 top-28 z-50 flex flex-col items-end"
           >
             {toasts.map((toast) => (
-              <Notification {...toast} key={toast.id} />
+              <NotificationToast {...toast} key={toast.id} />
             ))}
           </div>,
           document.body,
         )}
-    </NotificationContext.Provider>
+    </NotificationToastContext.Provider>
   );
 }

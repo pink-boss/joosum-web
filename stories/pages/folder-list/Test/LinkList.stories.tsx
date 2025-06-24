@@ -27,6 +27,8 @@ import { useSearchBarStore } from "@/store/useSearchBarStore";
 
 let capturedRequest: Request | null = null;
 
+let mockLinkBookLinks = [...mockLinks];
+
 const testMeta = {
   ...meta,
   title: "Page/FolderList/LinkList",
@@ -40,12 +42,13 @@ const testMeta = {
         }),
         http.get("/api/link-books/:linkBookId/links", ({ request, params }) => {
           capturedRequest = request;
+
           return HttpResponse.json(
             params.linkBookId
-              ? mockLinks.filter(
+              ? mockLinkBookLinks.filter(
                   (link) => params.linkBookId === link.linkBookId,
                 )
-              : mockLinks,
+              : mockLinkBookLinks,
           );
         }),
         http.get("/api/link-books?sort=created_at", ({ request }) => {
@@ -55,14 +58,22 @@ const testMeta = {
             totalLinkCount: mockLinkBooks.length,
           });
         }),
-        http.delete("/api/links", ({ request }) => {
+        http.delete("/api/links", async ({ request }) => {
           capturedRequest = request;
+          const { linkIds } = (await request.json()) as { linkIds: string[] };
+          mockLinkBookLinks = mockLinkBookLinks.filter(
+            (link) => !linkIds.includes(link.linkId),
+          );
           return HttpResponse.json({ status: 200 });
         }),
         http.put(
-          "/api/links/:linkIds/link-book-id/:linkBookId",
-          ({ request }) => {
+          "/api/links/:linkId/link-book-id/:linkBookId",
+          async ({ request, params }) => {
             capturedRequest = request;
+            const { linkId } = params;
+            mockLinkBookLinks = mockLinkBookLinks.filter(
+              (link) => link.linkId !== linkId,
+            );
             return HttpResponse.json({ status: 204 });
           },
         ),
@@ -74,6 +85,7 @@ const testMeta = {
     useFolderLinkSortStore.setState(sortDefaultValues);
     queryClient.clear();
     capturedRequest = null;
+    mockLinkBookLinks = [...mockLinks];
   },
 } satisfies Meta<typeof React.Component>;
 
@@ -117,7 +129,7 @@ export const TestCheckStatement: Story = {
   },
 };
 
-type TestRequestURI = Pick<LinkSortState, "sort" | "orderBy"> & {
+type TestRequestURI = Pick<LinkSortState, "sort" | "order"> & {
   label: string;
 };
 
@@ -125,7 +137,7 @@ const testRequestURI = async ({
   canvasElement,
   label,
   sort,
-  orderBy,
+  order,
 }: TestRequestURI & { canvasElement: HTMLElement }) => {
   const canvas = within(canvasElement);
   const dropdown = canvas.getByTestId("sort-dropdown");
@@ -138,57 +150,46 @@ const testRequestURI = async ({
   await waitFor(async () => {
     expect(capturedRequest).not.toBeNull();
     const url = new URL(capturedRequest!.url);
+
     expect(url.pathname).toBe(
       `/api/link-books/${mockLinkBooks[2].linkBookId}/links`,
     );
     expect(url.searchParams.get("sort")).toBe(sort);
-    expect(url.searchParams.get("order")).toBe(orderBy);
+    expect(url.searchParams.get("order")).toBe(order);
   });
 
   capturedRequest = null;
 };
 
 export const TestSortRequestURI_Lastest: Story = {
-  beforeEach: () => {
-    useFolderLinkSortStore.setState(sortDefaultValues);
-    capturedRequest = null;
-  },
   play: async ({ canvasElement }) => {
     await testRequestURI({
       canvasElement,
       label: "최신순",
       sort: "created_at",
-      orderBy: "desc",
+      order: "desc",
     });
   },
 };
 
 export const TestSortRequestURI_Oldest: Story = {
-  beforeEach: () => {
-    useFolderLinkSortStore.setState(sortDefaultValues);
-    capturedRequest = null;
-  },
   play: async ({ canvasElement }) => {
     await testRequestURI({
       canvasElement,
       label: "오래된순",
       sort: "created_at",
-      orderBy: "asc",
+      order: "asc",
     });
   },
 };
 
 export const TestSortRequestURI_Title: Story = {
-  beforeEach: () => {
-    useFolderLinkSortStore.setState(sortDefaultValues);
-    capturedRequest = null;
-  },
   play: async ({ canvasElement }) => {
     await testRequestURI({
       canvasElement,
       label: "제목순",
       sort: "title",
-      orderBy: "asc",
+      order: "asc",
     });
   },
 };

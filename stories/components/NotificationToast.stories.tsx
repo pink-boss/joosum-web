@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import React from "react";
-import Notification from "@/components/notification/Notification";
-import { toast } from "@/components/notification/toast";
-import { ToastProvider } from "@/components/notification/ToastProvider";
+import NotificationToast from "@/components/notification/toast/NotificationToast";
+import { toast } from "@/components/notification/toast/toast";
+import { ToastProvider } from "@/components/notification/toast/ToastProvider";
 
 const meta = {
-  title: "Component/Notification",
-  component: Notification,
+  title: "Component/NotificationToast",
+  component: NotificationToast,
   decorators: [
     (Story) => {
       return (
@@ -17,7 +17,7 @@ const meta = {
       );
     },
   ],
-} satisfies Meta<typeof Notification>;
+} satisfies Meta<typeof NotificationToast>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

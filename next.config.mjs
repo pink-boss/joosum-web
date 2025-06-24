@@ -11,6 +11,18 @@ const nextConfig = {
       },
     ],
   },
+  // ngrok 사용 시 호스트 헤더 불일치 문제 해결
+  experimental: {
+    serverActions: {
+      allowedOrigins: [
+        "localhost:3000",
+        "*.ngrok.io",
+        "*.ngrok-free.app",
+        "appleid.apple.com",
+        "app.joosum.com",
+      ],
+    },
+  },
 };
 
 export default nextConfig;

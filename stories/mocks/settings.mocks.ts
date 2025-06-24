@@ -1,4 +1,4 @@
-export const mockNotification = {
+export const mockNotificationSetting = {
   deviceId: "string",
   isClassifyAgree: false,
   isReadAgree: false,

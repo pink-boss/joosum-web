@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, SaveFormState } from "@/types/link.types";
 
 import { isApiError } from "@/utils/error";
-import { toast } from "@/components/notification/toast";
+import { toast } from "@/components/notification/toast/toast";
 
 import { isSuccessfullLinkResponse } from "@/utils/link";
 import useUpdateLinkCache from "./useUpdateLinkCache";
@@ -38,7 +38,7 @@ export default function useSaveLink(onClose: () => void) {
 
       if (!isSuccessfullLinkResponse(result)) {
         const error = result.find((item) => isApiError(item));
-        console.error(error);
+        console.log(error);
         throw new Error("링크 저장에 실패했습니다.");
       }
 

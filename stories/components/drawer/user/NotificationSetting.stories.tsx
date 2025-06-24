@@ -5,17 +5,17 @@ import { NotificationSettingDialog } from "@/components/dialog/dynamic";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
-import { mockNotification } from "@/stories/mocks/settings.mocks";
+import { mockNotificationSetting } from "@/stories/mocks/settings.mocks";
 import React from "react";
 
 const meta = {
-  title: "Component/Drawer/User/Notification",
+  title: "Component/Drawer/User/NotificationSetting",
   component: NotificationSettingDialog,
   parameters: {
     msw: {
       handlers: [
         http.get("/api/settings/notification", async () => {
-          return HttpResponse.json(mockNotification);
+          return HttpResponse.json(mockNotificationSetting);
         }),
       ],
     },

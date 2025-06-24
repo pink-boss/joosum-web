@@ -11,7 +11,7 @@ export default function DrawerButton({ link }: InputProps) {
     openLinkDrawer(true, "mutate", link);
   };
   return (
-    <button onClick={handleOpenMutateLinkDrawer}>
+    <button data-testid="drawer-button" onClick={handleOpenMutateLinkDrawer}>
       <Image
         src="/icons/icon-more-vertical-gray.png"
         alt="more-vertical"

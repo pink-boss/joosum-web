@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Image from "next/image";
 
+import ButtonLoading from "@/components/ButtonLoading";
 import useDelete from "@/hooks/auth/useDelete";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
@@ -117,10 +118,13 @@ export default function DeleteAccountDialog({}: InputProps) {
             type="submit"
             className={clsx(
               "flex-1 rounded-lg bg-gray-silver px-10 py-4",
-              "font-bold text-white",
+              "flex items-center justify-center gap-2 font-bold text-white",
+              deleteAccount.isPending ? "cursor-not-allowed bg-gray-vapor" : "",
             )}
+            disabled={deleteAccount.isPending}
           >
-            탈퇴하기
+            <span>탈퇴하기</span>
+            <ButtonLoading loading={deleteAccount.isPending} />
           </button>
 
           <button
@@ -130,6 +134,7 @@ export default function DeleteAccountDialog({}: InputProps) {
               "font-bold text-white",
             )}
             onClick={handleMaintainService}
+            disabled={deleteAccount.isPending}
           >
             주섬 계속 이용하기
           </button>
