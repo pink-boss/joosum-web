@@ -6,7 +6,7 @@ import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import { useLinkBookSortStore } from "@/store/useLinkBookSortStore";
 
 import { sortOptions } from "./constants";
-import CreateButton from "./CreateDialogButton";
+import CreateButton from "./CreateDialogOpenButton";
 import LinkBookList from "./LinkBookList";
 
 // TODO: 테스트

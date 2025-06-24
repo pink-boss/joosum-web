@@ -1,5 +1,6 @@
-import { trimTrailingSlash } from "@/utils/envUri";
 import { NextRequest, NextResponse } from "next/server";
+
+import { trimTrailingSlash } from "@/utils/envUri";
 
 export async function GET(request: NextRequest) {
   try {

@@ -1,23 +1,25 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import OpenShareButton from "@/app/link-book/OpenShareButton";
 import Drawer from "@/components/drawer/Drawer";
 import ImageWithFallback from "@/components/ImageWithFallback";
+import useDeleteDrawerLink from "@/hooks/link/useDeleteDrawerLink";
 import useUpdateLink from "@/hooks/link/useUpdateLink";
-import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { CreateFormState } from "@/types/link.types";
 import { krDateFormatter } from "@/utils/date";
 
-import Buttons from "./Buttons";
 import { defaultValues } from "./data";
 import Folder from "./Folder";
 import Header from "./Header";
 import LinkInput from "./LinkInput";
+import PrimaryButton from "./PrimaryButton";
+import SecondaryButton from "./SecondaryButton";
 import Tag from "./Tag";
 import TitleInput from "./TitleInput";
 
+// TODO: 수정/삭제시 로딩 중 버튼 비활성화, 직접 삭제/생성 시에도 마찬가지. 폴더 수정/삭제와 맞추기
 export default function MutateLinkDrawer() {
   const {
     link,
@@ -25,23 +27,25 @@ export default function MutateLinkDrawer() {
     openLinkDrawer: open,
     mode,
   } = useOpenDrawerStore();
-  const { openDeleteDrawerLink } = useOpenDialogStore();
 
   const [formState, setFormState] = useState<CreateFormState>(defaultValues);
 
-  const onClose = () => {
+  const onClose = useCallback(() => {
     setFormState(defaultValues);
     open(false);
-  };
+  }, [open]);
 
-  const updateLink = useUpdateLink();
+  const { mutate: updateMutate, isPending: isUpdatePending } =
+    useUpdateLink(onClose);
+  const { mutate: deleteMutate, isPending: isDeletePending } =
+    useDeleteDrawerLink(onClose, link?.linkId || "");
+
   const handleSubmit = async () => {
-    updateLink.mutate(formState as Required<CreateFormState>);
-    onClose();
+    updateMutate(formState as Required<CreateFormState>);
   };
 
   const handleDelete = () => {
-    openDeleteDrawerLink(true);
+    deleteMutate();
   };
 
   useEffect(() => {
@@ -114,14 +118,17 @@ export default function MutateLinkDrawer() {
           </div>
         </div>
       </div>
-      <div className="mt-auto px-10">
-        <Buttons
+      <div className="mt-auto flex justify-center gap-3 px-10">
+        <SecondaryButton loading={isDeletePending} onClick={handleDelete}>
+          삭제
+        </SecondaryButton>
+        <PrimaryButton
           title={formState.title}
-          closeBtnName="삭제"
-          onCloseCallback={handleDelete}
-          submitBtnName="수정"
-          onSubmitCallback={handleSubmit}
-        />
+          loading={isUpdatePending}
+          onClick={handleSubmit}
+        >
+          수정
+        </PrimaryButton>
       </div>
     </Drawer>
   );

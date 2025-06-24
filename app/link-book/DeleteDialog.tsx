@@ -34,6 +34,7 @@ export default function DeleteDialog() {
         children: "삭제",
         onClick: handleSubmit,
       }}
+      submitLoading={mutation.isPending}
     >
       <div className="flex flex-col gap-4 text-center">
         <div className="text-center text-gray-ink">

@@ -33,6 +33,7 @@ export default function DeleteDialog() {
         children: "삭제",
         onClick: handleSubmit,
       }}
+      submitLoading={mutation.isPending}
     >
       <div className="text-center text-gray-ink">
         <p>폴더 내의 모든 링크가 삭제됩니다.</p>

@@ -6,11 +6,12 @@ import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { SaveFormState, SaveLink } from "@/types/link.types";
 
-import Buttons from "./Buttons";
 import { defaultValues } from "./data";
 import Folder from "./Folder";
 import Header from "./Header";
 import LinkInput from "./LinkInput";
+import { PrimaryUIButton } from "./PrimaryButton";
+import SecondaryButton from "./SecondaryButton";
 import Tag from "./Tag";
 import TitleInput from "./TitleInput";
 
@@ -101,13 +102,22 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
               }))
             }
           />
+          <div className="mt-auto flex justify-center gap-3">
+            <SecondaryButton
+              loading={saveLinkMutation.isPending}
+              onClick={onClose}
+            >
+              취소
+            </SecondaryButton>
 
-          <Buttons
-            title={formState.title}
-            closeBtnName="취소"
-            onCloseCallback={onClose}
-            submitBtnName="저장"
-          />
+            <PrimaryUIButton
+              type="submit"
+              loading={saveLinkMutation.isPending}
+              disabled={!formState.title}
+            >
+              저장
+            </PrimaryUIButton>
+          </div>
         </form>
       </div>
     </Drawer>

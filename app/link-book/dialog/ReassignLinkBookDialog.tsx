@@ -57,6 +57,7 @@ export default function ReassignLinkBookDialog() {
         onClick: handleSubmit,
         disabled: !toLinkBookId,
       }}
+      submitLoading={mutation.isPending}
     >
       <div className="flex flex-col gap-4 text-center">
         <div className="text-center text-gray-ink">

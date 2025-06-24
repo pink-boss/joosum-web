@@ -51,6 +51,8 @@ export default function LinkInput({
       setFormState((prev) => ({
         ...prev,
         thumbnailURL: result.thumbnailURL,
+        title: result.title,
+        url: result.url,
       }));
 
       setIsError(false);

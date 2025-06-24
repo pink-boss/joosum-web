@@ -12,6 +12,7 @@ export type InputProps = {
   label: string;
 };
 
+// TODO: 인풋 포커스 & 수정시 로딩 처리 & 태그 수정시 기존 태그 삭제 처리
 const TagMore = ({ label }: InputProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const ref = useClearDropdown(() => setIsOpen(false));

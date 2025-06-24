@@ -9,7 +9,7 @@ import { isApiError } from "@/utils/error";
 import { isSuccessfullLinkResponse } from "@/utils/link";
 import useUpdateLinkCache from "./useUpdateLinkCache";
 
-export default function useUpdateLink() {
+export default function useUpdateLink(onSuccessCallback: () => void) {
   const prevLinkBook = useLinkBookFromTitle();
   const queryClient = useQueryClient();
 
@@ -17,27 +17,29 @@ export default function useUpdateLink() {
 
   return useMutation<undefined, Error, UpdateFormState>({
     mutationFn: async (state) => {
+      if (!state.linkId) {
+        throw new Error("링크 ID가 없습니다.");
+      }
+
       const work: Promise<Link | ApiError | { status: number }>[] = [];
 
       const linkUpdateResult: Promise<Link | ApiError> = (
-        await fetch(`/api/links/${state.linkId ?? ""}`, {
-          method: state.linkId ? "PUT" : "POST",
+        await fetch(`/api/links/${state.linkId}`, {
+          method: "PUT",
           body: JSON.stringify(state),
         })
       ).json();
       work.push(linkUpdateResult);
 
-      if (state.linkId) {
-        const linkBookUpdateResult: Promise<{ status: number } | ApiError> = (
-          await fetch(
-            `/api/links/${state.linkId}/link-book-id/${state.linkBookId}`,
-            {
-              method: "PUT",
-            },
-          )
-        ).json();
-        work.push(linkBookUpdateResult);
-      }
+      const linkBookUpdateResult: Promise<{ status: number } | ApiError> = (
+        await fetch(
+          `/api/links/${state.linkId}/link-book-id/${state.linkBookId}`,
+          {
+            method: "PUT",
+          },
+        )
+      ).json();
+      work.push(linkBookUpdateResult);
 
       if (state.tags.length) {
         const tagsResult: Promise<{ status: number } | ApiError> = (
@@ -63,7 +65,8 @@ export default function useUpdateLink() {
         queryKey: ["tags"],
       });
 
-      toast({ status: "success", message: "링크가 저장되었습니다." });
+      onSuccessCallback();
+      toast({ status: "success", message: "링크가 수정되었습니다." });
     },
     onError: (error) => {
       toast({ status: "fail", message: error.message });

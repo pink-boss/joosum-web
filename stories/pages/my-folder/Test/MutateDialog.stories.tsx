@@ -6,7 +6,7 @@ import {
   pickIllustrations,
   pickTitleColors,
 } from "@/app/my-folder/constants";
-import CreateButton from "@/app/my-folder/CreateDialogButton";
+import CreateButton from "@/app/my-folder/CreateDialogOpenButton";
 import { hexToRgb } from "@/utils/color";
 import meta from "../MutateDialog.stories";
 
