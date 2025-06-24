@@ -19,7 +19,6 @@ import SecondaryButton from "./SecondaryButton";
 import Tag from "./Tag";
 import TitleInput from "./TitleInput";
 
-// TODO: 수정/삭제시 로딩 중 버튼 비활성화, 직접 삭제/생성 시에도 마찬가지. 폴더 수정/삭제와 맞추기
 export default function MutateLinkDrawer() {
   const {
     link,
