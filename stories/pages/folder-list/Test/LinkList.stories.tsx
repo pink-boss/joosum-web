@@ -42,6 +42,7 @@ const testMeta = {
         }),
         http.get("/api/link-books/:linkBookId/links", ({ request, params }) => {
           capturedRequest = request;
+
           return HttpResponse.json(
             params.linkBookId
               ? mockLinkBookLinks.filter(
@@ -128,7 +129,7 @@ export const TestCheckStatement: Story = {
   },
 };
 
-type TestRequestURI = Pick<LinkSortState, "sort" | "orderBy"> & {
+type TestRequestURI = Pick<LinkSortState, "sort" | "order"> & {
   label: string;
 };
 
@@ -136,7 +137,7 @@ const testRequestURI = async ({
   canvasElement,
   label,
   sort,
-  orderBy,
+  order,
 }: TestRequestURI & { canvasElement: HTMLElement }) => {
   const canvas = within(canvasElement);
   const dropdown = canvas.getByTestId("sort-dropdown");
@@ -149,57 +150,46 @@ const testRequestURI = async ({
   await waitFor(async () => {
     expect(capturedRequest).not.toBeNull();
     const url = new URL(capturedRequest!.url);
+
     expect(url.pathname).toBe(
       `/api/link-books/${mockLinkBooks[2].linkBookId}/links`,
     );
     expect(url.searchParams.get("sort")).toBe(sort);
-    expect(url.searchParams.get("order")).toBe(orderBy);
+    expect(url.searchParams.get("order")).toBe(order);
   });
 
   capturedRequest = null;
 };
 
 export const TestSortRequestURI_Lastest: Story = {
-  beforeEach: () => {
-    useFolderLinkSortStore.setState(sortDefaultValues);
-    capturedRequest = null;
-  },
   play: async ({ canvasElement }) => {
     await testRequestURI({
       canvasElement,
       label: "최신순",
       sort: "created_at",
-      orderBy: "desc",
+      order: "desc",
     });
   },
 };
 
 export const TestSortRequestURI_Oldest: Story = {
-  beforeEach: () => {
-    useFolderLinkSortStore.setState(sortDefaultValues);
-    capturedRequest = null;
-  },
   play: async ({ canvasElement }) => {
     await testRequestURI({
       canvasElement,
       label: "오래된순",
       sort: "created_at",
-      orderBy: "asc",
+      order: "asc",
     });
   },
 };
 
 export const TestSortRequestURI_Title: Story = {
-  beforeEach: () => {
-    useFolderLinkSortStore.setState(sortDefaultValues);
-    capturedRequest = null;
-  },
   play: async ({ canvasElement }) => {
     await testRequestURI({
       canvasElement,
       label: "제목순",
       sort: "title",
-      orderBy: "asc",
+      order: "asc",
     });
   },
 };

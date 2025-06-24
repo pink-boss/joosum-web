@@ -22,7 +22,7 @@ export default function LinkCardList() {
     linkSort: {
       field: "lastest",
       sort: "created_at",
-      orderBy: "desc",
+      order: "desc",
     },
     linkBookId: undefined,
   });
