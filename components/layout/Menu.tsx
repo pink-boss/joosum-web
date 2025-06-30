@@ -106,6 +106,24 @@ export default function Menu() {
               : "h-0 overflow-hidden",
           )}
         >
+          <Link href="/link-book">
+            <div
+              className={clsx(
+                "h-[48px] py-3 pl-12 pr-5",
+                "flex items-center gap-2",
+              )}
+            >
+              <div
+                className={clsx("size-5 rounded-full border border-white")}
+                style={{
+                  backgroundColor: data?.linkBooks?.[0]?.backgroundColor,
+                }}
+              />
+              <div className="w-36 truncate font-semibold text-gray-graphite">
+                전체
+              </div>
+            </div>
+          </Link>
           {data?.linkBooks?.map((linkBook, index) => (
             <LinkBookMenu
               linkBook={linkBook}

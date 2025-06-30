@@ -35,20 +35,18 @@ export default function AppDownloadDialog() {
               alt="app store qr"
               width={124}
               height={124}
-              className="bg-gray-ghost"
             />
             <IOSDownload />
           </div>
-          <div className="flex flex-col items-center gap-2">
+          {/* <div className="flex flex-col items-center gap-2">
             <Image
               src="/google-play-qr.png"
               alt="google play qr"
               width={124}
               height={124}
-              className="bg-gray-ghost"
             />
             <AndroidDownload />
-          </div>
+          </div> */}
         </div>
 
         <p className="text-center text-sm text-gray-dim">
