@@ -6,7 +6,7 @@ export function useQueryTagsSetting() {
   const { data, refetch, ...others } = useQuery<TagList, ApiError>({
     queryKey: ["settings", "tags"],
     queryFn: () =>
-      fetch(`/api/settings/tags`, {
+      fetch(`/api/settings/tags?sort=created`, {
         method: "GET",
       }).then((res) => res.json()),
   });

@@ -9,6 +9,9 @@ export default function useUpdateTagsCache() {
     queryClient.invalidateQueries({
       queryKey: ["settings", "tags"],
     });
+    queryClient.invalidateQueries({
+      queryKey: ["tags"],
+    });
   }, [queryClient]);
 
   return updateCache;

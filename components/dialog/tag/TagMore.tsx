@@ -7,12 +7,12 @@ import { useEffect, useRef, useState } from "react";
 import useUpsertTags from "@/hooks/settings/useUpsertTags";
 import { useClearDropdown } from "@/hooks/useClearDropdown";
 import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
+import { Tag } from "@/types/tags.types";
 
 export type InputProps = {
   label: string;
 };
 
-// TODO: 인풋 포커스 & 수정시 로딩 처리 & 태그 수정시 기존 태그 삭제 처리
 const TagMore = ({ label }: InputProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const ref = useClearDropdown(() => setIsOpen(false));
@@ -52,7 +52,10 @@ const TagMore = ({ label }: InputProps) => {
             "gap-[20px] rounded-lg border border-gray-ghost bg-white p-6 shadow-lg",
           )}
         >
-          <TagUpdaterInput defaultValue={label} />
+          <TagUpdaterInput
+            defaultValue={label}
+            onSuccess={() => setIsOpen(false)}
+          />
           <button
             className="w-full pl-1 text-start font-semibold text-gray-black"
             onClick={handleDelete}
@@ -68,19 +71,20 @@ const TagMore = ({ label }: InputProps) => {
 export default TagMore;
 
 type TagUpdaterInputProps = {
-  defaultValue: string;
+  defaultValue: Tag;
+  onSuccess?: () => void;
 };
 
-function TagUpdaterInput({ defaultValue }: TagUpdaterInputProps) {
-  const { handleInput, inputRef } = useUpsertTags();
+function TagUpdaterInput({ defaultValue, onSuccess }: TagUpdaterInputProps) {
+  const { handleInput, inputRef, loading } = useUpsertTags(onSuccess);
   return (
     <input
       ref={inputRef}
       className="w-full bg-gray-ghost px-2 py-[9px] text-gray-dim"
       defaultValue={defaultValue}
-      onKeyUp={handleInput}
+      onKeyUp={(e) => handleInput(e, defaultValue)}
+      autoFocus
+      disabled={loading}
     />
   );
 }
-
-// TODO: 서버랑 연결해서 기능 마무리 짓기

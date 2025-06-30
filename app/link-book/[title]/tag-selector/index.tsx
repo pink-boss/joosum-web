@@ -34,7 +34,7 @@ const TagSelector = ({
   } = useQuery<string[]>({
     queryKey: ["tags"],
     queryFn: () =>
-      fetch(`/api/settings/tags`, {
+      fetch(`/api/settings/tags?sort=used`, {
         method: "GET",
       }).then((res) => res.json()),
     staleTime: 60 * 60 * 1000,
