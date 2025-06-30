@@ -12,6 +12,8 @@ import { LinkFilterValues } from "@/store/link-filter/schema";
 import { LinkBook } from "@/types/linkBook.types";
 import { sortByKeywordPosition } from "@/utils/sort";
 import useQueryLinkBooks from "../my-folder/useQueryLinkBooks";
+import { isApiError } from "@/utils/error";
+import { toast } from "@/components/notification/toast/toast";
 
 type InputProps = {
   linkSort: Omit<LinkSortState, "setField">;
@@ -51,7 +53,7 @@ export function useQueryLinks({
     data = [],
     refetch,
     ...others
-  } = useQuery<Link[], ApiError>({
+  } = useQuery<Link[]>({
     enabled: !!isCompleteQueryLinkBook,
     queryKey: queryOptions.queryKey,
     queryFn: () =>
@@ -59,20 +61,24 @@ export function useQueryLinks({
         method: "GET",
       })
         .then((res) => res.json())
-        .then((data: Link[]) => {
+        .then((data: Link[] | ApiError) => {
+          if (isApiError(data)) {
+            toast({ status: "fail", message: data.error });
+            return [];
+          }
           if (linkSort.field === "mostViewd") {
-            return [...data].sort(
+            return [...(data as Link[])].sort(
               (prev, next) => next.readCount - prev.readCount,
             );
           } else if (linkSort.field === "relevance") {
-            return sortByKeywordPosition(data, searchKeyword);
+            return sortByKeywordPosition(data as Link[], searchKeyword);
           }
-          return data;
+          return data as Link[];
         }),
   });
 
   const linkList = useMemo(() => {
-    return data.filter(({ readCount, createdAt, tags: linkTags }) => {
+    return data?.filter(({ readCount, createdAt, tags: linkTags }) => {
       const unreadFlag = linkFilter.unread ? !readCount : true;
       const datePickerFlag = linkFilter.dateRange.length
         ? linkFilter.dateRange.length == 2 &&
