@@ -7,6 +7,7 @@ import useIncrementViewCount from "@/hooks/link/useIncrementViewCount";
 import { useSearchBarStore } from "@/store/useSearchBarStore";
 import { Link } from "@/types/link.types";
 import { dateFormatter } from "@/utils/date";
+import { extractDomain } from "@/utils/urlEncoder";
 
 import OpenShareButton from "../../OpenShareButton";
 import DrawerButton from "../DrawerButton";
@@ -74,8 +75,7 @@ export default function LinkCard({ link, index }: InputProps) {
         </div>
         <div className="mt-auto flex gap-4 text-gray-dim">
           <div className="flex min-w-0 gap-1">
-            {/* TODO: 너비 조정 */}
-            <div className="truncate">{link.url}</div>|
+            <div className="truncate">{extractDomain(link.url)}</div>|
             <div className="flex-none">
               {dateFormatter(link.createdAt, "2-digit")}
             </div>

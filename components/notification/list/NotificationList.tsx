@@ -77,7 +77,7 @@ export default function NotificationList({ setHasNotification }: InputProps) {
             key={notification.notificationId}
             className={clsx(
               "flex gap-3.5 py-5 pl-5 pr-4",
-              notification.isRead && "bg-primary-100 cursor-pointer",
+              notification.isRead && "cursor-pointer bg-primary-100",
             )}
             onClick={() => handleUpdateRead(notification.notificationId)}
           >

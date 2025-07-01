@@ -77,11 +77,13 @@ export function SelectBox({
     >
       <div className="flex flex-1 items-center justify-between">
         <div ref={tagsRef} className="flex w-10/12 gap-1">
-          {visibleTags.length
-            ? visibleTags.map((tag) => (
-                <span key={`selected-tag-${tag}}`}>#{tag}</span>
-              ))
-            : undefined}
+          {visibleTags.length ? (
+            visibleTags.map((tag) => (
+              <span key={`selected-tag-${tag}}`}>#{tag}</span>
+            ))
+          ) : (
+            <span>전체</span>
+          )}
         </div>
         {hiddenCount ? (
           <div className="mr-2" data-testid="hidden-count">
