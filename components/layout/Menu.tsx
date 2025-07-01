@@ -67,7 +67,7 @@ export default function Menu() {
 
   return (
     <div className="w-[282px]">
-      <Link href="/home" onClick={closeDialog}>
+      <Link href="/dashboard" onClick={closeDialog}>
         <div className="flex items-center gap-4 px-10 py-3">
           <Image src="/icons/home.png" width={24} height={24} alt="home" />
           <div className="text-lg font-bold text-gray-ink">홈</div>

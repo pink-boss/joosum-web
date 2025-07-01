@@ -9,9 +9,10 @@ const WIDTH = 374;
 
 type LinkCardProps = {
   link: Link;
+  index: number;
 };
 
-export default function LinkCard({ link }: LinkCardProps) {
+export default function LinkCard({ link, index }: LinkCardProps) {
   const [visibleTags, setVisibleTags] = useState<string[]>([]);
   const [hiddenCount, setHiddenCount] = useState(0);
 
@@ -71,6 +72,7 @@ export default function LinkCard({ link }: LinkCardProps) {
           useFill
           className="rounded-lg object-cover"
           unoptimized
+          index={index}
         />
       </div>
       <div className="flex flex-col gap-2">

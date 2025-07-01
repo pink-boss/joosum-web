@@ -27,7 +27,7 @@ export default function Sidebar({ children }: InputProps) {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between px-10 py-1">
             <Link
-              href="/"
+              href="/dashboard"
               className="cursor-pointer"
               onClick={() => {
                 closeDialog();

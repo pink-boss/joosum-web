@@ -27,9 +27,9 @@ function FolderLink({ linkBookName }: FolderLinkInputProps) {
   );
 }
 
-type InputProps = { link: Link };
+type InputProps = { link: Link; index: number };
 
-export default function LinkCard({ link }: InputProps) {
+export default function LinkCard({ link, index }: InputProps) {
   const pathname = usePathname();
   const mutation = useIncrementViewCount(link);
   const { title: highlightKeyword } = useSearchBarStore();
@@ -50,6 +50,7 @@ export default function LinkCard({ link }: InputProps) {
           useFill
           className="rounded-lg object-cover"
           unoptimized
+          index={index}
         />
       </div>
       <div className="flex min-w-0 grow flex-col">
@@ -94,7 +95,7 @@ export default function LinkCard({ link }: InputProps) {
         }}
       >
         <OpenShareButton link={link} />
-        <DrawerButton link={link} />
+        <DrawerButton link={{ ...link, index }} />
       </div>
     </div>
   );

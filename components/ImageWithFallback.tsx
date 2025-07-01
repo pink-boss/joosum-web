@@ -1,20 +1,6 @@
 import Image, { ImageProps } from "next/image";
 import { useState } from "react";
 
-const noImagePlaceholder = `data:image/svg+xml,${encodeURIComponent(`
-<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1600" height="900" fill="#f0f0f0"/>
-  <text x="800" y="450" 
-        text-anchor="middle" 
-        dominant-baseline="middle"
-        font-family="Arial, sans-serif" 
-        font-size="160" 
-        fill="#999">
-    No Image
-  </text>
-</svg>
-`)}`;
-
 interface ImageWithFallbackProps {
   src?: string | null;
   alt: string;
@@ -23,6 +9,7 @@ interface ImageWithFallbackProps {
   quality?: number;
   priority?: boolean;
   sizes?: string;
+  index?: number;
 }
 
 type InputProps = ImageWithFallbackProps & Pick<ImageProps, "unoptimized">;
@@ -36,9 +23,12 @@ export default function ImageWithFallback({
   priority,
   sizes,
   unoptimized,
+  index = 0,
 }: InputProps) {
   const [error, setError] = useState(false);
 
+  const noImagePlaceholder =
+    index % 2 === 0 ? "/no_img_odd.png" : "/no_img_even.png";
   const imgSrc = error || !src ? noImagePlaceholder : src;
 
   if (useFill) {

@@ -77,6 +77,7 @@ export default function MutateLinkDrawer() {
               src={link.thumbnailURL}
               alt="thumbnail"
               unoptimized
+              index={link.index ?? 0}
             />
           </div>
           <LinkInput

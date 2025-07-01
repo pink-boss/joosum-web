@@ -1,4 +1,5 @@
 export interface Link {
+  index?: number;
   createdAt: string;
   lastReadAt: string;
   linkBookId: string;
