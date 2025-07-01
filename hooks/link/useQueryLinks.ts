@@ -104,5 +104,9 @@ export function useQueryLinks({
     }
   }, [refetch, linkSort.field]);
 
-  return { ...others, data: linkList, refetch };
+  return {
+    ...others,
+    data: linkList,
+    refetch,
+  };
 }

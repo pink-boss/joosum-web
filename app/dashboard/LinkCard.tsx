@@ -5,7 +5,7 @@ import useIncrementViewCount from "@/hooks/link/useIncrementViewCount";
 import { Link } from "@/types/link.types";
 import { krDateFormatter } from "@/utils/date";
 
-const WIDTH = 374;
+const WIDTH = 354;
 
 type LinkCardProps = {
   link: Link;
