@@ -8,7 +8,6 @@ import { Tag, TagList as TagListType } from "@/types/tags.types";
 import Dialog from "../Dialog";
 import TagMore from "./TagMore";
 
-// TODO: 바로 저장할지 저장 버튼 누르면 저장할지
 export default function TagSettingDialog() {
   const { isTagSettingOpen: isOpen, openTagSetting: open } =
     useOpenDialogStore();

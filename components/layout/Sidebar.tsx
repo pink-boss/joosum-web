@@ -5,6 +5,7 @@ import React from "react";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import Menu from "./Menu";
+import NotificationDropdown from "../notification/list/NotificationDropdown";
 
 type InputProps = {
   children: React.ReactNode;
@@ -26,7 +27,7 @@ export default function Sidebar({ children }: InputProps) {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between px-10 py-1">
             <Link
-              href="/"
+              href="/dashboard"
               className="cursor-pointer"
               onClick={() => {
                 closeDialog();
@@ -40,19 +41,7 @@ export default function Sidebar({ children }: InputProps) {
                 className="py-3"
               />
             </Link>
-            <div
-              className="cursor-pointer"
-              onClick={() => {
-                closeDialog();
-              }}
-            >
-              <Image
-                src="/icons/basic-bell.png"
-                width={24}
-                height={24}
-                alt="bell"
-              />
-            </div>
+            <NotificationDropdown />
           </div>
           <Menu />
         </div>

@@ -88,7 +88,7 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
             "flex justify-between p-3",
             "rounded-lg border",
             isActive
-              ? "border-primary-500 bg-inputactivebg"
+              ? "border-primary-500 bg-primary-100"
               : "border-gray-ghost bg-gray-ghost",
           )}
         >

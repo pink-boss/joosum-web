@@ -5,8 +5,8 @@ import { Link, SaveFormState } from "@/types/link.types";
 import { isApiError } from "@/utils/error";
 import { toast } from "@/components/notification/toast/toast";
 
-import { isSuccessfullLinkResponse } from "@/utils/link";
 import useUpdateLinkCache from "./useUpdateLinkCache";
+import { isSuccessfullResponse } from "@/utils/type-guard";
 
 export default function useSaveLink(onClose: () => void) {
   const queryClient = useQueryClient();
@@ -36,7 +36,7 @@ export default function useSaveLink(onClose: () => void) {
 
       const result = await Promise.all(work);
 
-      if (!isSuccessfullLinkResponse(result)) {
+      if (!isSuccessfullResponse<Link>(result)) {
         const error = result.find((item) => isApiError(item));
         console.log(error);
         throw new Error("링크 저장에 실패했습니다.");

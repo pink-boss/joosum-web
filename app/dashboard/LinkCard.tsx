@@ -5,13 +5,14 @@ import useIncrementViewCount from "@/hooks/link/useIncrementViewCount";
 import { Link } from "@/types/link.types";
 import { krDateFormatter } from "@/utils/date";
 
-const WIDTH = 374;
+const WIDTH = 354;
 
 type LinkCardProps = {
   link: Link;
+  index: number;
 };
 
-export default function LinkCard({ link }: LinkCardProps) {
+export default function LinkCard({ link, index }: LinkCardProps) {
   const [visibleTags, setVisibleTags] = useState<string[]>([]);
   const [hiddenCount, setHiddenCount] = useState(0);
 
@@ -71,6 +72,7 @@ export default function LinkCard({ link }: LinkCardProps) {
           useFill
           className="rounded-lg object-cover"
           unoptimized
+          index={index}
         />
       </div>
       <div className="flex flex-col gap-2">

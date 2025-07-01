@@ -113,7 +113,7 @@ export default function LinkList({
                   checked={cachedLinks.has(link.linkId)}
                 />
               )}
-              <LinkComponent link={link} />
+              <LinkComponent link={link} index={index} />
             </div>
           ))}
         </div>

@@ -25,7 +25,9 @@ export function SelectBox({ selected, isOpen, setIsOpen }: SelectBoxProps) {
           {selected[0] && dateFormatter(selected[0], "numeric")}
           {selected[1] && ` ~ ${dateFormatter(selected[1], "numeric")}`}
         </span>
-      ) : undefined}
+      ) : (
+        <span>전체</span>
+      )}
 
       <Image
         src="/icons/icon-down3.png"

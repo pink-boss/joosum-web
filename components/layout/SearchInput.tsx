@@ -72,7 +72,7 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
         placeholder="링크 제목으로 검색해보세요."
         className={clsx(
           "h-[48px] w-full rounded-lg border pl-3 pr-20",
-          "focus:bg-inputactivebg",
+          "focus:bg-primary-100",
         )}
         onKeyDown={handleKeyDown}
         value={inputValue}
