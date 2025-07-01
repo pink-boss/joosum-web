@@ -3,25 +3,16 @@ import Image from "next/image";
 import { useCallback, useState } from "react";
 
 import { useClearDropdown } from "@/hooks/useClearDropdown";
-import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import NotificationList from "./NotificationList";
 
-type InputProps = {};
-
-const NotificationDropdown = ({}: InputProps) => {
+const NotificationDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasNotification, setHasNotification] = useState(false);
 
   const onCloseDropdown = () => setIsOpen(false);
 
   const ref = useClearDropdown(onCloseDropdown);
-
-  const { openMutateLinkBook, openDeleteLinkBook } = useOpenDialogStore();
-
-  const closeDialog = () => {
-    openMutateLinkBook(false);
-    openDeleteLinkBook(false);
-  };
 
   const onOpen = useCallback(() => {
     setIsOpen((current) => !current);
@@ -56,11 +47,14 @@ const NotificationDropdown = ({}: InputProps) => {
               />
             </button>
           </div>
-          <NotificationList />
+          <NotificationList setHasNotification={setHasNotification} />
         </div>
       )}
-      <button onClick={onOpen}>
+      <button className="relative" onClick={onOpen}>
         <Image src="/icons/basic-bell.png" width={24} height={24} alt="bell" />
+        {hasNotification && (
+          <div className="absolute -right-0.5 -top-0.5 size-2.5 rounded-full bg-error" />
+        )}
       </button>
     </div>
   );

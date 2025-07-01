@@ -1,9 +1,10 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { TQueryNotifications } from "@/types/notification/list.types";
 
 export default function useQueryNotifications() {
-  return useInfiniteQuery({
+  return useInfiniteQuery<TQueryNotifications>({
     queryKey: ["notifications"],
-    queryFn: async ({ pageParam = 0 }) => {
+    queryFn: async ({ pageParam = 0 }: { pageParam?: unknown }) => {
       const res = await fetch(`/api/notifications?page=${pageParam}`, {
         method: "GET",
       });
@@ -17,13 +18,13 @@ export default function useQueryNotifications() {
       // 실제 API 대신 더미 데이터 반환 (개발용)
       // const pageData: TQueryNotifications = {
       //   notifications: Array.from({ length: 10 }, (_, i) => ({
-      //     body: `페이지 ${pageParam} - 알림 본문 내용 ${i + 1}`,
+      //     body: `페이지 ${pageParam} - 알림 본문 내용 ${i + 1 + pageParam * 10}`,
       //     createdAt: new Date(
       //       Date.now() - (pageParam * 10 + i) * 1000 * 60 * 60,
       //     ).toISOString(),
       //     isRead: (pageParam * 10 + i) % 2 === 0,
       //     notificationId: `notification-${pageParam}-${i + 1}`,
-      //     title: `페이지 ${pageParam} - 알림 제목 ${i + 1}`,
+      //     title: `페이지 ${pageParam} - 알림 제목 ${i + 1 + pageParam * 10}`,
       //     type: (pageParam * 10 + i) % 2 === 0 ? "folder" : "book",
       //     userId: `user-1`,
       //   })),

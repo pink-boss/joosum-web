@@ -1,10 +1,19 @@
 import clsx from "clsx";
 import Image from "next/image";
+import { useEffect, useMemo } from "react";
 
 import useQueryNotifications from "@/hooks/useQueryNotifications";
-import { Notification } from "@/types/notification/list.types";
+import useUpdateNotification from "@/hooks/useUpdateNotification";
+import {
+  Notification,
+  TQueryNotifications,
+} from "@/types/notification/list.types";
 
-export default function NotificationList() {
+type InputProps = {
+  setHasNotification: (hasNotification: boolean) => void;
+};
+
+export default function NotificationList({ setHasNotification }: InputProps) {
   const {
     data,
     fetchNextPage,
@@ -14,11 +23,31 @@ export default function NotificationList() {
     isError,
   } = useQueryNotifications();
 
+  const updateRead = useUpdateNotification();
+  const handleUpdateRead = (notificationId: Notification["notificationId"]) => {
+    updateRead.mutate(notificationId);
+  };
+
   const handleLoadMore = () => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
   };
+
+  const allNotifications: Notification[] = useMemo(
+    () => (data?.pages as unknown as TQueryNotifications)?.notifications ?? [],
+    [data?.pages],
+  );
+
+  useEffect(() => {
+    if (allNotifications.length > 0) {
+      setHasNotification(
+        allNotifications.some((notification) => !notification.isRead)
+          ? true
+          : false,
+      );
+    }
+  }, [allNotifications, setHasNotification]);
 
   // 로딩 상태
   if (isLoading) {
@@ -40,9 +69,6 @@ export default function NotificationList() {
     );
   }
 
-  const allNotifications: Notification[] =
-    data?.pages?.flatMap((pageData) => pageData.notifications) ?? [];
-
   return allNotifications.length > 0 ? (
     <div className="flex flex-col">
       <div className="h-[420px] overflow-y-scroll">
@@ -53,6 +79,7 @@ export default function NotificationList() {
               "flex gap-3.5 py-5 pl-5 pr-4",
               notification.isRead && "bg-primary-100 cursor-pointer",
             )}
+            onClick={() => handleUpdateRead(notification.notificationId)}
           >
             <Image
               alt="notification-type"
