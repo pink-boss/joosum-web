@@ -48,7 +48,8 @@ export const TestAddFolder: Story = {
   play: async ({ canvasElement }) => {
     useOpenDrawerStore.setState({
       link: mockLink,
-      isMutateLinkDrawerOpen: true,
+      isLinkDrawerOpen: true,
+      mode: "mutate",
     });
 
     const canvas = within(canvasElement);

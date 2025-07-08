@@ -15,7 +15,13 @@ export default function OpenUserDrawerButton() {
         "transition-opacity hover:opacity-80",
       )}
     >
-      <Image src="/icons/user.png" alt="user" width={48} height={48} />
+      <Image
+        src="/icons/user.svg"
+        alt="user"
+        width={48}
+        height={48}
+        unoptimized
+      />
     </button>
   );
 }

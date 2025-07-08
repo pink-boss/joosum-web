@@ -1,28 +1,20 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 
-import {
-  DefaultFolderProps,
-  EntireFolderProps,
-  OptionalFolderProps,
-} from "@/types/linkBook.types";
-import { replaceSpacesWithDash } from "@/utils/urlEncoder";
-
-export function isNormalLinkBook(
-  linkBook: EntireFolderProps,
-): linkBook is DefaultFolderProps {
-  const requiredFields = [] as Array<
-    keyof Omit<OptionalFolderProps, "illustration">
-  >;
-
-  return requiredFields.every((field) => linkBook[field] !== undefined);
-}
+import { EntireFolderProps, LinkBook } from "@/types/linkBook.types";
+import { encodeForUrlPath } from "@/utils/urlEncoder";
 
 type InputProps = {
   children: ReactNode;
-  linkBook: EntireFolderProps;
+  linkBook: LinkBook | EntireFolderProps;
   onClickCallback?: () => void;
 };
+
+export function isNormalLinkBook(
+  linkBook: LinkBook | EntireFolderProps,
+): linkBook is LinkBook {
+  return "linkBookId" in linkBook && Boolean(linkBook.linkBookId);
+}
 
 export default function LinkToPage({
   children,
@@ -31,7 +23,7 @@ export default function LinkToPage({
 }: InputProps) {
   let path = "/link-book";
   if (isNormalLinkBook(linkBook) && linkBook.linkBookId) {
-    path += `/${linkBook.title}`;
+    path += `/${encodeForUrlPath(linkBook.title)}`;
   }
 
   const handleClick = () => {
@@ -41,7 +33,7 @@ export default function LinkToPage({
   };
 
   return (
-    <Link href={replaceSpacesWithDash(path)} onClick={handleClick}>
+    <Link href={path} onClick={handleClick}>
       {children}
     </Link>
   );

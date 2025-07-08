@@ -34,6 +34,9 @@ export default testMeta;
 type Story = StoryObj<typeof testMeta>;
 
 export const TestLinkClickCount: Story = {
+  args: {
+    index: 0,
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 

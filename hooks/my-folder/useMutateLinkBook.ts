@@ -46,11 +46,11 @@ export default function useMutateLinkBook(onSuccessCallback: () => void) {
     : "/api/link-books";
 
   return useMutation<LinkBook, Error, CreateFormState>({
-    mutationFn: async (state) => {
+    mutationFn: (state) => {
       return apiCall<LinkBook>(pathname, {
         method: linkBook ? "PUT" : "POST",
         body: JSON.stringify(state),
-      });
+      }) as Promise<LinkBook>;
     },
     onSuccess: (result) => {
       updateCache();

@@ -51,7 +51,13 @@ const NotificationDropdown = () => {
         </div>
       )}
       <button className="relative" onClick={onOpen}>
-        <Image src="/icons/basic-bell.png" width={24} height={24} alt="bell" />
+        <Image
+          src="/icons/basic-bell.svg"
+          width={24}
+          height={24}
+          alt="bell"
+          unoptimized
+        />
         {hasNotification && (
           <div className="absolute -right-0.5 -top-0.5 size-2.5 rounded-full bg-error" />
         )}

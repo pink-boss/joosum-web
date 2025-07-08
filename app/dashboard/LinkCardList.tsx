@@ -72,7 +72,7 @@ export default function LinkCardList() {
       </div>
       {data.length ? (
         <div className="flex flex-col items-start gap-8 overflow-auto">
-          <div className="flex flex-wrap gap-x-[22px] gap-y-5">
+          <div className="flex flex-wrap justify-center gap-x-[22px] gap-y-5">
             {data.slice(0, isAllLinks ? undefined : 30).map((link, index) => (
               <LinkCard key={index} link={link} index={index} />
             ))}

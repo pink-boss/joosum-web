@@ -1,6 +1,6 @@
 import { useParams } from "next/navigation";
 
-import { replaceDashWithSpaces } from "@/utils/urlEncoder";
+import { decodeFromUrlPath } from "@/utils/urlEncoder";
 
 import useQueryLinkBooks from "../my-folder/useQueryLinkBooks";
 
@@ -12,6 +12,6 @@ export default function useLinkBookFromTitle() {
   if (!title) return undefined;
 
   return data?.linkBooks?.find(
-    (linkBook) => linkBook.title === replaceDashWithSpaces(title),
+    (linkBook) => linkBook.title === decodeFromUrlPath(title),
   );
 }

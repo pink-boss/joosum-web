@@ -104,10 +104,11 @@ export default function AccountDialog({}: InputProps) {
               >
                 <div className="flex items-center gap-5">
                   <Image
-                    src="/icons/icon-folder2.png"
+                    src="/icons/icon-folder-account.svg"
                     alt="hyper-link"
                     width={24}
                     height={24}
+                    unoptimized
                   />
                   <span className="font-bold">폴더</span>
                 </div>

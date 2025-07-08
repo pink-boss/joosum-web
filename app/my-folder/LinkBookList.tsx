@@ -4,7 +4,6 @@ import Folder from "./folder";
 
 type LinkBookListInputProps = TQueryLinkBooks & {};
 
-// TODO: dropdown이 스크롤 내린상태에서 보면 띄워져 있음
 export default function LinkBookList({
   linkBooks,
   totalLinkCount,

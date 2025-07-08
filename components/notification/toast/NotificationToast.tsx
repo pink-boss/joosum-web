@@ -1,8 +1,8 @@
 import clsx from "clsx";
 
-import { NotificationToast } from "@/types/notification/toast.types";
+import { NotificationToast as NotificationToastType } from "@/types/notification/toast.types";
 
-type InputProps = NotificationToast;
+type InputProps = NotificationToastType;
 
 export default function NotificationToast({
   message,
