@@ -9,9 +9,9 @@ export default function Topbar() {
     <div
       className={clsx(
         "mb-8 flex h-[104px] w-full items-center justify-between bg-paperabovebg py-7",
-        "gap-4 px-4",
-        "sm:gap-6 sm:px-6",
-        "lg:gap-12 lg:px-10",
+        "gap-6 px-10",
+
+        "lg:gap-12",
       )}
     >
       <div className="min-w-0 flex-1">

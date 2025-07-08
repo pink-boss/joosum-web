@@ -10,6 +10,8 @@ interface ImageWithFallbackProps {
   priority?: boolean;
   sizes?: string;
   index?: number;
+  width?: number;
+  height?: number;
 }
 
 type InputProps = ImageWithFallbackProps & Pick<ImageProps, "unoptimized">;
@@ -24,6 +26,8 @@ export default function ImageWithFallback({
   sizes,
   unoptimized,
   index = 0,
+  width,
+  height,
 }: InputProps) {
   const [error, setError] = useState(false);
 
@@ -53,9 +57,9 @@ export default function ImageWithFallback({
     <Image
       src={imgSrc}
       alt={alt}
-      width={1600}
-      height={900}
-      className={`h-auto w-full ${className}`}
+      width={width || 1600}
+      height={height || 900}
+      className={`${className}`}
       onError={() => setError(true)}
       placeholder="blur"
       blurDataURL={noImagePlaceholder}

@@ -17,8 +17,7 @@ export default function OpenLinkSaveDrawerButton() {
       )}
       onClick={handleClick}
     >
-      <span className="sm:inline hidden">링크 저장</span>
-      <span className="sm:hidden">저장</span>
+      <span className="inline">링크 저장</span>
     </button>
   );
 }

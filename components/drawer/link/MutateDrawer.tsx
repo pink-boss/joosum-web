@@ -61,10 +61,11 @@ export default function MutateLinkDrawer() {
           center={
             <div className="flex items-center gap-1">
               <Image
-                src="/icons/icon-folder2.png"
+                src="/icons/icon-folder.svg"
                 alt="folder"
                 width={20}
                 height={20}
+                unoptimized
               />
               <span className="text-gray-dim">{link.linkBookName}</span>
             </div>
@@ -72,11 +73,13 @@ export default function MutateLinkDrawer() {
           right={<OpenShareButton link={link} />}
         />
         <div className="flex flex-col gap-6 px-10">
-          <div className="relative w-[414px] flex-none">
+          <div className="relative h-[260px] w-[414px] flex-none">
             <ImageWithFallback
               src={link.thumbnailURL}
               alt="thumbnail"
               unoptimized
+              useFill
+              className="rounded-lg object-scale-down"
               index={link.index ?? 0}
             />
           </div>

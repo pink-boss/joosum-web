@@ -69,17 +69,24 @@ export default function Menu() {
     <div className="w-[282px]">
       <Link href="/dashboard" onClick={closeDialog}>
         <div className="flex items-center gap-4 px-10 py-3">
-          <Image src="/icons/home.png" width={24} height={24} alt="home" />
+          <Image
+            src="/icons/home.svg"
+            width={24}
+            height={24}
+            alt="home"
+            unoptimized
+          />
           <div className="text-lg font-bold text-gray-ink">홈</div>
         </div>
       </Link>
       <Link href="/my-folder">
         <div className="flex cursor-pointer items-center gap-4 px-10 py-3">
           <Image
-            src="/icons/icon-folder.png"
+            src="/icons/icon-folder.svg"
             width={24}
             height={24}
             alt="folder"
+            unoptimized
           />
           <div className="text-lg font-bold text-gray-ink">내 폴더</div>
           <div className="ml-auto" onClick={handleOpenMenu}>

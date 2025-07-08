@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -41,8 +42,14 @@ export default function BannerCard({}: InputProps) {
 
   return (
     <Link href={currentBanner.clickURL} target="_blank">
-      <div className="flex items-center justify-center gap-40 rounded-xl bg-primary-lavender">
-        <div className="text-2xl text-gray-ink">
+      <div
+        className={clsx(
+          "flex items-center rounded-xl bg-primary-lavender",
+          "justify-between gap-4 px-10",
+          "pc:justify-center pc:gap-40 pc:px-10",
+        )}
+      >
+        <div className="text-xl text-gray-ink pc:text-2xl">
           <div key={current} className="animate-fade-in-up">
             <p>{currentBanner.title}</p>
             <p className="flex items-center">
@@ -52,7 +59,7 @@ export default function BannerCard({}: InputProps) {
                 alt="right"
                 width={30.71}
                 height={30.71}
-                className="ml-2"
+                className="ml-1 pc:ml-2"
               />
             </p>
           </div>
