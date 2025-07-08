@@ -85,7 +85,7 @@ const DropdownMore = ({ linkBook, isLayout = false }: InputProps) => {
       </button>
 
       {isOpen && (
-        <div className="fixed z-20 mt-1 flex w-[110px] flex-col rounded-lg border border-gray-ghost bg-white py-4 shadow-xl">
+        <div className="absolute z-20 mt-1 flex w-[110px] flex-col rounded-lg border border-gray-ghost bg-white py-4 shadow-xl">
           <DropdownItem title="폴더 수정" handleClick={handleModify} />
           <DropdownItem title="폴더 삭제" handleClick={handleDelete} />
         </div>
