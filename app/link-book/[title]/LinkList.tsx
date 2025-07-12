@@ -18,7 +18,7 @@ export default function LinkList({
 }: InputProps) {
   return (
     <LinkListComponent
-      type="search"
+      type="linkBook"
       defaultEditMode={defaultEditMode}
       linkSort={linkSort}
       linkFilter={linkFilter}

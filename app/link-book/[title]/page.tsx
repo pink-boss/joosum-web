@@ -7,8 +7,8 @@ import {
 } from "@/store/link-filter/useFolderStore";
 import { useFolderLinkSortStore } from "@/store/link-sort/useFolderStore";
 
-import Filter from "./Filter";
-import LinkList from "./link-list/LinkList";
+import LinkList from "./LinkList";
+import Filter from "../../../components/link/Filter";
 
 export default function FolderDetail() {
   const linkBook = useLinkBookFromTitle();

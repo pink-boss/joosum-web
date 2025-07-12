@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import LinkBookFilter from "@/app/search/filter/LinkBook";
+import LinkBookFilter from "@/app/search/Filter";
 import meta from "../LinkBook.stories";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { mockLinkBooks } from "@/stories/mocks/linkBook.mocks";

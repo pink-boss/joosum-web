@@ -2,6 +2,7 @@ import Image from "next/image";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 
+import OpenShareButton from "@/app/link-book/OpenShareButton";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import useIncrementViewCount from "@/hooks/link/useIncrementViewCount";
 import { useSearchBarStore } from "@/store/useSearchBarStore";
@@ -9,7 +10,6 @@ import { Link } from "@/types/link.types";
 import { dateFormatter } from "@/utils/date";
 import { extractDomain } from "@/utils/urlEncoder";
 
-import OpenShareButton from "../../OpenShareButton";
 import DrawerButton from "../DrawerButton";
 
 type FolderLinkInputProps = { linkBookName: string };

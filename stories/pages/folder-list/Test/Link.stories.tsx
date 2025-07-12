@@ -4,11 +4,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { http, HttpResponse } from "msw";
 
-import LinkCard from "@/app/link-book/[title]/link-list/LinkCard";
-
 import { mockLink } from "../../../mocks/link.mocks";
 import meta from "../Link.stories";
 import { queryClient } from "@/stories/mocks/store.mocks";
+import LinkCard from "@/components/link/link-list/LinkCard";
 
 let capturedRequest: Request | null = null;
 
@@ -37,7 +36,7 @@ export const TestLinkClickCount: Story = {
   args: {
     index: 0,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
 
     const windowSpy = test.spyOn(window, "open");

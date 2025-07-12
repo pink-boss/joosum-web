@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Card } from "@/app/search/filter/LinkBook";
+import { Card } from "@/app/search/Filter";
 import { fn } from "@storybook/test";
 
 const meta = {

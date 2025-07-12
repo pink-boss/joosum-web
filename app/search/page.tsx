@@ -7,9 +7,9 @@ import {
 import { useSearchLinkSortStore } from "@/store/link-sort/useSearchStore";
 import { useSearchBarStore } from "@/store/useSearchBarStore";
 
-import LinkBookFilter from "./filter/LinkBook";
+import LinkBookFilter from "./Filter";
 import LinkList from "./LinkList";
-import Filter from "../link-book/[title]/Filter";
+import Filter from "../../components/link/Filter";
 
 export default function Search() {
   const { title } = useSearchBarStore();
