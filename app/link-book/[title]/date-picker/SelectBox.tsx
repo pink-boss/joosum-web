@@ -17,7 +17,7 @@ export function SelectBox({ selected, isOpen, setIsOpen }: SelectBoxProps) {
       onClick={() => setIsOpen(!isOpen)}
       className={clsx(
         "flex items-center px-3 text-sm text-gray-dim",
-        "h-[46px] w-[305px] rounded-lg border border-gray-silver",
+        "h-[46px] w-full rounded-lg border border-gray-silver",
       )}
     >
       {selected.length ? (
@@ -26,7 +26,7 @@ export function SelectBox({ selected, isOpen, setIsOpen }: SelectBoxProps) {
           {selected[1] && ` ~ ${dateFormatter(selected[1], "numeric")}`}
         </span>
       ) : (
-        <span>전체</span>
+        <span>기간 전체</span>
       )}
 
       <Image

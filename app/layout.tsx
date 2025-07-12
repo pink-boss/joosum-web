@@ -133,7 +133,9 @@ function Component({
   return (
     <main
       className={clsx(
-        "relative flex h-screen flex-1 flex-col items-center bg-white text-black",
+        "relative h-screen flex-1 overflow-x-hidden",
+        "flex flex-col items-center",
+        "bg-white text-black",
         className && className,
       )}
     >

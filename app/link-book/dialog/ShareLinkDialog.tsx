@@ -21,6 +21,8 @@ export default function ShareLinkDialog() {
     window.Kakao.cleanup();
 
     const kakaoAppKey = process.env.NEXT_PUBLIC_KAKAO_APP_KEY;
+    // TODO: 테스트 완료시 삭제
+    console.log("kakaoAppKey", kakaoAppKey);
     if (kakaoAppKey) {
       window.Kakao.init(kakaoAppKey);
     } else {
