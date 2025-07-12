@@ -4,16 +4,16 @@ import Checkbox from "@/components/Checkbox";
 import EmptyLinks from "@/components/EmptyLinks";
 import Loading from "@/components/Loading";
 import useCheckLink from "@/hooks/link/useCheckLink";
-import { useQueryLinkBookLinks } from "@/hooks/link/useQueryLinkBookLinks";
+import { useQueryLinks } from "@/hooks/link/useQuerySearchLinks";
 import { LinkFilterValues } from "@/store/link-filter/schema";
 import { LinkSortState } from "@/store/link-sort/schema";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { LinkBook } from "@/types/linkBook.types";
 
-import EditHeader from "./EditHeader";
-import EditToolbar from "./EditToolbar";
-import LinkComponent from "./LinkCard";
-import ViewToolbar from "./ViewToolbar";
+import EditHeader from "../link-book/[title]/link-list/EditHeader";
+import EditToolbar from "../link-book/[title]/link-list/EditToolbar";
+import LinkComponent from "../link-book/[title]/link-list/LinkCard";
+import ViewToolbar from "../link-book/[title]/link-list/ViewToolbar";
 
 type InputProps = {
   defaultEditMode?: boolean;
@@ -31,7 +31,7 @@ export default function LinkList({
   const { openDeleteLink, openReassignLinkBook } = useOpenDialogStore();
   const [editMode, setEditMode] = useState(defaultEditMode);
   const { cachedLinks, setCachedLink, setAllLinks } = useCheckLink();
-  const { data, isPending } = useQueryLinkBookLinks({
+  const { data, isPending } = useQueryLinks({
     linkSort,
     linkFilter,
     linkBookId,

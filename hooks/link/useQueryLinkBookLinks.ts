@@ -21,15 +21,13 @@ type InputProps = {
   linkBookId?: LinkBook["linkBookId"];
 };
 
-// TODO: 검색에서 폴더 선택하면 검색이 적용안됨
-export function useQueryLinks({
+export function useQueryLinkBookLinks({
   linkSort,
   linkFilter,
   linkBookId,
 }: InputProps) {
   const { isSuccess: isCompleteQueryLinkBook } =
     useQueryLinkBooks("created_at"); // queryLink가 먼저 실행되는 걸 방지
-  const { title: searchKeyword } = useSearchBarStore();
 
   const queryOptions = useMemo<
     Record<string, unknown> & {
@@ -40,14 +38,8 @@ export function useQueryLinks({
     let queryString = `sort=${linkSort.sort}&order=${linkSort.order}`;
     let queryKey = getLinkListQueryKey(linkBookId);
 
-    if (searchKeyword) {
-      queryString += `&search=${searchKeyword}`;
-      queryKey = ["search", "linkList"];
-      if (linkBookId) queryKey.push(linkBookId);
-    }
-
     return { pathname, queryString, queryKey };
-  }, [linkBookId, linkSort.sort, linkSort.order, searchKeyword]);
+  }, [linkBookId, linkSort.sort, linkSort.order]);
 
   const {
     data = [],
@@ -70,32 +62,38 @@ export function useQueryLinks({
             return [...(data as Link[])].sort(
               (prev, next) => next.readCount - prev.readCount,
             );
-          } else if (linkSort.field === "relevance") {
-            return sortByKeywordPosition(data as Link[], searchKeyword);
           }
           return data as Link[];
         }),
   });
 
   const linkList = useMemo(() => {
-    return data?.filter(({ readCount, createdAt, tags: linkTags }) => {
-      const unreadFlag = linkFilter.unread ? !readCount : true;
-      const datePickerFlag = linkFilter.dateRange.length
-        ? linkFilter.dateRange.length == 2 &&
-          isBetween(
-            new Date(createdAt),
-            new Date(linkFilter.dateRange[0]),
-            new Date(linkFilter.dateRange[1]),
-            true,
-          )
-        : true;
-
-      const tagFlag =
-        linkFilter.tags.length && linkTags
-          ? linkFilter.tags.some((tag) => linkTags.includes(tag))
+    return data?.filter(
+      ({
+        readCount,
+        createdAt,
+        tags: linkTags,
+        linkBookId: linkLinkBookId,
+      }) => {
+        const unreadFlag = linkFilter.unread ? !readCount : true;
+        const datePickerFlag = linkFilter.dateRange.length
+          ? linkFilter.dateRange.length == 2 &&
+            isBetween(
+              new Date(createdAt),
+              new Date(linkFilter.dateRange[0]),
+              new Date(linkFilter.dateRange[1]),
+              true,
+            )
           : true;
-      return unreadFlag && datePickerFlag && tagFlag;
-    });
+
+        const tagFlag =
+          linkFilter.tags.length && linkTags
+            ? linkFilter.tags.some((tag) => linkTags.includes(tag))
+            : true;
+
+        return unreadFlag && datePickerFlag && tagFlag;
+      },
+    );
   }, [data, linkFilter.dateRange, linkFilter.unread, linkFilter.tags]);
 
   useEffect(() => {

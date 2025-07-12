@@ -5,7 +5,7 @@ import NextLink from "next/link";
 import { useState } from "react";
 
 import EmptyLinks from "@/components/EmptyLinks";
-import { useQueryLinks } from "@/hooks/link/useQueryLinks";
+import useQueryAllLinks from "@/hooks/link/useQueryAllLinks";
 
 import LinkCard from "./LinkCard";
 
@@ -17,14 +17,13 @@ export default function LinkCardList() {
     isPending,
     error,
     data = [],
-  } = useQueryLinks({
+  } = useQueryAllLinks({
     linkFilter: { unread: filter === "unread", tags: [], dateRange: [] },
     linkSort: {
       field: "lastest",
       sort: "created_at",
       order: "desc",
     },
-    linkBookId: undefined,
   });
 
   const handleFilter = (e: any) => {
