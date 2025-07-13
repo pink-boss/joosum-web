@@ -14,6 +14,8 @@ import useUpsertTagsSetting from "@/hooks/settings/useUpsertTagsSetting";
 import useQueryLinkFilterTags from "@/hooks/useQueryLinkFilterTags";
 import { isValidName } from "@/utils/regexp";
 
+import RecentTags from "./RecentTags";
+
 type InputProps = {
   tags: string[];
   setTags: (tags: string[]) => void;
@@ -23,6 +25,7 @@ type InputProps = {
 export default function Tag({ tags, setTags, disabled = false }: InputProps) {
   const [isActive, setIsActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const recentTagsRef = useRef<HTMLDivElement>(null);
 
   const [input, setInput] = useState<string>("");
   const [isComposing, setIsComposing] = useState(false);
@@ -52,8 +55,10 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
         status: "warning",
       });
     } else {
-      const newTagList = [trimmedInput, ...(totalTags ?? [])];
-      upsertTags.mutate(newTagList);
+      if (!totalTags.includes(trimmedInput)) {
+        const newTagList = [trimmedInput, ...(totalTags ?? [])];
+        upsertTags.mutate(newTagList);
+      }
       setTags([...tags, trimmedInput]);
       setInput("");
     }
@@ -75,6 +80,25 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
   const removeTag = (index: number) => {
     setTags([...tags.slice(0, index), ...tags.slice(index + 1)]);
   };
+
+  const handleSelectRecentTag = (tag: string) => {
+    if (tags.length == 10) {
+      toast({
+        message: "태그는 10개까지 선택할 수 있어요.",
+        status: "warning",
+      });
+    } else if (tags.includes(tag)) {
+      toast({
+        message: "이미 추가된 태그입니다.",
+        status: "warning",
+      });
+    } else {
+      setTags([...tags, tag]);
+      setInput("");
+      setIsActive(false);
+    }
+  };
+
   return (
     <div
       data-testid="tags-input"
@@ -136,7 +160,9 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
               onKeyDown={handleTypeInput}
               placeholder={!tags?.length ? "태그를 추가해보세요." : undefined}
               onFocus={() => setIsActive(true)}
-              onBlur={() => setIsActive(false)}
+              onBlur={() => {
+                if (!recentTagsRef.current) setIsActive(false);
+              }}
               disabled={disabled}
               maxLength={10}
               onCompositionStart={() => setIsComposing(true)}
@@ -159,6 +185,13 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
             </button>
           )}
         </div>
+        {isActive && (
+          <RecentTags
+            totalTags={totalTags}
+            handleSelectRecentTag={handleSelectRecentTag}
+            recentTagsRef={recentTagsRef}
+          />
+        )}
       </TagWrapper>
     </div>
   );
@@ -202,7 +235,7 @@ function TagWrapper({
   }, [setIsActive]);
 
   return (
-    <div ref={wrapperRef} onClick={handleClick}>
+    <div ref={wrapperRef} className="relative" onClick={handleClick}>
       {children}
     </div>
   );

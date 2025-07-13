@@ -17,7 +17,7 @@ export default function useUpsertTagsSetting(onSuccess?: () => void) {
     },
     onSuccess: () => {
       updateCache();
-      toast({ status: "success", message: "태그가 생성되었습니다." });
+      toast({ status: "success", message: "태그가 저장되었습니다." });
       onSuccess?.();
     },
     onError: (error) => {
