@@ -41,7 +41,7 @@ export default function LinkCard({ link, index }: InputProps) {
 
   return (
     <div
-      className="flex h-[84px] flex-1 cursor-pointer justify-between gap-5"
+      className="flex h-[84px] w-full flex-1 cursor-pointer justify-between gap-5"
       onClick={handleOpenLink}
     >
       <div className="relative h-[84px] w-[160px] flex-none">
@@ -55,7 +55,7 @@ export default function LinkCard({ link, index }: InputProps) {
         />
       </div>
       <div className="flex min-w-0 grow flex-col">
-        <div className="w-2/3 truncate text-lg font-bold">
+        <div className="truncate text-lg font-bold">
           {pathname.startsWith("/search") && highlightKeyword
             ? link.title
                 .split(new RegExp(`(${highlightKeyword})`, "gi"))
@@ -70,7 +70,7 @@ export default function LinkCard({ link, index }: InputProps) {
                 )
             : link.title}
         </div>
-        <div className="w-2/3 truncate text-gray-ink">
+        <div className="truncate text-gray-ink">
           {link.tags?.reduce((result, tag) => result + ` #${tag}`, "")}
         </div>
         <div className="mt-auto flex gap-4 text-gray-dim">
