@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import DatePicker from "@/app/link-book/[title]/date-picker";
+
 import { useState } from "react";
 import { DateRange } from "@/types/date.types";
+import DatePicker from "@/components/link/date-picker";
 
 const Wrapper = () => {
   const [dateRange, setDateRange] = useState<DateRange>([]);

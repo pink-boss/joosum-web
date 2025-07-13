@@ -7,6 +7,7 @@ import { toast } from "@/components/notification/toast/toast";
 
 import useUpdateLinkCache from "./useUpdateLinkCache";
 import { isSuccessfullResponse } from "@/utils/type-guard";
+import { getTagsQueryKey } from "@/utils/queryKey";
 
 export default function useSaveLink(onClose: () => void) {
   const queryClient = useQueryClient();
@@ -24,16 +25,6 @@ export default function useSaveLink(onClose: () => void) {
       ).json();
       work.push(linkSaveResult);
 
-      if (state.tags.length) {
-        const tagsResult: Promise<{ status: number } | ApiError> = (
-          await fetch(`/api/settings/tags`, {
-            method: "POST",
-            body: JSON.stringify(state.tags),
-          })
-        ).json();
-        work.push(tagsResult);
-      }
-
       const result = await Promise.all(work);
 
       if (!isSuccessfullResponse<Link>(result)) {
@@ -44,11 +35,11 @@ export default function useSaveLink(onClose: () => void) {
 
       return result[0] as Link;
     },
-    onSuccess: (result) => {
-      updateCache(result.linkBookId);
+    onSuccess: () => {
+      updateCache();
 
       queryClient.invalidateQueries({
-        queryKey: ["tags"],
+        queryKey: getTagsQueryKey("used"),
       });
 
       toast({ status: "success", message: "링크가 저장되었습니다." });

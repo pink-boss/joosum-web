@@ -1,4 +1,4 @@
-import { WEEK } from "../../constants";
+import { WEEK } from "@/app/link-book/constants";
 
 export default function RenderWeek() {
   return (

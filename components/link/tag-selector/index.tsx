@@ -1,11 +1,11 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { ChangeEvent, useState } from "react";
 
 import Checkbox from "@/components/Checkbox";
 import { useClearDropdown } from "@/hooks/useClearDropdown";
+import useQueryLinkFilterTags from "@/hooks/useQueryLinkFilterTags";
 import { FolderLinkFilterState } from "@/store/link-filter/useFolderStore";
 import { removeItem } from "@/utils/array";
 
@@ -27,18 +27,7 @@ const TagSelector = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const ref = useClearDropdown(() => setIsOpen(false));
 
-  const {
-    isPending,
-    error,
-    data: totalTags = [],
-  } = useQuery<string[]>({
-    queryKey: ["tags"],
-    queryFn: () =>
-      fetch(`/api/settings/tags?sort=used`, {
-        method: "GET",
-      }).then((res) => res.json()),
-    staleTime: 60 * 60 * 1000,
-  });
+  const { totalTags } = useQueryLinkFilterTags();
 
   const handleCheckTag = (e: ChangeEvent<HTMLInputElement>) => {
     const targetTag = e.target.value;

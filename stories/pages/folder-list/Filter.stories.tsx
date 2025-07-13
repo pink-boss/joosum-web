@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Filter from "@/app/link-book/[title]/Filter";
+import Filter from "@/components/link/Filter";
 import { defaultValues } from "@/store/link-filter/schema";
 import { fn } from "@storybook/test";
 import { http, HttpResponse } from "msw";

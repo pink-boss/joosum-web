@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { http, HttpResponse } from "msw";
 
-import LinkList from "@/app/link-book/[title]/link-list/LinkList";
+import LinkList from "@/app/link-book/[title]/LinkList";
 import {
   defaultValues as filterDefaultValues,
   useFolderLinkFilterStore,
@@ -17,14 +17,12 @@ import useLinkBookFromTitle from "@/hooks/link/useLinkBookFromTitle";
 import { queryClient } from "@/stories/mocks/store.mocks";
 
 const Wrapper = ({ defaultEditMode }: { defaultEditMode?: boolean }) => {
-  const linkSort = useFolderLinkSortStore();
   const linkFilter = useFolderLinkFilterStore();
   const linkBook = useLinkBookFromTitle();
 
   return (
     <LinkList
       defaultEditMode={defaultEditMode}
-      linkSort={linkSort}
       linkFilter={linkFilter}
       linkBookId={linkBook?.linkBookId}
     />

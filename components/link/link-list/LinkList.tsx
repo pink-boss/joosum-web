@@ -4,10 +4,10 @@ import Checkbox from "@/components/Checkbox";
 import EmptyLinks from "@/components/EmptyLinks";
 import Loading from "@/components/Loading";
 import useCheckLink from "@/hooks/link/useCheckLink";
-import { useQueryLinks } from "@/hooks/link/useQueryLinks";
 import { LinkFilterValues } from "@/store/link-filter/schema";
 import { LinkSortState } from "@/store/link-sort/schema";
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import { TLinkQueryResult } from "@/types/link.types";
 import { LinkBook } from "@/types/linkBook.types";
 
 import EditHeader from "./EditHeader";
@@ -19,6 +19,7 @@ type InputProps = {
   defaultEditMode?: boolean;
   linkSort: LinkSortState;
   linkFilter: LinkFilterValues;
+  queryResult: TLinkQueryResult;
   linkBookId?: LinkBook["linkBookId"];
 };
 
@@ -26,17 +27,15 @@ export default function LinkList({
   defaultEditMode = false,
   linkSort,
   linkFilter,
-  linkBookId,
+  queryResult,
 }: InputProps) {
   const { openDeleteLink, openReassignLinkBook } = useOpenDialogStore();
   const [editMode, setEditMode] = useState(defaultEditMode);
   const { cachedLinks, setCachedLink, setAllLinks } = useCheckLink();
-  const { data, isPending } = useQueryLinks({
-    linkSort,
-    linkFilter,
-    linkBookId,
-  });
-  const totalCount = data.length;
+
+  const { data, isPending } = queryResult;
+
+  const totalCount = data?.length ?? 0;
 
   const handleChangeToolbarMode = () => {
     if (cachedLinks.size) {
@@ -58,6 +57,7 @@ export default function LinkList({
       openDeleteLink(true);
     }
   };
+
   const handleChangeFolder = () => {
     if (cachedLinks.size) {
       openReassignLinkBook(true);
@@ -94,11 +94,11 @@ export default function LinkList({
       </div>
       {isPending ? (
         <Loading />
-      ) : data.length ? (
+      ) : data?.length ? (
         <div
           data-testid="link-list"
           role="list"
-          className="flex-1 overflow-auto"
+          className="flex-1 overflow-y-auto pr-2"
         >
           {data.map((link, index) => (
             <div

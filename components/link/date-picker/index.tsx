@@ -31,7 +31,7 @@ const DatePicker = ({ open, dateRange = [], setDateRange }: InputProps) => {
     setDateRange([]);
   };
   return (
-    <div className="relative" data-testid="date-picker" ref={ref}>
+    <div className="relative w-[305px]" data-testid="date-picker" ref={ref}>
       <SelectBox isOpen={isOpen} setIsOpen={setIsOpen} selected={dateRange} />
 
       {isOpen && (

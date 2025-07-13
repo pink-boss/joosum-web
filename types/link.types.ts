@@ -1,3 +1,5 @@
+import { UseQueryResult } from "@tanstack/react-query";
+
 export interface Link {
   index?: number;
   createdAt: string;
@@ -13,6 +15,10 @@ export interface Link {
   url: string;
   userId: string;
 }
+
+export type TLinkQueryResult = Omit<UseQueryResult<Link[], Error>, "data"> & {
+  data: Link[];
+};
 
 export type MutateLink = Pick<
   Link,

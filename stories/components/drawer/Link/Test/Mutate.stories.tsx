@@ -10,8 +10,6 @@ import {
 } from "@storybook/test";
 import { http, HttpResponse } from "msw";
 
-import DrawerButton from "@/app/link-book/[title]/DrawerButton";
-
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { Link } from "@/types/link.types";
 import { CreateFormState } from "@/types/linkBook.types";
@@ -22,6 +20,7 @@ import meta from "../Mutate.stories";
 import { mockLink, mockLinks } from "@/stories/mocks/link.mocks";
 import { mockLinkBooks } from "@/stories/mocks/linkBook.mocks";
 import { queryClient } from "@/stories/mocks/store.mocks";
+import DrawerButton from "@/components/link/DrawerButton";
 
 let capturedRequest: {
   updateLink?: Request;

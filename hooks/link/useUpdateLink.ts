@@ -8,9 +8,12 @@ import { isApiError } from "@/utils/error";
 
 import useUpdateLinkCache from "./useUpdateLinkCache";
 import { isSuccessfullResponse } from "@/utils/type-guard";
+import { getTagsQueryKey } from "@/utils/queryKey";
+import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 
 export default function useUpdateLink(onSuccessCallback: () => void) {
   const prevLinkBook = useLinkBookFromTitle();
+  const { linkBookId: searchLinkBookId } = useSearchLinkFilterStore();
   const queryClient = useQueryClient();
 
   const updateCache = useUpdateLinkCache();
@@ -41,16 +44,6 @@ export default function useUpdateLink(onSuccessCallback: () => void) {
       ).json();
       work.push(linkBookUpdateResult);
 
-      if (state.tags.length) {
-        const tagsResult: Promise<{ status: number } | ApiError> = (
-          await fetch(`/api/settings/tags`, {
-            method: "POST",
-            body: JSON.stringify(state.tags),
-          })
-        ).json();
-        work.push(tagsResult);
-      }
-
       const result = await Promise.all(work);
 
       if (!isSuccessfullResponse<Link>(result)) {
@@ -60,9 +53,9 @@ export default function useUpdateLink(onSuccessCallback: () => void) {
       }
     },
     onSuccess: () => {
-      updateCache(prevLinkBook?.linkBookId);
+      updateCache(prevLinkBook?.linkBookId || searchLinkBookId);
       queryClient.invalidateQueries({
-        queryKey: ["tags"],
+        queryKey: getTagsQueryKey("used"),
       });
 
       onSuccessCallback();

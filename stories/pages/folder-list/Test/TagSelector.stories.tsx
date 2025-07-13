@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 
-import TagSelector from "@/app/link-book/[title]/tag-selector";
 import {
   defaultValues,
   useFolderLinkFilterStore,
@@ -10,6 +9,7 @@ import {
 import { mockTags } from "../../../mocks/tag.mocks";
 import meta from "../TagSelector.stories";
 import { queryClient } from "@/stories/mocks/store.mocks";
+import TagSelector from "@/components/link/tag-selector";
 
 const testMeta = {
   ...meta,
@@ -28,7 +28,7 @@ export default testMeta;
 type Story = StoryObj<typeof testMeta>;
 
 export const TestCheckTags: Story = {
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByTestId("open-button"));
     await waitFor(async () => {
@@ -58,7 +58,7 @@ export const TestUncheckTags: Story = {
     });
     queryClient.clear();
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByTestId("open-button"));
 
@@ -87,7 +87,7 @@ export const TestUncheckTags: Story = {
 };
 
 export const TestVisibleTags: Story = {
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
     const selectbox = canvas.getByTestId("open-button");
     await userEvent.click(selectbox);

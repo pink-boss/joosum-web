@@ -20,7 +20,7 @@ import { queryClient } from "@/stories/mocks/store.mocks";
 import meta from "../LinkList.stories";
 import React from "react";
 import { LinkSortState, searchDefaultValues } from "@/store/link-sort/schema";
-import LinkList from "@/app/link-book/[title]/link-list/LinkList";
+import LinkList from "@/app/link-book/[title]/LinkList";
 import { useSearchLinkSortStore } from "@/store/link-sort/useSearchStore";
 import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 import { useSearchBarStore } from "@/store/useSearchBarStore";
@@ -335,15 +335,8 @@ export const TestReassignLinkBook: Story = {
 };
 
 const SearchWrapper = () => {
-  const linkSort = useSearchLinkSortStore();
   const linkFilter = useSearchLinkFilterStore();
-  return (
-    <LinkList
-      defaultEditMode={false}
-      linkSort={linkSort}
-      linkFilter={linkFilter}
-    />
-  );
+  return <LinkList defaultEditMode={false} linkFilter={linkFilter} />;
 };
 // 제목 필터는 서버라서 테스트 불가
 export const TestRelevanceOption: Story = {

@@ -2,13 +2,13 @@ import * as test from "@storybook/test";
 import type { Meta, StoryObj } from "@storybook/react";
 import { http, HttpResponse } from "msw";
 
-import TagSelector from "@/app/link-book/[title]/tag-selector";
 import {
   defaultValues,
   useFolderLinkFilterStore,
 } from "@/store/link-filter/useFolderStore";
 
 import { mockTags } from "../../mocks/tag.mocks";
+import TagSelector from "@/components/link/tag-selector";
 
 // TODO: 태그 비었을 때 # 나옴
 const meta = {

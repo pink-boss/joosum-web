@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import LinkBookFilter from "@/app/search/filter/LinkBook";
+import LinkBookFilter from "@/app/search/Filter";
 import { mockLinkBooks, mockRespone } from "@/stories/mocks/linkBook.mocks";
 import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 import { http, HttpResponse } from "msw";

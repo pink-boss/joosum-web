@@ -82,7 +82,7 @@ export function SelectBox({
               <span key={`selected-tag-${tag}}`}>#{tag}</span>
             ))
           ) : (
-            <span>전체</span>
+            <span>태그 전체</span>
           )}
         </div>
         {hiddenCount ? (
