@@ -8,6 +8,7 @@ import { isApiError } from "@/utils/error";
 
 import useUpdateLinkCache from "./useUpdateLinkCache";
 import { isSuccessfullResponse } from "@/utils/type-guard";
+import { getTagsQueryKey } from "@/utils/queryKey";
 
 export default function useUpdateLink(onSuccessCallback: () => void) {
   const prevLinkBook = useLinkBookFromTitle();
@@ -62,7 +63,7 @@ export default function useUpdateLink(onSuccessCallback: () => void) {
     onSuccess: () => {
       updateCache(prevLinkBook?.linkBookId);
       queryClient.invalidateQueries({
-        queryKey: ["tags"],
+        queryKey: getTagsQueryKey("used"),
       });
 
       onSuccessCallback();

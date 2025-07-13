@@ -7,6 +7,7 @@ import { toast } from "@/components/notification/toast/toast";
 
 import useUpdateLinkCache from "./useUpdateLinkCache";
 import { isSuccessfullResponse } from "@/utils/type-guard";
+import { getTagsQueryKey } from "@/utils/queryKey";
 
 export default function useSaveLink(onClose: () => void) {
   const queryClient = useQueryClient();
@@ -48,7 +49,7 @@ export default function useSaveLink(onClose: () => void) {
       updateCache();
 
       queryClient.invalidateQueries({
-        queryKey: ["tags"],
+        queryKey: getTagsQueryKey("used"),
       });
 
       toast({ status: "success", message: "링크가 저장되었습니다." });

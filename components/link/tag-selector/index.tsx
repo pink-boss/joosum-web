@@ -8,6 +8,7 @@ import Checkbox from "@/components/Checkbox";
 import { useClearDropdown } from "@/hooks/useClearDropdown";
 import { FolderLinkFilterState } from "@/store/link-filter/useFolderStore";
 import { removeItem } from "@/utils/array";
+import { getTagsQueryKey } from "@/utils/queryKey";
 
 import { SelectBox } from "./SelectBox";
 import SelectedTags from "./SelectedTags";
@@ -32,7 +33,7 @@ const TagSelector = ({
     error,
     data: totalTags = [],
   } = useQuery<string[]>({
-    queryKey: ["tags"],
+    queryKey: getTagsQueryKey("used"),
     queryFn: () =>
       fetch(`/api/settings/tags?sort=used`, {
         method: "GET",

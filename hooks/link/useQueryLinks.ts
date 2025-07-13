@@ -59,7 +59,6 @@ export function useQueryLinks({
     let pathname: string;
     let queryString: string;
 
-    console.log("query's querykey ", queryKey);
     switch (type) {
       case "all":
         pathname = "links";

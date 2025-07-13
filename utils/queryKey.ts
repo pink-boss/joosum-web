@@ -8,6 +8,10 @@ const QUERY_KEYS = {
       linkBookId,
     ], // search, all |linkBookId 조회
   },
+  tags: {
+    sortUsed: () => ["tags", "used"],
+    sortCreated: () => ["tags", "created"],
+  },
 };
 
 export const getLinkListQueryKey = (
@@ -17,3 +21,6 @@ export const getLinkListQueryKey = (
   searchKeyword
     ? QUERY_KEYS.linkList.bySearch(searchKeyword, linkBookId)
     : QUERY_KEYS.linkList.byLinkBookId(linkBookId || "all");
+
+export const getTagsQueryKey = (sort: "used" | "created") =>
+  sort === "used" ? QUERY_KEYS.tags.sortUsed() : QUERY_KEYS.tags.sortCreated();

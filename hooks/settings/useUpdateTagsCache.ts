@@ -1,3 +1,4 @@
+import { getTagsQueryKey } from "@/utils/queryKey";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { useCallback } from "react";
@@ -7,10 +8,10 @@ export default function useUpdateTagsCache() {
 
   const updateCache = useCallback(() => {
     queryClient.invalidateQueries({
-      queryKey: ["settings", "tags"],
+      queryKey: getTagsQueryKey("created"),
     });
     queryClient.invalidateQueries({
-      queryKey: ["tags"],
+      queryKey: getTagsQueryKey("used"),
     });
   }, [queryClient]);
 
