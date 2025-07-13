@@ -6,12 +6,14 @@ import { useState } from "react";
 
 import EmptyLinks from "@/components/EmptyLinks";
 import useQueryAllLinks from "@/hooks/link/useQueryAllLinks";
+import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
 
 import LinkCard from "./LinkCard";
 
 export default function LinkCardList() {
   const [isAllLinks, setIsAllLinks] = useState(false);
   const [filter, setFilter] = useState<"latest" | "unread">("latest");
+  const { setUnread } = useFolderLinkFilterStore();
 
   const {
     isPending,
@@ -29,6 +31,12 @@ export default function LinkCardList() {
   const handleFilter = (e: any) => {
     setIsAllLinks(false);
     setFilter(e.target.value);
+  };
+
+  const handleLinkToAllLinks = () => {
+    if (filter === "unread") {
+      setUnread(true);
+    }
   };
 
   return (
@@ -57,7 +65,7 @@ export default function LinkCardList() {
             <label htmlFor="filter-unread">읽지 않음</label>
           </div>
         </form>
-        <NextLink href="/my-folder">
+        <NextLink href="/link-book" onClick={handleLinkToAllLinks}>
           <div className="flex gap-1 pl-5">
             <span className="text-lg font-semibold">전체보기</span>
             <Image
