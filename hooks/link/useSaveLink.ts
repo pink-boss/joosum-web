@@ -25,16 +25,6 @@ export default function useSaveLink(onClose: () => void) {
       ).json();
       work.push(linkSaveResult);
 
-      if (state.tags.length) {
-        const tagsResult: Promise<{ status: number } | ApiError> = (
-          await fetch(`/api/settings/tags`, {
-            method: "POST",
-            body: JSON.stringify(state.tags),
-          })
-        ).json();
-        work.push(tagsResult);
-      }
-
       const result = await Promise.all(work);
 
       if (!isSuccessfullResponse<Link>(result)) {

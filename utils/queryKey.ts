@@ -19,7 +19,7 @@ export const getLinkListQueryKey = (
   searchKeyword?: string,
 ) =>
   searchKeyword
-    ? QUERY_KEYS.linkList.bySearch(searchKeyword, linkBookId)
+    ? QUERY_KEYS.linkList.bySearch(searchKeyword, linkBookId || "all")
     : QUERY_KEYS.linkList.byLinkBookId(linkBookId || "all");
 
 export const getTagsQueryKey = (sort: "used" | "created") =>

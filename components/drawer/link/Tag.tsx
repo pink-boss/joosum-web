@@ -10,6 +10,8 @@ import {
 } from "react";
 
 import { toast } from "@/components/notification/toast/toast";
+import useUpsertTagsSetting from "@/hooks/settings/useUpsertTagsSetting";
+import useQueryLinkFilterTags from "@/hooks/useQueryLinkFilterTags";
 import { isValidName } from "@/utils/regexp";
 
 type InputProps = {
@@ -24,6 +26,10 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
 
   const [input, setInput] = useState<string>("");
   const [isComposing, setIsComposing] = useState(false);
+
+  const { totalTags } = useQueryLinkFilterTags();
+
+  const upsertTags = useUpsertTagsSetting();
 
   const handleSubmit = () => {
     const trimmedInput = input.trim();
@@ -46,6 +52,8 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
         status: "warning",
       });
     } else {
+      const newTagList = [trimmedInput, ...(totalTags ?? [])];
+      upsertTags.mutate(newTagList);
       setTags([...tags, trimmedInput]);
       setInput("");
     }

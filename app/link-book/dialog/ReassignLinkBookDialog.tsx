@@ -7,6 +7,7 @@ import useCheckLink from "@/hooks/link/useCheckLink";
 import useLinkBookFromTitle from "@/hooks/link/useLinkBookFromTitle";
 import useReassignLinkBook from "@/hooks/link/useReassignLinkBook";
 import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
+import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { LinkBook } from "@/types/linkBook.types";
 
@@ -21,6 +22,7 @@ export default function ReassignLinkBookDialog() {
   >(undefined);
   const { cachedLinks, clearLinks } = useCheckLink();
   const fromLinkBook = useLinkBookFromTitle();
+  const { linkBookId: searchLinkBookId } = useSearchLinkFilterStore();
 
   const onClose = () => {
     open(false);
@@ -67,7 +69,7 @@ export default function ReassignLinkBookDialog() {
         <SelectLinkBook
           linkBookId={toLinkBookId}
           setLinkBookId={(name, id) => setToLinkBookId(id)}
-          fromLinkBookId={fromLinkBook?.linkBookId}
+          fromLinkBookId={fromLinkBook?.linkBookId || searchLinkBookId}
           className="w-[305px]"
         />
       </div>
