@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { ApiError } from "next/dist/server/api-utils";
 import { useEffect, useMemo } from "react";
 
@@ -55,27 +55,23 @@ export function useQueryLinks({
       queryString: string;
     }
   >(() => {
+    const queryKey = getLinkListQueryKey(linkBookId, searchKeyword);
     let pathname: string;
     let queryString: string;
-    let queryKey: readonly unknown[];
 
+    console.log("query's querykey ", queryKey);
     switch (type) {
       case "all":
         pathname = "links";
         queryString = `sort=${linkSort.sort}&order=${linkSort.order}`;
-        queryKey = ["linkList", "all"];
         break;
       case "linkBook":
         pathname = linkBookId ? `link-books/${linkBookId}/links` : "links";
         queryString = `sort=${linkSort.sort}&order=${linkSort.order}`;
-        queryKey = getLinkListQueryKey(linkBookId);
         break;
       case "search":
         pathname = "links";
         queryString = `sort=${linkSort.sort}&order=${linkSort.order}&search=${searchKeyword}`;
-        queryKey = linkBookId
-          ? ["search", "linkList", linkBookId, searchKeyword]
-          : ["search", "linkList", searchKeyword];
         break;
     }
 
@@ -122,11 +118,6 @@ export function useQueryLinks({
         linkBookId: linkLinkBookId,
       }) => {
         const unreadFlag = linkFilter.unread ? !readCount : true;
-
-        // 전체 링크 조회일 때는 날짜/태그 필터링 안함
-        if (type === "all") {
-          return unreadFlag;
-        }
 
         const datePickerFlag = linkFilter.dateRange.length
           ? linkFilter.dateRange.length === 2 &&

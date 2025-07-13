@@ -1,10 +1,15 @@
 import clsx from "clsx";
 
+import useSearchBarReset from "@/hooks/useSearchBarReset";
+
 import SearchInput from "./SearchInput";
 import OpenLinkSaveDrawerButton from "../drawer/link/OpenSaveDrawerButton";
 import OpenUserDrawerButton from "../drawer/user/OpenDrawerButton";
 
 export default function Topbar() {
+  // '/search' 페이지가 아니면 검색어 초기화
+  useSearchBarReset();
+
   return (
     <div
       className={clsx(

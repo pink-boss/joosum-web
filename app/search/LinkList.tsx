@@ -15,6 +15,7 @@ export default function LinkList({
 }: InputProps) {
   const linkSort = useSearchLinkSortStore();
   const { linkBookId } = useSearchLinkFilterStore();
+  console.log("searchlinkBookId", linkBookId);
   const links = useQuerySearchLinks({
     linkSort,
     linkFilter,

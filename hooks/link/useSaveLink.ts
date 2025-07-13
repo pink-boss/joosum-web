@@ -44,8 +44,8 @@ export default function useSaveLink(onClose: () => void) {
 
       return result[0] as Link;
     },
-    onSuccess: (result) => {
-      updateCache(result.linkBookId);
+    onSuccess: () => {
+      updateCache();
 
       queryClient.invalidateQueries({
         queryKey: ["tags"],

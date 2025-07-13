@@ -13,22 +13,8 @@ export default function useUpdateLinkCache() {
   const updateCache = useCallback(
     (linkBookId?: string) => {
       queryClient.invalidateQueries({
-        queryKey: getLinkListQueryKey(linkBookId),
+        queryKey: getLinkListQueryKey(linkBookId, searchKeyword),
       });
-      queryClient.invalidateQueries({
-        queryKey: getLinkListQueryKey(),
-      });
-
-      if (searchKeyword) {
-        queryClient.invalidateQueries({
-          queryKey: ["search", "linkList"],
-        });
-        if (searchLinkBookId) {
-          queryClient.invalidateQueries({
-            queryKey: ["search", "linkList", searchLinkBookId],
-          });
-        }
-      }
     },
     [queryClient, searchKeyword, searchLinkBookId],
   );

@@ -98,7 +98,7 @@ export default function LinkList({
         <div
           data-testid="link-list"
           role="list"
-          className="flex-1 overflow-y-auto"
+          className="flex-1 overflow-y-auto pr-2"
         >
           {data.map((link, index) => (
             <div

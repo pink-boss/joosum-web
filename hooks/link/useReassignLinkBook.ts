@@ -1,10 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { Link } from "@/types/link.types";
 import { LinkBook } from "@/types/linkBook.types";
 import { getLinkListQueryKey } from "@/utils/queryKey";
 
-import useCheckLink from "./useCheckLink";
 import useLinkBookFromTitle from "./useLinkBookFromTitle";
 import { toast } from "@/components/notification/toast/toast";
 import { useSearchBarStore } from "@/store/useSearchBarStore";
@@ -74,21 +72,16 @@ export default function useReassignLinkBook(onSuccessCallback: () => void) {
 
       return { toLinkBookId };
     },
-    onSuccess: () => {
-      if (searchKeyword) {
-        queryClient.invalidateQueries({
-          queryKey: ["search", "linkList"],
-        });
-        if (searchLinkBookId) {
-          queryClient.invalidateQueries({
-            queryKey: ["search", "linkList", searchLinkBookId],
-          });
-        }
-      } else {
-        queryClient.invalidateQueries({
-          queryKey: getLinkListQueryKey(fromLinkBook?.linkBookId),
-        });
-      }
+    onSuccess: ({ toLinkBookId }) => {
+      queryClient.invalidateQueries({
+        queryKey: getLinkListQueryKey(
+          fromLinkBook?.linkBookId || searchLinkBookId,
+          searchKeyword,
+        ),
+      });
+      queryClient.invalidateQueries({
+        queryKey: getLinkListQueryKey(toLinkBookId, searchKeyword),
+      });
 
       toast({
         status: "success",

@@ -41,15 +41,15 @@ export default function useUpdateLink(onSuccessCallback: () => void) {
       ).json();
       work.push(linkBookUpdateResult);
 
-      if (state.tags.length) {
-        const tagsResult: Promise<{ status: number } | ApiError> = (
-          await fetch(`/api/settings/tags`, {
-            method: "POST",
-            body: JSON.stringify(state.tags),
-          })
-        ).json();
-        work.push(tagsResult);
-      }
+      // if (state.tags.length) {
+      //   const tagsResult: Promise<{ status: number } | ApiError> = (
+      //     await fetch(`/api/settings/tags`, {
+      //       method: "POST",
+      //       body: JSON.stringify(state.tags),
+      //     })
+      //   ).json();
+      //   work.push(tagsResult);
+      // }
 
       const result = await Promise.all(work);
 
