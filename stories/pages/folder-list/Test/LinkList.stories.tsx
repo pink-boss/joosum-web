@@ -335,15 +335,8 @@ export const TestReassignLinkBook: Story = {
 };
 
 const SearchWrapper = () => {
-  const linkSort = useSearchLinkSortStore();
   const linkFilter = useSearchLinkFilterStore();
-  return (
-    <LinkList
-      defaultEditMode={false}
-      linkSort={linkSort}
-      linkFilter={linkFilter}
-    />
-  );
+  return <LinkList defaultEditMode={false} linkFilter={linkFilter} />;
 };
 // 제목 필터는 서버라서 테스트 불가
 export const TestRelevanceOption: Story = {

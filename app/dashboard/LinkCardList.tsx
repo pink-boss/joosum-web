@@ -5,7 +5,7 @@ import NextLink from "next/link";
 import { useState } from "react";
 
 import EmptyLinks from "@/components/EmptyLinks";
-import { useQueryAllLinks } from "@/hooks/link/useQueryLinks";
+import useQueryAllLinks from "@/hooks/link/useQueryAllLinks";
 
 import LinkCard from "./LinkCard";
 

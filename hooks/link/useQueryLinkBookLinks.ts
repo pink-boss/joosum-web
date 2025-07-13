@@ -1,10 +1,7 @@
 import { LinkSortState } from "@/store/link-sort/schema";
 import { LinkFilterValues } from "@/store/link-filter/schema";
 import { LinkBook } from "@/types/linkBook.types";
-import {
-  useQueryLinkBookLinks as useQueryLinkBookLinksBase,
-  useQueryAllLinks,
-} from "./useQueryLinks";
+import { useQueryLinks } from "./useQueryLinks";
 
 type InputProps = {
   linkSort: Omit<LinkSortState, "setField">;
@@ -12,14 +9,19 @@ type InputProps = {
   linkBookId?: LinkBook["linkBookId"];
 };
 
-export function useQueryLinkBookLinks({
+export default function useQueryLinkBookLinks({
   linkSort,
   linkFilter,
   linkBookId,
 }: InputProps) {
   if (linkBookId) {
-    return useQueryLinkBookLinksBase({ linkSort, linkFilter, linkBookId });
+    return useQueryLinks({
+      linkSort,
+      linkFilter,
+      linkBookId,
+      type: "linkBook",
+    });
   } else {
-    return useQueryAllLinks({ linkSort, linkFilter });
+    return useQueryLinks({ linkSort, linkFilter, type: "all" });
   }
 }

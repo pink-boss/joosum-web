@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { ApiError } from "next/dist/server/api-utils";
 import { useEffect, useMemo } from "react";
 
-import { Link } from "@/types/link.types";
+import { Link, TLinkQueryResult } from "@/types/link.types";
 import { isBetween } from "@/utils/date";
 import { getLinkListQueryKey } from "@/utils/queryKey";
 
@@ -14,8 +14,6 @@ import { sortByKeywordPosition } from "@/utils/sort";
 import useQueryLinkBooks from "../my-folder/useQueryLinkBooks";
 import { isApiError } from "@/utils/error";
 import { toast } from "@/components/notification/toast/toast";
-
-type QueryType = "all" | "linkBook" | "search";
 
 type BaseInputProps = {
   linkSort: Omit<LinkSortState, "setField">;
@@ -39,12 +37,14 @@ type SearchLinksProps = BaseInputProps & {
 
 type InputProps = AllLinksProps | LinkBookLinksProps | SearchLinksProps;
 
-export function useQueryLinks(props: InputProps) {
-  const { linkSort, linkFilter, type } = props;
-  const linkBookId = "linkBookId" in props ? props.linkBookId : undefined;
-
+export function useQueryLinks({
+  linkSort,
+  linkFilter,
+  type,
+  linkBookId,
+}: InputProps): TLinkQueryResult {
   const { isSuccess: isCompleteQueryLinkBook } =
-    useQueryLinkBooks("created_at"); // queryLink가 먼저 실행되는 걸 방지
+    useQueryLinkBooks("created_at"); // linkBook 쿼리가 먼저 실행되는걸 방지
 
   const { title: searchKeyword } = useSearchBarStore();
 
@@ -73,8 +73,9 @@ export function useQueryLinks(props: InputProps) {
       case "search":
         pathname = "links";
         queryString = `sort=${linkSort.sort}&order=${linkSort.order}&search=${searchKeyword}`;
-        queryKey = ["search", "linkList"];
-        if (linkBookId) queryKey = [...queryKey, linkBookId];
+        queryKey = linkBookId
+          ? ["search", "linkList", linkBookId, searchKeyword]
+          : ["search", "linkList", searchKeyword];
         break;
     }
 
@@ -174,17 +175,4 @@ export function useQueryLinks(props: InputProps) {
     data: linkList,
     refetch,
   };
-}
-
-// 기존 훅들을 위한 래퍼 함수들
-export function useQueryAllLinks(props: Omit<AllLinksProps, "type">) {
-  return useQueryLinks({ ...props, type: "all" });
-}
-
-export function useQueryLinkBookLinks(props: Omit<LinkBookLinksProps, "type">) {
-  return useQueryLinks({ ...props, type: "linkBook" });
-}
-
-export function useQuerySearchLinks(props: Omit<SearchLinksProps, "type">) {
-  return useQueryLinks({ ...props, type: "search" });
 }

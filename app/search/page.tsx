@@ -4,7 +4,6 @@ import {
   defaultValues,
   useSearchLinkFilterStore,
 } from "@/store/link-filter/useSearchStore";
-import { useSearchLinkSortStore } from "@/store/link-sort/useSearchStore";
 import { useSearchBarStore } from "@/store/useSearchBarStore";
 
 import LinkBookFilter from "./Filter";
@@ -14,8 +13,6 @@ import Filter from "../../components/link/Filter";
 export default function Search() {
   const { title } = useSearchBarStore();
   const linkFilter = useSearchLinkFilterStore();
-  const linkSort = useSearchLinkSortStore();
-  const { linkBookId } = useSearchLinkFilterStore();
 
   return (
     <div className="flex min-h-0 w-full flex-1 flex-col gap-[25px] px-10">
@@ -24,11 +21,7 @@ export default function Search() {
       </div>
       <LinkBookFilter />
       <Filter defaultValues={defaultValues} {...linkFilter} />
-      <LinkList
-        linkSort={linkSort}
-        linkFilter={linkFilter}
-        linkBookId={linkBookId}
-      />
+      <LinkList linkFilter={linkFilter} />
     </div>
   );
 }

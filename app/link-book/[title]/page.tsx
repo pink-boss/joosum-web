@@ -5,7 +5,6 @@ import {
   defaultValues,
   useFolderLinkFilterStore,
 } from "@/store/link-filter/useFolderStore";
-import { useFolderLinkSortStore } from "@/store/link-sort/useFolderStore";
 
 import LinkList from "./LinkList";
 import Filter from "../../../components/link/Filter";
@@ -13,7 +12,6 @@ import Filter from "../../../components/link/Filter";
 export default function FolderDetail() {
   const linkBook = useLinkBookFromTitle();
   const linkFilter = useFolderLinkFilterStore();
-  const linkSort = useFolderLinkSortStore();
 
   return (
     <div className="flex min-h-0 w-full flex-1 flex-col gap-[25px] px-10 pb-8">
@@ -21,11 +19,7 @@ export default function FolderDetail() {
         {linkBook ? linkBook.title : "전체"}
       </div>
       <Filter defaultValues={defaultValues} {...linkFilter} />
-      <LinkList
-        linkSort={linkSort}
-        linkFilter={linkFilter}
-        linkBookId={linkBook?.linkBookId}
-      />
+      <LinkList linkFilter={linkFilter} linkBookId={linkBook?.linkBookId} />
     </div>
   );
 }

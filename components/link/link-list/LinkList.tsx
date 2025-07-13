@@ -1,17 +1,13 @@
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 import Checkbox from "@/components/Checkbox";
 import EmptyLinks from "@/components/EmptyLinks";
 import Loading from "@/components/Loading";
 import useCheckLink from "@/hooks/link/useCheckLink";
-import {
-  useQueryLinks,
-  useQueryLinkBookLinks,
-  useQuerySearchLinks,
-} from "@/hooks/link/useQueryLinks";
 import { LinkFilterValues } from "@/store/link-filter/schema";
 import { LinkSortState } from "@/store/link-sort/schema";
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import { TLinkQueryResult } from "@/types/link.types";
 import { LinkBook } from "@/types/linkBook.types";
 
 import EditHeader from "./EditHeader";
@@ -19,48 +15,27 @@ import EditToolbar from "./EditToolbar";
 import LinkComponent from "./LinkCard";
 import ViewToolbar from "./ViewToolbar";
 
-type LinkListType = "linkBook" | "search";
-
-type BaseInputProps = {
+type InputProps = {
   defaultEditMode?: boolean;
   linkSort: LinkSortState;
   linkFilter: LinkFilterValues;
-};
-
-type LinkBookProps = BaseInputProps & {
-  type: "linkBook";
+  queryResult: TLinkQueryResult;
   linkBookId?: LinkBook["linkBookId"];
 };
 
-type SearchProps = BaseInputProps & {
-  type: "search";
-  linkBookId?: LinkBook["linkBookId"];
-};
-
-type InputProps = LinkBookProps | SearchProps;
-
-export default function LinkList(props: InputProps) {
-  const { defaultEditMode = false, linkSort, linkFilter, type } = props;
-  const linkBookId = "linkBookId" in props ? props.linkBookId : undefined;
-
+export default function LinkList({
+  defaultEditMode = false,
+  linkSort,
+  linkFilter,
+  queryResult,
+}: InputProps) {
   const { openDeleteLink, openReassignLinkBook } = useOpenDialogStore();
   const [editMode, setEditMode] = useState(defaultEditMode);
   const { cachedLinks, setCachedLink, setAllLinks } = useCheckLink();
 
-  // 타입에 따라 적절한 훅 사용
-  const linkBookLinks = useQueryLinkBookLinks({
-    linkSort,
-    linkFilter,
-    linkBookId,
-  });
-  const searchLinks = useQuerySearchLinks({
-    linkSort,
-    linkFilter,
-    linkBookId,
-  });
-  const { data, isPending } = type === "linkBook" ? linkBookLinks : searchLinks;
+  const { data, isPending } = queryResult;
 
-  const totalCount = data.length;
+  const totalCount = data?.length ?? 0;
 
   const handleChangeToolbarMode = () => {
     if (cachedLinks.size) {
@@ -119,7 +94,7 @@ export default function LinkList(props: InputProps) {
       </div>
       {isPending ? (
         <Loading />
-      ) : data.length ? (
+      ) : data?.length ? (
         <div
           data-testid="link-list"
           role="list"
