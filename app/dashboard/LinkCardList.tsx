@@ -2,34 +2,50 @@
 
 import Image from "next/image";
 import NextLink from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import EmptyLinks from "@/components/EmptyLinks";
+import LoadMoreButton from "@/components/link/link-list/LoadMoreButton";
 import useQueryAllLinks from "@/hooks/link/useQueryAllLinks";
+import { usePaginationWithDeps } from "@/hooks/usePaginationWithDeps";
+import { defaultValues } from "@/store/link-filter/schema";
 import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
 
 import LinkCard from "./LinkCard";
 
 export default function LinkCardList() {
-  const [isAllLinks, setIsAllLinks] = useState(false);
   const [filter, setFilter] = useState<"latest" | "unread">("latest");
   const { setUnread } = useFolderLinkFilterStore();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const linkFilter = {
+    ...defaultValues,
+    unread: filter === "unread",
+  };
+  const linkSort = {
+    field: "lastest" as const,
+    sort: "created_at" as const,
+    order: "desc" as const,
+  };
 
   const {
     isPending,
     error,
     data = [],
   } = useQueryAllLinks({
-    linkFilter: { unread: filter === "unread", tags: [], dateRange: [] },
-    linkSort: {
-      field: "lastest",
-      sort: "created_at",
-      order: "desc",
-    },
+    linkFilter,
+    linkSort,
   });
 
+  const { currentItems, hasNextPage, loadNextPage, totalItems } =
+    usePaginationWithDeps({
+      items: data,
+      itemsPerPage: 30,
+      additionalDeps: [filter], // filter 변경 시 페이징 리셋
+      scrollTargetRef: scrollContainerRef,
+    });
+
   const handleFilter = (e: any) => {
-    setIsAllLinks(false);
     setFilter(e.target.value);
   };
 
@@ -78,28 +94,22 @@ export default function LinkCardList() {
         </NextLink>
       </div>
       {data.length ? (
-        <div className="flex flex-col items-start gap-8 overflow-auto">
+        <div
+          ref={scrollContainerRef}
+          className="flex flex-col items-start gap-8 overflow-auto"
+        >
           <div className="flex flex-wrap justify-center gap-x-[22px] gap-y-5">
-            {data.slice(0, isAllLinks ? undefined : 30).map((link, index) => (
+            {currentItems.map((link, index) => (
               <LinkCard key={index} link={link} index={index} />
             ))}
           </div>
-          {data.length > 30 && !isAllLinks && (
-            <div
-              className="flex cursor-pointer self-center rounded-lg py-4"
-              onClick={() => setIsAllLinks(true)}
-            >
-              <span className="text-lg font-bold text-gray-dim">
-                {filter === "latest" ? "저장한" : "읽지 않은"} 링크{" "}
-                {data.length - 30 > 999 ? "999+" : data.length - 30}개 모두 보기
-              </span>
-              <Image
-                src="/icons/icon-right.png"
-                alt="right"
-                width={24}
-                height={24}
-              />
-            </div>
+          {hasNextPage && (
+            <LoadMoreButton
+              onClick={loadNextPage}
+              remainingCount={totalItems - currentItems.length}
+              textPrefix={filter === "latest" ? "저장한" : "읽지 않은"}
+              variant="card"
+            />
           )}
         </div>
       ) : (
