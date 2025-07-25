@@ -25,11 +25,11 @@ async function storeAccessTokenInCookie(accessToken: string) {
 }
 
 export async function isExist(
-  authToken: string,
+  idToken: string,
   social: "apple" | "google",
 ): Promise<boolean> {
   try {
-    const { email } = jwtDecode(authToken) as { email: string };
+    const { email } = jwtDecode(idToken) as { email: string };
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_JOOSUM_WEB_URI}/api/auth/signup-check?email=${email}`,
     );
