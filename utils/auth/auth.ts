@@ -2,6 +2,7 @@ import { LoginResult, PreviousLoginProvider } from "@/types/auth.types";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { handleApiResponse } from "../error";
+import { getClientUri, getServerApiUri } from "../envUri";
 
 export function handleAuthToken(result: LoginResult) {
   if ("error" in result) {
@@ -24,20 +25,25 @@ async function storeAccessTokenInCookie(accessToken: string) {
   });
 }
 
-export async function isExist(
-  idToken: string,
-  social: "apple" | "google",
-): Promise<boolean> {
+export async function isExist(idToken: string): Promise<boolean> {
   try {
     const { email } = jwtDecode(idToken) as { email: string };
+
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_JOOSUM_WEB_URI}/api/auth/signup-check?email=${email}`,
+      `${getClientUri()}/api/auth/signup-check?email=${email}`,
     );
-    await handleApiResponse(response);
-    return true;
+    const { signedUp, ...props } = (await handleApiResponse(response)) as {
+      signedUp: boolean;
+    };
+
+    if (signedUp === undefined || signedUp === null) {
+      throw new Error("User not found");
+    }
+
+    return signedUp;
   } catch (error) {
     console.error("Error:", error);
-    return false;
+    throw new Error("Failed to check if user exists");
   }
 }
 

@@ -4,7 +4,8 @@ import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 
 import ConfirmDialog from "../ConfirmDialog";
 
-export default function DeleteConfirmDialog() {
+// TODO: 태그 수정 엔터를 치면 오픈, 업데이트 완료시 입력창 초기화하고 TagMore까지 닫기
+export default function UpdateConfirmDialog() {
   const {
     isDeleteTagConfirmOpen: isOpen,
     openDeleteTagConfirm: open,

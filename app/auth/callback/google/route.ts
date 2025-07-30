@@ -1,5 +1,4 @@
-import { redirect } from "next/navigation";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import {
   isExist,
@@ -7,7 +6,8 @@ import {
   storeAccessToken,
   storePreviousLoginProvider,
 } from "@/utils/auth/auth";
-import { trimTrailingSlash } from "@/utils/envUri";
+import { getClientUri, getServerApiUri } from "@/utils/envUri";
+import { redirect } from "next/navigation";
 
 export async function GET(request: NextRequest) {
   try {
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
         client_secret: process.env.AUTH_GOOGLE_SECRET!,
         code,
         grant_type: "authorization_code",
-        redirect_uri: `${trimTrailingSlash(process.env.NEXT_PUBLIC_JOOSUM_WEB_URI)}/auth/callback/google`,
+        redirect_uri: `${getClientUri()}/auth/callback/google`,
       }),
     });
 
@@ -47,32 +47,29 @@ export async function GET(request: NextRequest) {
     }
 
     // 사용자 존재 여부 확인
-    const userExists = await isExist(idToken, "google");
+    const userExists = await isExist(idToken);
 
     if (!userExists) {
       // 신규 사용자 - 온보딩으로 리다이렉트
       await storeAuthTokenForOnboarding(idToken, "google");
-      return redirect("/onboarding");
+      return NextResponse.redirect(getClientUri() + "/onboarding");
     }
 
+    // TODO: 구글 웹 회원가입도 idtoken 제대로 처리되는지 확인 요청
+    // TODO: { code: 'INTERNAL_SERVER_ERROR', message: '이메일을 가져오는 중 오류가 발생했습니다' }
     // 기존 사용자 - 로그인 처리
     // 서버에 로그인 요청 보내기
-    const response = await fetch(
-      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/auth/google/web`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({
-          idToken,
-        }),
+    const response = await fetch(`${getServerApiUri()}/api/auth/google/web`, {
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      method: "POST",
+      body: JSON.stringify({
+        idToken,
+      }),
+    });
 
     const data = await response.json();
-
-    console.log("data", data);
 
     // 토큰을 쿠키에 저장
     if (data.accessToken) {
