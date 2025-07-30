@@ -1,9 +1,11 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useRef } from "react";
 
 import Checkbox from "@/components/Checkbox";
 import EmptyLinks from "@/components/EmptyLinks";
+import LoadMoreButton from "@/components/link/link-list/LoadMoreButton";
 import Loading from "@/components/Loading";
 import useCheckLink from "@/hooks/link/useCheckLink";
+import { usePaginationWithDeps } from "@/hooks/usePaginationWithDeps";
 import { LinkFilterValues } from "@/store/link-filter/schema";
 import { LinkSortState } from "@/store/link-sort/schema";
 import { useOpenDialogStore } from "@/store/useDialogStore";
@@ -32,10 +34,18 @@ export default function LinkList({
   const { openDeleteLink, openReassignLinkBook } = useOpenDialogStore();
   const [editMode, setEditMode] = useState(defaultEditMode);
   const { cachedLinks, setCachedLink, setAllLinks } = useCheckLink();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const { data, isPending } = queryResult;
 
-  const totalCount = data?.length ?? 0;
+  const { currentItems, hasNextPage, loadNextPage, totalItems } =
+    usePaginationWithDeps({
+      items: data,
+      itemsPerPage: 30,
+      linkFilter,
+      linkSort,
+      scrollTargetRef: scrollContainerRef,
+    });
 
   const handleChangeToolbarMode = () => {
     if (cachedLinks.size) {
@@ -45,7 +55,7 @@ export default function LinkList({
   };
 
   const handleAllCheckLinks = (e: ChangeEvent<HTMLInputElement>) => {
-    setAllLinks(!!e.target.checked, data);
+    setAllLinks(!!e.target.checked, currentItems);
   };
 
   const handleCheckLink = (e: ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +80,7 @@ export default function LinkList({
         {!editMode ? (
           <>
             <div className="text-lg font-semibold text-gray-ink">
-              {totalCount}개 주섬
+              {currentItems.length}개 주섬
             </div>
             <ViewToolbar
               linkSort={linkSort}
@@ -80,7 +90,7 @@ export default function LinkList({
         ) : (
           <>
             <EditHeader
-              totalCount={totalCount}
+              totalCount={currentItems.length}
               cachedLinks={cachedLinks}
               handleAllCheckLinks={handleAllCheckLinks}
             />
@@ -94,28 +104,40 @@ export default function LinkList({
       </div>
       {isPending ? (
         <Loading />
-      ) : data?.length ? (
-        <div
-          data-testid="link-list"
-          role="list"
-          className="flex-1 overflow-y-auto pr-2"
-        >
-          {data.map((link, index) => (
-            <div
-              key={`link-${index}`}
-              role="listitem"
-              className="flex items-start gap-2 py-5"
-            >
-              {editMode && (
-                <Checkbox
-                  onChange={handleCheckLink}
-                  value={link.linkId}
-                  checked={cachedLinks.has(link.linkId)}
-                />
-              )}
-              <LinkComponent link={link} index={index} />
-            </div>
-          ))}
+      ) : currentItems?.length ? (
+        <div className="flex h-full flex-1 flex-col overflow-hidden">
+          <div
+            ref={scrollContainerRef}
+            data-testid="link-list"
+            role="list"
+            className="flex-1 overflow-y-auto pr-2"
+          >
+            {currentItems.map((link, index) => (
+              <div
+                key={`link-${index}`}
+                role="listitem"
+                className="flex items-start gap-2 py-5"
+              >
+                {editMode && (
+                  <Checkbox
+                    onChange={handleCheckLink}
+                    value={link.linkId}
+                    checked={cachedLinks.has(link.linkId)}
+                  />
+                )}
+                <LinkComponent link={link} index={index} />
+              </div>
+            ))}
+            {hasNextPage && (
+              <LoadMoreButton
+                onClick={loadNextPage}
+                remainingCount={totalItems - currentItems.length}
+                variant="list"
+                iconSrc="/icons/icon-down.png"
+                iconAlt="더 보기"
+              />
+            )}
+          </div>
         </div>
       ) : (
         <EmptyLinks unread={linkFilter.unread} />

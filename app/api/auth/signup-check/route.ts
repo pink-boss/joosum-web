@@ -5,7 +5,7 @@ import { trimTrailingSlash } from "@/utils/envUri";
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
-    const requestUrl = `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/auth/signup-check?email=${searchParams.get("email")}`;
+    const requestUrl = `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/signup-check?email=${searchParams.get("email")}`;
     const requestInit: RequestInit = {
       headers: {
         "Content-Type": "application/json",

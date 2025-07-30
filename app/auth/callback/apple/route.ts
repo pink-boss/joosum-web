@@ -1,7 +1,6 @@
 import { parse } from "querystring";
 
-import { redirect } from "next/navigation";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import {
   isExist,
@@ -9,7 +8,8 @@ import {
   storeAccessToken,
   storePreviousLoginProvider,
 } from "@/utils/auth/auth";
-import { trimTrailingSlash } from "@/utils/envUri";
+import { getClientUri, getServerApiUri } from "@/utils/envUri";
+import { redirect } from "next/navigation";
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,29 +21,25 @@ export async function POST(request: NextRequest) {
       return new Response("Unauthorized: Missing idToken", { status: 401 });
     }
 
-    // TODO: api 연결 완성 후 주석 해제
     // 사용자 존재 여부 확인
-    // const userExists = await isExist(idToken, "apple");
+    const userExists = await isExist(idToken);
 
-    // if (!userExists) {
-    //   // 신규 사용자 - 온보딩으로 리다이렉트
-    //   await storeAuthTokenForOnboarding(idToken, "apple");
-    //   return redirect("/onboarding");
-    // }
+    if (!userExists) {
+      // 신규 사용자 - 온보딩으로 리다이렉트
+      await storeAuthTokenForOnboarding(idToken, "apple");
+      return NextResponse.redirect(getClientUri() + "/onboarding");
+    }
 
     // 서버에 로그인 요청 보내기
-    const response = await fetch(
-      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/auth/apple`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({
-          idToken,
-        }),
+    const response = await fetch(`${getServerApiUri()}/api/auth/apple`, {
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      method: "POST",
+      body: JSON.stringify({
+        idToken,
+      }),
+    });
 
     // 기존 사용자 - 로그인 처리
     let data = await response.json();
@@ -55,7 +51,7 @@ export async function POST(request: NextRequest) {
 
     await storePreviousLoginProvider("apple");
 
-    return redirect("/");
+    return redirect(getClientUri() + "/");
   } catch (e) {
     console.log(e);
     return redirect("/login");

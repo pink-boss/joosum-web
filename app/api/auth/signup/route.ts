@@ -35,8 +35,9 @@ export async function POST(request: NextRequest) {
     if (gender !== undefined) signupData.gender = gender;
     if (nickname !== undefined) signupData.nickname = nickname;
 
+    console.log("signupData", signupData);
     const response = await fetch(
-      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/auth/signup`,
+      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/auth/signup`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -49,6 +50,7 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     if (!response.ok) {
+      console.log("response", data);
       return NextResponse.json(
         { error: data.error || "회원가입에 실패했습니다." },
         { status: response.status },

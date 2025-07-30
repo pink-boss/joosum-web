@@ -181,7 +181,7 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
                 handleSubmit();
               }}
             >
-              생성하기
+              생성
             </button>
           )}
         </div>
