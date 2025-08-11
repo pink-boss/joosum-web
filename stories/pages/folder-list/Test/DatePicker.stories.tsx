@@ -50,7 +50,7 @@ export const TestPickDate: Story = {
 
     await step("초기화 버튼 선택", async () => {
       await userEvent.click(canvas.getByText("초기화"));
-      expect(selectBox.textContent).toBe("");
+      expect(selectBox).toHaveTextContent("기간 전체");
     });
 
     await step("전 주 버튼 선택", async () => {

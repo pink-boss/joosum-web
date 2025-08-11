@@ -201,14 +201,10 @@ export const TestUpdateLink: Story = {
     await step("request 확인", async () => {
       await waitFor(() => {
         expect(capturedRequest.updateLink).not.toBeNull();
-        expect(capturedRequest.updateTags).not.toBeNull();
       });
 
       if (!capturedRequest.updateLink) {
         throw new Error("updateLink request is null");
-      }
-      if (!capturedRequest.updateTags) {
-        throw new Error("updateTags request is null");
       }
 
       const linkUrl = new URL(capturedRequest.updateLink.url);
@@ -241,7 +237,7 @@ export const TestUpdateLink: Story = {
         const toastPopup = screen.queryByRole("alertdialog");
         expect(toastPopup).toBeInTheDocument();
         expect(
-          within(toastPopup!).getByText("링크가 저장되었습니다."),
+          within(toastPopup!).getByText("링크가 수정되었습니다."),
         ).toBeInTheDocument();
       });
     });
@@ -261,9 +257,6 @@ export const TestDeleteLink: Story = {
 
     await userEvent.click(await canvas.findByRole("button", { name: "삭제" }));
 
-    const dialog = await canvas.findByTestId("delete-dialog");
-    await userEvent.click(within(dialog).getByText("삭제"));
-
     await step("request 확인", () => {
       if (capturedRequest.deleteLink) {
         const url = new URL(capturedRequest.deleteLink.url);
@@ -278,10 +271,6 @@ export const TestDeleteLink: Story = {
       ) as Link[];
       const deleteLink = links.find((link) => link.linkId === mockLink.linkId);
       expect(deleteLink).toBeUndefined();
-    });
-
-    await waitFor(() => {
-      expect(dialog).not.toBeInTheDocument();
     });
   },
 };

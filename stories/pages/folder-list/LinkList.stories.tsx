@@ -15,6 +15,7 @@ import {
 } from "@/store/link-sort/useFolderStore";
 import useLinkBookFromTitle from "@/hooks/link/useLinkBookFromTitle";
 import { queryClient } from "@/stories/mocks/store.mocks";
+import { useSearchBarStore } from "@/store/useSearchBarStore";
 
 const Wrapper = ({ defaultEditMode }: { defaultEditMode?: boolean }) => {
   const linkFilter = useFolderLinkFilterStore();
@@ -64,6 +65,7 @@ const meta = {
   beforeEach: () => {
     useFolderLinkFilterStore.setState(filterDefaultValues);
     useFolderLinkSortStore.setState(sortDefaulValues);
+    useSearchBarStore.getState().setTitle("");
     queryClient.clear();
   },
 } satisfies Meta<typeof Wrapper>;

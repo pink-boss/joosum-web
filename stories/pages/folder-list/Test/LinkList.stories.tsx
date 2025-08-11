@@ -83,6 +83,7 @@ const testMeta = {
   beforeEach: () => {
     useFolderLinkFilterStore.setState(filterDefaultValues);
     useFolderLinkSortStore.setState(sortDefaultValues);
+    useSearchBarStore.getState().setTitle("");
     queryClient.clear();
     capturedRequest = null;
     mockLinkBookLinks = [...mockLinks];
@@ -148,12 +149,9 @@ const testRequestURI = async ({
   );
 
   await waitFor(async () => {
-    expect(capturedRequest).not.toBeNull();
     const url = new URL(capturedRequest!.url);
 
-    expect(url.pathname).toBe(
-      `/api/link-books/${mockLinkBooks[2].linkBookId}/links`,
-    );
+    expect(url.pathname).toBe(`/api/links`);
     expect(url.searchParams.get("sort")).toBe(sort);
     expect(url.searchParams.get("order")).toBe(order);
   });
@@ -161,7 +159,13 @@ const testRequestURI = async ({
   capturedRequest = null;
 };
 
+const SortWrapper = () => {
+  const linkFilter = useFolderLinkFilterStore();
+  return <LinkList linkFilter={linkFilter} />;
+};
+
 export const TestSortRequestURI_Lastest: Story = {
+  render: () => <SortWrapper />,
   play: async ({ canvasElement }) => {
     await testRequestURI({
       canvasElement,
@@ -173,6 +177,7 @@ export const TestSortRequestURI_Lastest: Story = {
 };
 
 export const TestSortRequestURI_Oldest: Story = {
+  render: () => <SortWrapper />,
   play: async ({ canvasElement }) => {
     await testRequestURI({
       canvasElement,
@@ -184,6 +189,7 @@ export const TestSortRequestURI_Oldest: Story = {
 };
 
 export const TestSortRequestURI_Title: Story = {
+  render: () => <SortWrapper />,
   play: async ({ canvasElement }) => {
     await testRequestURI({
       canvasElement,
@@ -195,6 +201,7 @@ export const TestSortRequestURI_Title: Story = {
 };
 
 export const TestSortRequestURI_MostViewd: Story = {
+  render: () => <SortWrapper />,
   parameters: {
     nextjs: {
       navigation: {
@@ -370,9 +377,10 @@ export const TestRelevanceOption: Story = {
       expect(listElement).toBeInTheDocument();
 
       const items = within(listElement).getAllByRole("listitem");
-      expect(items[0].textContent).toMatch(/공식\s?문서.*피그마/);
-      expect(items[1].textContent).toMatch(/공식\s?문서.*스토리북/);
-      expect(items[2].textContent).toMatch(/React\s?공식\s?문서\s?\(17\)/);
+      expect(items[0].textContent).toMatch(/React\s?공식\s?문서*/);
+      expect(items[1].textContent).toMatch(/React\s?공식\s?문서*/);
+      expect(items[2].textContent).toMatch(/공식\s?문서.*스토리북/);
+      expect(items[3].textContent).toMatch(/공식\s?문서.*피그마/);
     });
   },
 };

@@ -9,12 +9,11 @@ export default function useUpsertTagsSetting(onSuccess?: () => void) {
   const updateCache = useUpdateTagsCache();
 
   return useMutation<undefined, Error, TagList>({
-    mutationFn: async (state: TagList) => {
-      return apiCall(`/api/settings/tags`, {
+    mutationFn: async (state: TagList) =>
+      apiCall(`/api/settings/tags`, {
         method: "POST",
         body: JSON.stringify(state),
-      });
-    },
+      }),
     onSuccess: () => {
       updateCache();
       toast({ status: "success", message: "태그가 저장되었습니다." });

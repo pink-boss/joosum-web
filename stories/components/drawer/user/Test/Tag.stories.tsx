@@ -11,9 +11,10 @@ import { mockTags } from "@/stories/mocks/tag.mocks";
 
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import React from "react";
-import { verifyTestAPI } from "@/utils/storybook-test";
+import { verifyTagsAPI } from "@/utils/storybook-test";
 import meta from "../Tag.stories";
 import { queryClient } from "@/stories/mocks/store.mocks";
+import { getTagsQueryKey } from "@/utils/queryKey";
 
 let capturedRequest: Request | null;
 
@@ -50,7 +51,10 @@ export const TestInsertTag: Story = {
       handlers: [
         http.post("/api/settings/tags", async ({ request }) => {
           capturedRequest = request.clone();
-          return HttpResponse.json([await request.json()]);
+          const tags = await request.json();
+          queryClient.setQueryData(getTagsQueryKey("created"), tags);
+          queryClient.setQueryData(getTagsQueryKey("used"), tags);
+          return HttpResponse.json([]);
         }),
       ],
     },
@@ -64,16 +68,17 @@ export const TestInsertTag: Story = {
 
     // 엔터키
     await userEvent.type(input, "블록체인{enter}");
-    await verifyTestAPI(capturedRequest, `/api/settings/tags`, "POST");
-
-    expect(await canvas.findByText("블록체인")).toBeTruthy();
-    capturedRequest = null;
+    await verifyTagsAPI(capturedRequest, `/api/settings/tags`, "POST", [
+      "블록체인",
+    ]);
 
     // 스페이스바
     await userEvent.type(input, "양자컴퓨터 ");
-    await verifyTestAPI(capturedRequest, `/api/settings/tags`, "POST");
+    await verifyTagsAPI(capturedRequest, `/api/settings/tags`, "POST", [
+      "양자컴퓨터",
+      "블록체인",
+    ]);
 
-    expect(await canvas.findByText("양자컴퓨터")).toBeTruthy();
     capturedRequest = null;
   },
 };
@@ -85,7 +90,10 @@ export const TestUpdateTag: Story = {
         ...meta.parameters.msw.handlers,
         http.post("/api/settings/tags", async ({ request }) => {
           capturedRequest = request.clone();
-          return HttpResponse.json([await request.json()]);
+          const tags = await request.json();
+          queryClient.setQueryData(getTagsQueryKey("created"), tags);
+          queryClient.setQueryData(getTagsQueryKey("used"), tags);
+          return HttpResponse.json([]);
         }),
       ],
     },
@@ -93,7 +101,6 @@ export const TestUpdateTag: Story = {
 
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const tagList = within(await canvas.findByTestId("tag-list"));
 
     // 엔터키
     const targetForEnterKey = await canvas.findByText("생산성");
@@ -106,13 +113,17 @@ export const TestUpdateTag: Story = {
     await userEvent.clear(updateInput);
     await userEvent.type(updateInput, "맛집{enter}");
 
-    await verifyTestAPI(capturedRequest, `/api/settings/tags`, "POST");
-
-    expect(await tagList.findByText("맛집")).toBeTruthy();
+    await verifyTagsAPI(capturedRequest, `/api/settings/tags`, "POST", [
+      "맛집",
+      ...mockTags.slice(1),
+    ]);
     capturedRequest = null;
+    await waitFor(() => {
+      expect(capturedRequest).toBeNull();
+    });
 
     // 스페이스바
-    const targetForSpacebarKey = await canvas.findByText("여행");
+    const targetForSpacebarKey = await canvas.findByText("맛집");
     await userEvent.click(targetForSpacebarKey.nextElementSibling!);
 
     moreOption = targetForEnterKey.nextElementSibling! as HTMLElement;
@@ -123,9 +134,10 @@ export const TestUpdateTag: Story = {
     await userEvent.clear(updateInput);
     await userEvent.type(updateInput, "견문{enter}");
 
-    await verifyTestAPI(capturedRequest, `/api/settings/tags`, "POST");
-
-    expect(await tagList.findByText("견문")).toBeTruthy();
+    await verifyTagsAPI(capturedRequest, `/api/settings/tags`, "POST", [
+      "견문",
+      ...mockTags.slice(1),
+    ]);
     capturedRequest = null;
   },
 };
@@ -144,7 +156,9 @@ export const TestDeleteTag: Story = {
             ...mockTags.slice(index + 1, -1),
           ];
 
-          return HttpResponse.json([tags]);
+          queryClient.setQueryData(getTagsQueryKey("created"), tags);
+          queryClient.setQueryData(getTagsQueryKey("used"), tags);
+          return HttpResponse.json([]);
         }),
       ],
     },
@@ -174,7 +188,13 @@ export const TestDeleteTag: Story = {
       );
     });
 
-    await verifyTestAPI(capturedRequest, `/api/settings/tags/AI`, "DELETE");
+    await waitFor(() => {
+      expect(capturedRequest).not.toBeNull();
+
+      const url = new URL(capturedRequest!.url);
+      expect(url.pathname).toBe(`/api/settings/tags/AI`);
+      expect(capturedRequest!.method).toBe("DELETE");
+    });
 
     const tagList = within(canvas.getByTestId("tag-list"));
     await waitFor(() => {

@@ -1,5 +1,6 @@
 import { parse } from "querystring";
 
+import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 import {
@@ -9,7 +10,6 @@ import {
   storePreviousLoginProvider,
 } from "@/utils/auth/auth";
 import { getClientUri, getServerApiUri } from "@/utils/envUri";
-import { redirect } from "next/navigation";
 
 export async function POST(request: NextRequest) {
   try {

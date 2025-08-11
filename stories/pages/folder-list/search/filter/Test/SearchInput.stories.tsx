@@ -67,12 +67,19 @@ export const TestSearchWithButton: Story = {
   },
 };
 export const TestClear: Story = {
+  parameters: {
+    nextjs: {
+      navigation: {
+        pathname: "/search",
+      },
+    },
+  },
   beforeEach: () => {
     useSearchBarStore.getState().setTitle("피그마");
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByTestId("result")).toHaveTextContent("피그마");
+    expect(canvas.getByTestId("search-link-input")).toHaveValue("피그마");
 
     await step("click button", async () => {
       const button = await canvas.findByTestId("clear-button");
@@ -81,7 +88,7 @@ export const TestClear: Story = {
     });
 
     await waitFor(() => {
-      expect(canvas.getByTestId("result")).toHaveTextContent("");
+      expect(canvas.getByTestId("search-link-input")).toHaveValue("");
     });
   },
 };

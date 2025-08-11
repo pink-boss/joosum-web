@@ -77,6 +77,7 @@ export function useQueryLinks({
     return { pathname, queryString, queryKey };
   }, [type, linkBookId, linkSort.sort, linkSort.order, searchKeyword]);
 
+  console.log("queryOptions", queryOptions);
   const {
     data = [],
     refetch,

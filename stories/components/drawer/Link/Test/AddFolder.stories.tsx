@@ -3,11 +3,16 @@ import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { http, HttpResponse } from "msw";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 
-import { CreateFormState } from "@/types/linkBook.types";
+import {
+  CreateFormState,
+  LinkBook,
+  TQueryLinkBooks,
+} from "@/types/linkBook.types";
 
 import { MutateLinkDrawer } from "@/components/drawer/dynamic";
 import meta, { Wrapper } from "../AddFolder.stories";
 import { mockLink } from "@/stories/mocks/link.mocks";
+import { queryClient } from "@/stories/mocks/store.mocks";
 
 const testMeta = {
   ...meta,
@@ -31,18 +36,31 @@ export const TestSelectFolder: Story = {
   },
 };
 
-// TODO: 새 폴더로 생성한 폴더 자동으로 선택되게
 export const TestAddFolder: Story = {
   parameters: {
     msw: {
       handlers: [
         ...meta.parameters.msw.handlers,
         http.post("/api/link-books", async ({ request }) => {
-          const data = (await request.json()) as CreateFormState;
-          return HttpResponse.json({ ...data, linkBookId: "lb_999" });
+          const newData = (await request.json()) as CreateFormState;
+          const result = { ...newData, linkBookId: "lb_999" };
+
+          queryClient.setQueryData(
+            ["linkBookList", "created_at"],
+            (old: TQueryLinkBooks) => {
+              return {
+                linkBooks: [...(old?.linkBooks ?? []), result],
+                totalLinkCount: old?.totalLinkCount ?? 0 + 1,
+              };
+            },
+          );
+          return HttpResponse.json(result);
         }),
       ],
     },
+  },
+  beforeEach: () => {
+    queryClient.clear();
   },
   render: () => <MutateLinkDrawer />,
   play: async ({ canvasElement }) => {

@@ -60,7 +60,7 @@ export const TestAddTags: Story = {
     await step("버튼 저장", async () => {
       await userEvent.click(input);
       await userEvent.keyboard("android");
-      await userEvent.click(canvas.getByRole("button", { name: "생성하기" }));
+      await userEvent.click(canvas.getByRole("button", { name: "생성" }));
       expect(input.value).toBeFalsy();
       expect(canvas.getByText("android")).toBeInTheDocument();
     });
@@ -91,7 +91,11 @@ export const TestLimit: Story = {
     await waitFor(() => {
       expect(canvas.queryByText("web")).toBeNull();
       expect(canvas.getByText("10/10"));
-      expect(screen.queryByRole("alertdialog")).toBeInTheDocument();
+      const dialogs = screen.queryAllByRole("alertdialog");
+      const toastPopup = dialogs.find((dialog) =>
+        dialog.textContent?.includes("태그는 10개까지 선택할 수 있어요."),
+      );
+      expect(toastPopup).toBeInTheDocument();
     });
   },
 };

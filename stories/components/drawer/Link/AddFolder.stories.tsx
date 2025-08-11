@@ -37,7 +37,11 @@ const meta = {
     msw: {
       handlers: [
         http.get("/api/link-books?sort=created_at", () => {
-          return HttpResponse.json(mockRespone);
+          const cache = queryClient.getQueryData([
+            "linkBookList",
+            "created_at",
+          ]);
+          return HttpResponse.json(cache ?? mockRespone);
         }),
       ],
     },

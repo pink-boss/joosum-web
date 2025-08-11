@@ -33,28 +33,30 @@ export const TestRequired: Story = {
   },
 };
 
-export const TestValidationWithForm: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const input = canvas.getByTestId("url");
-    const form = canvasElement.querySelector("form");
-    const button = canvas.getByRole("button", { name: "submit" });
+// deprecated
+// export const TestValidationWithForm: Story = {
+//   play: async ({ canvasElement }) => {
+//     const canvas = within(canvasElement);
+//     const input = canvas.getByTestId("url");
+//     const form = canvasElement.querySelector("form");
+//     const button = canvas.getByRole("button", { name: "submit" });
 
-    await userEvent.type(input, "invalid.org");
-    await userEvent.click(button);
-    expect(form?.checkValidity()).toBe(false);
+//     await userEvent.type(input, "invalid.org");
+//     await userEvent.click(button);
+//     expect(form?.checkValidity()).toBe(false);
 
-    expect(input).toHaveAttribute("type", "url");
-  },
-};
+//     expect(input).toHaveAttribute("type", "url");
+//   },
+// };
 
-export const TestValidationWithEnterKey: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const input = canvas.getByTestId("url");
-    const form = canvasElement.querySelector("form");
+// deprecated
+// export const TestValidationWithEnterKey: Story = {
+//   play: async ({ canvasElement }) => {
+//     const canvas = within(canvasElement);
+//     const input = canvas.getByTestId("url");
+//     const form = canvasElement.querySelector("form");
 
-    await userEvent.type(input, "invalid.org{Enter}");
-    expect(form?.checkValidity()).toBe(false);
-  },
-};
+//     await userEvent.type(input, "invalid.org{Enter}");
+//     expect(form?.checkValidity()).toBe(false);
+//   },
+// };

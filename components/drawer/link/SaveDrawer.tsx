@@ -74,6 +74,11 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
             titleInput={titleRef.current}
             setFormState={setFormState}
           />
+          <input
+            hidden
+            value={formState.thumbnailURL}
+            data-testid="thumbnailURL"
+          />
           <TitleInput
             value={formState.title}
             setValue={(value) => {

@@ -10,6 +10,8 @@ import { mockTags } from "@/stories/mocks/tag.mocks";
 
 import { TagCard } from "@/components/dialog/tag/TagSettingDialog";
 import React from "react";
+import { queryClient } from "@/stories/mocks/store.mocks";
+import { getTagsQueryKey } from "@/utils/queryKey";
 
 const meta = {
   title: "Component/Drawer/User/Tag",
@@ -18,7 +20,9 @@ const meta = {
     msw: {
       handlers: [
         http.get("/api/settings/tags", async () => {
-          return HttpResponse.json(mockTags);
+          return HttpResponse.json(
+            queryClient.getQueryData(getTagsQueryKey("created")) || mockTags,
+          );
         }),
       ],
     },

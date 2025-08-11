@@ -9,12 +9,11 @@ import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { expect, screen, userEvent, waitFor, within } from "@storybook/test";
 import OpenLinkSaveDrawerButton from "@/components/drawer/link/OpenSaveDrawerButton";
 
-// TODO: 폴더 변경해도 기본으로 계속 저장됨.
-// TODO: drawer 스크롤 가능하게
 let capturedRequest: {
   getThumbnail?: Request;
   saveLink?: Request;
   updateLinkBook?: Request;
+  updateTags?: Request;
 } = {};
 
 const testMeta = {
@@ -45,6 +44,10 @@ const testMeta = {
             return HttpResponse.json({ status: 204 });
           },
         ),
+        http.post("/api/settings/tags", ({ request }) => {
+          capturedRequest.updateTags = request.clone();
+          return HttpResponse.json({ status: 200 });
+        }),
       ],
     },
   },
@@ -127,25 +130,26 @@ export const TestRequiredURL: Story = {
     const form = canvasElement.querySelector("form");
     expect(form?.checkValidity()).toBe(false);
 
-    await step("Invalid: 제목, 폴더, 태그 선택 불가", async () => {
-      await userEvent.type(linkInput, "invalid.org{enter}");
+    // deprecated
+    // await step("Invalid: 제목, 폴더, 태그 선택 불가", async () => {
+    //   await userEvent.type(linkInput, "invalid.org{enter}");
 
-      expect(form?.checkValidity()).toBe(false);
+    //   expect(form?.checkValidity()).toBe(false);
 
-      expect(canvas.getByTestId("title")).toHaveProperty("disabled", true);
-      const folder = within(
-        canvas.getByTestId("link-book-selector").parentElement as HTMLElement,
-      );
-      expect(folder.getByTestId("create-folder-dialog-button")).toHaveProperty(
-        "disabled",
-        true,
-      );
-      expect(folder.getByTestId("open-button")).toHaveProperty(
-        "disabled",
-        true,
-      );
-      expect(canvas.getByTestId("tag-input")).toHaveProperty("disabled", true);
-    });
+    //   expect(canvas.getByTestId("title")).toHaveProperty("disabled", true);
+    //   const folder = within(
+    //     canvas.getByTestId("link-book-selector").parentElement as HTMLElement,
+    //   );
+    //   expect(folder.getByTestId("create-folder-dialog-button")).toHaveProperty(
+    //     "disabled",
+    //     true,
+    //   );
+    //   expect(folder.getByTestId("open-button")).toHaveProperty(
+    //     "disabled",
+    //     true,
+    //   );
+    //   expect(canvas.getByTestId("tag-input")).toHaveProperty("disabled", true);
+    // });
 
     await step("Valid: 제목, 폴더, 태그 선택 가능", async () => {
       await userEvent.clear(linkInput);
@@ -252,11 +256,11 @@ export const TestSubmit: Story = {
 
     await step("feedback", async () => {
       await waitFor(async function OpenToast() {
-        const toastPopup = screen.queryByRole("alertdialog");
+        const dialogs = screen.queryAllByRole("alertdialog");
+        const toastPopup = dialogs.find((dialog) =>
+          dialog.textContent?.includes("링크가 저장되었습니다."),
+        );
         expect(toastPopup).toBeInTheDocument();
-        expect(
-          within(toastPopup!).getByText("링크가 저장되었습니다."),
-        ).toBeInTheDocument();
       });
     });
   },

@@ -68,6 +68,7 @@ export default function SearchInput({ inputDelay = 1000 }: InputProps) {
       data-testid="search-link"
     >
       <input
+        data-testid="search-link-input"
         type="text"
         placeholder="링크 제목으로 검색해보세요."
         className={clsx(
