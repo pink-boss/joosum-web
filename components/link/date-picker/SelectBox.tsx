@@ -1,10 +1,10 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 import { DateRange } from "@/types/date.types";
 import { dateFormatter } from "@/utils/date";
-import { usePathname } from "next/navigation";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type SelectBoxProps = {
   selected: DateRange;

@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +13,6 @@ import { LinkBook } from "@/types/linkBook.types";
 
 import LinkToPage from "../link-book/LinkToPage";
 import Loading from "../Loading";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type LinkBookMenuProps = {
   linkBook: LinkBook;

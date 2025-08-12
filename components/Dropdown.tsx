@@ -1,11 +1,11 @@
 "use client";
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { useClearDropdown } from "@/hooks/useClearDropdown";
-import { usePathname } from "next/navigation";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   selected: Value;

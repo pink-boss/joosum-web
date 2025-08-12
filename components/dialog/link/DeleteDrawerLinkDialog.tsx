@@ -1,12 +1,13 @@
 "use client";
 
+import { sendGTMEvent } from "@next/third-parties/google";
+import { usePathname } from "next/navigation";
+
 import useDeleteDrawerLink from "@/hooks/link/useDeleteDrawerLink";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 
 import ConfirmDialog from "../ConfirmDialog";
-import { usePathname } from "next/navigation";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function DeleteDialog() {
   const { isDeleteDrawerLinkOpen: isOpen, openDeleteDrawerLink: open } =

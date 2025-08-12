@@ -1,7 +1,7 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import Image from "next/image";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function Logout() {
   const { openLogout } = useOpenDialogStore();

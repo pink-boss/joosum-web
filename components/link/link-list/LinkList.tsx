@@ -1,3 +1,5 @@
+import { sendGTMEvent } from "@next/third-parties/google";
+import { usePathname } from "next/navigation";
 import { ChangeEvent, useState, useRef } from "react";
 
 import Checkbox from "@/components/Checkbox";
@@ -16,8 +18,6 @@ import EditHeader from "./EditHeader";
 import EditToolbar from "./EditToolbar";
 import LinkComponent from "./LinkCard";
 import ViewToolbar from "./ViewToolbar";
-import { usePathname } from "next/navigation";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   defaultEditMode?: boolean;

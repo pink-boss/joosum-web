@@ -1,5 +1,7 @@
 "use client";
 
+import { sendGTMEvent } from "@next/third-parties/google";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import ConfirmDialog from "@/components/dialog/ConfirmDialog";
@@ -12,8 +14,6 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 import { LinkBook } from "@/types/linkBook.types";
 
 import SelectLinkBook from "./SelectLinkBook";
-import { usePathname } from "next/navigation";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function ReassignLinkBookDialog() {
   const { data: linkBooks } = useQueryLinkBooks("created_at");

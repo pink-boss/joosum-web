@@ -1,10 +1,10 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { HTMLAttributes } from "react";
 
 import { Account } from "@/types/account.types";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type NewTabLinkInputType = {
   href: string;

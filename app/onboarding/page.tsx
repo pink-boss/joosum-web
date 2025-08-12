@@ -1,5 +1,6 @@
 "use client";
 
+import { sendGTMEvent } from "@next/third-parties/google";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -7,7 +8,6 @@ import CompletionScreen from "@/components/onboarding/CompletionScreen";
 import TermsAgreement from "@/components/onboarding/TermsAgreement";
 import UserInfoForm from "@/components/onboarding/UserInfoForm";
 import PublicPathHeader from "@/components/PublicPathHeader";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 const today = new Date();
 

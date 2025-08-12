@@ -57,8 +57,6 @@ export const TestLinkClickCount: Story = {
 
     // 링크 열기
     await waitFor(async () => {
-      console.log("TestLinkClickCount", windowSpy);
-      console.log("TestLinkClickCount", mockLink.url);
       expect(windowSpy).toHaveBeenCalledWith(mockLink.url, "_blank");
     });
 

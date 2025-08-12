@@ -1,9 +1,9 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 import { Link } from "@/types/link.types";
-import { usePathname } from "next/navigation";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = { link: Link };
 

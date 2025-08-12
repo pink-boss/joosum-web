@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import Image from "next/image";
 
 import { useQueryNotificationSetting } from "@/hooks/settings/useQueryNotificationSetting";
@@ -10,7 +11,6 @@ import {
 
 import Toggle from "../Toggle";
 import Dialog from "./Dialog";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function NotificationSettingDialog() {
   const { isNotificationSettingOpen: isOpen, openNotificationSetting: open } =

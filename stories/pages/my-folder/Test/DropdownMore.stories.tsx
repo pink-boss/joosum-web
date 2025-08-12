@@ -33,10 +33,8 @@ export const TestpenEditDialog: Story = {
 
     const linkBookMore = within(canvas.getByTestId("link-book-more"));
 
-    await waitFor(async () => {
-      await userEvent.click(linkBookMore.getByAltText("more"));
-      await userEvent.click(linkBookMore.getByText("폴더 수정"));
-    });
+    await userEvent.click(await linkBookMore.findByAltText("more"));
+    await userEvent.click(await linkBookMore.findByText("폴더 수정"));
 
     await waitFor(async () => {
       const dialog = canvas.getByRole("dialog");

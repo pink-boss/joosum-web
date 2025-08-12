@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 import { useCallback, useState } from "react";
@@ -5,7 +6,6 @@ import { useCallback, useState } from "react";
 import { useClearDropdown } from "@/hooks/useClearDropdown";
 
 import NotificationList from "./NotificationList";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 const NotificationDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);

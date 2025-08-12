@@ -1,12 +1,12 @@
 "use client";
 
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { Banner } from "../../types/banner.types";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   data: Banner[];

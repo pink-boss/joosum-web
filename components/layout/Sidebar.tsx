@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -6,7 +7,6 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import Menu from "./Menu";
 import NotificationDropdown from "../notification/list/NotificationDropdown";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   children: React.ReactNode;

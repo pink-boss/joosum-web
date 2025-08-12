@@ -1,11 +1,11 @@
 "use client";
 
+import { sendGTMEvent } from "@next/third-parties/google";
 import { useRouter } from "next/navigation";
 
 import PreviousProviderBubble from "@/components/PreviousProviderBubble";
 import { PreviousLoginProvider } from "@/types/auth.types";
 import { getClientUri } from "@/utils/envUri";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH_GOOGLE_ID;
 const GOOGLE_REDIRECT_URI = `${getClientUri()}/auth/callback/google`;

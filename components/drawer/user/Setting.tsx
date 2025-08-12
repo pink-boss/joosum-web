@@ -1,8 +1,8 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type MenuInputProps = {
   title: string;

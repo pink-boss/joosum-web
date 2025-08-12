@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 import { useEffect, useMemo } from "react";
@@ -8,7 +9,6 @@ import {
   Notification,
   TQueryNotifications,
 } from "@/types/notification/list.types";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   setHasNotification: (hasNotification: boolean) => void;

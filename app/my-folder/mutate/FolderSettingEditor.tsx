@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import {
   Dispatch,
@@ -11,7 +12,6 @@ import useEditorTabs from "@/hooks/useEditorTabs";
 import { CreateFormState } from "@/types/linkBook.types";
 
 import { FolderBook } from "../folder";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type Tab = { title: string; component: ReactNode };
 

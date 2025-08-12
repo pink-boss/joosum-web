@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import {
   KeyboardEvent,
@@ -15,8 +16,6 @@ import useQueryLinkFilterTags from "@/hooks/useQueryLinkFilterTags";
 import { isValidName } from "@/utils/regexp";
 
 import RecentTags from "./RecentTags";
-import { usePathname } from "next/navigation";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   tags: string[];
@@ -31,7 +30,6 @@ export default function Tag({
   disabled = false,
   onClickTagInputCallback,
 }: InputProps) {
-  const pathname = usePathname();
   const [isActive, setIsActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const recentTagsRef = useRef<HTMLDivElement>(null);
@@ -144,6 +142,7 @@ export default function Tag({
         >
           <div
             role="list"
+            data-testid="input-tags-list"
             className={clsx("flex flex-wrap items-center gap-2")}
           >
             {tags?.map((tag, index) => (

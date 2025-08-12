@@ -1,9 +1,9 @@
 "use client";
 
+import { sendGTMEvent } from "@next/third-parties/google";
 import Link from "next/link";
 
 import AgreementCheckbox from "./AgreementCheckbox";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 interface TermsAgreementProps {
   agreements: {

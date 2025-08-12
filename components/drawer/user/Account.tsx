@@ -1,9 +1,9 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { Account as AccountType } from "@/types/account.types";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = Pick<AccountType, "email">;
 

@@ -1,11 +1,11 @@
 "use client";
 
+import { sendGTMEvent } from "@next/third-parties/google";
 import Image from "next/image";
 import { ReactNode } from "react";
 
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import { useOpenDialogStore } from "@/store/useDialogStore";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   children: ReactNode;

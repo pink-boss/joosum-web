@@ -183,16 +183,20 @@ export const TestUpdateLink: Story = {
     });
 
     await step("folder 수정", async () => {
-      const folderSelector = canvas.getByTestId("link-book-selector");
+      const folderSelector = await canvas.findByTestId("link-book-selector");
       await userEvent.click(folderSelector.firstElementChild as HTMLElement);
       await userEvent.click(within(folderSelector).getByText(NEW_FOLDER_NAME));
     });
 
     await step("tag 수정", async () => {
-      const tagsInput = within(canvas.getByTestId("tags-input"));
-      await userEvent.type(tagsInput.getByRole("textbox"), `${NEW_TAG}{Enter}`);
+      const tagsInput = within(await canvas.findByTestId("tags-input"));
+      await userEvent.type(
+        await tagsInput.findByRole("textbox"),
+        `${NEW_TAG}{Enter}`,
+      );
+      const inputTagsList = await canvas.findByTestId("input-tags-list");
       expect(
-        within(tagsInput.getByRole("list")).getByText(NEW_TAG),
+        await within(inputTagsList).findByText(NEW_TAG),
       ).toBeInTheDocument();
     });
 

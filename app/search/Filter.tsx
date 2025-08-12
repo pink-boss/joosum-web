@@ -1,11 +1,11 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
+import { usePathname } from "next/navigation";
 
 import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 import { useSearchLinkSortStore } from "@/store/link-sort/useSearchStore";
 import { LinkBook } from "@/types/linkBook.types";
-import { sendGTMEvent } from "@next/third-parties/google";
-import { usePathname } from "next/navigation";
 
 export default function LinkBookFilter() {
   const linkSort = useSearchLinkSortStore();

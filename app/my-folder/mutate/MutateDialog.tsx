@@ -1,5 +1,6 @@
 "use client";
 
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 
@@ -11,7 +12,6 @@ import { CreateFormState } from "@/types/linkBook.types";
 
 import FolderSettingEditor from "./FolderSettingEditor";
 import { pickBackgroundColors, pickTitleColors } from "../constants";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 const defaultValues: CreateFormState = {
   title: "",

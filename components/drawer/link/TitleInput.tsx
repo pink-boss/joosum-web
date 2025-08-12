@@ -1,8 +1,8 @@
+import { sendGTMEvent } from "@next/third-parties/google";
+import { usePathname } from "next/navigation";
 import { ChangeEvent, KeyboardEvent, RefObject, useState } from "react";
 
 import FormItem from "./FormItem";
-import { usePathname } from "next/navigation";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   value?: string;

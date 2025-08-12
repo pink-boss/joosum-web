@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 import { ReactNode } from "react";
@@ -8,7 +9,6 @@ import LinkToPage, {
 import { CreateLinkBook, EntireFolderProps } from "@/types/linkBook.types";
 
 import DropdownMore from "./DropdownMore";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 const TITLE_PLACEHOLDER = "폴더명을 입력해주세요.";
 

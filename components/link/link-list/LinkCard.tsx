@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import Image from "next/image";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,7 +12,6 @@ import { dateFormatter } from "@/utils/date";
 import { extractDomain } from "@/utils/urlEncoder";
 
 import DrawerButton from "../DrawerButton";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type FolderLinkInputProps = { linkBookName: string };
 

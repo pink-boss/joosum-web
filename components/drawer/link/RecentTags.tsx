@@ -31,7 +31,6 @@ export default function RecentTags({
             "cursor-pointer hover:bg-gray-ghost",
           )}
           onClick={(e) => {
-            console.log("onClick");
             e.stopPropagation();
             e.preventDefault();
             handleSelectRecentTag(tag);

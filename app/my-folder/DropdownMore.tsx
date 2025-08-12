@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 import { useCallback, useState } from "react";
@@ -6,7 +7,6 @@ import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import { useClearDropdown } from "@/hooks/useClearDropdown";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { LinkBook } from "@/types/linkBook.types";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type DropdownItemProps = {
   title: string;

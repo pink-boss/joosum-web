@@ -1,4 +1,6 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 
 import OpenShareButton from "@/app/link-book/OpenShareButton";
@@ -18,8 +20,6 @@ import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import Tag from "./Tag";
 import TitleInput from "./TitleInput";
-import { usePathname } from "next/navigation";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function MutateLinkDrawer() {
   const {

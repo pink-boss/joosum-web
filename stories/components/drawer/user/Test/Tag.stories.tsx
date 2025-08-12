@@ -21,6 +21,34 @@ let capturedRequest: Request | null;
 const testMeta = {
   ...meta,
   title: "Component/Drawer/User/Tag",
+  parameters: {
+    msw: {
+      handlers: [
+        ...meta.parameters.msw.handlers,
+        http.post("/api/settings/tags", async ({ request }) => {
+          capturedRequest = request.clone();
+          const tags = await request.json();
+          queryClient.setQueryData(getTagsQueryKey("created"), tags);
+          queryClient.setQueryData(getTagsQueryKey("used"), tags);
+          return HttpResponse.json([]);
+        }),
+        http.delete("/api/settings/tags/:tag", async ({ request, params }) => {
+          capturedRequest = request.clone();
+          const { tag: target } = await (params as any);
+          const index = mockTags.indexOf(target as string);
+          const tags = [
+            ...mockTags.slice(0, index),
+            ...mockTags.slice(index + 1, -1),
+          ];
+
+          queryClient.setQueryData(getTagsQueryKey("created"), tags);
+          queryClient.setQueryData(getTagsQueryKey("used"), tags);
+          return HttpResponse.json([]);
+        }),
+      ],
+    },
+  },
+
   beforeEach: () => {
     queryClient.clear();
   },
@@ -46,20 +74,6 @@ export const TestQueryTag: Story = {
 };
 
 export const TestInsertTag: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        http.post("/api/settings/tags", async ({ request }) => {
-          capturedRequest = request.clone();
-          const tags = await request.json();
-          queryClient.setQueryData(getTagsQueryKey("created"), tags);
-          queryClient.setQueryData(getTagsQueryKey("used"), tags);
-          return HttpResponse.json([]);
-        }),
-      ],
-    },
-  },
-
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -70,6 +84,7 @@ export const TestInsertTag: Story = {
     await userEvent.type(input, "블록체인{enter}");
     await verifyTagsAPI(capturedRequest, `/api/settings/tags`, "POST", [
       "블록체인",
+      ...mockTags,
     ]);
 
     // 스페이스바
@@ -77,6 +92,7 @@ export const TestInsertTag: Story = {
     await verifyTagsAPI(capturedRequest, `/api/settings/tags`, "POST", [
       "양자컴퓨터",
       "블록체인",
+      ...mockTags,
     ]);
 
     capturedRequest = null;
@@ -84,21 +100,6 @@ export const TestInsertTag: Story = {
 };
 
 export const TestUpdateTag: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        ...meta.parameters.msw.handlers,
-        http.post("/api/settings/tags", async ({ request }) => {
-          capturedRequest = request.clone();
-          const tags = await request.json();
-          queryClient.setQueryData(getTagsQueryKey("created"), tags);
-          queryClient.setQueryData(getTagsQueryKey("used"), tags);
-          return HttpResponse.json([]);
-        }),
-      ],
-    },
-  },
-
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -143,26 +144,6 @@ export const TestUpdateTag: Story = {
 };
 
 export const TestDeleteTag: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        ...meta.parameters.msw.handlers,
-        http.delete("/api/settings/tags/:tag", async ({ request, params }) => {
-          capturedRequest = request.clone();
-          const { tag: target } = await (params as any);
-          const index = mockTags.indexOf(target as string);
-          const tags = [
-            ...mockTags.slice(0, index),
-            ...mockTags.slice(index + 1, -1),
-          ];
-
-          queryClient.setQueryData(getTagsQueryKey("created"), tags);
-          queryClient.setQueryData(getTagsQueryKey("used"), tags);
-          return HttpResponse.json([]);
-        }),
-      ],
-    },
-  },
   render: () => (
     <>
       <TagSettingDialog />

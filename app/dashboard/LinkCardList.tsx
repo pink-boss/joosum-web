@@ -1,5 +1,6 @@
 "use client";
 
+import { sendGTMEvent } from "@next/third-parties/google";
 import Image from "next/image";
 import NextLink from "next/link";
 import { useState, useRef } from "react";
@@ -12,7 +13,6 @@ import { defaultValues } from "@/store/link-filter/schema";
 import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
 
 import LinkCard from "./LinkCard";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function LinkCardList() {
   const [filter, setFilter] = useState<"latest" | "unread">("latest");

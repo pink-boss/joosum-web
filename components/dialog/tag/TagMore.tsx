@@ -1,5 +1,6 @@
 "use client";
 
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -8,7 +9,6 @@ import useUpsertTags from "@/hooks/settings/useUpsertTags";
 import { useClearDropdown } from "@/hooks/useClearDropdown";
 import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 import { Tag } from "@/types/tags.types";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 export type InputProps = {
   label: string;

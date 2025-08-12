@@ -1,8 +1,8 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function OpenUserDrawerButton() {
   const { openUserDrawer } = useOpenDrawerStore();

@@ -1,12 +1,12 @@
 "use client";
 
+import { sendGTMEvent } from "@next/third-parties/google";
 import { useEffect } from "react";
 
 import PreviousProviderBubble from "@/components/PreviousProviderBubble";
 import { PreviousLoginProvider } from "@/types/auth.types";
 import { sanitizeRedirectUrl } from "@/utils/auth/oauth";
 import { getClientUri } from "@/utils/envUri";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 const APPLE_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH_APPLE_ID;
 

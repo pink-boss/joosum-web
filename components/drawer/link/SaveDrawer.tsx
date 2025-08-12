@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import { useEffect, useRef, useState } from "react";
 
 import Drawer from "@/components/drawer/Drawer";
@@ -14,7 +15,6 @@ import { PrimaryUIButton } from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import Tag from "./Tag";
 import TitleInput from "./TitleInput";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   _defaultValues?: SaveLink;
