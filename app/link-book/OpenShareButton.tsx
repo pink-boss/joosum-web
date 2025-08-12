@@ -2,6 +2,8 @@ import Image from "next/image";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { Link } from "@/types/link.types";
+import { sendGTMEvent } from "@next/third-parties/google";
+import { usePathname } from "next/navigation";
 
 type InputProps = {
   link: Link;
@@ -9,8 +11,15 @@ type InputProps = {
 
 export default function OpenShareButton({ link }: InputProps) {
   const { openShareLink } = useOpenDialogStore();
+  const pathname = usePathname();
 
   const handleClick = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.share_detail_link_searchResult"
+          : "click.share_detail_link_linkList",
+    });
     openShareLink(true, link.linkId);
   };
   return (

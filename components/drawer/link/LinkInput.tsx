@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  KeyboardEvent,
-  SetStateAction,
-  useState,
-} from "react";
+import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction } from "react";
 
 import { toast } from "@/components/notification/toast/toast";
 import useQueryThumbnail from "@/hooks/link/useQueryThumbnail";
@@ -18,12 +12,14 @@ type InputProps = {
   titleInput?: HTMLInputElement | null;
   setFormState: Dispatch<SetStateAction<SaveFormState>>;
   disabled?: boolean;
+  onClickCallback?: () => void;
 };
 export default function LinkInput({
   value,
   titleInput,
   setFormState,
   disabled,
+  onClickCallback,
 }: InputProps) {
   const queryThumbnail = useQueryThumbnail();
   // const [isError, setIsError] = useState(false);
@@ -88,6 +84,7 @@ export default function LinkInput({
         onBlur: (e) => handleValidURL(e.currentTarget),
         onKeyDown: handlePressKey,
         onChange: handleChangeValue,
+        onClick: onClickCallback,
       }}
       // error={{ status: isError, message: "유효한 링크를 입력해주세요." }}
     />

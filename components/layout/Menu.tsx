@@ -12,6 +12,7 @@ import { LinkBook } from "@/types/linkBook.types";
 
 import LinkToPage from "../link-book/LinkToPage";
 import Loading from "../Loading";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type LinkBookMenuProps = {
   linkBook: LinkBook;
@@ -19,8 +20,12 @@ type LinkBookMenuProps = {
 };
 
 function LinkBookMenu({ linkBook, closeDialog }: LinkBookMenuProps) {
+  const handleClick = () => {
+    sendGTMEvent({ event: "click.folder_gnb_common" });
+    closeDialog();
+  };
   return (
-    <LinkToPage linkBook={linkBook} onClickCallback={closeDialog}>
+    <LinkToPage linkBook={linkBook} onClickCallback={handleClick}>
       <div className={clsx("h-[48px] py-3 pl-12 pr-5")}>
         <div className="relative flex items-center gap-2">
           <div
@@ -55,6 +60,7 @@ export default function Menu() {
   };
 
   const handleCreateFolder = () => {
+    sendGTMEvent({ event: "click.addFolder_gnb_common" });
     clearLinkBook();
     openMutateLinkBook(true);
   };
@@ -67,7 +73,13 @@ export default function Menu() {
 
   return (
     <div className="w-[282px]">
-      <Link href="/dashboard" onClick={closeDialog}>
+      <Link
+        href="/dashboard"
+        onClick={() => {
+          sendGTMEvent({ event: "click.home_gnb_common" });
+          closeDialog();
+        }}
+      >
         <div className="flex items-center gap-4 px-10 py-3">
           <Image
             src="/icons/home.svg"
@@ -79,7 +91,12 @@ export default function Menu() {
           <div className="text-lg font-bold text-gray-ink">홈</div>
         </div>
       </Link>
-      <Link href="/my-folder">
+      <Link
+        href="/my-folder"
+        onClick={() => {
+          sendGTMEvent({ event: "click.myFolder_gnb_common" });
+        }}
+      >
         <div className="flex cursor-pointer items-center gap-4 px-10 py-3">
           <Image
             src="/icons/icon-folder.svg"
@@ -113,7 +130,10 @@ export default function Menu() {
               : "h-0 overflow-hidden",
           )}
         >
-          <Link href="/link-book">
+          <Link
+            href="/link-book"
+            onClick={() => sendGTMEvent({ event: "click.folder_gnb_common" })}
+          >
             <div
               className={clsx(
                 "h-[48px] py-3 pl-12 pr-5",

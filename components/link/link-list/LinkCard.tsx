@@ -11,6 +11,7 @@ import { dateFormatter } from "@/utils/date";
 import { extractDomain } from "@/utils/urlEncoder";
 
 import DrawerButton from "../DrawerButton";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type FolderLinkInputProps = { linkBookName: string };
 
@@ -36,6 +37,12 @@ export default function LinkCard({ link, index }: InputProps) {
   const { title: highlightKeyword } = useSearchBarStore();
 
   const handleOpenLink = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.link_searchResult"
+          : "click.link_linkList",
+    });
     mutation.mutate();
   };
 

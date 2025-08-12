@@ -8,6 +8,7 @@ import LinkToPage, {
 import { CreateLinkBook, EntireFolderProps } from "@/types/linkBook.types";
 
 import DropdownMore from "./DropdownMore";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 const TITLE_PLACEHOLDER = "폴더명을 입력해주세요.";
 
@@ -75,8 +76,13 @@ export function FolderBook({
 type InputProps = { linkBook: EntireFolderProps };
 
 export default function Folder({ linkBook }: InputProps) {
+  const onClickFolder = () => {
+    sendGTMEvent({
+      event: "click.folderList_myFolder",
+    });
+  };
   return (
-    <LinkToPage linkBook={linkBook}>
+    <LinkToPage linkBook={linkBook} onClickCallback={onClickFolder}>
       <div
         className={clsx(
           "flex h-[275.9px] w-[174.9px] cursor-pointer flex-col items-center gap-[17.6px]",

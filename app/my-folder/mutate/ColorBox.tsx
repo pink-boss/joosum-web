@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 
@@ -21,14 +22,19 @@ export default function ColorBox({
   const isSelected = previewColor && previewColor === color;
   const isBrightColor = [WHITE_COLOR, "#F6F6F6"].includes(color);
   const isWhiteColor = color === WHITE_COLOR;
+
+  const onClickColorBox = () => {
+    sendGTMEvent({
+      event: "click.select_folderColor_addFolder",
+    });
+    setPreviewColor(stateName, color);
+  };
   return (
     <button
       data-testid={`${stateName}-${colorIndex}`}
       className={clsx("size-12 rounded-lg border", isSelected && "p-0")}
       style={{ backgroundColor: color, borderColor: color }}
-      onClick={() => {
-        setPreviewColor(stateName, color);
-      }}
+      onClick={onClickColorBox}
     >
       <div
         className={clsx(

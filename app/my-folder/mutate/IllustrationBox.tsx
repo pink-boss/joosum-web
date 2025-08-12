@@ -1,3 +1,4 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
 
@@ -22,13 +23,18 @@ export default function IllustrationBox({
   const isSelected =
     previewIllustration == illustration ||
     (isEmpty(previewIllustration) && isEmpty(illustration));
+
+  const onClickIllustrationBox = () => {
+    sendGTMEvent({
+      event: "click.select_folderIllust_addFolder",
+    });
+    setPreviewIllustration(stateName, illustration);
+  };
   return (
     <button
       data-testid={`${stateName}-${illustrationIndex}`}
       className={clsx("relative size-20 rounded-lg bg-gray-vapor")}
-      onClick={() => {
-        setPreviewIllustration(stateName, illustration);
-      }}
+      onClick={onClickIllustrationBox}
     >
       {isSelected && (
         <div className="absolute size-full rounded-lg bg-primary-500 opacity-20"></div>

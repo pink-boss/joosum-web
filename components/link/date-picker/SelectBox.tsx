@@ -3,6 +3,8 @@ import Image from "next/image";
 
 import { DateRange } from "@/types/date.types";
 import { dateFormatter } from "@/utils/date";
+import { usePathname } from "next/navigation";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type SelectBoxProps = {
   selected: DateRange;
@@ -11,10 +13,20 @@ type SelectBoxProps = {
 };
 
 export function SelectBox({ selected, isOpen, setIsOpen }: SelectBoxProps) {
+  const pathname = usePathname();
+  const onClick = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.dateFilter_searchResult"
+          : "click.dateFilter_linkList",
+    });
+    setIsOpen(!isOpen);
+  };
   return (
     <button
       data-testid="open-button"
-      onClick={() => setIsOpen(!isOpen)}
+      onClick={onClick}
       className={clsx(
         "flex items-center px-3 text-sm text-gray-dim",
         "h-[46px] w-full rounded-lg border border-gray-silver",

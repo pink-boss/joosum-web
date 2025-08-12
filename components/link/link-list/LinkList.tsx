@@ -16,6 +16,8 @@ import EditHeader from "./EditHeader";
 import EditToolbar from "./EditToolbar";
 import LinkComponent from "./LinkCard";
 import ViewToolbar from "./ViewToolbar";
+import { usePathname } from "next/navigation";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   defaultEditMode?: boolean;
@@ -47,28 +49,67 @@ export default function LinkList({
       scrollTargetRef: scrollContainerRef,
     });
 
+  const pathname = usePathname();
+
   const handleChangeToolbarMode = () => {
     if (cachedLinks.size) {
       setAllLinks(false);
     }
-    setEditMode((prev) => !prev);
+    setEditMode((prev) => {
+      const editOnEvent =
+        pathname === "/search"
+          ? "click.editOn_searchResult"
+          : "click.editOn_linkList";
+      const editOffEvent =
+        pathname === "/search"
+          ? "click.editOff_searchResult"
+          : "click.editOff_linkList";
+      sendGTMEvent({
+        event: prev ? editOffEvent : editOnEvent,
+      });
+      return !prev;
+    });
   };
 
   const handleAllCheckLinks = (e: ChangeEvent<HTMLInputElement>) => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.checkAll_editOn_searchResult"
+          : "click.checkAll_editOn_linkList",
+    });
     setAllLinks(!!e.target.checked, currentItems);
   };
 
   const handleCheckLink = (e: ChangeEvent<HTMLInputElement>) => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.checkLink_editOn_searchResult"
+          : "click.checkLink_editOn_linkList",
+    });
     setCachedLink(e.target.value);
   };
 
   const handleDeleteLinks = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.deleteLink_editOn_searchResult"
+          : "click.deleteLink_editOn_linkList",
+    });
     if (cachedLinks.size) {
       openDeleteLink(true);
     }
   };
 
   const handleChangeFolder = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.moveFolder_editOn_searchResult"
+          : "click.moveFolder_editOn_linkList",
+    });
     if (cachedLinks.size) {
       openReassignLinkBook(true);
     }

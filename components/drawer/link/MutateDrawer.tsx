@@ -18,6 +18,8 @@ import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import Tag from "./Tag";
 import TitleInput from "./TitleInput";
+import { usePathname } from "next/navigation";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function MutateLinkDrawer() {
   const {
@@ -34,16 +36,39 @@ export default function MutateLinkDrawer() {
     open(false);
   }, [open]);
 
+  const pathname = usePathname();
+  const onClickClose = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.close_detail_link_searchResult"
+          : "click.close_detail_link_linkList",
+    });
+    onClose();
+  };
+
   const { mutate: updateMutate, isPending: isUpdatePending } =
     useUpdateLink(onClose);
   const { mutate: deleteMutate, isPending: isDeletePending } =
     useDeleteDrawerLink(onClose, link?.linkId || "");
 
   const handleSubmit = async () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.edit_detail_link_searchResult"
+          : "click.edit_detail_link_linkList",
+    });
     updateMutate(formState as Required<CreateFormState>);
   };
 
   const handleDelete = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.delete_detail_link_searchResult"
+          : "click.delete_detail_link_linkList",
+    });
     deleteMutate();
   };
 
@@ -53,11 +78,56 @@ export default function MutateLinkDrawer() {
 
   if (mode !== "mutate" || !link) return null;
 
+  const onClickThumbnail = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.thumbnail_detail_link_searchResult"
+          : "click.thumbnail_detail_link_linkList",
+    });
+  };
+
+  const onClickTitle = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.title_edit_detail_link_searchResult"
+          : "click.title_edit_detail_link_linkList",
+    });
+  };
+
+  const onClickCreateFolder = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.addFolder_edit_detail_link_searchResult"
+          : "click.addFolder_edit_detail_link_linkList",
+    });
+  };
+
+  const onClickSelectFolder = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.editFolder_edit_detail_link_searchResult"
+          : "click.editFolder_edit_detail_link_linkList",
+    });
+  };
+
+  const onClickTagInput = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.Tag_edit_detail_link_searchResult"
+          : "click.Tag_edit_detail_link_linkList",
+    });
+  };
+
   return (
-    <Drawer open={isOpen} onCloseCallback={onClose}>
+    <Drawer open={isOpen} onCloseCallback={onClickClose}>
       <div className="flex flex-1 flex-col gap-10">
         <Header
-          onClose={onClose}
+          onClose={onClickClose}
           center={
             <div className="flex items-center gap-1">
               <Image
@@ -73,7 +143,10 @@ export default function MutateLinkDrawer() {
           right={<OpenShareButton link={link} />}
         />
         <div className="flex flex-col gap-6 px-10">
-          <div className="relative h-[260px] w-[414px] flex-none">
+          <div
+            className="relative h-[260px] w-[414px] flex-none"
+            onClick={onClickThumbnail}
+          >
             <ImageWithFallback
               src={link.thumbnailURL}
               alt="thumbnail"
@@ -96,6 +169,7 @@ export default function MutateLinkDrawer() {
                 title: value,
               }));
             }}
+            onClickCallback={onClickTitle}
           />
           <Folder
             linkBookId={formState.linkBookId}
@@ -107,10 +181,13 @@ export default function MutateLinkDrawer() {
               }))
             }
             disabled={false}
+            onClickCreateFolderCallback={onClickCreateFolder}
+            onClickSelectFolderCallback={onClickSelectFolder}
           />
           <Tag
             tags={formState.tags ?? []}
             setTags={(tags) => setFormState((prev) => ({ ...prev, tags }))}
+            onClickTagInputCallback={onClickTagInput}
           />
           <div className="mt-10 flex gap-1 text-xs text-gray-slate">
             <span>{krDateFormatter(link.createdAt)}에 주섬주섬</span>

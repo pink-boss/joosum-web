@@ -10,6 +10,7 @@ import {
 
 import Toggle from "../Toggle";
 import Dialog from "./Dialog";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function NotificationSettingDialog() {
   const { isNotificationSettingOpen: isOpen, openNotificationSetting: open } =
@@ -34,6 +35,20 @@ export default function NotificationSettingDialog() {
       state.isClassifyAgree = !state.isClassifyAgree;
 
     updateNotificationSetting.mutate(state);
+  };
+
+  const onClickReadAgree = () => {
+    sendGTMEvent({
+      event: "click.unread_settingNotification_myPage",
+    });
+    handleSetting("read");
+  };
+
+  const onClickClassifyAgree = () => {
+    sendGTMEvent({
+      event: "click.unclassified_settingNotification_myPage",
+    });
+    handleSetting("classify");
   };
 
   return (
@@ -68,7 +83,7 @@ export default function NotificationSettingDialog() {
               &apos;읽지 않음&apos; 상태의 링크 알림
             </div>
           </div>
-          <Toggle isOn={!!isReadAgree} onUpdate={() => handleSetting("read")} />
+          <Toggle isOn={!!isReadAgree} onUpdate={onClickReadAgree} />
         </div>
         <div className="w-full">
           <div className="w-full border-t border-gray-silver" />
@@ -83,10 +98,7 @@ export default function NotificationSettingDialog() {
               &apos;기본&apos; 폴더에 분류된 링크 알림
             </div>
           </div>
-          <Toggle
-            isOn={!!isClassifyAgree}
-            onUpdate={() => handleSetting("classify")}
-          />
+          <Toggle isOn={!!isClassifyAgree} onUpdate={onClickClassifyAgree} />
         </div>
       </div>
     </Dialog>

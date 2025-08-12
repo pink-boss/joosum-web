@@ -4,6 +4,7 @@ import ImageWithFallback from "@/components/ImageWithFallback";
 import useIncrementViewCount from "@/hooks/link/useIncrementViewCount";
 import { Link } from "@/types/link.types";
 import { krDateFormatter } from "@/utils/date";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 const WIDTH = 354;
 
@@ -19,6 +20,9 @@ export default function LinkCard({ link, index }: LinkCardProps) {
   const mutation = useIncrementViewCount(link);
 
   const handleOpenLink = () => {
+    sendGTMEvent({
+      event: "click.card_home",
+    });
     mutation.mutate();
   };
 

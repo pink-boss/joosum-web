@@ -6,6 +6,7 @@ import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import { useClearDropdown } from "@/hooks/useClearDropdown";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { LinkBook } from "@/types/linkBook.types";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type DropdownItemProps = {
   title: string;
@@ -44,11 +45,17 @@ const DropdownMore = ({ linkBook, isLayout = false }: InputProps) => {
   };
 
   const handleModify = () => {
+    sendGTMEvent({
+      event: "click.edit_setting_myFolder",
+    });
     closeDialog();
     openMutateLinkBook(true, linkBook.title);
     onCloseDropdown();
   };
   const handleDelete = () => {
+    sendGTMEvent({
+      event: "click.delete_setting_myFolder",
+    });
     closeDialog();
     openDeleteLinkBook(true, linkBook.title);
     onCloseDropdown();

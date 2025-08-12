@@ -8,6 +8,7 @@ import useUpsertTags from "@/hooks/settings/useUpsertTags";
 import { useClearDropdown } from "@/hooks/useClearDropdown";
 import { useOpenSubDialogStore } from "@/store/useSubDialogStore";
 import { Tag } from "@/types/tags.types";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export type InputProps = {
   label: string;
@@ -25,6 +26,13 @@ const TagMore = ({ label }: InputProps) => {
     openDeleteTagConfirm(true);
   };
 
+  const onClickTagMore = () => {
+    sendGTMEvent({
+      event: "click.kebab_settingTag_myPage",
+    });
+    setIsOpen((state) => !state);
+  };
+
   useEffect(() => {
     if (isOpen && dropdownRef.current) {
       dropdownRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -32,10 +40,7 @@ const TagMore = ({ label }: InputProps) => {
   }, [isOpen]);
   return (
     <div className={clsx("relative")} data-testid="tag-more" ref={ref}>
-      <button
-        className="rounded-full"
-        onClick={() => setIsOpen((state) => !state)}
-      >
+      <button className="rounded-full" onClick={onClickTagMore}>
         <Image
           alt="tag-more"
           src="/icons/icon-more-vertical-gray.png"

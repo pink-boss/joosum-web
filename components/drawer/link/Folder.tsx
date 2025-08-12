@@ -11,12 +11,16 @@ type InputProps = {
     linkBookId: LinkBook["linkBookId"],
   ) => void;
   disabled?: boolean;
+  onClickCreateFolderCallback?: () => void;
+  onClickSelectFolderCallback?: () => void;
 };
 
 export default function Folder({
   linkBookId,
   setLinkBookId,
   disabled,
+  onClickCreateFolderCallback,
+  onClickSelectFolderCallback,
 }: InputProps) {
   return (
     <div className="flex flex-col gap-2 text-gray-black">
@@ -25,6 +29,7 @@ export default function Folder({
         <Button
           className="flex items-center font-semibold text-primary-500"
           disabled={disabled}
+          onClickCallback={onClickCreateFolderCallback}
         >
           <Image
             src="/icons/icon-plus.png"
@@ -40,6 +45,7 @@ export default function Folder({
         setLinkBookId={setLinkBookId}
         className="border-none bg-gray-ghost"
         disabled={disabled}
+        onClickCallback={onClickSelectFolderCallback}
       />
     </div>
   );

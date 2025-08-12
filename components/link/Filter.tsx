@@ -5,6 +5,8 @@ import { LinkFilterState, LinkFilterValues } from "@/store/link-filter/schema";
 import DatePicker from "./date-picker";
 import ResetButton from "./ResetButton";
 import TagSelector from "./tag-selector";
+import { usePathname } from "next/navigation";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = LinkFilterState & {
   defaultValues: LinkFilterValues;
@@ -23,7 +25,14 @@ export default function Filter({
     return unread || dateRange.length || tags.length;
   }, [unread, dateRange.length, tags.length]);
 
+  const pathname = usePathname();
   const handleClickUnread = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.unreadFilter_searchResult"
+          : "click.unreadFilter_linkList",
+    });
     setUnread(!unread);
   };
 

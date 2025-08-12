@@ -6,18 +6,20 @@ interface AgreementCheckboxProps {
   isChecked: boolean;
   label: string;
   link?: string;
-  onClick: () => void;
+  onCheck: () => void;
+  onOpenLinkCallback?: () => void;
 }
 
 export default function AgreementCheckbox({
   isChecked,
   label,
   link,
-  onClick,
+  onCheck,
+  onOpenLinkCallback,
 }: AgreementCheckboxProps) {
   return (
     <div className="flex items-center justify-between">
-      <div className="flex cursor-pointer items-center gap-2" onClick={onClick}>
+      <div className="flex cursor-pointer items-center gap-2" onClick={onCheck}>
         <div className="flex size-6 items-center justify-center">
           {isChecked && (
             <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
@@ -39,6 +41,7 @@ export default function AgreementCheckbox({
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-400 hover:text-gray-600"
+          onClick={onOpenLinkCallback}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path

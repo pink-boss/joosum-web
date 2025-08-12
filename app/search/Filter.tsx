@@ -4,6 +4,8 @@ import useQueryLinkBooks from "@/hooks/my-folder/useQueryLinkBooks";
 import { useSearchLinkFilterStore } from "@/store/link-filter/useSearchStore";
 import { useSearchLinkSortStore } from "@/store/link-sort/useSearchStore";
 import { LinkBook } from "@/types/linkBook.types";
+import { sendGTMEvent } from "@next/third-parties/google";
+import { usePathname } from "next/navigation";
 
 export default function LinkBookFilter() {
   const linkSort = useSearchLinkSortStore();
@@ -13,12 +15,23 @@ export default function LinkBookFilter() {
   const { linkBookId: selected, setLinkBookId: setSelected } =
     useSearchLinkFilterStore();
 
+  const pathname = usePathname();
+
+  const onClick = (linkBookId: string) => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.tagFilter_searchResult"
+          : "click.tagFilter_linkList",
+    });
+    setSelected(linkBookId);
+  };
   return (
     <div className="scrollbar-hide flex gap-3 overflow-x-auto">
       <Card
         isSelected={!!selected === false}
         title="전체"
-        onClick={() => setSelected("")}
+        onClick={() => onClick("")}
       />
       {linkBooks.map((_linkBook) => {
         return (
@@ -26,7 +39,7 @@ export default function LinkBookFilter() {
             key={_linkBook.linkBookId}
             isSelected={selected === _linkBook.linkBookId}
             title={_linkBook.title}
-            onClick={() => setSelected(_linkBook.linkBookId)}
+            onClick={() => onClick(_linkBook.linkBookId)}
           />
         );
       })}

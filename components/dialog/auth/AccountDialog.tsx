@@ -6,6 +6,7 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 import { formatNumber } from "@/utils/number";
 
 import Dialog from "../Dialog";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {};
 
@@ -22,12 +23,25 @@ export default function AccountDialog({}: InputProps) {
     open(false);
   };
 
+  const onClickClose = () => {
+    sendGTMEvent({
+      event: "click.close_myAccount_myPage",
+    });
+    onClose();
+  };
+
   async function handleDeleteAccount() {
+    sendGTMEvent({
+      event: "click.deleteAccount_myAccount_myPage",
+    });
     openDeleteAccount(true);
     open(false);
   }
 
   async function handleLogout() {
+    sendGTMEvent({
+      event: "click.logout_myAccount_myPage",
+    });
     onClose();
     openLogout(true);
   }
@@ -37,14 +51,14 @@ export default function AccountDialog({}: InputProps) {
       testId="my-account"
       className="h-[408px] w-[500px] px-5 py-10"
       open={isOpen}
-      onCloseCallback={onClose}
+      onCloseCallback={onClickClose}
     >
       <div className="flex flex-col items-center gap-5">
         <div className="flex w-full flex-col gap-[30px] px-6">
           <div className="flex flex-1 justify-between">
             <div className="invisible size-6" />
             <span className="text-2xl font-bold">내 계정</span>
-            <button onClick={onClose}>
+            <button onClick={onClickClose}>
               <Image
                 src="/icons/basic-close.png"
                 alt="close"

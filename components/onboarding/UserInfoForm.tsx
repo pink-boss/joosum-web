@@ -1,5 +1,7 @@
 "use client";
 
+import { sendGTMEvent } from "@next/third-parties/google";
+
 interface UserInfoFormProps {
   selectedGender: string;
   selectedYear: string;
@@ -19,6 +21,20 @@ export default function UserInfoForm({
   onComplete,
   onSkip,
 }: UserInfoFormProps) {
+  const onClickGender = (gender: string) => {
+    sendGTMEvent({
+      event: "click.selectGender_signAddtional",
+    });
+    onGenderSelect(gender);
+  };
+
+  const onClickYear = (year: string) => {
+    sendGTMEvent({
+      event: "click.selectBirthyear_signAddtional",
+    });
+    onYearSelect(year);
+  };
+
   return (
     <main className="mx-auto flex size-full max-w-[1280px] flex-col justify-center gap-8 px-20">
       {/* 제목 섹션 */}
@@ -44,7 +60,7 @@ export default function UserInfoForm({
             </h3>
             <div className="flex gap-2">
               <button
-                onClick={() => onGenderSelect("male")}
+                onClick={() => onClickGender("male")}
                 className={`flex h-12 w-[104px] items-center justify-center rounded-lg font-semibold ${
                   selectedGender === "male"
                     ? "bg-primary-500 text-white"
@@ -54,7 +70,7 @@ export default function UserInfoForm({
                 남자
               </button>
               <button
-                onClick={() => onGenderSelect("female")}
+                onClick={() => onClickGender("female")}
                 className={`flex h-12 w-[104px] items-center justify-center rounded-lg font-semibold ${
                   selectedGender === "female"
                     ? "bg-primary-500 text-white"
@@ -64,7 +80,7 @@ export default function UserInfoForm({
                 여자
               </button>
               <button
-                onClick={() => onGenderSelect("other")}
+                onClick={() => onClickGender("other")}
                 className={`flex h-12 w-[104px] items-center justify-center rounded-lg font-semibold ${
                   selectedGender === "other"
                     ? "bg-primary-500 text-white"
@@ -84,7 +100,7 @@ export default function UserInfoForm({
             <div className="relative">
               <select
                 value={selectedYear}
-                onChange={(e) => onYearSelect(e.target.value)}
+                onChange={(e) => onClickYear(e.target.value)}
                 className="h-12 w-full appearance-none rounded-lg bg-gray-ghost px-3 font-semibold text-gray-black focus:outline-none focus:ring-2 focus:ring-primary-500"
               >
                 {Array.from({ length: 80 }, (_, i) => {

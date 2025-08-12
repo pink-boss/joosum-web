@@ -6,6 +6,7 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 
 import Menu from "./Menu";
 import NotificationDropdown from "../notification/list/NotificationDropdown";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   children: React.ReactNode;
@@ -19,6 +20,7 @@ export default function Sidebar({ children }: InputProps) {
   };
 
   const openAppDownloadDialog = () => {
+    sendGTMEvent({ event: "click.downloadApp_gnb_common" });
     openAppDownload(true);
   };
   return (
@@ -30,6 +32,7 @@ export default function Sidebar({ children }: InputProps) {
               href="/dashboard"
               className="cursor-pointer"
               onClick={() => {
+                sendGTMEvent({ event: "click.logo_gnb_common" });
                 closeDialog();
               }}
             >

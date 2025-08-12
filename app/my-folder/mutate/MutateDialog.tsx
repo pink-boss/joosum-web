@@ -11,6 +11,7 @@ import { CreateFormState } from "@/types/linkBook.types";
 
 import FolderSettingEditor from "./FolderSettingEditor";
 import { pickBackgroundColors, pickTitleColors } from "../constants";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 const defaultValues: CreateFormState = {
   title: "",
@@ -35,8 +36,18 @@ export default function MutateDialog() {
     open(false);
   }, [clearLinkBook, open]);
 
+  const onClickClose = () => {
+    sendGTMEvent({
+      event: "click.close_folderTitle_addFolder",
+    });
+    onClose();
+  };
+
   const mutation = useMutateLinkBook(onClose);
   async function handleSubmit() {
+    sendGTMEvent({
+      event: "click.save_folderTitle_addFolder",
+    });
     mutation.mutate(formState);
   }
 
@@ -47,12 +58,12 @@ export default function MutateDialog() {
   return (
     <ConfirmDialog
       open={isOpen}
-      onCloseCallback={onClose}
+      onCloseCallback={onClickClose}
       className="w-[792px]"
       closeProps={{
         className: "w-[220.5px] h-[56px] bg-gray-silver",
         children: "닫기",
-        onClick: onClose,
+        onClick: onClickClose,
       }}
       submitProps={{
         className: clsx(["h-[56px] w-[220.5px]"]),

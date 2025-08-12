@@ -12,6 +12,7 @@ import { defaultValues } from "@/store/link-filter/schema";
 import { useFolderLinkFilterStore } from "@/store/link-filter/useFolderStore";
 
 import LinkCard from "./LinkCard";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function LinkCardList() {
   const [filter, setFilter] = useState<"latest" | "unread">("latest");
@@ -46,13 +47,26 @@ export default function LinkCardList() {
     });
 
   const handleFilter = (e: any) => {
+    sendGTMEvent({
+      event: "click.tab_home",
+    });
     setFilter(e.target.value);
   };
 
   const handleLinkToAllLinks = () => {
+    sendGTMEvent({
+      event: "click.viewAll_home",
+    });
     if (filter === "unread") {
       setUnread(true);
     }
+  };
+
+  const onClickLoadMore = () => {
+    sendGTMEvent({
+      event: "click.more_home",
+    });
+    loadNextPage();
   };
 
   return (
@@ -105,7 +119,7 @@ export default function LinkCardList() {
           </div>
           {hasNextPage && (
             <LoadMoreButton
-              onClick={loadNextPage}
+              onClick={onClickLoadMore}
               remainingCount={totalItems - currentItems.length}
               textPrefix={filter === "latest" ? "저장한" : "읽지 않은"}
               variant="card"

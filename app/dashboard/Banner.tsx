@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { Banner } from "../../types/banner.types";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   data: Banner[];
@@ -40,8 +41,14 @@ export default function BannerCard({}: InputProps) {
 
   const currentBanner = bannerData[current];
 
+  const onClickBanner = () => {
+    sendGTMEvent({
+      event: "click.banner_home",
+    });
+  };
+
   return (
-    <Link href={currentBanner.clickURL} target="_blank">
+    <Link href={currentBanner.clickURL} target="_blank" onClick={onClickBanner}>
       <div
         className={clsx(
           "flex items-center rounded-xl bg-primary-lavender",

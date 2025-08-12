@@ -7,6 +7,7 @@ import CompletionScreen from "@/components/onboarding/CompletionScreen";
 import TermsAgreement from "@/components/onboarding/TermsAgreement";
 import UserInfoForm from "@/components/onboarding/UserInfoForm";
 import PublicPathHeader from "@/components/PublicPathHeader";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 const today = new Date();
 
@@ -106,6 +107,9 @@ export default function OnboardingPage() {
   };
 
   const handleSkip = async () => {
+    sendGTMEvent({
+      event: "click.skip_signAddtional",
+    });
     if (isLoading) return;
 
     setIsLoading(true);

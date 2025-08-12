@@ -12,6 +12,8 @@ import { useOpenDialogStore } from "@/store/useDialogStore";
 import { LinkBook } from "@/types/linkBook.types";
 
 import SelectLinkBook from "./SelectLinkBook";
+import { usePathname } from "next/navigation";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function ReassignLinkBookDialog() {
   const { data: linkBooks } = useQueryLinkBooks("created_at");
@@ -28,6 +30,16 @@ export default function ReassignLinkBookDialog() {
     open(false);
   };
 
+  const onClickClose = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.cancel_moveFolder_editOn_searchResult"
+          : "click.cancel_moveFolder_editOn_linkList",
+    });
+    onClose();
+  };
+
   const onSuccessCallback = () => {
     clearLinks();
     onClose();
@@ -35,8 +47,16 @@ export default function ReassignLinkBookDialog() {
 
   const mutation = useReassignLinkBook(onSuccessCallback);
 
+  const pathname = usePathname();
+
   async function handleSubmit() {
     if (toLinkBookId && cachedLinks.size) {
+      sendGTMEvent({
+        event:
+          pathname === "/search"
+            ? "click.confirm_moveFolder_editOn_searchResult"
+            : "click.confirm_moveFolder_editOn_linkList",
+      });
       mutation.mutate({
         toLinkBookId,
         linkIds: [...cachedLinks],
@@ -52,8 +72,8 @@ export default function ReassignLinkBookDialog() {
   return (
     <ConfirmDialog
       open={isOpen}
-      onCloseCallback={onClose}
-      closeProps={{ children: "취소", onClick: onClose }}
+      onCloseCallback={onClickClose}
+      closeProps={{ children: "취소", onClick: onClickClose }}
       submitProps={{
         children: "이동",
         onClick: handleSubmit,

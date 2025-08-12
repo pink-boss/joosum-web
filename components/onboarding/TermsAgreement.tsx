@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import AgreementCheckbox from "./AgreementCheckbox";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 interface TermsAgreementProps {
   agreements: {
@@ -23,6 +24,45 @@ export default function TermsAgreement({
   onStart,
   isStartButtonEnabled,
 }: TermsAgreementProps) {
+  const onClickAllAgreement = () => {
+    sendGTMEvent({
+      event: "click.checkAll_agreeTermsOfService",
+    });
+    onAllAgreement();
+  };
+
+  const onClickStart = () => {
+    sendGTMEvent({
+      event: "click.signUp_agreeTermsOfService",
+    });
+    onStart();
+  };
+
+  const onLinkOpenTerms = () => {
+    sendGTMEvent({
+      event: "click.termsOfService_agreeTermsOfService",
+    });
+  };
+
+  const onLinkOpenPrivacy = () => {
+    sendGTMEvent({
+      event: "click.privacyPolicy_agreeTermsOfService",
+    });
+  };
+
+  const onCheckTerms = () => {
+    sendGTMEvent({
+      event: "click.checkTermsOfService_agreeTermsOfService",
+    });
+    onIndividualAgreement("terms");
+  };
+
+  const onCheckPrivacy = () => {
+    sendGTMEvent({
+      event: "click.checkPrivacyPolicy_agreeTermsOfService",
+    });
+    onIndividualAgreement("privacy");
+  };
   return (
     <main className="mx-auto flex size-full max-w-[1280px] flex-col justify-center gap-8 px-20">
       {/* 제목 섹션 */}
@@ -44,7 +84,7 @@ export default function TermsAgreement({
           <div className="mb-6">
             <div
               className="flex h-12 w-full cursor-pointer items-center rounded-lg bg-gray-ghost px-4"
-              onClick={onAllAgreement}
+              onClick={onClickAllAgreement}
             >
               <div className="flex items-center gap-2">
                 <div
@@ -80,7 +120,8 @@ export default function TermsAgreement({
               isChecked={agreements.terms}
               label="서비스 이용약관 동의"
               link="https://joosum.notion.site/6df241a6e3174b8fbfc7933a506a0b1e"
-              onClick={() => onIndividualAgreement("terms")}
+              onCheck={onCheckTerms}
+              onOpenLinkCallback={onLinkOpenTerms}
             />
 
             {/* 개인정보 수집 및 이용 동의 */}
@@ -88,13 +129,14 @@ export default function TermsAgreement({
               isChecked={agreements.privacy}
               label="개인정보 수집 및 이용 동의"
               link="https://joosum.notion.site/33975a64eb55468ea523f707353743cf"
-              onClick={() => onIndividualAgreement("privacy")}
+              onCheck={onCheckPrivacy}
+              onOpenLinkCallback={onLinkOpenPrivacy}
             />
           </div>
 
           {/* 시작하기 버튼 */}
           <button
-            onClick={onStart}
+            onClick={onClickStart}
             disabled={!isStartButtonEnabled}
             className={`flex h-14 w-full items-center justify-center gap-2 rounded-lg text-lg font-semibold transition-all ${
               isStartButtonEnabled

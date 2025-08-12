@@ -15,7 +15,6 @@ export default function Topbar() {
       className={clsx(
         "mb-8 flex h-[104px] w-full items-center justify-between bg-paperabovebg py-7",
         "gap-6 px-10",
-
         "lg:gap-12",
       )}
     >

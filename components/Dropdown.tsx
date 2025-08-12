@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { useClearDropdown } from "@/hooks/useClearDropdown";
+import { usePathname } from "next/navigation";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   selected: Value;
@@ -17,11 +19,24 @@ const Dropdown = ({ selected, setSelected, options }: InputProps) => {
   const ref = useClearDropdown(() => setIsOpen(false));
 
   const selectedOption = options.find(({ value }) => selected === value);
+
+  const pathname = usePathname();
+  const onClick = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/my-folder"
+          ? "click.sortby_myFolder"
+          : pathname === "/search"
+            ? "click.sortby_searchResult"
+            : "click.sortby_linkList",
+    });
+    setIsOpen(!isOpen);
+  };
   return (
     <div className="relative h-fit" data-testid="sort-dropdown" ref={ref}>
       <button
         data-testid="open-button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onClick}
         className="flex h-[24px] items-center p-1 font-semibold text-gray-dim"
       >
         <div>{selectedOption?.label}</div>

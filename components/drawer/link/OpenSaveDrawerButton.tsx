@@ -1,10 +1,12 @@
 import clsx from "clsx";
 
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function OpenLinkSaveDrawerButton() {
   const { openLinkDrawer } = useOpenDrawerStore();
   const handleClick = () => {
+    sendGTMEvent({ event: "click.saveLink_topNavi_common" });
     openLinkDrawer(true, "save");
   };
   return (

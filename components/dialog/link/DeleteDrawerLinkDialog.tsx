@@ -1,21 +1,26 @@
 "use client";
 
-import clsx from "clsx";
-
-import ButtonLoading from "@/components/ButtonLoading";
-import Dialog from "@/components/dialog/Dialog";
 import useDeleteDrawerLink from "@/hooks/link/useDeleteDrawerLink";
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
 
 import ConfirmDialog from "../ConfirmDialog";
+import { usePathname } from "next/navigation";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function DeleteDialog() {
   const { isDeleteDrawerLinkOpen: isOpen, openDeleteDrawerLink: open } =
     useOpenDialogStore();
   const { link, openLinkDrawer } = useOpenDrawerStore();
+  const pathname = usePathname();
 
   const onClose = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.cancel_deleteConfirm_detail_link_searchResult"
+          : "click.cancel_deleteConfirm_detail_link_linkList",
+    });
     open(false);
     openLinkDrawer(false);
   };
@@ -23,6 +28,12 @@ export default function DeleteDialog() {
   const mutation = useDeleteDrawerLink(onClose, link?.linkId!);
 
   async function handleSubmit() {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.delete_deleteConfirm_detail_link_searchResult"
+          : "click.delete_deleteConfirm_detail_link_linkList",
+    });
     mutation.mutate();
   }
 

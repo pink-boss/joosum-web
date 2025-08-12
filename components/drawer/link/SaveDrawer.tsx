@@ -14,6 +14,7 @@ import { PrimaryUIButton } from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import Tag from "./Tag";
 import TitleInput from "./TitleInput";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   _defaultValues?: SaveLink;
@@ -37,12 +38,60 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
   const onClose = () => {
     open(false);
   };
+
+  const onClickClose = () => {
+    sendGTMEvent({
+      event: "click.close_saveLink",
+    });
+    onClose();
+  };
+
+  const onClickCancel = () => {
+    sendGTMEvent({
+      event: "click.cancel_saveLink",
+    });
+    onClose();
+  };
+
   const saveLinkMutation = useSaveLink(onClose);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    sendGTMEvent({
+      event: "click.save_saveLink",
+    });
     saveLinkMutation.mutate(formState);
+  };
+
+  const onClickUrl = () => {
+    sendGTMEvent({
+      event: "click.url_saveLink",
+    });
+  };
+
+  const onClickTitle = () => {
+    sendGTMEvent({
+      event: "click.title_saveLink",
+    });
+  };
+
+  const onClickCreateFolder = () => {
+    sendGTMEvent({
+      event: "click.addFolder_saveLink",
+    });
+  };
+
+  const onClickSelectFolder = () => {
+    sendGTMEvent({
+      event: "click.selectFolder_saveLink",
+    });
+  };
+
+  const onClickTagInput = () => {
+    sendGTMEvent({
+      event: "click.tag_saveLink",
+    });
   };
 
   useEffect(() => {
@@ -56,10 +105,10 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
   if (mode !== "save") return null;
 
   return (
-    <Drawer open={isOpen} onCloseCallback={onClose}>
+    <Drawer open={isOpen} onCloseCallback={onClickClose}>
       <div className="flex flex-1 flex-col gap-10">
         <Header
-          onClose={onClose}
+          onClose={onClickClose}
           center={
             <div className="font-semibold text-gray-black">링크 저장</div>
           }
@@ -73,10 +122,17 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
             value={formState.url}
             titleInput={titleRef.current}
             setFormState={setFormState}
+            onClickCallback={onClickUrl}
           />
           <input
             hidden
             value={formState.thumbnailURL}
+            onChange={(e) =>
+              setFormState((prev) => ({
+                ...prev,
+                thumbnailURL: e.target.value,
+              }))
+            }
             data-testid="thumbnailURL"
           />
           <TitleInput
@@ -88,6 +144,7 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
               }));
             }}
             inputRef={titleRef}
+            onClickCallback={onClickTitle}
           />
           <Folder
             linkBookId={formState.linkBookId}
@@ -97,6 +154,8 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 linkBookId,
               }))
             }
+            onClickCreateFolderCallback={onClickCreateFolder}
+            onClickSelectFolderCallback={onClickSelectFolder}
           />
           <Tag
             tags={formState.tags}
@@ -106,11 +165,12 @@ export default function LinkSaveDrawer({ _defaultValues }: InputProps) {
                 tags,
               }))
             }
+            onClickTagInputCallback={onClickTagInput}
           />
           <div className="mt-auto flex justify-center gap-3">
             <SecondaryButton
               loading={saveLinkMutation.isPending}
-              onClick={onClose}
+              onClick={onClickCancel}
             >
               취소
             </SecondaryButton>

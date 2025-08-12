@@ -1,10 +1,17 @@
 import clsx from "clsx";
-import { Dispatch, ReactNode, SetStateAction, useState } from "react";
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 
 import useEditorTabs from "@/hooks/useEditorTabs";
 import { CreateFormState } from "@/types/linkBook.types";
 
 import { FolderBook } from "../folder";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type Tab = { title: string; component: ReactNode };
 
@@ -42,6 +49,18 @@ export default function FolderSettingEditor({
 }: InputProps) {
   const tabs = useEditorTabs(formState, setFormState);
   const [selectedTab, setSelectedTab] = useState(tabs[0].title);
+
+  useEffect(() => {
+    sendGTMEvent({
+      event:
+        selectedTab === "폴더명"
+          ? "view.folderTitle_addFolder"
+          : selectedTab === "색상"
+            ? "view.folderColor_addFolder"
+            : "view.folderIllust_addFolder",
+    });
+  }, [selectedTab]);
+
   return (
     <div className="mb-5 flex w-full flex-col items-center">
       <div

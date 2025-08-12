@@ -15,14 +15,23 @@ import useQueryLinkFilterTags from "@/hooks/useQueryLinkFilterTags";
 import { isValidName } from "@/utils/regexp";
 
 import RecentTags from "./RecentTags";
+import { usePathname } from "next/navigation";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   tags: string[];
   setTags: (tags: string[]) => void;
   disabled?: boolean;
+  onClickTagInputCallback?: () => void;
 };
 
-export default function Tag({ tags, setTags, disabled = false }: InputProps) {
+export default function Tag({
+  tags,
+  setTags,
+  disabled = false,
+  onClickTagInputCallback,
+}: InputProps) {
+  const pathname = usePathname();
   const [isActive, setIsActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const recentTagsRef = useRef<HTMLDivElement>(null);
@@ -35,6 +44,9 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
   const upsertTags = useUpsertTagsSetting();
 
   const handleSubmit = () => {
+    sendGTMEvent({
+      event: "click.add_tag",
+    });
     const trimmedInput = input.trim();
 
     if (tags.length == 10) {
@@ -78,10 +90,16 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
   };
 
   const removeTag = (index: number) => {
+    sendGTMEvent({
+      event: "click.delete_tag",
+    });
     setTags([...tags.slice(0, index), ...tags.slice(index + 1)]);
   };
 
   const handleSelectRecentTag = (tag: string) => {
+    sendGTMEvent({
+      event: "click.recent_tag",
+    });
     if (tags.length == 10) {
       toast({
         message: "태그는 10개까지 선택할 수 있어요.",
@@ -167,6 +185,7 @@ export default function Tag({ tags, setTags, disabled = false }: InputProps) {
               maxLength={10}
               onCompositionStart={() => setIsComposing(true)}
               onCompositionEnd={() => setIsComposing(false)}
+              onClick={onClickTagInputCallback}
             />
           </div>
           {input && (

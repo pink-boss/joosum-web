@@ -18,6 +18,7 @@ export type InputProps = {
   fromLinkBookId?: string;
   className?: string;
   disabled?: boolean;
+  onClickCallback?: () => void;
 };
 
 export default function SelectLinkBook({
@@ -27,6 +28,7 @@ export default function SelectLinkBook({
   fromLinkBookId,
   className,
   disabled,
+  onClickCallback,
 }: InputProps) {
   const ref = useClearDropdown(() => setIsOpen(false));
   const [isOpen, setIsOpen] = useState(open);
@@ -60,7 +62,10 @@ export default function SelectLinkBook({
       <button
         data-testid="open-button"
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen);
+          onClickCallback?.();
+        }}
         className={clsx(
           "flex items-center justify-between gap-0.5 px-3 text-start text-sm text-gray-dim",
           "h-[46px] w-full rounded-lg border border-gray-silver",

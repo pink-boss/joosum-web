@@ -1,5 +1,7 @@
+import { sendGTMEvent } from "@next/third-parties/google";
 import clsx from "clsx";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 type SelectBoxProps = {
@@ -65,10 +67,20 @@ export function SelectBox({
     setHiddenCount(selected.length - visibleTags.length);
   }, [selected.length, visibleTags.length]);
 
+  const pathname = usePathname();
+  const onClick = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.tagFilter_searchResult"
+          : "click.tagFilter_linkList",
+    });
+    setIsOpen(!isOpen);
+  };
   return (
     <button
       data-testid="open-button"
-      onClick={() => setIsOpen(!isOpen)}
+      onClick={onClick}
       className={clsx(
         "flex items-center justify-between gap-0.5 px-3 text-sm text-gray-dim",
         "h-[46px] w-full rounded-lg border border-gray-silver",

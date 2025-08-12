@@ -2,6 +2,7 @@ import clsx from "clsx";
 import Image from "next/image";
 
 import { useOpenDrawerStore } from "@/store/useDrawerStore";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function OpenUserDrawerButton() {
   const { openUserDrawer } = useOpenDrawerStore();
@@ -9,7 +10,10 @@ export default function OpenUserDrawerButton() {
   return (
     <button
       data-testid="user-drawer-open"
-      onClick={() => openUserDrawer(true)}
+      onClick={() => {
+        sendGTMEvent({ event: "click.user_gnb_common" });
+        openUserDrawer(true);
+      }}
       className={clsx(
         "flex cursor-pointer items-center justify-center",
         "transition-opacity hover:opacity-80",

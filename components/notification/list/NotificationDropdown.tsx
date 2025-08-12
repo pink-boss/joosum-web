@@ -5,12 +5,16 @@ import { useCallback, useState } from "react";
 import { useClearDropdown } from "@/hooks/useClearDropdown";
 
 import NotificationList from "./NotificationList";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 const NotificationDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hasNotification, setHasNotification] = useState(false);
 
-  const onCloseDropdown = () => setIsOpen(false);
+  const onCloseDropdown = () => {
+    setIsOpen(false);
+    sendGTMEvent({ event: "click.close_notification" });
+  };
 
   const ref = useClearDropdown(onCloseDropdown);
 
@@ -26,6 +30,7 @@ const NotificationDropdown = () => {
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
+        sendGTMEvent({ event: "click.notification" });
       }}
     >
       {isOpen && (

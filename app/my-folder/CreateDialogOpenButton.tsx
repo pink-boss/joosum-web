@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 
 import useSelectLinkBook from "@/hooks/my-folder/useSelectLinkBook";
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   children: ReactNode;
@@ -44,8 +45,16 @@ export function Button({
 }
 
 export default function CreateDialogOpenButton() {
+  const onClickCreateFolder = () => {
+    sendGTMEvent({
+      event: "click.addFolder_myFolder",
+    });
+  };
   return (
-    <Button className="flex rounded bg-primary-500 py-[6px] pl-2 pr-3 font-semibold text-white">
+    <Button
+      className="flex rounded bg-primary-500 py-[6px] pl-2 pr-3 font-semibold text-white"
+      onClickCallback={onClickCreateFolder}
+    >
       <Image
         src="/icons/icon-plus-white.png"
         alt="plus"

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import PreviousProviderBubble from "@/components/PreviousProviderBubble";
 import { PreviousLoginProvider } from "@/types/auth.types";
 import { getClientUri } from "@/utils/envUri";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_AUTH_GOOGLE_ID;
 const GOOGLE_REDIRECT_URI = `${getClientUri()}/auth/callback/google`;
@@ -17,6 +18,9 @@ const GoogleOAuthHandler = ({
   const router = useRouter();
 
   const handleGoogleLogin = () => {
+    sendGTMEvent({
+      event: "click.googleLogin_login",
+    });
     const authUrl =
       `https://accounts.google.com/o/oauth2/v2/auth?` +
       `client_id=${GOOGLE_CLIENT_ID}` +

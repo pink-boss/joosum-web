@@ -4,6 +4,8 @@ import ConfirmDialog from "@/components/dialog/ConfirmDialog";
 import useCheckLink from "@/hooks/link/useCheckLink";
 import useDeleteLink from "@/hooks/link/useDeleteLink";
 import { useOpenDialogStore } from "@/store/useDialogStore";
+import { sendGTMEvent } from "@next/third-parties/google";
+import { usePathname } from "next/navigation";
 
 export default function DeleteDialog() {
   const { isDeleteLinkOpen: isOpen, openDeleteLink: open } =
@@ -14,6 +16,16 @@ export default function DeleteDialog() {
     open(false);
   };
 
+  const onClickClose = () => {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.cancel_deleteLink_editOn_searchResult"
+          : "click.cancel_deleteLink_editOn_linkList",
+    });
+    onClose();
+  };
+
   const onSuccessCallback = () => {
     clearLinks();
     onClose();
@@ -21,15 +33,23 @@ export default function DeleteDialog() {
 
   const mutation = useDeleteLink(onSuccessCallback, [...cachedLinks]);
 
+  const pathname = usePathname();
+
   async function handleSubmit() {
+    sendGTMEvent({
+      event:
+        pathname === "/search"
+          ? "click.delete_deleteLink_editOn_searchResult"
+          : "click.delete_deleteLink_editOn_linkList",
+    });
     mutation.mutate();
   }
 
   return (
     <ConfirmDialog
       open={isOpen}
-      onCloseCallback={onClose}
-      closeProps={{ children: "취소", onClick: onClose }}
+      onCloseCallback={onClickClose}
+      closeProps={{ children: "취소", onClick: onClickClose }}
       submitProps={{
         children: "삭제",
         onClick: handleSubmit,

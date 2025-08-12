@@ -8,6 +8,7 @@ import {
   Notification,
   TQueryNotifications,
 } from "@/types/notification/list.types";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   setHasNotification: (hasNotification: boolean) => void;
@@ -30,6 +31,7 @@ export default function NotificationList({ setHasNotification }: InputProps) {
 
   const handleLoadMore = () => {
     if (hasNextPage && !isFetchingNextPage) {
+      sendGTMEvent({ event: "click.more_notification" });
       fetchNextPage();
     }
   };
@@ -79,7 +81,10 @@ export default function NotificationList({ setHasNotification }: InputProps) {
               "flex gap-3.5 py-5 pl-5 pr-4",
               notification.isRead && "cursor-pointer bg-primary-100",
             )}
-            onClick={() => handleUpdateRead(notification.notificationId)}
+            onClick={() => {
+              sendGTMEvent({ event: "click.detail_notification" });
+              handleUpdateRead(notification.notificationId);
+            }}
           >
             <Image
               alt="notification-type"

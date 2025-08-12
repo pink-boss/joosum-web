@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { useOpenDialogStore } from "@/store/useDialogStore";
 import { Account as AccountType } from "@/types/account.types";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = Pick<AccountType, "email">;
 
@@ -10,6 +11,9 @@ export default function Account({ email }: InputProps) {
   const { openAccount: openAccountDialog } = useOpenDialogStore();
 
   const onOpenMyAccount = () => {
+    sendGTMEvent({
+      event: "click.myAccount_myPage",
+    });
     openAccountDialog(true);
   };
 

@@ -1,19 +1,24 @@
 import { ChangeEvent, KeyboardEvent, RefObject, useState } from "react";
 
 import FormItem from "./FormItem";
+import { usePathname } from "next/navigation";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type InputProps = {
   value?: string;
   setValue: (value: string) => void;
   disabled?: boolean;
   inputRef?: RefObject<HTMLInputElement>;
+  onClickCallback?: () => void;
 };
 export default function TitleInput({
   value,
   setValue,
   disabled,
   inputRef,
+  onClickCallback,
 }: InputProps) {
+  const pathname = usePathname();
   const [isError, setIsError] = useState(false);
   const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
@@ -37,6 +42,10 @@ export default function TitleInput({
       nextInput?.focus();
     }
   };
+
+  const handleClick = () => {
+    onClickCallback?.();
+  };
   return (
     <FormItem
       label="제목"
@@ -50,6 +59,7 @@ export default function TitleInput({
         onChange: handleChangeValue,
         onKeyDown: handlePressEnterKey,
         disabled: disabled,
+        onClick: handleClick,
       }}
       error={{ status: isError, message: "제목은 1 글자 이상 입력해주세요." }}
     />
