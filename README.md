@@ -178,5 +178,6 @@ middleware.ts         # 경로 가드
 ## 베포 전략
 
 - main 원격 브런치에 코드를 푸쉬하면 서버로 자동 배포. 만약 배포에 실패하면 저장소에서 failed jobs만 재실행.
+- 용량이 크기 때문에 volume 관련 에러가 날시에 vm docker image 삭제
 
 ---
