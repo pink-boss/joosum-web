@@ -98,6 +98,7 @@ export default function OnboardingPage() {
       setShowFinalScreen(true);
     } catch (error) {
       console.error("Signup error:", error);
+      alert(JSON.stringify(error));
       alert(
         error instanceof Error ? error.message : "회원가입에 실패했습니다.",
       );
@@ -133,6 +134,7 @@ export default function OnboardingPage() {
       setShowFinalScreen(true);
     } catch (error) {
       console.error("Signup error:", error);
+      alert(JSON.stringify(error));
       alert(
         error instanceof Error ? error.message : "회원가입에 실패했습니다.",
       );
