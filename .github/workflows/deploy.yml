@@ -70,6 +70,7 @@ jobs:
           script: |
             docker pull joosum.kr.ncr.ntruss.com/joosum-frontend:${{ steps.date.outputs.date }}
             docker stop frontend || true
+            docker rm frontend || true
             docker run --rm -d -p 3000:3000 \
               --log-opt max-size=10k --log-opt max-file=3 \
               --name frontend joosum.kr.ncr.ntruss.com/joosum-frontend:${{ steps.date.outputs.date }}
