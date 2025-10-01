@@ -1,8 +1,9 @@
 {
-  "plugins": ["prettier-plugin-tailwindcss"],
-
-  "importOrder": ["^react$", "^next", "^[a-z]", "^@/"],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true,
-  "tailwindFunctions": ["clsx", "classnames"]
+  "tabWidth": 2,
+  "printWidth": 120,
+  "useTabs": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "tailwindFunctions": ["clsx", "classnames"],
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

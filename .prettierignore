@@ -1,0 +1,38 @@
+# 빌드 산출물
+.next
+out
+build
+dist
+
+# 캐시
+.cache
+
+# 의존성
+node_modules
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 환경 변수
+.env
+.env.*
+!.env.example
+
+# Git 관련
+.git
+.gitignore
+.gitattributes
+
+# CI/CD 및 설정 파일
+.github/
+*.yml
+*.yaml
+
+# 로그 & 시스템 파일
+*.log
+.DS_Store
+Thumbs.db
+
+# 테스트 관련
+*.snap
+coverage

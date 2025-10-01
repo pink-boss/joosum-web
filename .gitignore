@@ -42,4 +42,4 @@ node_modules
 storybook-static
 
 # vscode
-/.vscode
+# /.vscode
