@@ -1,13 +1,10 @@
-import { NextRequest } from "next/server";
+import { NextRequest } from 'next/server';
 
-import { serverApi } from "@/utils/api";
+import { serverApi } from '@/utils/api';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ linkBookId: string }> },
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ linkBookId: string }> }) {
   const searchParams = request.nextUrl.searchParams;
-  const queryString = `sort=${searchParams.get("sort")}&order=${searchParams.get("order")}`;
+  const queryString = `sort=${searchParams.get('sort')}&order=${searchParams.get('order')}`;
   const { linkBookId } = await params;
 
   return serverApi({

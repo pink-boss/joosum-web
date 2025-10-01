@@ -1,15 +1,15 @@
-import { NextRequest } from "next/server";
+import { NextRequest } from 'next/server';
 
-import { serverApi } from "@/utils/api";
+import { serverApi } from '@/utils/api';
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ linkId: string; linkBookId: string }> },
+  { params }: { params: Promise<{ linkBookId: string; linkId: string }> },
 ) {
   const { linkId, linkBookId } = await params;
 
   return serverApi({
     path: `api/links/${linkId}/link-book-id/${linkBookId}`,
-    method: "PUT",
+    method: 'PUT',
   });
 }

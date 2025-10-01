@@ -1,12 +1,9 @@
-import { NextRequest } from "next/server";
+import { NextRequest } from 'next/server';
 
-import { serverApi } from "@/utils/api";
+import { serverApi } from '@/utils/api';
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ tag: string }> },
-) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ tag: string }> }) {
   const { tag } = await params;
 
-  return serverApi({ path: `api/tags/${tag}`, method: "DELETE" });
+  return serverApi({ path: `api/tags/${tag}`, method: 'DELETE' });
 }
