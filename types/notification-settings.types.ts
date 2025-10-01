@@ -6,10 +6,7 @@ export interface NotificationSetting {
   userId: string;
 }
 
-export type UpdateFormState = Pick<
-  NotificationSetting,
-  "isClassifyAgree" | "isReadAgree"
->;
+export type UpdateFormState = Pick<NotificationSetting, 'isClassifyAgree' | 'isReadAgree'>;
 
 export type UpdateFormResult = {
   matchedCount: number;
@@ -18,4 +15,4 @@ export type UpdateFormResult = {
   upsertedID: string;
 };
 
-export type UpdateNotificationSettingType = "read" | "classify";
+export type UpdateNotificationSettingType = 'classify' | 'read';

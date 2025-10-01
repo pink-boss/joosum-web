@@ -1,4 +1,4 @@
-import { UseQueryResult } from "@tanstack/react-query";
+import { UseQueryResult } from '@tanstack/react-query';
 
 export interface Link {
   index?: number;
@@ -16,33 +16,22 @@ export interface Link {
   userId: string;
 }
 
-export type TLinkQueryResult = Omit<UseQueryResult<Link[], Error>, "data"> & {
+export type TLinkQueryResult = Omit<UseQueryResult<Link[], Error>, 'data'> & {
   data: Link[];
 };
 
 export type MutateLink = Pick<
   Link,
-  | "linkId"
-  | "linkBookId"
-  | "linkBookName"
-  | "tags"
-  | "thumbnailURL"
-  | "title"
-  | "url"
+  'linkBookId' | 'linkBookName' | 'linkId' | 'tags' | 'thumbnailURL' | 'title' | 'url'
 >;
 
-export type CreateFormState = Partial<Omit<MutateLink, "tags">> &
-  Pick<MutateLink, "tags">;
+export type CreateFormState = Partial<Omit<MutateLink, 'tags'>> & Pick<MutateLink, 'tags'>;
 
 export type UpdateFormState = MutateLink;
 
-export type SaveLink = Pick<
-  Link,
-  "linkBookId" | "tags" | "thumbnailURL" | "title" | "url"
->;
+export type SaveLink = Pick<Link, 'linkBookId' | 'tags' | 'thumbnailURL' | 'title' | 'url'>;
 
-export type SaveFormState = Partial<Omit<SaveLink, "tags">> &
-  Pick<SaveLink, "tags">;
+export type SaveFormState = Partial<Omit<SaveLink, 'tags'>> & Pick<SaveLink, 'tags'>;
 
-export type TQueryThumbnailArgs = Pick<Link, "url">;
-export type TQueryThumbnail = Pick<Link, "thumbnailURL" | "title" | "url">;
+export type TQueryThumbnailArgs = Pick<Link, 'url'>;
+export type TQueryThumbnail = Pick<Link, 'thumbnailURL' | 'title' | 'url'>;

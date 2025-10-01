@@ -1,12 +1,12 @@
-export type MonthType = "prev" | "this" | "next";
+export type MonthType = 'next' | 'prev' | 'this';
 
 export type RenderDateType = {
-  month: number;
   date: number;
-  monthType: MonthType;
   dateObj: Date;
+  month: number;
+  monthType: MonthType;
 };
 
 export type DateValue = Date | string;
 
-export type DateRange = [] | [DateValue] | [DateValue, DateValue];
+export type DateRange = [] | [DateValue, DateValue] | [DateValue];

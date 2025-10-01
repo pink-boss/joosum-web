@@ -14,4 +14,4 @@ export type LogoutResult = {
   upsertedID: string;
 };
 
-export type PreviousLoginProvider = "apple" | "google" | null;
+export type PreviousLoginProvider = 'apple' | 'google' | null;

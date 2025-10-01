@@ -1,4 +1,4 @@
-export type ToastStatus = "success" | "fail" | "warning";
+export type ToastStatus = 'fail' | 'success' | 'warning';
 
 export interface NotificationToast {
   message: string;
