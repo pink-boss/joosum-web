@@ -1,43 +1,37 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
-import { trimTrailingSlash } from "./envUri";
+import { trimTrailingSlash } from './env-uri';
 
 interface FetchParams {
   path: string;
-  method?: "GET" | "POST" | "PUT" | "DELETE";
-  queryString?: string | null;
-  body?: Record<string, any> | Array<any> | string | number | boolean | null;
+  method?: 'DELETE' | 'GET' | 'POST' | 'PUT';
+  queryString?: null | string;
+  body?: Array<any> | boolean | null | number | Record<string, any> | string;
   Authorization?: string;
 }
 
-export async function serverApi({
-  path,
-  method,
-  queryString,
-  body,
-  Authorization,
-}: FetchParams) {
-  const token = (await cookies()).get("accessToken");
+export const serverApi = async ({ path, method, queryString, body, Authorization }: FetchParams) => {
+  const token = (await cookies()).get('accessToken');
 
   if (!token?.value) {
-    return NextResponse.json({ error: "정상적으로 로그인되어 있지 않습니다." });
+    return NextResponse.json({ error: '정상적으로 로그인되어 있지 않습니다.' });
   }
 
   try {
     const requestInit: RequestInit = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: Authorization ?? `Bearer ${token.value}`,
       },
-      method: method ?? "GET",
+      method: method ?? 'GET',
     };
     if (body) {
       requestInit.body = JSON.stringify(body);
     }
 
     const response = await fetch(
-      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/${path}${queryString ? `?${queryString}` : ""}`,
+      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/${path}${queryString ? `?${queryString}` : ''}`,
       requestInit,
     );
 
@@ -49,10 +43,7 @@ export async function serverApi({
 
     return NextResponse.json(data);
   } catch (error) {
-    console.log("Error:", error);
-    return NextResponse.json(
-      { error: "서버 요청 중 오류가 발생했습니다." },
-      { status: 500 },
-    );
+    console.log('Error:', error);
+    return NextResponse.json({ error: '서버 요청 중 오류가 발생했습니다.' }, { status: 500 });
   }
-}
+};

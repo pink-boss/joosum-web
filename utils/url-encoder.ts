@@ -1,27 +1,27 @@
 // URL에서 문제가 될 수 있는 특수문자들과 대체 문자들의 매핑
 const URL_SAFE_MAPPING = {
-  "/": "__SLASH__",
-  "#": "__HASH__",
-  "?": "__QUESTION__",
-  "&": "__AMP__",
-  "%": "__PERCENT__",
-  "+": "__PLUS__",
-  "=": "__EQUAL__",
-  ":": "__COLON__",
-  ";": "__SEMICOLON__",
-  "<": "__LT__",
-  ">": "__GT__",
-  '"': "__QUOTE__",
-  "'": "__SINGLE_QUOTE__",
-  "\\": "__BACKSLASH__",
-  "|": "__PIPE__",
-  "[": "__LEFT_BRACKET__",
-  "]": "__RIGHT_BRACKET__",
-  "{": "__LEFT_BRACE__",
-  "}": "__RIGHT_BRACE__",
-  "^": "__CARET__",
-  "`": "__BACKTICK__",
-  " ": "__SPACE__",
+  '/': '__SLASH__',
+  '#': '__HASH__',
+  '?': '__QUESTION__',
+  '&': '__AMP__',
+  '%': '__PERCENT__',
+  '+': '__PLUS__',
+  '=': '__EQUAL__',
+  ':': '__COLON__',
+  ';': '__SEMICOLON__',
+  '<': '__LT__',
+  '>': '__GT__',
+  '"': '__QUOTE__',
+  "'": '__SINGLE_QUOTE__',
+  '\\': '__BACKSLASH__',
+  '|': '__PIPE__',
+  '[': '__LEFT_BRACKET__',
+  ']': '__RIGHT_BRACKET__',
+  '{': '__LEFT_BRACE__',
+  '}': '__RIGHT_BRACE__',
+  '^': '__CARET__',
+  '`': '__BACKTICK__',
+  ' ': '__SPACE__',
 } as const;
 
 /**
@@ -38,7 +38,7 @@ export const encodeUrlSafeTitle = (str: string): string => {
 
   // 각 특수문자를 대체 문자열로 변환
   Object.entries(URL_SAFE_MAPPING).forEach(([char, replacement]) => {
-    const regex = new RegExp(escapeRegExp(char), "g");
+    const regex = new RegExp(escapeRegExp(char), 'g');
     result = result.replace(regex, replacement);
   });
 
@@ -59,7 +59,7 @@ export const decodeUrlSafeTitle = (str: string): string => {
 
   // 각 대체 문자열을 원래 특수문자로 복원
   Object.entries(URL_SAFE_MAPPING).forEach(([char, replacement]) => {
-    const regex = new RegExp(escapeRegExp(replacement), "g");
+    const regex = new RegExp(escapeRegExp(replacement), 'g');
     result = result.replace(regex, char);
   });
 
@@ -72,7 +72,7 @@ export const decodeUrlSafeTitle = (str: string): string => {
  * @returns 이스케이프된 문자열
  */
 const escapeRegExp = (str: string): string => {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
 /**
@@ -83,9 +83,7 @@ const escapeRegExp = (str: string): string => {
 export const isUrlSafeEncoded = (str: string): boolean => {
   if (!str) return false;
 
-  return Object.values(URL_SAFE_MAPPING).some((replacement) =>
-    str.includes(replacement),
-  );
+  return Object.values(URL_SAFE_MAPPING).some((replacement) => str.includes(replacement));
 };
 
 /**
@@ -126,6 +124,7 @@ export function extractDomain(url: string): string {
     const urlObject = new URL(url);
     return urlObject.hostname;
   } catch (error) {
+    console.error(error);
     // URL이 유효하지 않은 경우, 간단한 정규식으로 처리
     const match = url.match(/^(?:https?:\/\/)?([^\/\?#]+)/);
     return match ? match[1] : url;

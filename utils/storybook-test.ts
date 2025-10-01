@@ -1,11 +1,6 @@
-import { expect, waitFor } from "@storybook/test";
+import { expect, waitFor } from '@storybook/test';
 
-export async function verifyTagsAPI(
-  capturedRequest: Request | null,
-  pathname: string,
-  method: string,
-  body?: any,
-) {
+export const verifyTagsAPI = async (capturedRequest: null | Request, pathname: string, method: string, body?: any) => {
   const error = new Error(`API 요청 에러: ${pathname}`);
   if (!capturedRequest) {
     throw error;
@@ -17,4 +12,4 @@ export async function verifyTagsAPI(
     expect(capturedRequest.method).toBe(method);
     expect(await capturedRequest.text()).toEqual(JSON.stringify(body));
   });
-}
+};

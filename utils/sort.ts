@@ -1,6 +1,6 @@
-import { Link } from "@/types/link.types";
+import { Link } from '@/types/link.types';
 
-export function sortByKeywordPosition(items: Link[], keyword: string): Link[] {
+export const sortByKeywordPosition = (items: Link[], keyword: string): Link[] => {
   return [...items].sort((a, b) => {
     const score = (text: string) => {
       const lowerText = text.toLowerCase();
@@ -12,4 +12,4 @@ export function sortByKeywordPosition(items: Link[], keyword: string): Link[] {
 
     return score(a.title) - score(b.title);
   });
-}
+};
