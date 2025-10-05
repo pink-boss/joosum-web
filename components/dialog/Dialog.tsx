@@ -1,81 +1,71 @@
-"use client";
+'use client';
 
-import clsx from "clsx";
-import { ReactNode, useCallback } from "react";
-import { createPortal } from "react-dom";
+import { ReactNode, useCallback } from 'react';
 
-import { useOpenDialogStore } from "@/store/useDialogStore";
+import clsx from 'clsx';
+import { createPortal } from 'react-dom';
 
-export type InputProps = {
-  open: boolean;
+import { useDialogStore } from '@/libs/zustand/store';
+
+export interface DialogProps {
   children: ReactNode;
   className?: string;
   onCloseCallback: () => void;
+  open: boolean;
   testId?: string;
-};
+}
 
-export default function Dialog({
-  open,
-  children,
-  className,
-  onCloseCallback,
-  testId,
-}: InputProps) {
+export default function Dialog({ open, children, className, onCloseCallback, testId }: DialogProps) {
   const {
-    // linkBook
-    isMutateLinkBookOpen,
-    isDeleteLinkBookOpen,
-    openMutateLinkBook,
-    openDeleteLinkBook,
+    // folder
+    isMutateFolderOpen,
+    isDeleteFolderOpen,
+    openMutateFolder,
+    openDeleteFolder,
 
     // link
     isDeleteLinkOpen,
     openDeleteLink,
-  } = useOpenDialogStore();
+  } = useDialogStore();
 
   const onClose = useCallback(() => {
     onCloseCallback();
-    if (isMutateLinkBookOpen) openMutateLinkBook(false);
-    if (isDeleteLinkBookOpen) openDeleteLinkBook(false);
+    if (isMutateFolderOpen) openMutateFolder(false);
+    if (isDeleteFolderOpen) openDeleteFolder(false);
     if (isDeleteLinkOpen) openDeleteLink(false);
   }, [
-    isDeleteLinkBookOpen,
+    isDeleteFolderOpen,
     isDeleteLinkOpen,
-    isMutateLinkBookOpen,
+    isMutateFolderOpen,
     onCloseCallback,
     openDeleteLink,
-    openDeleteLinkBook,
-    openMutateLinkBook,
+    openDeleteFolder,
+    openMutateFolder,
   ]);
 
   if (!open) return null;
 
   const modal = (
     <>
+      <div aria-hidden="true" className="absolute inset-0 bg-black/50" role="presentation" onClick={onClose} />
       <div
-        role="presentation"
-        className="absolute inset-0 bg-black/50"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      <div
-        role="dialog"
-        className={clsx(
-          "absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2",
-          "rounded-2xl bg-white p-10 shadow-xl",
-          className && className,
-        )}
         aria-modal
         aria-labelledby="dialog"
-        onClick={(e) => e.stopPropagation()}
         data-testid={testId}
+        role="dialog"
+        onClick={(e) => e.stopPropagation()}
+        className={clsx(
+          'absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2',
+          'rounded-2xl bg-white p-10 shadow-xl',
+          className && className,
+        )}
       >
         {children}
       </div>
     </>
   );
 
-  const modalRoot = document.getElementById("modal-root");
+  const modalRoot = document.getElementById('modal-root');
   if (!modalRoot) return null;
 
   return createPortal(modal, modalRoot);

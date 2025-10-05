@@ -23,8 +23,8 @@ const eslintConfig = [
       perfectionist,
     },
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/no-explicit-any': 'off', // TODO: 추후 제거
+      '@typescript-eslint/no-empty-object-type': 'off', // TODO: 추후 제거
       'perfectionist/sort-imports': [
         'error',
         {
@@ -39,7 +39,7 @@ const eslintConfig = [
             },
             {
               groupName: 'api',
-              elementNamePattern: ['@/actions/.+'],
+              elementNamePattern: ['@/actions/.+', '@/services/.+'],
             },
             {
               groupName: 'app',
@@ -51,7 +51,7 @@ const eslintConfig = [
             },
             {
               groupName: 'utils',
-              elementNamePattern: ['@/hooks/.+', '@/utils/.+', '@/store/.+', '@/constants'],
+              elementNamePattern: ['@/libs/.+', '@/hooks/.+', '@/utils/.+', '@/store/.+', '@/constants'],
             },
             {
               groupName: 'types',

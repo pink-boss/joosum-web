@@ -1,31 +1,26 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-import { defaultPath, protectedPaths, publicOnlyPaths } from "./utils/path";
-import { cookies } from "next/headers";
+import { defaultPath, protectedPaths, publicOnlyPaths } from './utils/path';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 특정 경로는 미들웨어 처리에서 제외
-  const ignorePaths = ["/api", "/_next", "/static", "/images", "/favicon.ico"];
+  const ignorePaths = ['/api', '/_next', '/static', '/images', '/favicon.ico'];
   if (ignorePaths.some((path) => pathname.startsWith(path))) {
     return NextResponse.next();
   }
 
   // 기본 경로는 home
-  if (pathname === "/") {
+  if (pathname === '/') {
     return NextResponse.redirect(new URL(defaultPath, request.url));
   }
 
-  const isProtectedPath = protectedPaths.some((path) =>
-    pathname.startsWith(path),
-  );
-  const isPublicOnlyPath = publicOnlyPaths.some((path) =>
-    pathname.startsWith(path),
-  );
+  const isProtectedPath = protectedPaths.some((path) => pathname.startsWith(path));
+  const isPublicOnlyPath = publicOnlyPaths.some((path) => pathname.startsWith(path));
 
-  const accessToken = request.cookies.get("accessToken");
+  const accessToken = request.cookies.get('accessToken');
 
   // 로그인 상태에 따른 리다이렉션
   if (accessToken) {
@@ -36,8 +31,8 @@ export async function middleware(request: NextRequest) {
   } else {
     // 로그인하지 않은 사용자가 보호된 경로 접근 시도
     if (isProtectedPath) {
-      const url = new URL("/login", request.url);
-      url.searchParams.set("from", pathname);
+      const url = new URL('/login', request.url);
+      url.searchParams.set('from', pathname);
       return NextResponse.redirect(url);
     }
   }

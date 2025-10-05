@@ -1,29 +1,32 @@
-"use client";
+'use client';
 
-import "./globals.css";
-import { GoogleTagManager } from "@next/third-parties/google";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import clsx from "clsx";
-import localFont from "next/font/local";
-import { usePathname } from "next/navigation";
-import { Suspense, useState } from "react";
+import { GoogleTagManager } from '@next/third-parties/google';
+import localFont from 'next/font/local';
+import { usePathname } from 'next/navigation';
 
-import DynamicOpenDialogs from "@/components/dialog/DynamicOpenDialogs";
-import DynamicOpenDrawers from "@/components/drawer/DynamicOpenDrawers";
-import Sidebar from "@/components/layout/Sidebar";
-import Topbar from "@/components/layout/Topbar";
-import Loading from "@/components/Loading";
-import { ToastProvider } from "@/components/notification/toast/ToastProvider";
-import PublicPathHeader from "@/components/PublicPathHeader";
-import ScreenSizeWrapper from "@/components/ScreenSizeWrapper";
-import { publicOnlyPaths } from "@/utils/path";
+import { Suspense, useState } from 'react';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import clsx from 'clsx';
+
+import { DynamicDialogs } from '@/components/dynamic-dialogs';
+import { DynamicDrawers } from '@/components/dynamic-drawers';
+import Loader from '@/components/loader';
+import { NotificationToastProvider } from '@/components/notification';
+import PublicPathHeader from '@/components/public-path-header';
+import ScreenSizeWrapper from '@/components/screen-size-wrapper';
+import Gnb from '@/layouts/gnb';
+import Lnb from '@/layouts/lnb';
+
+import { publicOnlyPaths } from '@/utils/path';
+
+import './globals.css';
 
 const pretendard = localFont({
-  src: "../public/fonts/PretendardVariable.woff2",
-  display: "swap",
-  weight: "45 920",
-  variable: "--font-pretendard",
+  src: '../node_modules/pretendard/dist/web/variable/woff2/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-pretendard',
 });
 
 // QueryClient 최적화 설정
@@ -35,14 +38,14 @@ function makeQueryClient() {
         gcTime: 10 * 60 * 1000, // 10분 (구 cacheTime)
         retry: (failureCount, error) => {
           // 4xx 에러는 재시도하지 않음
-          if (error instanceof Error && error.message.includes("4")) {
+          if (error instanceof Error && error.message.includes('4')) {
             return false;
           }
           return failureCount < 3;
         },
         refetchOnWindowFocus: false,
         refetchOnMount: false,
-        refetchOnReconnect: "always",
+        refetchOnReconnect: 'always',
       },
       mutations: {
         retry: 1,
@@ -54,7 +57,7 @@ function makeQueryClient() {
 let browserQueryClient: QueryClient | undefined = undefined;
 
 function getQueryClient() {
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return makeQueryClient();
   } else {
     if (!browserQueryClient) browserQueryClient = makeQueryClient();
@@ -68,9 +71,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  const isPublicOnlyPath = publicOnlyPaths.some((path) =>
-    pathname.startsWith(path),
-  );
+  const isPublicOnlyPath = publicOnlyPaths.some((path) => pathname.startsWith(path));
 
   const [queryClient] = useState(() => getQueryClient());
 
@@ -78,43 +79,43 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <script
-          type="text/javascript"
+          async
           src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"
-          async
+          type="text/javascript"
         ></script>
-        <script src="https://accounts.google.com/gsi/client" async></script>
+        <script async src="https://accounts.google.com/gsi/client"></script>
         <script
-          src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.5/kakao.min.js"
-          integrity="sha384-dok87au0gKqJdxs7msEdBPNnKSRT+/mhTVzq+qOhcL464zXwvcrpjeWvyj1kCdq6"
-          crossOrigin="anonymous"
           async
+          crossOrigin="anonymous"
+          integrity="sha384-dok87au0gKqJdxs7msEdBPNnKSRT+/mhTVzq+qOhcL464zXwvcrpjeWvyj1kCdq6"
+          src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.5/kakao.min.js"
         ></script>
       </head>
-      <body className={clsx(pretendard.variable, "font-pretendard")}>
+      <body className={clsx(pretendard.variable, 'font-pretendard')}>
         <GoogleTagManager gtmId="GTM-K4FXLG7Z" />
         <ScreenSizeWrapper>
           {isPublicOnlyPath ? (
             <Component className="justify-center">
               <PublicPathHeader />
-              <Suspense fallback={<Loading />}>{children}</Suspense>
+              <Suspense fallback={<Loader />}>{children}</Suspense>
             </Component>
           ) : (
             <QueryClientProvider client={queryClient}>
-              <ToastProvider>
-                <Sidebar>
+              <NotificationToastProvider>
+                <div className="flex h-screen">
+                  <Lnb />
                   <Component>
-                    <Topbar />
-                    <Suspense fallback={<Loading />}>{children}</Suspense>
+                    <Gnb />
+                    <Suspense fallback={<Loader />}>
+                      <main className="relative w-full flex-1">{children}</main>
+                    </Suspense>
                     <div id="drawer-root" />
                     <div id="modal-root" />
-                    <DynamicOpenDrawers />
-                    <DynamicOpenDialogs />
+                    <DynamicDrawers />
+                    <DynamicDialogs />
                   </Component>
-                </Sidebar>
-              </ToastProvider>
-              {process.env.NODE_ENV === "development" && (
-                <ReactQueryDevtools initialIsOpen={false} />
-              )}
+                </div>
+              </NotificationToastProvider>
             </QueryClientProvider>
           )}
         </ScreenSizeWrapper>
@@ -131,15 +132,15 @@ function Component({
   className?: string;
 }>) {
   return (
-    <main
+    <div
       className={clsx(
-        "relative h-screen flex-1 overflow-x-hidden",
-        "flex flex-col items-center",
-        "bg-white text-black",
+        'h-screen flex-1 overflow-x-hidden',
+        'flex flex-col items-center',
+        'bg-white text-black',
         className && className,
       )}
     >
       {children}
-    </main>
+    </div>
   );
 }

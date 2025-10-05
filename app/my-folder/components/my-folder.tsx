@@ -1,0 +1,30 @@
+import clsx from 'clsx';
+
+import Folder from '@/components/folder';
+import FolderLink from '@/components/folder-link';
+import FolderMutateDropdown from '@/components/folder-mutate-dropdown';
+
+import { isFolderLink } from '@/utils/folder-link';
+
+import { Folder as FolderType } from '@/types/folder.types';
+
+interface Props {
+  folder: FolderType;
+}
+
+export default function MyFolder({ folder }: Props) {
+  return (
+    <FolderLink dataTestId="folderList_myFolder" folder={folder}>
+      <div className={clsx('flex h-[275.9px] w-[174.9px] cursor-pointer flex-col items-center gap-[17.6px]')}>
+        <Folder {...folder}>
+          {isFolderLink(folder) && folder.isDefault !== 'y' && (
+            <div className="absolute bottom-[13.3px] right-[13.53px] p-px" onClick={(e) => e.stopPropagation()}>
+              <FolderMutateDropdown dataTestId="setting_myFolder" folder={folder} type="myFolder" />
+            </div>
+          )}
+        </Folder>
+        <div className="text-gray-dim">{folder.linkCount}개</div>
+      </div>
+    </FolderLink>
+  );
+}

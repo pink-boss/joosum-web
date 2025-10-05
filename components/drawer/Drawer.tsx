@@ -1,70 +1,57 @@
-"use client";
+'use client';
 
-import clsx from "clsx";
-import { ReactNode, useCallback } from "react";
-import { createPortal } from "react-dom";
+import { ReactNode, useCallback } from 'react';
 
-import { useOpenDrawerStore } from "@/store/useDrawerStore";
+import clsx from 'clsx';
+import { createPortal } from 'react-dom';
 
-type InputProps = {
-  open: boolean;
+import { useDrawerStore } from '@/libs/zustand/store';
+
+interface Props {
   children: ReactNode;
   className?: string;
   onCloseCallback: () => void;
-};
+  open: boolean;
+  dataTestId?: string;
+}
 
-export default function Drawer({
-  open,
-  children,
-  className,
-  onCloseCallback,
-}: InputProps) {
-  const { isLinkDrawerOpen, openLinkDrawer, isUserDrawerOpen, openUserDrawer } =
-    useOpenDrawerStore();
+export default function Drawer({ open, children, className, onCloseCallback, dataTestId }: Props) {
+  const { isLinkDrawerOpen, openLinkDrawer, isUserDrawerOpen, openUserDrawer } = useDrawerStore();
 
-  const onClose = useCallback(() => {
+  const handleClose = useCallback(() => {
     onCloseCallback();
     if (isLinkDrawerOpen) openLinkDrawer(false);
     if (isUserDrawerOpen) openUserDrawer(false);
-  }, [
-    isLinkDrawerOpen,
-    isUserDrawerOpen,
-    onCloseCallback,
-    openLinkDrawer,
-    openUserDrawer,
-  ]);
+  }, [isLinkDrawerOpen, isUserDrawerOpen, onCloseCallback, openLinkDrawer, openUserDrawer]);
 
   if (!open) return null;
 
   const drawer = (
     <>
+      <div aria-hidden="true" className="absolute inset-0 bg-black/50" role="presentation" onClick={handleClose} />
       <div
-        role="presentation"
-        className="absolute inset-0 bg-black/50"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      <div
+        aria-modal
+        aria-keyshortcuts="Escape"
+        aria-labelledby="drawer"
+        data-testid={dataTestId}
         role="dialog"
+        onClick={(e) => e.stopPropagation()}
         className={clsx(
-          "fixed right-0 top-0 z-20 h-full w-[494px]",
-          "border border-gray-ghost",
-          "bg-white pb-20 pt-5",
-          "flex flex-col gap-10",
-          "overflow-y-auto",
+          'fixed right-0 top-0 z-20 h-full w-[494px]',
+          'border border-gray-ghost',
+          'bg-white pb-20 pt-5',
+          'flex flex-col gap-10',
+          'overflow-y-auto',
           className && className,
         )}
-        aria-modal
-        aria-labelledby="drawer"
-        aria-keyshortcuts="Escape"
-        onClick={(e) => e.stopPropagation()}
       >
         {children}
       </div>
     </>
   );
 
-  const drawerRoot = document.getElementById("drawer-root");
+  const drawerRoot = document.getElementById('drawer-root');
+
   if (!drawerRoot) return null;
 
   return createPortal(drawer, drawerRoot);

@@ -118,7 +118,7 @@ export const decodeFromUrlPath = (str: string): string => {
  * extractDomain("http://www.google.com/search?q=test") // "www.google.com"
  * extractDomain("https://subdomain.example.com:8080/path") // "subdomain.example.com"
  */
-export function extractDomain(url: string): string {
+export const extractDomain = (url: string): string => {
   try {
     // URL 객체를 사용하여 도메인 추출
     const urlObject = new URL(url);
@@ -129,4 +129,4 @@ export function extractDomain(url: string): string {
     const match = url.match(/^(?:https?:\/\/)?([^\/\?#]+)/);
     return match ? match[1] : url;
   }
-}
+};
