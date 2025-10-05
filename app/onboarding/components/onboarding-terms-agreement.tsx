@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 
 import clsx from 'clsx';
 
-import { CheckIcon } from '@/assets/icons';
+import { CheckboxCircleIcon } from '@/assets/icons';
 
 import AgreementCheckbox from './onboarding-agreement-checkbox';
 
@@ -57,14 +57,7 @@ export default function OnboardingTermsAgreement(props: Props) {
               onClick={onAllAgreement}
             >
               <div className="flex items-center gap-2">
-                <div
-                  className={clsx(
-                    'flex size-6 items-center justify-center rounded-full border-2',
-                    agreements.all ? 'border-primary-500 bg-primary-500' : 'border-gray-300 bg-white',
-                  )}
-                >
-                  {agreements.all && <CheckIcon className="text-white" height={9} width={12} />}
-                </div>
+                <CheckboxCircleIcon className={clsx('size-6', agreements.all ? 'text-primary-500' : 'text-white')} />
                 <span className="text-base font-bold text-gray-black">전체 동의</span>
               </div>
             </button>

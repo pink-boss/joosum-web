@@ -2,7 +2,9 @@
 
 import Link from 'next/link';
 
-import { ArrowLeftIcon, CheckPurpleIcon } from '@/assets/icons';
+import clsx from 'clsx';
+
+import { CheckmarkIcon, ChevronRightIcon } from '@/assets/icons';
 
 interface Props {
   isChecked: boolean;
@@ -24,20 +26,18 @@ export default function OnboardingAgreementCheckbox(props: Props) {
         type="button"
         onClick={onCheck}
       >
-        <div className="flex size-6 items-center justify-center">
-          {isChecked && <CheckPurpleIcon className="text-primary-500" height={9} width={12} />}
-        </div>
+        <CheckmarkIcon className={clsx('size-6', isChecked ? 'text-primary-500' : 'text-gray-500')} />
         <span className="text-base text-gray-dim">{label}</span>
       </button>
       {link && (
         <Link
-          className="text-gray-400 hover:text-gray-600"
+          className="text-gray-500 hover:text-gray-600"
           data-testid={linkDataTestId}
           href={link}
           rel="noopener noreferrer"
           target="_blank"
         >
-          <ArrowLeftIcon className="text-inherit" height={24} width={24} />
+          <ChevronRightIcon className="size-6 text-inherit" />
         </Link>
       )}
     </div>

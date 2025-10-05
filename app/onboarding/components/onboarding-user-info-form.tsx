@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 
 import clsx from 'clsx';
 
-import { ArrowDownIcon, ArrowRightIcon } from '@/assets/icons';
+import { ChevronDownIcon } from '@/assets/icons';
 
 interface Props {
   selectedGender: string;
@@ -112,7 +112,7 @@ export default function OnboardingUserInfoForm(props: Props) {
                 })}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
-                <ArrowDownIcon className="text-gray-black" height={24} width={24} />
+                <ChevronDownIcon className="size-6 text-gray-500" />
               </div>
             </div>
           </section>
@@ -136,7 +136,6 @@ export default function OnboardingUserInfoForm(props: Props) {
             ) : (
               <>
                 <span>완료</span>
-                <ArrowRightIcon className="text-white" height={20} width={20} />
               </>
             )}
           </button>
