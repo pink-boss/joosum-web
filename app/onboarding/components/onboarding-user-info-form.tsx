@@ -4,6 +4,8 @@ import { useCallback } from 'react';
 
 import clsx from 'clsx';
 
+import { ArrowDownIcon, ArrowRightIcon } from '@/assets/icons';
+
 interface Props {
   selectedGender: string;
   selectedYear: string;
@@ -110,15 +112,7 @@ export default function OnboardingUserInfoForm(props: Props) {
                 })}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
-                <svg fill="none" height="24" viewBox="0 0 24 24" width="24">
-                  <path
-                    d="M6 9L12 15L18 9"
-                    stroke="#1d1d1d"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                  />
-                </svg>
+                <ArrowDownIcon className="text-gray-black" height={24} width={24} />
               </div>
             </div>
           </section>
@@ -142,15 +136,7 @@ export default function OnboardingUserInfoForm(props: Props) {
             ) : (
               <>
                 <span>완료</span>
-                <svg fill="none" height="20" viewBox="0 0 20 20" width="20">
-                  <path
-                    d="M7.5 15L12.5 10L7.5 5"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                  />
-                </svg>
+                <ArrowRightIcon className="text-white" height={20} width={20} />
               </>
             )}
           </button>

@@ -10,7 +10,7 @@ import NotificationToast from './notification-toast';
 
 interface ToastMetaData
   extends Omit<NotificationToastType, 'visible'>,
-  Required<Pick<NotificationToastType, 'visible'>> {
+    Required<Pick<NotificationToastType, 'visible'>> {
   id: string;
 }
 

@@ -4,6 +4,8 @@ import { useCallback } from 'react';
 
 import clsx from 'clsx';
 
+import { CheckIcon } from '@/assets/icons';
+
 import AgreementCheckbox from './onboarding-agreement-checkbox';
 
 interface Props {
@@ -61,17 +63,7 @@ export default function OnboardingTermsAgreement(props: Props) {
                     agreements.all ? 'border-primary-500 bg-primary-500' : 'border-gray-300 bg-white',
                   )}
                 >
-                  {agreements.all && (
-                    <svg fill="none" height="9" viewBox="0 0 12 9" width="12">
-                      <path
-                        d="M1 4.5L4.5 8L11 1.5"
-                        stroke="white"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                      />
-                    </svg>
-                  )}
+                  {agreements.all && <CheckIcon className="text-white" height={9} width={12} />}
                 </div>
                 <span className="text-base font-bold text-gray-black">전체 동의</span>
               </div>

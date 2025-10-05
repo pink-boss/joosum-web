@@ -54,6 +54,10 @@ const eslintConfig = [
               elementNamePattern: ['@/libs/.+', '@/hooks/.+', '@/utils/.+', '@/store/.+', '@/constants'],
             },
             {
+              groupName: 'assets',
+              elementNamePattern: ['@/assets/.+'],
+            },
+            {
               groupName: 'types',
               elementNamePattern: ['@/types/.+'],
             },
@@ -68,6 +72,7 @@ const eslintConfig = [
             'api',
             'components',
             'utils',
+            'assets',
             'type-internal',
             'types',
             ['value-parent', 'value-sibling', 'value-index'],

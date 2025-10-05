@@ -1,0 +1,9 @@
+<svg fill="none" height="24" viewBox="0 0 24 24" width="24">
+  <path
+    d="M9 18L15 12L9 6"
+    stroke="currentColor"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth="2"
+  />
+</svg>

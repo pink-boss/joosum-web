@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 
+import { ArrowLeftIcon, CheckPurpleIcon } from '@/assets/icons';
+
 interface Props {
   isChecked: boolean;
   label: string;
@@ -23,17 +25,7 @@ export default function OnboardingAgreementCheckbox(props: Props) {
         onClick={onCheck}
       >
         <div className="flex size-6 items-center justify-center">
-          {isChecked && (
-            <svg fill="none" height="9" viewBox="0 0 12 9" width="12">
-              <path
-                d="M1 4.5L4.5 8L11 1.5"
-                stroke="#392a95"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-              />
-            </svg>
-          )}
+          {isChecked && <CheckPurpleIcon className="text-primary-500" height={9} width={12} />}
         </div>
         <span className="text-base text-gray-dim">{label}</span>
       </button>
@@ -45,15 +37,7 @@ export default function OnboardingAgreementCheckbox(props: Props) {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <svg fill="none" height="24" viewBox="0 0 24 24" width="24">
-            <path
-              d="M9 18L15 12L9 6"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            />
-          </svg>
+          <ArrowLeftIcon className="text-inherit" height={24} width={24} />
         </Link>
       )}
     </div>

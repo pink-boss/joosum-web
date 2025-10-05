@@ -19,6 +19,14 @@ const nextConfig = {
       allowedOrigins: ['localhost:3000', '*.ngrok.io', '*.ngrok-free.app', 'appleid.apple.com', 'app.joosum.com'],
     },
   },
+  // SVG를 React Component로 변환
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
+    return config;
+  },
 };
 
 export default nextConfig;
