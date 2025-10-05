@@ -11,7 +11,7 @@ export interface Account {
 }
 
 export type TQueryAccount = {
-  user: Account;
-  totalLinkCount: number;
   totalFolderCount: number;
+  totalLinkCount: number;
+  user: Account;
 };

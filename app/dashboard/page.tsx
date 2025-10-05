@@ -1,7 +1,7 @@
-import BannerCard from "./Banner";
-import LinkCardList from "./LinkCardList";
+import { DashboardBanner, DashboardLinkCardList } from './components';
 
-export default function Home() {
+// 홈 화면
+export default function Dashboard() {
   // const bannerData = useQuery<TQueryBanners>({
   //   queryKey: ["banners"],
   //   queryFn: () =>
@@ -9,10 +9,11 @@ export default function Home() {
   //       method: "GET",
   //     }).then((res) => res.json()),
   // });
+
   return (
-    <div className="flex min-h-0 w-full flex-1 flex-col gap-12 px-10 pb-8">
-      <BannerCard data={[]} />
-      <LinkCardList />
+    <div className="flex min-h-0 w-full flex-1 flex-col gap-12 px-10 pb-8" data-testid="home">
+      <DashboardBanner />
+      <DashboardLinkCardList />
     </div>
   );
 }

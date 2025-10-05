@@ -1,8 +1,6 @@
-type Value = OptionItem["value"];
-
-type OptionItem<T = Value> = {
+type OptionItem = {
   label: string;
-  value: T;
+  value: string;
 };
 
 interface ApiError {

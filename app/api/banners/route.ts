@@ -1,7 +1,7 @@
-import { serverApi } from "@/utils/api";
+import { serverApi } from '@/utils/api';
 
 export async function GET() {
   return serverApi({
-    path: "api/banners",
+    path: 'api/banners',
   });
 }

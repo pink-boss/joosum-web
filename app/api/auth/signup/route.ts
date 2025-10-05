@@ -1,11 +1,8 @@
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
 
-import {
-  storeAccessToken,
-  storePreviousLoginProvider,
-} from "@/utils/auth/auth";
-import { trimTrailingSlash } from "@/utils/envUri";
+import { storeAccessToken, storePreviousLoginProvider } from '@/utils/auth';
+import { trimTrailingSlash } from '@/utils/env-uri';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,18 +11,15 @@ export async function POST(request: NextRequest) {
 
     // 쿠키에서 idToken과 social 가져오기
     const cookieStore = await cookies();
-    const idToken = cookieStore.get("idToken")?.value;
-    const social = cookieStore.get("social")?.value as "apple" | "google";
+    const idToken = cookieStore.get('idToken')?.value;
+    const social = cookieStore.get('social')?.value as 'apple' | 'google';
 
     if (!idToken || !social) {
-      return NextResponse.json(
-        { error: "인증 토큰이 없습니다." },
-        { status: 401 },
-      );
+      return NextResponse.json({ error: '인증 토큰이 없습니다.' }, { status: 401 });
     }
 
     // 서버에 회원가입 요청 보내기
-    const signupData: any = {
+    const signupData: Record<string, number | string> = {
       idToken,
       social,
     };
@@ -35,32 +29,26 @@ export async function POST(request: NextRequest) {
     if (gender !== undefined) signupData.gender = gender;
     if (nickname !== undefined) signupData.nickname = nickname;
 
-    console.log("signupData", signupData);
-    const response = await fetch(
-      `${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/auth/signup`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(signupData),
+    console.log('signupData', signupData);
+    const response = await fetch(`${trimTrailingSlash(process.env.JOOSUM_SERVER_URI)}/api/auth/signup`, {
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+      method: 'POST',
+      body: JSON.stringify(signupData),
+    });
 
     const data = await response.json();
 
     if (!response.ok) {
-      console.log("response", data);
-      return NextResponse.json(
-        { error: data.error || "회원가입에 실패했습니다." },
-        { status: response.status },
-      );
+      console.log('response', data);
+      return NextResponse.json({ error: data.error || '회원가입에 실패했습니다.' }, { status: response.status });
     }
 
     // 성공 시 토큰 저장 및 임시 쿠키 삭제
     const responseWithCookie = NextResponse.json(data);
-    responseWithCookie.cookies.delete("idToken");
-    responseWithCookie.cookies.delete("social");
+    responseWithCookie.cookies.delete('idToken');
+    responseWithCookie.cookies.delete('social');
 
     // accessToken을 쿠키에 저장
     if (data.accessToken) {
@@ -71,10 +59,7 @@ export async function POST(request: NextRequest) {
 
     return responseWithCookie;
   } catch (error) {
-    console.error("Signup error:", error);
-    return NextResponse.json(
-      { error: "서버 오류가 발생했습니다." },
-      { status: 500 },
-    );
+    console.error('Signup error:', error);
+    return NextResponse.json({ error: '서버 오류가 발생했습니다.' }, { status: 500 });
   }
 }

@@ -1,10 +1,10 @@
-import { NextRequest } from "next/server";
+import { NextRequest } from 'next/server';
 
-import { serverApi } from "@/utils/api";
+import { serverApi } from '@/utils/api';
 
 export async function GET() {
   return serverApi({
-    path: "api/settings/notification",
+    path: 'api/settings/notification',
   });
 }
 
@@ -13,7 +13,7 @@ export async function PUT(request: NextRequest) {
 
   return serverApi({
     path: `api/settings/notification`,
-    method: "PUT",
+    method: 'PUT',
     body,
   });
 }

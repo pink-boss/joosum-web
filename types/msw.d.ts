@@ -26,9 +26,7 @@ interface MSWRequestHandler {
 
 interface MSWResponseHandler {
   all(): Promise<MSWResponse[]>;
-  matching(
-    predicate: (response: MSWResponse) => boolean,
-  ): Promise<MSWResponse[]>;
+  matching(predicate: (response: MSWResponse) => boolean): Promise<MSWResponse[]>;
 }
 
 interface MSW {

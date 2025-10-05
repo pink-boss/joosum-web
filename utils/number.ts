@@ -1,3 +1,3 @@
 export const formatNumber = (amount: number): string => {
-  return new Intl.NumberFormat("en-US").format(amount);
+  return new Intl.NumberFormat('en-US').format(amount);
 };

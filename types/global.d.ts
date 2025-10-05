@@ -1,4 +1,4 @@
-import { ToastNotify } from "./notification/toast.types";
+import { ToastNotify } from './notification-toast.types';
 
 declare global {
   interface Window {

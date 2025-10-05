@@ -1,12 +1,12 @@
-import { NextRequest } from "next/server";
+import { NextRequest } from 'next/server';
 
-import { serverApi } from "@/utils/api";
+import { serverApi } from '@/utils/api';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  let queryString = `sort=${searchParams.get("sort")}`;
+  const queryString = `sort=${searchParams.get('sort')}`;
   return serverApi({
-    path: "api/tags",
+    path: 'api/tags',
     queryString,
   });
 }
@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
   return serverApi({
     path: `api/tags`,
-    method: "POST",
+    method: 'POST',
     body: newTags,
   });
 }

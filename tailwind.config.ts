@@ -1,45 +1,53 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
+
+import scrollbar from 'tailwind-scrollbar';
 
 const config: Config = {
-  content: [
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ['./components/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     screens: {
-      tablet: "822px",
-      lg: "1024px",
-      pc: "1240px",
+      tablet: '822px',
+      lg: '1024px',
+      pc: '1240px',
     },
     extend: {
       colors: {
         primary: {
-          100: "#EFECFF",
-          200: "#DFD9FF",
-          400: "#6B5FDE",
-          500: "#392A95",
-          600: "#2E2277",
-          lavender: "#DFD9FF",
+          100: '#efecff',
+          200: '#dfd9ff',
+          400: '#6b5fde',
+          500: '#392a95',
+          600: '#2e2277',
+          lavender: '#dfd9ff',
         },
-        secondary: "#6B5FDE",
+        secondary: '#6b5fde',
         gray: {
-          slate: "#909090",
-          ink: "#2F2F2F",
-          black: "#1D1D1D",
-          silver: "#BBBBBB",
-          graphite: "#444444",
-          vapor: "#EBECED",
-          ghost: "#F3F4F5",
-          dim: "#6C6C6C",
+          100: '#f8f9fa',
+          200: '#f3f4f5',
+          300: '#ebeced',
+          400: '#d9d9d9',
+          500: '#bbbbbb',
+          600: '#909090',
+          700: '#6c6c6c',
+          800: '#2f2f2f',
+          900: '#1d1d1d',
+          slate: '#909090',
+          ink: '#2f2f2f',
+          black: '#1d1d1d',
+          silver: '#bbbbbb',
+          graphite: '#444444',
+          vapor: '#ebeced',
+          ghost: '#f3f4f5',
+          dim: '#6c6c6c',
         },
-        paperabovebg: "#5242BF",
-        error: "#E34C4B",
+        paperabovebg: '#5242bf',
+        error: '#e34c4b',
       },
       fontFamily: {
-        pretendard: ["var(--font-pretendard)"],
+        pretendard: ['var(--font-pretendard)'],
       },
     },
   },
-  plugins: [require("tailwind-scrollbar")],
+  plugins: [scrollbar],
 };
 export default config;
