@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { useUpsertTags } from '@/services/tag';
 
-import Dialog from '@/components/dialog';
+import { Dialog } from '@/components/dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
 

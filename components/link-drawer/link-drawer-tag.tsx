@@ -18,7 +18,7 @@ import { toast } from '@/utils/toast';
 
 import { CloseFillIcon } from '@/assets/icons';
 
-import RecentTags from './link-drawer-recent-tag';
+import LinkDrawerRecentTag from './link-drawer-recent-tag';
 
 interface Props {
   disabled?: boolean;
@@ -175,7 +175,7 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
           )}
         </div>
         {isActive && (
-          <RecentTags
+          <LinkDrawerRecentTag
             handleSelectRecentTag={handleSelectRecentTag}
             recentTagsRef={recentTagsRef}
             totalTags={totalTags}

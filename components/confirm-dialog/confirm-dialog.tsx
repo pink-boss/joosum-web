@@ -3,7 +3,7 @@ import { ButtonHTMLAttributes, ReactNode } from 'react';
 import clsx from 'clsx';
 
 import ButtonLoading from '@/components/button-loading';
-import Dialog, { DialogProps } from '@/components/dialog';
+import { Dialog, DialogProps } from '@/components/dialog';
 
 // TODO: 로딩 상태 왜 안나오지
 interface Props extends DialogProps {

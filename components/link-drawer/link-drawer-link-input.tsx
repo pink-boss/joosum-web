@@ -7,7 +7,7 @@ import { toast } from '@/utils/toast';
 
 import { SaveFormState } from '@/types/link.types';
 
-import FormItem from './link-drawer-form-item';
+import LinkDrawerFormItem from './link-drawer-form-item';
 
 interface Props {
   disabled?: boolean;
@@ -79,7 +79,7 @@ export default function LinkDrawerLinkInput({ value, titleInput, setFormState, d
   );
 
   return (
-    <FormItem
+    <LinkDrawerFormItem
       label="링크"
       name="url"
       inputProps={{

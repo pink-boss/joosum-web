@@ -24,7 +24,9 @@ export default function MyFolderFolders({ folders, totalLinkCount }: Props) {
           linkBookId: '',
         }}
       />
-      {folders?.map((folder) => <MyFolder key={folder.linkBookId} folder={folder} />)}
+      {folders?.map((folder) => (
+        <MyFolder key={folder.linkBookId} folder={folder} />
+      ))}
     </div>
   );
 }

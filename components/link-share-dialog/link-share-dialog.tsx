@@ -6,7 +6,7 @@ import { useCallback, useEffect } from 'react';
 
 import { useGetLinkCache } from '@/services/link';
 
-import Dialog from '@/components/dialog';
+import { Dialog } from '@/components/dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
 import { toast } from '@/utils/toast';

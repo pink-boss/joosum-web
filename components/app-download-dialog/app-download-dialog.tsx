@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import clsx from 'clsx';
 
 import { IOSDownload } from '@/components/app-download';
-import Dialog from '@/components/dialog';
+import { Dialog } from '@/components/dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
 

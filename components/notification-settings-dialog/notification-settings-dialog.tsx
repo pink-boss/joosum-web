@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { useGetNotificationSetting, useUpdateNotificationSetting } from '@/services/notification';
 
-import Dialog from '@/components/dialog';
+import { Dialog } from '@/components/dialog';
 import Toggle from '@/components/toggle';
 
 import { useDialogStore } from '@/libs/zustand/store';

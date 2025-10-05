@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { useGetAccount } from '@/services/auth';
 
-import Drawer from '@/components/drawer/drawer';
+import Drawer from '@/components/drawer';
 
 import { useDrawerStore } from '@/libs/zustand/store';
 

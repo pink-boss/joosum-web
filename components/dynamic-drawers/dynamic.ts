@@ -10,7 +10,7 @@ const LinkMutateDrawer = dynamic(() => import('../link-drawer/link-mutate-drawer
   ssr: false,
 });
 
-const UserDrawer = dynamic(() => import('../user-drawer'), {
+const UserDrawer = dynamic(() => import('../user-drawer/user-drawer'), {
   loading: () => null,
   ssr: false,
 });

@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 import { useGetAccount } from '@/services/auth';
 
-import Dialog from '@/components/dialog';
+import { Dialog } from '@/components/dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
 import { formatNumber } from '@/utils/number';

@@ -164,7 +164,6 @@ middleware.ts         # 경로 가드
 ## 테스트 전략
 
 - 단위 테스트(Jest + Testing Library)
-
   - 로직 테스트에 사용
   - 테스트 위치: `__tests__/**` 또는 `*.test.ts(x)`
 

@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { useDeleteAccount } from '@/services/auth';
 
 import ButtonLoading from '@/components/button-loading';
-import Dialog from '@/components/dialog';
+import { Dialog } from '@/components/dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
 

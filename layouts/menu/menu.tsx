@@ -86,7 +86,9 @@ export default function Menu() {
             </div>
           </Link>
           {/* 폴더 > 유저가 생성한 폴더 */}
-          {data?.linkBooks?.map((folder, index) => <MenuItem key={index} folder={folder} />)}
+          {data?.linkBooks?.map((folder, index) => (
+            <MenuItem key={index} folder={folder} />
+          ))}
         </div>
       )}
       {/* 폴더 만들기 */}
