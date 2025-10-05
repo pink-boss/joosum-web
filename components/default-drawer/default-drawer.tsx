@@ -15,7 +15,7 @@ interface Props {
   dataTestId?: string;
 }
 
-export default function Drawer({ open, children, className, onCloseCallback, dataTestId }: Props) {
+export default function DefaultDrawer({ open, children, className, onCloseCallback, dataTestId }: Props) {
   const { isLinkDrawerOpen, openLinkDrawer, isUserDrawerOpen, openUserDrawer } = useDrawerStore();
 
   const handleClose = useCallback(() => {

@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 import { useGetAccount } from '@/services/auth';
 
-import { Dialog } from '@/components/dialog';
+import { DefaultDialog } from '@/components/default-dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
 import { formatNumber } from '@/utils/number';
@@ -34,7 +34,7 @@ export default function AccountDialog() {
   }, [handleClose, openLogout]);
 
   return (
-    <Dialog className="h-[408px] w-[500px] px-5 py-10" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDialog className="h-[408px] w-[500px] px-5 py-10" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col items-center gap-5">
         <div className="flex w-full flex-col gap-[30px] px-6">
           <div className="flex flex-1 justify-between">
@@ -101,6 +101,6 @@ export default function AccountDialog() {
           </button>
         </div>
       </div>
-    </Dialog>
+    </DefaultDialog>
   );
 }

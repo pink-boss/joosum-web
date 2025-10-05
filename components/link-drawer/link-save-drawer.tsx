@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { useGetFolders } from '@/services/folder';
 import { useSaveLink } from '@/services/link';
 
-import Drawer from '@/components/drawer';
+import DefaultDrawer from '@/components/default-drawer';
 
 import { useDrawerStore } from '@/libs/zustand/store';
 
@@ -59,7 +59,7 @@ export default function LinkSaveDrawer({ _defaultValues }: Props) {
   if (mode !== 'save') return null;
 
   return (
-    <Drawer dataTestId="saveLink" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDrawer dataTestId="saveLink" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-1 flex-col gap-10">
         <LinkDrawerHeader
           center={<div className="font-semibold text-gray-black">링크 저장</div>}
@@ -133,6 +133,6 @@ export default function LinkSaveDrawer({ _defaultValues }: Props) {
           </div>
         </form>
       </div>
-    </Drawer>
+    </DefaultDrawer>
   );
 }

@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { useDeleteAccount } from '@/services/auth';
 
 import ButtonLoading from '@/components/button-loading';
-import { Dialog } from '@/components/dialog';
+import { DefaultDialog } from '@/components/default-dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
 
@@ -34,7 +34,7 @@ export default function AccountDeleteDialog() {
   }, [handleClose, openAccount]);
 
   return (
-    <Dialog className="w-[528px] px-5 py-10" open={isOpen} testId="delete-account" onCloseCallback={handleClose}>
+    <DefaultDialog className="w-[528px] px-5 py-10" open={isOpen} onCloseCallback={handleClose}>
       <form className="flex flex-col items-center gap-5 text-center" onSubmit={handleDeleteAccount}>
         <div className="flex w-full flex-col px-6">
           <div className="flex flex-1 justify-between">
@@ -105,6 +105,6 @@ export default function AccountDeleteDialog() {
           </button>
         </div>
       </form>
-    </Dialog>
+    </DefaultDialog>
   );
 }

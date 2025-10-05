@@ -6,7 +6,7 @@ import { useCallback, useEffect } from 'react';
 
 import { useGetLinkCache } from '@/services/link';
 
-import { Dialog } from '@/components/dialog';
+import { DefaultDialog } from '@/components/default-dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
 import { toast } from '@/utils/toast';
@@ -82,7 +82,7 @@ export default function LinkShareDialog() {
   }, [link?.url, link?.title, link?.thumbnailURL]);
 
   return (
-    <Dialog className="w-[421.78px]" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDialog className="w-[421.78px]" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col items-center gap-5">
         <div className="flex flex-col items-center gap-4">
           <span className="text-2xl font-bold">공유하기</span>
@@ -107,6 +107,6 @@ export default function LinkShareDialog() {
           </button>
         </div>
       </div>
-    </Dialog>
+    </DefaultDialog>
   );
 }

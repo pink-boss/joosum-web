@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useDeleteDrawerLink, useUpdateLink } from '@/services/link';
 
-import Drawer from '@/components/drawer';
+import DefaultDrawer from '@/components/default-drawer';
 import ImageWithFallback from '@/components/image-with-fallback';
 import LinkShareButton from '@/components/link-share-button';
 
@@ -54,7 +54,7 @@ export default function LinkMutateDrawer() {
   if (mode !== 'mutate' || !link) return null;
 
   return (
-    <Drawer open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDrawer open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-1 flex-col gap-10">
         <LinkDrawerHeader
           right={<LinkShareButton link={link} />}
@@ -114,6 +114,6 @@ export default function LinkMutateDrawer() {
           수정
         </LinkDrawerPrimaryButton>
       </div>
-    </Drawer>
+    </DefaultDrawer>
   );
 }

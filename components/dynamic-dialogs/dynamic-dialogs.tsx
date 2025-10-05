@@ -12,7 +12,7 @@ import {
   LogoutDialog,
   NotificationSettingDialog,
   TagDeleteConfirmDialog,
-  TagSettingDialog,
+  TagSettingsDialog,
 } from './dynamic';
 
 export default function DynamicDialogs() {
@@ -56,7 +56,7 @@ export default function DynamicDialogs() {
       {isNotificationSettingOpen && <NotificationSettingDialog />}
 
       {/* 태그 설정 */}
-      {isTagSettingOpen && <TagSettingDialog />}
+      {isTagSettingOpen && <TagSettingsDialog />}
       {/* 태그 삭제 */}
       {isDeleteTagConfirmOpen && <TagDeleteConfirmDialog />}
 

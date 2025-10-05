@@ -1,3 +1,3 @@
-import TagSettingDialog from './tag-settings-dialog';
+import TagSettingsDialog from './tag-settings-dialog';
 
-export default TagSettingDialog;
+export default TagSettingsDialog;

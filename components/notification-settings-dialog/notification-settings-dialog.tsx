@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { useGetNotificationSetting, useUpdateNotificationSetting } from '@/services/notification';
 
-import { Dialog } from '@/components/dialog';
+import { DefaultDialog } from '@/components/default-dialog';
 import Toggle from '@/components/toggle';
 
 import { useDialogStore } from '@/libs/zustand/store';
@@ -47,7 +47,7 @@ export default function NotificationSettingDialog() {
   }, [handleSetting]);
 
   return (
-    <Dialog className="h-[276px] w-[500px] px-5 py-10" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDialog className="h-[276px] w-[500px] px-5 py-10" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col items-center gap-5 px-6">
         <div className="flex w-full flex-col">
           <div className="flex flex-1 justify-between">
@@ -80,6 +80,6 @@ export default function NotificationSettingDialog() {
           />
         </div>
       </div>
-    </Dialog>
+    </DefaultDialog>
   );
 }

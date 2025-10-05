@@ -7,7 +7,7 @@ import { createPortal } from 'react-dom';
 
 import { useDialogStore } from '@/libs/zustand/store';
 
-export interface DialogProps {
+export interface DefaultDialogProps {
   children: ReactNode;
   className?: string;
   onCloseCallback: () => void;
@@ -15,7 +15,7 @@ export interface DialogProps {
   testId?: string;
 }
 
-export default function Dialog({ open, children, className, onCloseCallback, testId }: DialogProps) {
+export default function DefaultDialog({ open, children, className, onCloseCallback, testId }: DefaultDialogProps) {
   const {
     // folder
     isMutateFolderOpen,

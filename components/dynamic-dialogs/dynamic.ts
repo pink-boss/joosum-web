@@ -25,7 +25,7 @@ const LinkShareDialog = dynamic(() => import('../link-share-dialog'), {
   ssr: false,
 });
 
-const TagSettingDialog = dynamic(() => import('../tag-settings-dialog'), {
+const TagSettingsDialog = dynamic(() => import('../tag-settings-dialog'), {
   loading: () => null,
   ssr: false,
 });
@@ -77,5 +77,5 @@ export {
   LogoutDialog,
   NotificationSettingDialog,
   TagDeleteConfirmDialog,
-  TagSettingDialog,
+  TagSettingsDialog,
 };

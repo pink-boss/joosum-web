@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { useUpsertTags } from '@/services/tag';
 
-import { Dialog } from '@/components/dialog';
+import { DefaultDialog } from '@/components/default-dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
 
@@ -15,7 +15,7 @@ import { Tag, TagList as TagListType } from '@/types/tags.types';
 import TagMore from './tag-more';
 
 // 태그 관리 모달
-export default function TagSettingDialog() {
+export default function TagSettingsDialog() {
   const { isTagSettingOpen: isOpen, openTagSetting: open } = useDialogStore();
 
   const { handleInput, handleButtonClick, inputRef, tags } = useUpsertTags({});
@@ -25,7 +25,7 @@ export default function TagSettingDialog() {
   }, [open]);
 
   return (
-    <Dialog className="w-[500px] px-11 py-10" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDialog className="w-[500px] px-11 py-10" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col gap-5">
         <div className="flex w-full flex-col">
           <div className="flex flex-1 justify-between">
@@ -53,7 +53,7 @@ export default function TagSettingDialog() {
           </button>
         </div>
       </div>
-    </Dialog>
+    </DefaultDialog>
   );
 }
 

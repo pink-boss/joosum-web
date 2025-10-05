@@ -3,10 +3,10 @@ import { ButtonHTMLAttributes, ReactNode } from 'react';
 import clsx from 'clsx';
 
 import ButtonLoading from '@/components/button-loading';
-import { Dialog, DialogProps } from '@/components/dialog';
+import { DefaultDialog, DefaultDialogProps } from '@/components/default-dialog';
 
 // TODO: 로딩 상태 왜 안나오지
-interface Props extends DialogProps {
+interface Props extends DefaultDialogProps {
   children: ReactNode;
   closeProps: ButtonProps;
   submitLoading?: boolean;
@@ -25,7 +25,7 @@ export default function ConfirmDialog({
   ...dialogProps
 }: Props) {
   return (
-    <Dialog className="w-[421.78px]" {...dialogProps}>
+    <DefaultDialog className="w-[421.78px]" {...dialogProps}>
       <div className="flex flex-col items-center gap-5">
         {children}
         <div className="mt-3 flex justify-center gap-1">
@@ -33,7 +33,7 @@ export default function ConfirmDialog({
           <SubmitButton {...submitProps} dataTestId={submitDataTestId} loading={submitLoading} />
         </div>
       </div>
-    </Dialog>
+    </DefaultDialog>
   );
 }
 

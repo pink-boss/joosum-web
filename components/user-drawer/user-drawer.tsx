@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { useGetAccount } from '@/services/auth';
 
-import Drawer from '@/components/drawer';
+import DefaultDrawer from '@/components/default-drawer';
 
 import { useDrawerStore } from '@/libs/zustand/store';
 
@@ -25,7 +25,7 @@ export default function UserDrawer() {
   }, [open]);
 
   return (
-    <Drawer dataTestId="myPage" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDrawer dataTestId="myPage" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col gap-10">
         <button className="px-5 py-1" type="button" onClick={handleClose}>
           <DoubleRightIcon aria-hidden="true" className="size-6 text-gray-900" />
@@ -39,6 +39,6 @@ export default function UserDrawer() {
           <UserDrawerLogout />
         </div>
       </div>
-    </Drawer>
+    </DefaultDrawer>
   );
 }
