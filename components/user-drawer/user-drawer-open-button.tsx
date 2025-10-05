@@ -1,10 +1,10 @@
-import Image from 'next/image';
-
 import { useCallback } from 'react';
 
 import clsx from 'clsx';
 
 import { useDrawerStore } from '@/libs/zustand/store';
+
+import { PersonOutlineIcon } from '@/assets/icons';
 
 interface Props {
   dataTestId?: string;
@@ -22,7 +22,9 @@ export default function UserDrawerOpenButton({ dataTestId }: Props) {
       type="button"
       onClick={handleClick}
     >
-      <Image unoptimized alt="user" height={48} src="/icons/icon-user.svg" width={48} />
+      <div className="flex size-12 items-center justify-center rounded-full border-2 border-white">
+        <PersonOutlineIcon aria-hidden="true" className="size-6 text-gray-500" />
+      </div>
     </button>
   );
 }

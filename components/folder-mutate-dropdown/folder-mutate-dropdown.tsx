@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { useCallback, useState } from 'react';
 
 import clsx from 'clsx';
@@ -8,6 +6,8 @@ import { useSelectFolder } from '@/services/folder';
 
 import { useClickAway } from '@/hooks/utils';
 import { useDialogStore } from '@/libs/zustand/store';
+
+import { MoreVerticalIcon } from '@/assets/icons';
 
 import { Folder } from '@/types/folder.types';
 
@@ -53,7 +53,6 @@ export default function FolderMutateDropdown({ folder, type, isLayout = false, d
     <div
       ref={ref}
       className="relative"
-      data-testid="link-book-more"
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -69,11 +68,9 @@ export default function FolderMutateDropdown({ folder, type, isLayout = false, d
           isLayout && 'size-5',
         )}
       >
-        <Image
-          alt="more"
-          height={isLayout ? 20 : 26.4}
-          src="/icons/icon-more-vertical.png"
-          width={isLayout ? 20 : 26.4}
+        <MoreVerticalIcon
+          aria-hidden="true"
+          className={clsx('size-6 text-gray-500', isLayout && 'size-[26px] text-black')}
         />
       </button>
       {isOpen && (

@@ -16,6 +16,8 @@ import { useGetLinkFilterTags, useUpsertTagsSetting } from '@/services/tag';
 import { isValidName } from '@/utils/regexp';
 import { toast } from '@/utils/toast';
 
+import { CloseFillIcon } from '@/assets/icons';
+
 import RecentTags from './link-drawer-recent-tag';
 
 interface Props {
@@ -125,31 +127,22 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
             isActive ? 'border-primary-500 bg-primary-100' : 'border-gray-ghost bg-gray-ghost',
           )}
         >
-          <div className={clsx('flex flex-wrap items-center gap-2')} data-testid="input-tags-list" role="list">
+          <div className={clsx('flex flex-wrap items-center gap-2')}>
             {tags?.map((tag, index) => (
               <div
                 key={index}
                 className="flex items-center gap-1 rounded-full bg-gray-vapor px-2 py-1 text-xs"
-                role="listitem"
                 onClick={handlePreventActive}
               >
                 <span>{tag}</span>
-                <button
-                  type="button"
-                  onClick={() => handleRemoveTag(index)}
-                  className={clsx(
-                    'size-[13.33px] rounded-full bg-gray-silver',
-                    'flex items-center justify-center pb-0.5 text-white',
-                  )}
-                >
-                  &times;
+                <button type="button" onClick={() => handleRemoveTag(index)}>
+                  <CloseFillIcon aria-hidden="true" className="size-4 text-gray-500" />
                 </button>
               </div>
             ))}
             <input
               ref={inputRef}
               className="min-w-[120px] flex-1 bg-transparent p-1 outline-none"
-              data-testid="tag-input"
               disabled={disabled}
               id="tag-input"
               maxLength={10}

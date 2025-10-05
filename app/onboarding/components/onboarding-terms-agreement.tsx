@@ -57,7 +57,10 @@ export default function OnboardingTermsAgreement(props: Props) {
               onClick={onAllAgreement}
             >
               <div className="flex items-center gap-2">
-                <CheckboxCircleIcon className={clsx('size-6', agreements.all ? 'text-primary-500' : 'text-white')} />
+                <CheckboxCircleIcon
+                  aria-hidden="true"
+                  className={clsx('size-6', agreements.all ? 'text-primary-500' : 'text-white')}
+                />
                 <span className="text-base font-bold text-gray-black">전체 동의</span>
               </div>
             </button>

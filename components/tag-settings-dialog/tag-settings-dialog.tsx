@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { useCallback } from 'react';
 
 import clsx from 'clsx';
@@ -9,6 +7,8 @@ import { useUpsertTags } from '@/services/tag';
 import Dialog from '@/components/dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
+
+import { CloseDialogIcon } from '@/assets/icons';
 
 import { Tag, TagList as TagListType } from '@/types/tags.types';
 
@@ -32,7 +32,7 @@ export default function TagSettingDialog() {
             <div className="invisible size-6" />
             <span className="text-2xl font-bold">태그 관리</span>
             <button type="button" onClick={handleClose}>
-              <Image alt="close" height={24} src="/icons/icon-basic-close.png" width={24} />
+              <CloseDialogIcon aria-hidden="true" className="size-6 text-gray-900" />
             </button>
           </div>
         </div>
@@ -62,7 +62,7 @@ function TagList({ tagList }: { tagList?: TagListType }) {
     <div>
       <div className="py-[10px] pl-[10px] text-lg font-bold text-black">태그 목록</div>
       {tagList?.length ? (
-        <div className="mini-scroll h-60 w-full overflow-scroll px-5" data-testid="tag-list">
+        <div className="mini-scroll h-60 w-full overflow-scroll px-5">
           {tagList.map((tag, index) => (
             <TagCard key={index} tag={tag} />
           ))}

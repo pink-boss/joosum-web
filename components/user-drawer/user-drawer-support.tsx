@@ -1,7 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 import clsx from 'clsx';
+
+import { ArrowTopRightIcon } from '@/assets/icons';
 
 import { Account } from '@/types/account.types';
 
@@ -51,7 +52,7 @@ function NewTabLink({
       target="_blank"
     >
       <span className={className}>{title}</span>
-      <Image alt="new-tab" height={24} src="/icons/icon-new-window.png" width={24} />
+      <ArrowTopRightIcon aria-hidden="true" className="size-6 text-gray-500" />
     </Link>
   );
 }

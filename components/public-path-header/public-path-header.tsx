@@ -7,7 +7,7 @@ export default function PublicPathHeader() {
       <div className="flex h-full items-center px-20">
         <Link className="flex items-center gap-2" href="/">
           <div className="relative">
-            <Image priority alt="Joosum Logo" height={32} src="/images/header-logo-3x.png" width={32} />
+            <Image priority alt="Joosum Logo" height={32} src="/images/header-logo.png" width={32} />
           </div>
           <span className="font-['PT_Sans_Caption'] text-[32px] font-bold leading-[41px] text-primary-500">Joosum</span>
         </Link>

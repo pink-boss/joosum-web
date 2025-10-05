@@ -112,7 +112,7 @@ export default function OnboardingUserInfoForm(props: Props) {
                 })}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
-                <ChevronDownIcon className="size-6 text-gray-500" />
+                <ChevronDownIcon aria-hidden="true" className="size-6 text-gray-500" />
               </div>
             </div>
           </section>

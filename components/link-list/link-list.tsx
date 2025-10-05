@@ -138,13 +138,7 @@ export default function LinkList({ defaultEditMode = false, type, linkSort, link
               </div>
             ))}
             {hasNextPage && (
-              <LoadMoreButton
-                iconAlt="더 보기"
-                iconSrc="/icons/icon-down.png"
-                remainingCount={totalItems - currentItems.length}
-                variant="list"
-                onClick={loadNextPage}
-              />
+              <LoadMoreButton remainingCount={totalItems - currentItems.length} variant="list" onClick={loadNextPage} />
             )}
           </div>
         </div>

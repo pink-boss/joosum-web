@@ -1,6 +1,6 @@
-import Image from 'next/image';
-
 import { ReactNode } from 'react';
+
+import { CloseOutlineIcon } from '@/assets/icons';
 
 interface Props {
   center: ReactNode;
@@ -13,7 +13,7 @@ export default function LinkDrawerHeader({ onClose, center, right = <div />, dat
   return (
     <div className="flex justify-between px-5 py-1">
       <button data-testid={dataTestId} type="button" onClick={onClose}>
-        <Image alt="close" height={24} src="/icons/icon-close-outline-black.png" width={24} />
+        <CloseOutlineIcon aria-hidden="true" className="size-6 text-black" />
       </button>
       {center}
       {right}

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
@@ -6,6 +5,8 @@ import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { useSearchBarStore, useSearchLinkFilterStore, useSearchLinkSortStore } from '@/libs/zustand/store';
+
+import { SearchIcon } from '@/assets/icons';
 
 interface Props {
   inputDelay?: number;
@@ -86,7 +87,7 @@ export default function SearchInput({ inputDelay = 1000 }: Props) {
           </button>
         )}
         <button className="cursor-pointer" type="button" onClick={() => handleChangeSearchState(inputValue)}>
-          <Image alt="search" height={22} src="/icons/icon-search.png" width={22} />
+          <SearchIcon aria-hidden="true" className="size-6 text-gray-50" />
         </button>
       </div>
     </div>

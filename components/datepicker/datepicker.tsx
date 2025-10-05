@@ -38,7 +38,7 @@ export default function DatePicker({ open, dateRange = [], setDateRange, dataTes
   }, [setDateRange]);
 
   return (
-    <div ref={ref} className="relative w-[305px]" data-testid="date-picker">
+    <div ref={ref} className="relative w-[305px]">
       {/* 기간 필터 */}
       <DatePickerDropdown dataTestId={dataTestId} isOpen={isOpen} selected={dateRange} setIsOpen={setIsOpen} />
       {isOpen && (

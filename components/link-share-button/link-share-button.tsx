@@ -1,8 +1,8 @@
-import Image from 'next/image';
-
 import { useCallback } from 'react';
 
 import { useDialogStore } from '@/libs/zustand/store';
+
+import { DownloadIcon } from '@/assets/icons';
 
 import { Link } from '@/types/link.types';
 
@@ -20,7 +20,7 @@ export default function LinkShareButton({ link, dataTestId }: Props) {
 
   return (
     <button data-testid={dataTestId} type="button" onClick={handleClick}>
-      <Image alt="share" height={24} src="/icons/icon-download2.png" width={24} />
+      <DownloadIcon aria-hidden="true" className="size-6 text-gray-500" />
     </button>
   );
 }

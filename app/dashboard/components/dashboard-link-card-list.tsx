@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import NextLink from 'next/link';
 
 import { ChangeEvent, useCallback, useMemo, useRef, useState } from 'react';
@@ -13,6 +12,8 @@ import LoadMoreButton from '@/components/load-more-button';
 import { usePaginationWithDeps } from '@/hooks/utils';
 import { LINK_FILTER_DEFAULT_VALUES } from '@/libs/zustand/schema';
 import { useFolderLinkFilterStore } from '@/libs/zustand/store';
+
+import { ChevronRightSmallIcon } from '@/assets/icons';
 
 import DashboardLinkCard from './dashboard-link-card';
 
@@ -85,7 +86,7 @@ export default function DashboardLinkCardList() {
         <NextLink data-testid="viewAll_home" href="/link-book" onClick={handleClick}>
           <div className="flex gap-1 pl-5">
             <span className="text-lg font-semibold">전체보기</span>
-            <Image alt="right" height={24} src="/icons/icon-right-black.png" width={24} />
+            <ChevronRightSmallIcon aria-hidden="true" className="size-6 text-black" />
           </div>
         </NextLink>
       </div>

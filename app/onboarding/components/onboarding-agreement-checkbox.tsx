@@ -26,7 +26,10 @@ export default function OnboardingAgreementCheckbox(props: Props) {
         type="button"
         onClick={onCheck}
       >
-        <CheckmarkIcon className={clsx('size-6', isChecked ? 'text-primary-500' : 'text-gray-500')} />
+        <CheckmarkIcon
+          aria-hidden="true"
+          className={clsx('size-6', isChecked ? 'text-primary-500' : 'text-gray-500')}
+        />
         <span className="text-base text-gray-dim">{label}</span>
       </button>
       {link && (
@@ -37,7 +40,7 @@ export default function OnboardingAgreementCheckbox(props: Props) {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <ChevronRightIcon className="size-6 text-inherit" />
+          <ChevronRightIcon aria-hidden="true" className="size-6 text-inherit" />
         </Link>
       )}
     </div>

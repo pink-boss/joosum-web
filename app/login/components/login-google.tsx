@@ -43,7 +43,7 @@ export default function LoginGoogle({ previousLoginProvider }: Props) {
         type="button"
         onClick={handleClick}
       >
-        <GoogleIcon height={24} width={24} />
+        <GoogleIcon aria-hidden="true" height={24} width={24} />
         <span className="font-medium">Google 계정으로 시작하기</span>
       </button>
     </LoginTooltip>

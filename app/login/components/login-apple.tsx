@@ -44,7 +44,7 @@ export default function LoginApple({ previousLoginProvider }: Props) {
         type="button"
         onClick={handleClick}
       >
-        <AppleIcon height={24} width={24} />
+        <AppleIcon aria-hidden="true" height={24} width={24} />
         <span className="font-medium">Apple ID로 시작하기</span>
       </button>
     </LoginTooltip>

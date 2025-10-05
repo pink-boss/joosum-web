@@ -1,10 +1,10 @@
-import Image from 'next/image';
-
 import { useCallback, useEffect, useMemo } from 'react';
 
 import clsx from 'clsx';
 
 import { useGetNotifications, useUpdateNotification } from '@/services/notification';
+
+import { BasicBellIcon, BookOpenIcon, FileFolderIcon } from '@/assets/icons';
 
 import { Notification, TQueryNotifications } from '@/types/notification-list.types';
 
@@ -73,13 +73,11 @@ export default function NotificationList({ setHasNotification }: Props) {
               handleUpdateRead(notification.notificationId);
             }}
           >
-            <Image
-              alt="notification-type"
-              className="size-6 flex-none"
-              height={24}
-              src={`/icons/${notification.type === 'folder' ? 'icon-notification-folder.png' : 'icon-notification-book-open.png'}`}
-              width={24}
-            />
+            {notification.type === 'folder' ? (
+              <FileFolderIcon aria-hidden="true" className="size-6 flex-none text-[#14181F]" />
+            ) : (
+              <BookOpenIcon aria-hidden="true" className="size-6 flex-none text-[#14181F]" />
+            )}
             <div className="">
               <div className="text-lg font-bold">
                 {notification.type === 'folder' ? '분류되지' : '읽지'} 않은 링크가 있어요
@@ -112,7 +110,7 @@ export default function NotificationList({ setHasNotification }: Props) {
     </div>
   ) : (
     <div className="mb-24 mt-10 flex h-full flex-col items-center justify-center gap-5">
-      <Image alt="notification-bell" height={60} src="/icons/icon-basic-bell-gray.png" width={60} />
+      <BasicBellIcon aria-hidden="true" className="size-[60px] text-gray-600" />
       <div className="text-center text-gray-slate">
         <p>확인 가능한 알림이 없어요.</p>
         <p>받은 알림은 최대 30일까지 저장돼요.</p>

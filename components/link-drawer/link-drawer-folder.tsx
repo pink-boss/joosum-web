@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { useCallback } from 'react';
 
 import { useSelectFolder } from '@/services/folder';
@@ -7,6 +5,8 @@ import { useSelectFolder } from '@/services/folder';
 import FolderDropdown from '@/components/folder-dropdown';
 
 import { useDialogStore } from '@/libs/zustand/store';
+
+import { PlusIcon } from '@/assets/icons';
 
 import { Folder } from '@/types/folder.types';
 
@@ -39,7 +39,7 @@ export default function LinkDrawerFolder({ folderId, setFolderId, disabled, data
           type="button"
           onClick={handleClick}
         >
-          <Image alt="new-folder" height={24} src="/icons/icon-plus.png" width={24} />
+          <PlusIcon aria-hidden="true" className="size-6 text-gray-500" />
           새폴더
         </button>
       </div>

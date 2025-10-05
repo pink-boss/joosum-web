@@ -1,8 +1,8 @@
-import Image from 'next/image';
-
 import { useCallback, useMemo } from 'react';
 
 import clsx from 'clsx';
+
+import { BasicCheckIcon } from '@/assets/icons';
 
 interface Props {
   color: string;
@@ -40,15 +40,12 @@ export default function FolderColorSelector({ color, previewColor, setPreviewCol
         className={clsx(
           'flex size-full items-center justify-center rounded-lg border',
           isBrightColor ? 'border-black' : 'border-white',
-          isSelected ? 'block' : isWhiteColor ? 'block [&>img]:hidden' : 'hidden',
+          isSelected ? 'block' : isWhiteColor ? 'block [&>svg]:hidden' : 'hidden',
         )}
       >
-        <Image
-          alt="check"
-          className={clsx('brightness-100', isBrightColor && 'invert')}
-          height={8.31}
-          src="/images/check.png"
-          width={12.47}
+        <BasicCheckIcon
+          aria-hidden="true"
+          className={clsx('size-[23.51px] text-white', isBrightColor && 'text-black')}
         />
       </div>
     </button>

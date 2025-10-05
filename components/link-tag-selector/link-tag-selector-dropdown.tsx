@@ -1,8 +1,8 @@
-import Image from 'next/image';
-
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
+
+import { ChevronDownIcon } from '@/assets/icons';
 
 interface Props {
   className?: string;
@@ -87,13 +87,9 @@ export default function LinkTagSelectorDropdown({ selected, isOpen, setIsOpen, c
             <span>태그 전체</span>
           )}
         </div>
-        {hiddenCount ? (
-          <div className="mr-2" data-testid="hidden-count">
-            +{hiddenCount}개
-          </div>
-        ) : undefined}
+        {hiddenCount ? <div className="mr-2">+{hiddenCount}개</div> : undefined}
       </div>
-      <Image alt="down" height={20} src="/icons/icon-down3.png" width={20} />
+      <ChevronDownIcon aria-hidden="true" className="size-5 text-gray-500" />
     </button>
   );
 }

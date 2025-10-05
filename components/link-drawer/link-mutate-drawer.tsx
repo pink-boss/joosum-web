@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { useCallback, useEffect, useState } from 'react';
 
 import { useDeleteDrawerLink, useUpdateLink } from '@/services/link';
@@ -10,6 +8,8 @@ import LinkShareButton from '@/components/link-share-button';
 
 import { useDrawerStore } from '@/libs/zustand/store';
 import { krDateFormatter } from '@/utils/date';
+
+import { FolderIcon } from '@/assets/icons';
 
 import { CreateFormState } from '@/types/link.types';
 
@@ -61,7 +61,7 @@ export default function LinkMutateDrawer() {
           onClose={handleClose}
           center={
             <div className="flex items-center gap-1">
-              <Image unoptimized alt="folder" height={20} src="/icons/icon-folder.svg" width={20} />
+              <FolderIcon aria-hidden="true" className="size-5 shrink-0 text-gray-500" />
               <span className="text-gray-dim">{link.linkBookName}</span>
             </div>
           }

@@ -66,11 +66,7 @@ export default function NotificationToastProvider({ children }: { children: Reac
       {children}
       {mounted &&
         createPortal(
-          <div
-            className="fixed right-4 top-28 z-50 flex flex-col items-end"
-            data-testid="notification-toast-root"
-            id="notification-toast-root"
-          >
+          <div className="fixed right-4 top-28 z-50 flex flex-col items-end" id="notification-toast-root">
             {toasts.map((toast) => (
               <NotificationToast {...toast} key={toast.id} />
             ))}

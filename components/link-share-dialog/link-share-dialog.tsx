@@ -88,11 +88,11 @@ export default function LinkShareDialog() {
           <span className="text-2xl font-bold">공유하기</span>
           <div className="flex gap-10">
             <button className="flex flex-col items-center gap-1" type="button" onClick={handleCopyLink}>
-              <Image alt="copy-link" height={60} src="/images/copy-link.png" width={60} />
+              <Image alt="" height={60} src="/images/share-link.png" width={60} />
               <span className="text-sm text-gray-black">링크 복사</span>
             </button>
             <button className="flex flex-col items-center gap-1" type="button" onClick={handleShareToKakao}>
-              <Image alt="kakao" height={60} src="/images/logo-kakao.png" width={60} />
+              <Image alt="" height={60} src="/images/share-kakao-talk.png" width={60} />
               <span className="text-sm text-gray-black">카카오톡</span>
             </button>
           </div>

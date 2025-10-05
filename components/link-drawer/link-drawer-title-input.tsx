@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, RefObject, useCallback, useState } from 'react';
+import { ChangeEvent, RefObject, useCallback, useState } from 'react';
 
 import FormItem from './link-drawer-form-item';
 
@@ -26,15 +26,16 @@ export default function LinkDrawerTitleInput({ value, setValue, disabled, inputR
     [setValue],
   );
 
-  const handlePressEnterKey = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
-    const isValid = e.currentTarget.checkValidity();
+  // TODO: 추후 수정
+  // const handlePressEnterKey = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+  //   const isValid = e.currentTarget.checkValidity();
 
-    if (isValid && e.key === 'Enter') {
-      e.currentTarget.blur();
-      const nextInput = document.querySelector<HTMLInputElement>('[data-testid="open-button"]');
-      nextInput?.focus();
-    }
-  }, []);
+  //   if (isValid && e.key === 'Enter') {
+  //     e.currentTarget.blur();
+  //     const nextInput = document.querySelector<HTMLInputElement>('[data-testid="open-button"]');
+  //     nextInput?.focus();
+  //   }
+  // }, []);
 
   return (
     <FormItem
@@ -48,7 +49,7 @@ export default function LinkDrawerTitleInput({ value, setValue, disabled, inputR
         required: true,
         maxLength: 60,
         onChange: handleChangeValue,
-        onKeyDown: handlePressEnterKey,
+        // onKeyDown: handlePressEnterKey,
         disabled: disabled,
       }}
     />

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -12,6 +11,8 @@ import LinkShareButton from '@/components/link-share-button';
 import { useDrawerStore, useSearchBarStore } from '@/libs/zustand/store';
 import { dateFormatter } from '@/utils/date';
 import { extractDomain } from '@/utils/url-encoder';
+
+import { FolderIcon, MoreVerticalIcon } from '@/assets/icons';
 
 import { Link } from '@/types/link.types';
 
@@ -91,7 +92,7 @@ export default function LinkListLinkCard({ link, index, linkDataTestId, kebabDat
         <LinkShareButton link={link} />
         {/* 케밥 클릭 */}
         <button data-testid={kebabDataTestId} type="button" onClick={handleClick}>
-          <Image alt="more-vertical" height={24} src="/icons/icon-more-vertical-gray.png" width={24} />
+          <MoreVerticalIcon aria-hidden="true" className="size-6 text-gray-500" />
         </button>
       </div>
     </button>
@@ -105,7 +106,7 @@ function FolderLink({ linkBookName }: { linkBookName: string }) {
       href={`/link-book/${linkBookName}`}
       onClick={(e) => e.stopPropagation()}
     >
-      <Image alt="folder" height={16} src="/icons/icon-folder.png" width={16} />
+      <FolderIcon aria-hidden="true" className="size-4 shrink-0 text-gray-500" />
       {linkBookName}
     </NextLink>
   );

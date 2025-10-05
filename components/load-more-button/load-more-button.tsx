@@ -1,8 +1,8 @@
-import Image from 'next/image';
-
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 
 import clsx from 'clsx';
+
+import { ChevronRightIcon } from '@/assets/icons';
 
 interface Props {
   /** 더 보기 버튼 클릭 핸들러 */
@@ -13,15 +13,12 @@ interface Props {
   textPrefix?: string;
   /** 버튼 텍스트 접미사 (예: "개 더 보기", "개 모두 보기") */
   textSuffix?: string;
-  /** 아이콘 이미지 경로 */
-  iconSrc?: string;
-  /** 아이콘 alt 텍스트 */
-  iconAlt?: string;
   /** 버튼 스타일 변형 */
   variant?: 'card' | 'list';
   /** 커스텀 클래스명 */
   className?: string;
   dataTestId?: string;
+  icon?: ReactNode;
 }
 
 const BASE_CLASSNAME = 'flex cursor-pointer';
@@ -42,11 +39,10 @@ export default function LoadMoreButton(props: Props) {
     remainingCount,
     textPrefix = '',
     textSuffix = '개 더 보기',
-    iconSrc = '/icons/icon-right.png',
-    iconAlt = '더 보기',
     variant = 'card',
     className = '',
     dataTestId,
+    icon,
   } = props;
 
   const displayCount = useMemo(() => (remainingCount > 999 ? '999+' : remainingCount), [remainingCount]);
@@ -64,7 +60,7 @@ export default function LoadMoreButton(props: Props) {
           링크 {displayCount}
           {textSuffix}
         </span>
-        <Image alt={iconAlt} height={24} src={iconSrc} width={24} />
+        {icon || <ChevronRightIcon aria-hidden="true" className="size-6 text-gray-700" />}
       </button>
     </div>
   );

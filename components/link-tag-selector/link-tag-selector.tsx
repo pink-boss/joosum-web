@@ -45,7 +45,7 @@ export default function LinkTagSelector({ className, selectBoxClassName, tags, s
   }, [setTags]);
 
   return (
-    <div ref={ref} className={clsx('relative', className && className)} data-testid="tag-selector">
+    <div ref={ref} className={clsx('relative', className && className)}>
       {/* 태그 필터 */}
       <TagSelectorDropdown
         className={selectBoxClassName}

@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { useCallback } from 'react';
 
 import clsx from 'clsx';
@@ -10,6 +8,8 @@ import ButtonLoading from '@/components/button-loading';
 import Dialog from '@/components/dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
+
+import { CloseDialogIcon } from '@/assets/icons';
 
 export default function AccountDeleteDialog() {
   const { isDeleteAccountOpen: isOpen, openDeleteAccount: open, openAccount } = useDialogStore();
@@ -41,7 +41,7 @@ export default function AccountDeleteDialog() {
             <div className="invisible size-6" />
             <span className="text-2xl font-bold">회원 탈퇴</span>
             <button type="button" onClick={handleClose}>
-              <Image alt="close" height={24} src="/icons/icon-basic-close.png" width={24} />
+              <CloseDialogIcon aria-hidden="true" className="size-6 text-gray-900" />
             </button>
           </div>
           {/* instruction */}

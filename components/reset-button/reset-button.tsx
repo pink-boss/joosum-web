@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { ResetIcon } from '@/assets/icons';
 
 interface Props {
   onClick: () => void;
@@ -11,7 +11,7 @@ export default function ResetButton({ onClick }: Props) {
       type="button"
       onClick={onClick}
     >
-      <Image alt="reset" height={16} src="/icons/icon-reset.png" width={16} />
+      <ResetIcon aria-hidden="true" className="size-4 text-gray-700" />
       초기화
     </button>
   );

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { MouseEvent, useCallback } from 'react';
@@ -12,6 +11,8 @@ import FolderMutateDropdown from '@/components/folder-mutate-dropdown';
 import Loader from '@/components/loader';
 
 import { useDialogStore, useLayoutStore } from '@/libs/zustand/store';
+
+import { ChevronDownIcon, FolderIcon, HomeIcon, PlusIcon } from '@/assets/icons';
 
 import { Folder } from '@/types/folder.types';
 
@@ -47,22 +48,19 @@ export default function Menu() {
       {/* 홈 */}
       <Link data-testid="home_gnb_common" href="/dashboard" onClick={handleClose}>
         <div className="flex items-center gap-4 px-10 py-3">
-          <Image unoptimized alt="home" height={24} src="/icons/icon-home.svg" width={24} />
+          <HomeIcon aria-hidden="true" className="size-6 shrink-0 text-gray-700" />
           <span className="text-lg font-bold text-gray-ink">홈</span>
         </div>
       </Link>
       {/* 내 폴더 */}
       <Link data-testid="myFolder_gnb_common" href="/my-folder">
         <div className="flex cursor-pointer items-center gap-4 px-10 py-3">
-          <Image unoptimized alt="folder" height={24} src="/icons/icon-folder.svg" width={24} />
+          <FolderIcon aria-hidden="true" className="size-6 shrink-0 text-gray-500" />
           <span className="text-lg font-bold text-gray-ink">내 폴더</span>
           <button className="ml-auto" type="button" onClick={handleOpen}>
-            <Image
-              alt="icon-direction"
-              className={clsx('transition-transform duration-300', !openSideMenu && 'rotate-180')}
-              height={24}
-              src={`/icons/icon-down.png`}
-              width={24}
+            <ChevronDownIcon
+              aria-hidden="true"
+              className={clsx('size-6 text-gray-600 transition-transform duration-300', !openSideMenu && 'rotate-180')}
             />
           </button>
         </div>
@@ -98,7 +96,7 @@ export default function Menu() {
         type="button"
         onClick={handleCreate}
       >
-        <Image alt="plus" height={28} src="/icons/icon-plus.png" width={28} />
+        <PlusIcon aria-hidden="true" className="size-7 text-gray-500" />
         <span className="text-left font-semibold text-gray-graphite">폴더 만들기</span>
       </button>
     </div>

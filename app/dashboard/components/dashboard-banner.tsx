@@ -7,6 +7,8 @@ import { useEffect, useMemo, useState } from 'react';
 
 import clsx from 'clsx';
 
+import { RightIcon } from '@/assets/icons';
+
 import { DASHBOARD_BANNER_DATA } from './constants';
 
 export default function DashboardBanner() {
@@ -35,7 +37,7 @@ export default function DashboardBanner() {
             <p>{currentBanner.title}</p>
             <p className="flex items-center">
               <span className="font-bold">{currentBanner.subtitle}</span>
-              <Image alt="right" className="ml-1 pc:ml-2" height={30.71} src="/icons/icon-right.png" width={30.71} />
+              <RightIcon aria-hidden="true" className="ml-1 text-gray-800 pc:ml-2" height={30.71} width={30.71} />
             </p>
           </div>
         </div>

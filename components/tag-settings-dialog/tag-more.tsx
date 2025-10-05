@@ -1,7 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
@@ -10,6 +8,8 @@ import { useUpsertTags } from '@/services/tag';
 
 import { useClickAway } from '@/hooks/utils';
 import { useSubDialogStore } from '@/libs/zustand/store';
+
+import { MoreVerticalIcon } from '@/assets/icons';
 
 import { Tag } from '@/types/tags.types';
 
@@ -43,7 +43,7 @@ export default function TagMore({ label }: Props) {
   return (
     <div ref={ref} className={clsx('relative')}>
       <button className="rounded-full" data-testid="kebab_settingTag_myPage" type="button" onClick={handleClick}>
-        <Image alt="tag-more" height={24} src="/icons/icon-more-vertical-gray.png" width={24} />
+        <MoreVerticalIcon aria-hidden="true" className="size-6 text-gray-500" />
       </button>
       {isOpen && (
         <div

@@ -1,8 +1,8 @@
-import Image from 'next/image';
-
 import { useCallback } from 'react';
 
 import { useDialogStore } from '@/libs/zustand/store';
+
+import { ExitIcon } from '@/assets/icons';
 
 export default function UserDrawerLogout() {
   const { openLogout } = useDialogStore();
@@ -19,7 +19,7 @@ export default function UserDrawerLogout() {
       onClick={handleLogout}
     >
       <span className="text-left">로그아웃</span>
-      <Image alt="exit" height={24} src="/icons/icon-exit.png" width={24} />
+      <ExitIcon aria-hidden="true" className="size-6 text-gray-500" />
     </button>
   );
 }

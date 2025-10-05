@@ -8,6 +8,8 @@ import Menu from '@/layouts/menu';
 
 import { useDialogStore } from '@/libs/zustand/store';
 
+import { ChevronRightIcon } from '@/assets/icons';
+
 export default function Lnb() {
   const { openMutateFolder, openAppDownload } = useDialogStore();
 
@@ -41,7 +43,7 @@ export default function Lnb() {
         onClick={handleAppDownload}
       >
         <span className="text-left font-semibold text-gray-graphite">주섬 앱 다운로드</span>
-        <Image alt="right" height={28} src="/icons/icon-right.png" width={28} />
+        <ChevronRightIcon aria-hidden="true" className="size-7 text-gray-600" />
       </button>
     </div>
   );

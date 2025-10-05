@@ -1,10 +1,10 @@
-import Image from 'next/image';
-
 import { useCallback } from 'react';
 
 import clsx from 'clsx';
 
 import { useDialogStore } from '@/libs/zustand/store';
+
+import { ChevronRightIcon } from '@/assets/icons';
 
 import { Account as AccountType } from '@/types/account.types';
 
@@ -24,7 +24,7 @@ export default function UserDrawerAccount({ email }: Props) {
         <div className="font-semibold">내 계정</div>
         <button className="flex justify-between" data-testid="myAccount_myPage" type="button" onClick={handleOpen}>
           <span className="font-bold text-gray-black">{email || ' '}</span>
-          <Image alt="open" height={24} src="/icons/icon-chevron-right.png" width={24} />
+          <ChevronRightIcon aria-hidden="true" className="size-6 text-gray-500" />
         </button>
       </div>
     </div>

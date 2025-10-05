@@ -1,6 +1,6 @@
-import Image from 'next/image';
-
 import { Dispatch, SetStateAction, useCallback } from 'react';
+
+import { ChevronLeftIcon, ChevronRightIcon } from '@/assets/icons';
 
 interface Props {
   renderMonth: Date;
@@ -21,13 +21,13 @@ export default function DatePickerChangeMonth({ renderMonth, setRenderMonth }: P
   return (
     <div className="flex items-center justify-between">
       <button type="button" onClick={() => handleClick('prev')}>
-        <Image alt="month-left" height={24} src="/icons/icon-chevron-left.png" width={24} />
+        <ChevronLeftIcon aria-hidden="true" className="size-6 text-gray-500" />
       </button>
       <span className="font-bold text-gray-black">
         {renderMonth.getFullYear()}년 {renderMonth.getMonth() + 1}월
       </span>
       <button type="button" onClick={() => handleClick('next')}>
-        <Image alt="month-right" height={24} src="/icons/icon-chevron-right.png" width={24} />
+        <ChevronRightIcon aria-hidden="true" className="size-6 text-gray-500" />
       </button>
     </div>
   );

@@ -1,7 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-
 import { useCallback, useMemo, useState } from 'react';
 
 import clsx from 'clsx';
@@ -9,6 +7,8 @@ import clsx from 'clsx';
 import { useGetFolders } from '@/services/folder';
 
 import { useClickAway } from '@/hooks/utils';
+
+import { ChevronDownIcon } from '@/assets/icons';
 
 import { Folder } from '@/types/folder.types';
 
@@ -67,10 +67,8 @@ export default function FolderDropdown(props: Props) {
           className && className,
         )}
       >
-        <span className="text-single-line w-64" data-testid="selected">
-          {folderOptions?.find(({ value }) => value === folderId)?.label}
-        </span>
-        <Image alt="down" height={20} src="/icons/icon-down3.png" width={20} />
+        <span className="text-single-line w-64">{folderOptions?.find(({ value }) => value === folderId)?.label}</span>
+        <ChevronDownIcon aria-hidden="true" className="size-6 text-gray-500" />
       </button>
       {isOpen && (
         <div

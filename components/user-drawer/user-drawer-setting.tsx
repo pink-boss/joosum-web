@@ -1,10 +1,10 @@
-import Image from 'next/image';
-
 import { useCallback } from 'react';
 
 import clsx from 'clsx';
 
 import { useDialogStore } from '@/libs/zustand/store';
+
+import { ChevronRightIcon } from '@/assets/icons';
 
 export default function UserDrawerSetting() {
   const { openNotificationSetting, openTagSetting } = useDialogStore();
@@ -32,7 +32,7 @@ function Menu({ dataTestId, title, onClick }: { dataTestId: string; onClick: () 
   return (
     <button className="flex cursor-pointer justify-between" data-testid={dataTestId} type="button" onClick={onClick}>
       <span className="text-left">{title}</span>
-      <Image alt="open" height={24} src="/icons/icon-chevron-right.png" width={24} />
+      <ChevronRightIcon aria-hidden="true" className="size-6 text-gray-500" />
     </button>
   );
 }

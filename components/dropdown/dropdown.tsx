@@ -1,12 +1,12 @@
 'use client';
 
-import Image from 'next/image';
-
 import { useCallback, useMemo, useState } from 'react';
 
 import clsx from 'clsx';
 
 import { useClickAway } from '@/hooks/utils';
+
+import { ChevronDownIcon } from '@/assets/icons';
 
 interface Props {
   options: OptionItem[];
@@ -35,7 +35,7 @@ const Dropdown = ({ selected, setSelected, options, dataTestId }: Props) => {
         onClick={handleClick}
       >
         <span>{selectedOption?.label}</span>
-        <Image alt="down" height={24} src="/icons/icon-down2.png" width={24} />
+        <ChevronDownIcon aria-hidden="true" className="size-6 text-gray-500" />
       </button>
       {isOpen && (
         <div className="absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border border-gray-ghost bg-white py-4 shadow-xl">

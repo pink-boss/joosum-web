@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { useCallback } from 'react';
 
 import { useGetNotificationSetting, useUpdateNotificationSetting } from '@/services/notification';
@@ -8,6 +6,8 @@ import Dialog from '@/components/dialog';
 import Toggle from '@/components/toggle';
 
 import { useDialogStore } from '@/libs/zustand/store';
+
+import { CloseDialogIcon } from '@/assets/icons';
 
 import { UpdateFormState, UpdateNotificationSettingType } from '@/types/notification-settings.types';
 
@@ -54,11 +54,11 @@ export default function NotificationSettingDialog() {
             <div className="invisible size-6" />
             <span className="text-2xl font-bold">알림 설정</span>
             <button type="button" onClick={handleClose}>
-              <Image alt="close" height={24} src="/icons/icon-basic-close.png" width={24} />
+              <CloseDialogIcon aria-hidden="true" className="size-6 text-gray-900" />
             </button>
           </div>
         </div>
-        <div className="flex w-full items-center justify-between" data-testid="read-agree">
+        <div className="flex w-full items-center justify-between">
           <div className="flex flex-col gap-1">
             <div className="text-lg font-semibold">읽지 않은 링크</div>
             <div className="text-sm text-gray-dim">&apos;읽지 않음&apos; 상태의 링크 알림</div>
@@ -68,7 +68,7 @@ export default function NotificationSettingDialog() {
         <div className="w-full">
           <div className="w-full border-t border-gray-silver" />
         </div>
-        <div className="flex w-full items-center justify-between" data-testid="classify-agree">
+        <div className="flex w-full items-center justify-between">
           <div className="flex flex-col gap-1">
             <div className="text-lg font-semibold">분류되지 않은 링크</div>
             <div className="text-sm text-gray-dim">&apos;기본&apos; 폴더에 분류된 링크 알림</div>

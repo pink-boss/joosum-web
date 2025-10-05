@@ -11,6 +11,8 @@ import Dialog from '@/components/dialog';
 import { useDialogStore } from '@/libs/zustand/store';
 import { formatNumber } from '@/utils/number';
 
+import { CloseDialogIcon, FolderIcon, HyperlinkOutlineIcon } from '@/assets/icons';
+
 // 내 계정 모달
 export default function AccountDialog() {
   const { isAccountOpen: isOpen, openAccount: open, openDeleteAccount, openLogout } = useDialogStore();
@@ -39,7 +41,7 @@ export default function AccountDialog() {
             <div className="invisible size-6" />
             <span className="text-2xl font-bold">내 계정</span>
             <button data-testid="close_myAccount_myPage" type="button" onClick={handleClose}>
-              <Image alt="close" height={24} src="/icons/icon-basic-close.png" width={24} />
+              <CloseDialogIcon aria-hidden="true" className="size-6 text-gray-900" />
             </button>
           </div>
           <div className="ml-0.5 flex items-center gap-5">
@@ -50,7 +52,7 @@ export default function AccountDialog() {
                 data?.user.social === 'apple' && 'bg-black',
               )}
             >
-              <Image alt="social" height={24} src={`/logo/${data?.user.social}.png`} width={24} />
+              <Image alt="social" height={24} src={`/images/logo-${data?.user.social}.png`} width={24} />
             </div>
             <span className="truncate text-xl font-bold text-gray-black">{data?.user.email}</span>
           </div>
@@ -58,7 +60,7 @@ export default function AccountDialog() {
             <div className="gap-5">
               <div className={clsx('flex justify-between', 'text-lg text-gray-black')}>
                 <div className="flex items-center gap-5">
-                  <Image alt="hyper-link" height={24} src="/icons/icon-hyper-link.png" width={24} />
+                  <HyperlinkOutlineIcon aria-hidden="true" className="size-6 text-gray-700" />
                   <span className="font-bold">링크</span>
                 </div>
                 <span className="">{formatNumber(data?.totalLinkCount || 0)}개</span>
@@ -67,7 +69,7 @@ export default function AccountDialog() {
             <div className="gap-5">
               <div className={clsx('flex justify-between', 'text-lg text-gray-black')}>
                 <div className="flex items-center gap-5">
-                  <Image unoptimized alt="hyper-link" height={24} src="/icons/icon-folder-account.svg" width={24} />
+                  <FolderIcon aria-hidden="true" className="size-6 text-gray-700" />
                   <span className="font-bold">폴더</span>
                 </div>
                 <span className="">{formatNumber(data?.totalFolderCount || 0)}개</span>

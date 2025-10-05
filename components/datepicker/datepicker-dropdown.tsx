@@ -1,10 +1,10 @@
-import Image from 'next/image';
-
 import { useCallback } from 'react';
 
 import clsx from 'clsx';
 
 import { dateFormatter } from '@/utils/date';
+
+import { ChevronDownIcon } from '@/assets/icons';
 
 import { DateRange } from '@/types/date.types';
 
@@ -38,7 +38,7 @@ export default function DatePickerDropdown({ selected, isOpen, setIsOpen, dataTe
       ) : (
         <span>기간 전체</span>
       )}
-      <Image alt="down" className="ml-auto" height={20} src="/icons/icon-down3.png" width={20} />
+      <ChevronDownIcon aria-hidden="true" className="ml-auto size-5 text-gray-500" />
     </button>
   );
 }
