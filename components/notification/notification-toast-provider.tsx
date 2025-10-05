@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useEffect, useState } from 'react';
+import { createContext, ReactNode, useCallback, useEffect, useState } from 'react';
 
 import { createPortal } from 'react-dom';
 
@@ -20,7 +20,7 @@ interface NotificationToastContextType {
 
 const NotificationToastContext = createContext<NotificationToastContextType | null>(null);
 
-export default function NotificationToastProvider({ children }: { children: React.ReactNode }) {
+export default function NotificationToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<ToastMetaData[]>([]);
   const [mounted, setMounted] = useState(false);
 

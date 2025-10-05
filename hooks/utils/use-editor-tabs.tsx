@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction, useCallback } from 'react';
+import { ChangeEvent, Dispatch, ReactNode, SetStateAction, useCallback } from 'react';
 
 import FolderColorSelector from '@/components/folder-color-selector';
 import FolderIllustrationSelector from '@/components/folder-illustration-selector';
@@ -28,7 +28,7 @@ export default function useEditorTabs({ localState, setLocalState }: Props) {
   );
 
   const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       handleStateChange(name, value);
     },

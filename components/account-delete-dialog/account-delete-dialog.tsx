@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { FormEvent, useCallback } from 'react';
 
 import clsx from 'clsx';
 
@@ -21,7 +21,7 @@ export default function AccountDeleteDialog() {
   }, [open]);
 
   const handleDeleteAccount = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       deleteAccount.mutate();
     },
