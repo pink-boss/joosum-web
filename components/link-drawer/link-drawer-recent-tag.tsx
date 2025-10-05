@@ -22,6 +22,7 @@ export default function LinkDrawerRecentTag({ totalTags, handleSelectRecentTag, 
       {totalTags.map((tag) => (
         <div
           key={`recent-tag-${tag}`}
+          data-testid="recent_tag"
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();

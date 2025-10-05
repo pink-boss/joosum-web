@@ -11,22 +11,29 @@ import { PlusIcon } from '@/assets/icons';
 import { Folder } from '@/types/folder.types';
 
 interface Props {
-  dataTestId?: string;
+  buttonDataTestId?: string;
   disabled?: boolean;
+  dropdownDataTestId?: string;
   folderId?: Folder['linkBookId'];
   setFolderId: (folderName: Folder['title'], folderId: Folder['linkBookId']) => void;
 }
 
 // Drawer 내부에서 폴더 관련 섹션 (새폴더 및 폴더 변경)
-export default function LinkDrawerFolder({ folderId, setFolderId, disabled, dataTestId }: Props) {
+export default function LinkDrawerFolder({
+  folderId,
+  setFolderId,
+  disabled,
+  buttonDataTestId,
+  dropdownDataTestId,
+}: Props) {
   const { openMutateFolder } = useDialogStore();
 
   const { clearFolder } = useSelectFolder({});
 
   const handleClick = useCallback(() => {
     clearFolder();
-    openMutateFolder(true, undefined, dataTestId);
-  }, [clearFolder, openMutateFolder, dataTestId]);
+    openMutateFolder(true, undefined, buttonDataTestId);
+  }, [clearFolder, openMutateFolder, buttonDataTestId]);
 
   return (
     <div className="flex flex-col gap-2 text-gray-black">
@@ -34,7 +41,7 @@ export default function LinkDrawerFolder({ folderId, setFolderId, disabled, data
         <label className="text-lg font-semibold">폴더</label>
         <button
           className="flex items-center font-semibold text-primary-500"
-          data-testid={dataTestId}
+          data-testid={buttonDataTestId}
           disabled={disabled}
           type="button"
           onClick={handleClick}
@@ -45,6 +52,7 @@ export default function LinkDrawerFolder({ folderId, setFolderId, disabled, data
       </div>
       <FolderDropdown
         className="border-none bg-gray-ghost"
+        dataTestId={dropdownDataTestId}
         disabled={disabled}
         folderId={folderId}
         setFolderId={setFolderId}

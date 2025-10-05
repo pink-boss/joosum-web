@@ -135,7 +135,7 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
                 onClick={handlePreventActive}
               >
                 <span>{tag}</span>
-                <button type="button" onClick={() => handleRemoveTag(index)}>
+                <button data-testid="delete_tag" type="button" onClick={() => handleRemoveTag(index)}>
                   <CloseFillIcon aria-hidden="true" className="size-4 text-gray-500" />
                 </button>
               </div>
@@ -163,6 +163,7 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
           {input && (
             <button
               className={clsx('ml-auto w-28 px-2', 'font-semibold text-primary-400')}
+              data-testid="add_tag"
               type="button"
               onClick={(e) => {
                 handlePreventActive(e);

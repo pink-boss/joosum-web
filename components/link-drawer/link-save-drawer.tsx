@@ -91,7 +91,8 @@ export default function LinkSaveDrawer({ _defaultValues }: Props) {
             }}
           />
           <LinkDrawerFolder
-            dataTestId="addFolder_saveLink"
+            buttonDataTestId="addFolder_saveLink"
+            dropdownDataTestId="selectFolder_saveLink"
             folderId={formState.linkBookId}
             setFolderId={(_, linkBookId) =>
               setFormState((prev) => ({

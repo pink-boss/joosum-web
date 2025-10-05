@@ -19,12 +19,13 @@ interface Props {
   folderId?: Folder['linkBookId'];
   onClickCallback?: () => void;
   open?: boolean;
+  dataTestId?: string;
   setFolderId: (folderName: Folder['title'], folderId: Folder['linkBookId']) => void;
 }
 
 // 폴더 선택 드롭다운
 export default function FolderDropdown(props: Props) {
-  const { open, folderId, setFolderId, fromFolderId, className, disabled, onClickCallback } = props;
+  const { open, folderId, setFolderId, fromFolderId, className, disabled, onClickCallback, dataTestId } = props;
 
   const { data } = useGetFolders('created_at');
 
@@ -55,6 +56,7 @@ export default function FolderDropdown(props: Props) {
   return (
     <div ref={ref} className="relative">
       <button
+        data-testid={dataTestId}
         disabled={disabled}
         type="button"
         onClick={() => {
