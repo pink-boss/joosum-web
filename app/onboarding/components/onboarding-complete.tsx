@@ -17,7 +17,7 @@ export default function OnboardingComplete({ onGoHome }: Props) {
           </div>
           {/* 메인 이미지 */}
           <div className="mb-12">
-            <Image priority alt="회원가입 완료" height={140} src="/img-join.svg" width={230} />
+            <Image priority alt="회원가입 완료" height={140} src="/icons/icon-img-join.svg" width={230} />
           </div>
           {/* 시작하기 버튼 */}
           <button

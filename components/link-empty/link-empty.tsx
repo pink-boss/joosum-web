@@ -16,7 +16,7 @@ export default function LinkEmpty({ unread }: Props) {
     >
       {!unread ? (
         <>
-          <Image priority alt="empty-links" height={141.6} src="/empty-links.svg" width={188.4} />
+          <Image priority alt="empty-links" height={141.6} src="/icons/icon-empty-links.svg" width={188.4} />
           <div>
             <p>저장된 링크가 없어요.</p>
             <p>링크를 주섬주섬 담아보세요.</p>
@@ -24,7 +24,7 @@ export default function LinkEmpty({ unread }: Props) {
         </>
       ) : (
         <>
-          <Image priority alt="read-links" height={142.8} src="/read-links.png" width={139.2} />
+          <Image priority alt="read-links" height={142.8} src="/images/read-links.png" width={139.2} />
           <div>
             <p>저장된 링크를 모두 다 읽었어요!</p>
           </div>

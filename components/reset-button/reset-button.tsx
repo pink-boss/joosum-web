@@ -11,7 +11,7 @@ export default function ResetButton({ onClick }: Props) {
       type="button"
       onClick={onClick}
     >
-      <Image alt="reset" height={16} src="/icons/reset.png" width={16} />
+      <Image alt="reset" height={16} src="/icons/icon-reset.png" width={16} />
       초기화
     </button>
   );

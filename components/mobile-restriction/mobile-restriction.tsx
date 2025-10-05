@@ -13,7 +13,7 @@ export default function MobileRestriction() {
       </Head>
       <div className="mobile-restriction-fade-in flex min-h-screen w-full flex-col items-center justify-center gap-10 bg-gray-ghost">
         <div className="mobile-restriction-zoom-in">
-          <Image priority alt="Screen Safer" height={240} src="/screen-safer.png" width={240} />
+          <Image priority alt="Screen Safer" height={240} src="/images/screen-safer.png" width={240} />
         </div>
         <div className="mobile-restriction-slide-in-2 text-center text-2xl font-semibold text-gray-ink">
           <p>주섬 웹서비스는 현재</p>

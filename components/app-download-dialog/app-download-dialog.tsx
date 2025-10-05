@@ -25,12 +25,12 @@ export default function AppDownloadDialog() {
 
         <div className="flex gap-6">
           <div className="flex flex-col items-center gap-2">
-            <Image alt="app store qr" height={124} src="/app-store-qr.png" width={124} />
+            <Image alt="app store qr" height={124} src="/images/qr-app-store.png" width={124} />
             <IOSDownload />
           </div>
           {/* <div className="flex flex-col items-center gap-2">
             <Image
-              src="/google-play-qr.png"
+              src="/images/qr-google-play.png"
               alt="google play qr"
               width={124}
               height={124}

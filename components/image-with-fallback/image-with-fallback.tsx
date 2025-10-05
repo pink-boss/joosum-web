@@ -30,7 +30,7 @@ export default function ImageWithFallback({
 }: Props) {
   const [error, setError] = useState(false);
 
-  const noImagePlaceholder = index % 2 === 0 ? '/no_img_odd.png' : '/no_img_even.png';
+  const noImagePlaceholder = index % 2 === 0 ? '/images/no-img-odd.png' : '/images/no-img-even.png';
 
   const imgSrc = error || !src ? noImagePlaceholder : src;
 

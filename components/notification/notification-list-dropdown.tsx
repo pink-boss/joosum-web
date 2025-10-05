@@ -36,7 +36,7 @@ export default function NotificationListDropdown() {
             <div className="text-2xl font-bold">알림</div>
             {/* 알림 > 닫기 */}
             <button data-testid="close_notification" type="button" onClick={handleClose}>
-              <Image alt="close" height={24} src="/icons/basic-close.png" width={24} />
+              <Image alt="close" height={24} src="/icons/icon-basic-close.png" width={24} />
             </button>
           </div>
           <NotificationList setHasNotification={setHasNotification} />
@@ -44,7 +44,7 @@ export default function NotificationListDropdown() {
       )}
       {/* LNB > 알림 */}
       <button className="relative" data-testid="notification_gnb_common" type="button" onClick={handleOpen}>
-        <Image unoptimized alt="bell" height={24} src="/icons/basic-bell.svg" width={24} />
+        <Image unoptimized alt="bell" height={24} src="/icons/icon-basic-bell.svg" width={24} />
         {hasNotification && <div className="absolute -right-0.5 -top-0.5 size-2.5 rounded-full bg-error" />}
       </button>
     </div>

@@ -47,7 +47,7 @@ export default function Menu() {
       {/* 홈 */}
       <Link data-testid="home_gnb_common" href="/dashboard" onClick={handleClose}>
         <div className="flex items-center gap-4 px-10 py-3">
-          <Image unoptimized alt="home" height={24} src="/icons/home.svg" width={24} />
+          <Image unoptimized alt="home" height={24} src="/icons/icon-home.svg" width={24} />
           <span className="text-lg font-bold text-gray-ink">홈</span>
         </div>
       </Link>

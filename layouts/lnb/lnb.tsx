@@ -25,7 +25,7 @@ export default function Lnb() {
         <div className="flex items-center justify-between px-10 py-1">
           {/* 로고 */}
           <Link className="cursor-pointer" data-testid="logo_gnb_common" href="/dashboard" onClick={handleClose}>
-            <Image alt="joosum" className="py-3" height={18} src="/logo/joosum-text.png" width={88} />
+            <Image alt="joosum" className="py-3" height={18} src="/images/joosum-text.png" width={88} />
           </Link>
           {/* 알림 */}
           <NotificationListDropdown />

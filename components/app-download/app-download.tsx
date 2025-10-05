@@ -8,7 +8,7 @@ export const IOSDownload = () => {
       rel="noopener noreferrer"
       target="_blank"
     >
-      <Image alt="app store" height={39} src="/app-store.png" width={124} />
+      <Image alt="app store" height={39} src="/images/download-app-store.png" width={124} />
     </Link>
   );
 };
@@ -16,7 +16,7 @@ export const IOSDownload = () => {
 export const AndroidDownload = () => {
   return (
     <Link href="https://play.google.com/store/apps/details?id=com.joosum.app" rel="noopener noreferrer" target="_blank">
-      <Image alt="google play" height={39} src="/google-play.png" width={124} />
+      <Image alt="google play" height={39} src="/images/download-google-play.png" width={124} />
     </Link>
   );
 };

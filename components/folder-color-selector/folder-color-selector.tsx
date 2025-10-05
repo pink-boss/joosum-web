@@ -47,7 +47,7 @@ export default function FolderColorSelector({ color, previewColor, setPreviewCol
           alt="check"
           className={clsx('brightness-100', isBrightColor && 'invert')}
           height={8.31}
-          src="/link-book/check.png"
+          src="/images/check.png"
           width={12.47}
         />
       </div>

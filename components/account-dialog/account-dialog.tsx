@@ -39,7 +39,7 @@ export default function AccountDialog() {
             <div className="invisible size-6" />
             <span className="text-2xl font-bold">내 계정</span>
             <button data-testid="close_myAccount_myPage" type="button" onClick={handleClose}>
-              <Image alt="close" height={24} src="/icons/basic-close.png" width={24} />
+              <Image alt="close" height={24} src="/icons/icon-basic-close.png" width={24} />
             </button>
           </div>
           <div className="ml-0.5 flex items-center gap-5">
@@ -58,7 +58,7 @@ export default function AccountDialog() {
             <div className="gap-5">
               <div className={clsx('flex justify-between', 'text-lg text-gray-black')}>
                 <div className="flex items-center gap-5">
-                  <Image alt="hyper-link" height={24} src="/icons/hyper-link.png" width={24} />
+                  <Image alt="hyper-link" height={24} src="/icons/icon-hyper-link.png" width={24} />
                   <span className="font-bold">링크</span>
                 </div>
                 <span className="">{formatNumber(data?.totalLinkCount || 0)}개</span>

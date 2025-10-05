@@ -32,7 +32,7 @@ export default function TagSettingDialog() {
             <div className="invisible size-6" />
             <span className="text-2xl font-bold">태그 관리</span>
             <button type="button" onClick={handleClose}>
-              <Image alt="close" height={24} src="/icons/basic-close.png" width={24} />
+              <Image alt="close" height={24} src="/icons/icon-basic-close.png" width={24} />
             </button>
           </div>
         </div>

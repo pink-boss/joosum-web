@@ -77,7 +77,7 @@ export default function NotificationList({ setHasNotification }: Props) {
               alt="notification-type"
               className="size-6 flex-none"
               height={24}
-              src={`/icons/${notification.type === 'folder' ? 'notification-folder.png' : 'notification-book-open.png'}`}
+              src={`/icons/${notification.type === 'folder' ? 'icon-notification-folder.png' : 'icon-notification-book-open.png'}`}
               width={24}
             />
             <div className="">
@@ -112,7 +112,7 @@ export default function NotificationList({ setHasNotification }: Props) {
     </div>
   ) : (
     <div className="mb-24 mt-10 flex h-full flex-col items-center justify-center gap-5">
-      <Image alt="notification-bell" height={60} src="/icons/basic-bell-gray.png" width={60} />
+      <Image alt="notification-bell" height={60} src="/icons/icon-basic-bell-gray.png" width={60} />
       <div className="text-center text-gray-slate">
         <p>확인 가능한 알림이 없어요.</p>
         <p>받은 알림은 최대 30일까지 저장돼요.</p>

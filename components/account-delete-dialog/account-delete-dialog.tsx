@@ -41,7 +41,7 @@ export default function AccountDeleteDialog() {
             <div className="invisible size-6" />
             <span className="text-2xl font-bold">회원 탈퇴</span>
             <button type="button" onClick={handleClose}>
-              <Image alt="close" height={24} src="/icons/basic-close.png" width={24} />
+              <Image alt="close" height={24} src="/icons/icon-basic-close.png" width={24} />
             </button>
           </div>
           {/* instruction */}

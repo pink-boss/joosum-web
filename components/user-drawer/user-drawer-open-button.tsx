@@ -22,7 +22,7 @@ export default function UserDrawerOpenButton({ dataTestId }: Props) {
       type="button"
       onClick={handleClick}
     >
-      <Image unoptimized alt="user" height={48} src="/icons/user.svg" width={48} />
+      <Image unoptimized alt="user" height={48} src="/icons/icon-user.svg" width={48} />
     </button>
   );
 }
