@@ -56,6 +56,7 @@ export default function useGetLinks({ linkSort, linkFilter, type, folderId }: Pr
     const queryKey = getLinkListQueryKey(folderId, searchKeyword);
     console.log('useGetLinks queryKey', queryKey);
     console.log('useGetLinks searchKeyword', searchKeyword);
+    console.log('useGetLinks folderId', folderId);
     let pathname: string;
     let queryString: string;
 

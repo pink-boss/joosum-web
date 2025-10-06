@@ -16,7 +16,7 @@ export default function useGetFolderLinks({ linkSort, linkFilter, folderId }: Pr
   const queryOptions = useMemo(
     () =>
       folderId
-        ? { linkSort, linkFilter, linkBookId: folderId, type: 'linkBook' as const }
+        ? { linkSort, linkFilter, type: 'linkBook' as const, folderId }
         : { linkSort, linkFilter, type: 'all' as const },
     [linkSort, linkFilter, folderId],
   );
