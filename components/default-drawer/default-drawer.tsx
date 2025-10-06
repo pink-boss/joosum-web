@@ -37,7 +37,7 @@ export default function DefaultDrawer({ open, children, className, onCloseCallba
         role="dialog"
         onClick={(e) => e.stopPropagation()}
         className={clsx(
-          'fixed right-0 top-0 z-20 h-full w-[494px]',
+          'fixed right-0 top-0 z-20 h-full w-123.5',
           'border border-gray-200',
           'bg-white pb-20 pt-5',
           'flex flex-col gap-10',

@@ -71,7 +71,7 @@ export default function LinkSaveDrawer({ _defaultValues }: Props) {
           <LinkDrawerLinkInput setFormState={setFormState} titleInput={titleRef.current} value={formState.url} />
           <input
             hidden
-            data-testid="thumbnailURL"
+            name="thumbnailUrl"
             value={formState.thumbnailURL}
             onChange={(e) =>
               setFormState((prev) => ({
@@ -123,7 +123,7 @@ export default function LinkSaveDrawer({ _defaultValues }: Props) {
               disabled={!formState.title}
               type="submit"
               className={clsx(
-                'h-[56px] w-[220.5px] rounded-lg font-bold text-white',
+                'h-14 w-[220.5px] rounded-lg font-bold text-white',
                 'flex items-center justify-center gap-2',
                 saveLinkMutation.isPending ? 'cursor-not-allowed bg-gray-300' : 'bg-primary-500',
               )}

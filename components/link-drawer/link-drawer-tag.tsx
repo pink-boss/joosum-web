@@ -142,7 +142,7 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
             ))}
             <input
               ref={inputRef}
-              className="min-w-[120px] flex-1 bg-transparent p-1 outline-none"
+              className="min-w-30 flex-1 bg-transparent p-1 outline-none"
               disabled={disabled}
               id="tag-input"
               maxLength={10}
@@ -162,7 +162,7 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
           </div>
           {input && (
             <button
-              className={clsx('ml-auto w-28 px-2', 'font-semibold text-primary-400')}
+              className='ml-auto w-14.5 font-semibold text-primary-400'
               data-testid="add_tag"
               type="button"
               onClick={(e) => {
@@ -170,7 +170,7 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
                 handleSubmit();
               }}
             >
-              생성
+              생성하기
             </button>
           )}
         </div>

@@ -29,30 +29,27 @@ export default function Folder(props: Props) {
       style={{ backgroundColor }}
       className={clsx(
         'relative flex flex-col justify-between shadow',
-        isPreview ? 'h-[176px] w-[130px] rounded-lg' : 'w-full flex-1 rounded-xl',
+        isPreview ? 'h-44 w-32.5 rounded-lg' : 'w-full flex-1 rounded-xl',
       )}
     >
       <div
         className={clsx(
           'absolute h-full bg-black opacity-10',
-          isPreview ? 'left-[9px] w-0.5' : 'left-[13.2px] w-[3.3px]',
+          isPreview ? 'left-2.25 w-0.5' : 'left-[13.2px] w-[3.3px]',
         )}
       />
       <div
+        className={clsx('font-bold', isPreview ? 'ml-5.5 mt-4 w-23.5 text-sm' : 'ml-8.25 mt-[19.8px] w-30.25 text-lg')}
         style={{ color: titleColor }}
-        className={clsx(
-          'font-bold',
-          isPreview ? 'ml-[22px] mt-4 w-[94px] text-sm' : 'ml-[33px] mt-[19.8px] w-[121px] text-lg',
-        )}
       >
         {title || (isPreview && TITLE_PLACEHOLDER)}
       </div>
       {illustration && (
-        <div className={clsx(isPreview ? 'mb-4 ml-[34px]' : 'mb-[13.2px] ml-[41.66px]')}>
+        <div className={clsx(isPreview ? 'mb-4 ml-8.5' : 'mb-[13.2px] ml-[41.66px]')}>
           <Image
             alt={illustration}
             height={isPreview ? 80 : 118.8}
-            src={`/link-book/${illustration}.png`}
+            src={`/images/${illustration}.png`}
             width={isPreview ? 80 : 118.8}
           />
         </div>

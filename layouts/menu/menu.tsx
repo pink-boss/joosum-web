@@ -44,7 +44,7 @@ export default function Menu() {
   }, [clearFolder, openMutateFolder]);
 
   return (
-    <div className="w-[282px]">
+    <div className="w-70.5">
       {/* 홈 */}
       <Link data-testid="home_gnb_common" href="/dashboard" onClick={handleClose}>
         <div className="flex items-center gap-4 px-10 py-3">
@@ -75,7 +75,7 @@ export default function Menu() {
         >
           {/* 폴더 > 전체 */}
           <Link data-testid="folder_gnb_common" href="/link-book">
-            <div className={clsx('h-[48px] py-3 pl-12 pr-5', 'flex items-center gap-2')}>
+            <div className={clsx('h-12 py-3 pl-12 pr-5', 'flex items-center gap-2')}>
               <div
                 className={clsx('size-5 rounded-full border border-white')}
                 style={{
@@ -108,7 +108,7 @@ export default function Menu() {
 function MenuItem({ folder }: { folder: Folder }) {
   return (
     <FolderLink data-testid="folder_gnb_common" folder={folder}>
-      <div className={clsx('h-[48px] py-3 pl-12 pr-5')}>
+      <div className={clsx('h-12 py-3 pl-12 pr-5')}>
         <div className="relative flex items-center gap-2">
           <div
             className={clsx('size-5 rounded-full border border-white')}

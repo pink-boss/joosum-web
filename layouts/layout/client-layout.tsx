@@ -40,7 +40,7 @@ export default function ClientLayout({ children }: Readonly<{ children: ReactNod
                 <Component>
                   <Gnb />
                   <Suspense fallback={<Loader />}>
-                    <main className="relative w-full flex-1">{children}</main>
+                    <main className="relative flex w-full flex-1">{children}</main>
                   </Suspense>
                   <div id="drawer-root" />
                   <div id="modal-root" />

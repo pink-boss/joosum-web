@@ -12,7 +12,7 @@ export default function Toggle({ isOn, onUpdate, dataTestId }: Props) {
   }, [onUpdate]);
 
   return (
-    <label className="relative inline-block h-5 w-[33px]">
+    <label className="relative inline-block h-5 w-8.25">
       {/* 실제 체크박스는 화면에서 숨기고, peer 클래스를 사용하여 상태를 연결합니다. */}
       <input
         readOnly

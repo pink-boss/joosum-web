@@ -33,7 +33,7 @@ export default function OnboardingTermsAgreement(props: Props) {
 
   return (
     <main
-      className="mx-auto flex size-full max-w-[1280px] flex-col justify-center gap-8 px-20"
+      className="mx-auto flex size-full max-w-320 flex-col justify-center gap-8 px-20"
       data-testid="agreeTermsOfService"
     >
       {/* 제목 섹션 */}
@@ -43,11 +43,11 @@ export default function OnboardingTermsAgreement(props: Props) {
           <br />
           이용약관 동의
         </h1>
-        <p className="text-base leading-[19px] text-gray-800">서비스 이용을 위해 약관 및 정보제공에 동의해주세요.</p>
+        <p className="text-base leading-4.75 text-gray-800">서비스 이용을 위해 약관 및 정보제공에 동의해주세요.</p>
       </div>
       {/* 약관 동의 섹션 */}
       <div className="flex flex-col items-center" data-testid="agreeTermsOfService">
-        <div className="w-[335px]">
+        <div className="w-83.75">
           {/* 전체 동의 */}
           <div className="mb-6">
             <button

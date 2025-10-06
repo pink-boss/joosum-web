@@ -58,12 +58,12 @@ export default function LinkTagSelector({ className, selectBoxClassName, tags, s
         <div
           className={clsx(
             'absolute z-10 mt-1 flex max-w-min flex-col',
-            'gap-[20px] rounded-lg border border-gray-200 bg-white p-6 shadow-lg',
+            'gap-5 rounded-lg border border-gray-200 bg-white p-6 shadow-lg',
           )}
         >
-          <div className="flex flex-col gap-[20px]">
+          <div className="flex flex-col gap-5">
             <TagSelectorSelectedTags setTags={setTags} tags={tags} />
-            <ul className="mini-scroll flex h-[222px] w-[258px] flex-col gap-[10px] overflow-auto border border-gray-200 p-3">
+            <ul className="mini-scroll flex h-55.5 w-64.5 flex-col gap-2.5 overflow-auto border border-gray-200 p-3">
               {totalTags.map((tag, index) => (
                 <li key={`total-tag-${index}`} className="flex gap-2">
                   <Checkbox checked={tags.includes(tag)} id={`tag-${tag}`} value={tag} onChange={handleCheckTag} />

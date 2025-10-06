@@ -38,18 +38,18 @@ export default function DatePicker({ open, dateRange = [], setDateRange, dataTes
   }, [setDateRange]);
 
   return (
-    <div ref={ref} className="relative w-[305px]">
+    <div ref={ref} className="relative w-76.25">
       {/* 기간 필터 */}
       <DatePickerDropdown dataTestId={dataTestId} isOpen={isOpen} selected={dateRange} setIsOpen={setIsOpen} />
       {isOpen && (
         <div
           className={clsx(
             'absolute z-10 mt-1 flex max-w-min flex-col',
-            'gap-[20px] rounded-lg border border-gray-200 bg-white p-6 shadow-lg',
+            'gap-5 rounded-lg border border-gray-200 bg-white p-6 shadow-lg',
           )}
         >
-          <div className="flex flex-col gap-[20px]">
-            <div className="flex h-[28px] gap-1">
+          <div className="flex flex-col gap-5">
+            <div className="flex h-7 gap-1">
               <DatePickerLastPeriodButton
                 period="1w"
                 setDateRange={setDateRange}
@@ -67,7 +67,7 @@ export default function DatePicker({ open, dateRange = [], setDateRange, dataTes
             </div>
             <DatePickerChangeMonth renderMonth={renderMonth} setRenderMonth={setRenderMonth} />
             <DatePickerWeek />
-            <div className="flex flex-wrap gap-2" role="list">
+            <ul className="flex flex-wrap gap-2">
               {getCalendarDate(renderMonth).map(({ month, date, monthType, dateObj }) => (
                 <DatePickerDate
                   key={`${month}-${date}`}
@@ -81,7 +81,7 @@ export default function DatePicker({ open, dateRange = [], setDateRange, dataTes
                   tmpSelectedDate={tmpSelectedDate}
                 />
               ))}
-            </div>
+            </ul>
           </div>
           <div className="flex justify-end gap-4">
             <ResetButton onClick={handleReset} />

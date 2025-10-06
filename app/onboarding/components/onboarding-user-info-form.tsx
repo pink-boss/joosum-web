@@ -34,10 +34,7 @@ export default function OnboardingUserInfoForm(props: Props) {
   );
 
   return (
-    <main
-      className="mx-auto flex size-full max-w-[1280px] flex-col justify-center gap-8 px-20"
-      data-testid="signAdditional"
-    >
+    <main className="mx-auto flex size-full max-w-320 flex-col justify-center gap-8 px-20" data-testid="signAdditional">
       {/* 제목 섹션 */}
       <div className="text-center">
         <h1 className="mb-4 text-2xl font-bold leading-8 text-black">
@@ -45,14 +42,14 @@ export default function OnboardingUserInfoForm(props: Props) {
           <br />
           성별과 연령을 입력해주세요
         </h1>
-        <p className="text-base leading-[19px] text-gray-800">
+        <p className="text-base leading-4.75 text-gray-800">
           입력한 성별/연령 정보는 주섬 앱 개선을 위해서만 <br />
           사용되며 다른 용도로 사용되지 않아요.
         </p>
       </div>
       {/* 입력 섹션 */}
       <div className="flex justify-center">
-        <div className="w-[335px]">
+        <div className="w-83.75">
           {/* 성별 선택 */}
           <section className="mb-8">
             <h2 className="mb-4 text-lg font-semibold text-gray-900">성별을 선택해주세요</h2>
@@ -62,7 +59,7 @@ export default function OnboardingUserInfoForm(props: Props) {
                 type="button"
                 onClick={() => handleGenderSelect('male')}
                 className={clsx(
-                  'flex h-12 w-[104px] items-center justify-center rounded-lg font-semibold',
+                  'flex h-12 w-26 items-center justify-center rounded-lg font-semibold',
                   selectedGender === 'male' ? 'bg-primary-500 text-white' : 'bg-gray-300 text-gray-700',
                 )}
               >
@@ -73,7 +70,7 @@ export default function OnboardingUserInfoForm(props: Props) {
                 type="button"
                 onClick={() => handleGenderSelect('female')}
                 className={clsx(
-                  'flex h-12 w-[104px] items-center justify-center rounded-lg font-semibold',
+                  'flex h-12 w-26 items-center justify-center rounded-lg font-semibold',
                   selectedGender === 'female' ? 'bg-primary-500 text-white' : 'bg-gray-300 text-gray-700',
                 )}
               >
@@ -84,7 +81,7 @@ export default function OnboardingUserInfoForm(props: Props) {
                 type="button"
                 onClick={() => handleGenderSelect('other')}
                 className={clsx(
-                  'flex h-12 w-[104px] items-center justify-center rounded-lg font-semibold',
+                  'flex h-12 w-26 items-center justify-center rounded-lg font-semibold',
                   selectedGender === 'other' ? 'bg-primary-500 text-white' : 'bg-gray-300 text-gray-700',
                 )}
               >

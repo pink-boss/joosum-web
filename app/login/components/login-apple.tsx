@@ -39,7 +39,7 @@ export default function LoginApple({ previousLoginProvider }: Props) {
   return (
     <LoginTooltip isPreviousProvider={previousLoginProvider === 'apple'}>
       <button
-        className="flex h-[56px] items-center justify-center gap-2 rounded-lg bg-black px-4 py-3 text-white hover:bg-gray-800 active:bg-black"
+        className="flex h-14 items-center justify-center gap-2 rounded-lg bg-black px-4 py-3 text-white hover:bg-gray-800 active:bg-black"
         data-testid="appleLogin_login"
         type="button"
         onClick={handleClick}

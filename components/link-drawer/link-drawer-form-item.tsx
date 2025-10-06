@@ -24,7 +24,7 @@ export default function FormItem({ label, name, inputProps, error }: Props) {
         id={name}
         name={name}
         className={clsx(
-          'mt-1 h-[48px] w-full p-3',
+          'mt-1 h-12 w-full p-3',
           'rounded-lg border border-gray-200 bg-gray-200',
           inputProps?.disabled && 'text-gray-600',
         )}

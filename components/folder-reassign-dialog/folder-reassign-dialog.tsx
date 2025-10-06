@@ -70,7 +70,7 @@ export default function FolderReassignDialog() {
           <p>이동할 폴더를 선택해주세요.</p>
         </div>
         <FolderDropdown
-          className="w-[305px]"
+          className="w-76.25"
           folderId={toFolderId}
           fromFolderId={fromFolder?.linkBookId || searchFolderId}
           setFolderId={(_, id) => setToFolderId(id)}

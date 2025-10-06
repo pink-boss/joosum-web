@@ -2,24 +2,25 @@ import { InputHTMLAttributes } from 'react';
 
 import clsx from 'clsx';
 
+import { CheckboxCheckmarkIcon } from '@/assets/icons';
+
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   dataTestId?: string;
 }
 
 export default function Checkbox({ dataTestId, ...props }: Props) {
   return (
-    <input
-      {...props}
-      data-testid={dataTestId}
-      type="checkbox"
-      className={clsx(
-        'size-5 flex-none rounded border border-gray-500',
-        'relative appearance-none checked:after:absolute',
-        "checked:bg-primary-500 checked:after:content-['']",
-        'checked:after:left-1/2 checked:after:top-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2',
-        "checked:after:h-[8.93px] checked:after:w-[9.12px] checked:after:bg-[url('/icons/icon-checkbox-checkmark.png')]",
-        props.className && props.className,
-      )}
-    />
+    <>
+      <input
+        {...props}
+        className={clsx('peer sr-only', props.className && props.className)}
+        data-testid={dataTestId}
+        type="checkbox"
+      />
+      <div className="size-5 flex-none rounded border border-gray-500 peer-checked:hidden" />
+      <div className="hidden size-5 flex-none items-center justify-center rounded bg-primary-500 peer-checked:flex">
+        <CheckboxCheckmarkIcon aria-hidden="true" className="h-[10.72px] w-[10.94px] text-white" />
+      </div>
+    </>
   );
 }

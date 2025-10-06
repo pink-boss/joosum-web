@@ -47,7 +47,7 @@ export default function NotificationSettingDialog() {
   }, [handleSetting]);
 
   return (
-    <DefaultDialog className="h-[276px] w-[500px] px-5 py-10" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDialog className="h-69 w-125 px-5 py-10" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col items-center gap-5 px-6">
         <div className="flex w-full flex-col">
           <div className="flex flex-1 justify-between">

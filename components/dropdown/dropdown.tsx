@@ -29,7 +29,7 @@ const Dropdown = ({ selected, setSelected, options, dataTestId }: Props) => {
   return (
     <div ref={ref} className="relative h-fit">
       <button
-        className="flex h-[24px] items-center p-1 font-semibold text-gray-700"
+        className="flex h-6 items-center p-1 font-semibold text-gray-700"
         data-testid={dataTestId}
         type="button"
         onClick={handleClick}

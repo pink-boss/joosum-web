@@ -48,18 +48,18 @@ export default function FolderMutateDialog() {
   return (
     <ConfirmDialog
       cancelDataTestId={folderDataTestId === 'addFolder' ? 'close_folderTitle_addFolder' : 'close_addFolder_saveLink'}
-      className="w-[792px]"
+      className="w-198"
       open={isOpen}
       submitDataTestId={folderDataTestId === 'addFolder' ? 'save_folderTitle_addFolder' : 'confirm_addFolder_saveLink'}
       submitLoading={mutation.isPending || !formState.title}
       onCloseCallback={handleClose}
       closeProps={{
-        className: 'w-[220.5px] h-[56px] bg-gray-500',
+        className: 'w-[220.5px] h-14 bg-gray-500',
         children: '닫기',
         onClick: handleClose,
       }}
       submitProps={{
-        className: clsx(['h-[56px] w-[220.5px]']),
+        className: clsx(['h-14 w-[220.5px]']),
         children: folder ? '완료' : '생성',
         onClick: handleSubmit,
         disabled: !formState.title,

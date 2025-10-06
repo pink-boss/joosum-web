@@ -18,7 +18,7 @@ export default function MyFolder({ folder }: Props) {
       <div className={clsx('flex h-[275.9px] w-[174.9px] cursor-pointer flex-col items-center gap-[17.6px]')}>
         <Folder {...folder}>
           {isFolderLink(folder) && folder.isDefault !== 'y' && (
-            <div className="absolute bottom-[13.3px] right-[13.53px] p-px" onClick={(e) => e.stopPropagation()}>
+            <div className="absolute bottom-[13.3px] right-[14.21px] p-px" onClick={(e) => e.stopPropagation()}>
               <FolderMutateDropdown dataTestId="setting_myFolder" folder={folder} type="myFolder" />
             </div>
           )}

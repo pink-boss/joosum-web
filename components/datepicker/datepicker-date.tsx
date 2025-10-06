@@ -45,7 +45,7 @@ export default function DatePickerDate(props: Props) {
   }, [tmpSelectedDate, dateObj, setTmpSelectedDate, setDateRange]);
 
   return (
-    <div key={`${month}-${date}`} className="relative" role="listitem">
+    <li key={`${month}-${date}`} className="relative">
       {!tmpSelectedDate && isDateInRange && (
         <div
           className={clsx(
@@ -62,7 +62,7 @@ export default function DatePickerDate(props: Props) {
         <div
           className={clsx(
             'absolute inset-0 left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2',
-            'size-[30px] rounded-full bg-paperabovebg',
+            'size-7.5 rounded-full bg-paperabovebg',
           )}
         />
       )}
@@ -70,7 +70,7 @@ export default function DatePickerDate(props: Props) {
         disabled={disabled}
         onClick={handleClick}
         className={clsx(
-          'relative size-[30px] text-sm font-semibold',
+          'relative size-7.5 text-sm font-semibold',
           monthType === 'this' ? 'text-gray-800' : 'text-gray-500',
           greaterThanToday && 'text-gray-500',
           isSelectedDate && 'text-white',
@@ -78,6 +78,6 @@ export default function DatePickerDate(props: Props) {
       >
         {date}
       </button>
-    </div>
+    </li>
   );
 }

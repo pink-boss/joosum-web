@@ -1,9 +1,9 @@
-import clsx from 'clsx';
-
 import { FolderLinkFilterState } from '@/libs/zustand/store';
 import { removeItem } from '@/utils/array';
 
-interface Props extends Pick<FolderLinkFilterState, 'setTags' | 'tags'> { }
+import { CloseFillIcon } from '@/assets/icons';
+
+interface Props extends Pick<FolderLinkFilterState, 'setTags' | 'tags'> {}
 
 export default function LinkTagSelectorSelectedTags({ tags, setTags }: Props) {
   return (
@@ -25,16 +25,10 @@ function TagBadge({ tags, setTags }: { setTags: (tags: string[]) => void; tags: 
   return tags.length ? (
     <div className="flex flex-wrap gap-2">
       {tags.map((tag) => (
-        <div key={`selected-tag-${tag}`} className="flex items-center gap-1 rounded-[50px] bg-gray-300 px-2 py-1">
+        <div key={`selected-tag-${tag}`} className="flex items-center gap-1 rounded-12.5 bg-gray-300 px-2 py-1">
           <span>{tag}</span>
-          <button
-            onClick={() => handleRemoveTag(tag)}
-            className={clsx(
-              'flex size-4 items-center justify-center',
-              'rounded-full bg-gray-500 text-sm font-medium text-white',
-            )}
-          >
-            ×
+          <button onClick={() => handleRemoveTag(tag)}>
+            <CloseFillIcon className="size-4 text-gray-500" />
           </button>
         </div>
       ))}

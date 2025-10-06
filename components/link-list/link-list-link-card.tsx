@@ -42,60 +42,58 @@ export default function LinkListLinkCard({ link, index, linkDataTestId, kebabDat
 
   return (
     // 링크 클릭
-    <button
-      className="flex h-[84px] w-full flex-1 cursor-pointer justify-between gap-5"
-      data-testid={linkDataTestId}
-      type="button"
-      onClick={handleNavigate}
-    >
-      <div className="relative h-[84px] w-[160px] flex-none">
-        <ImageWithFallback
-          unoptimized
-          useFill
-          alt={`${link.title}-thumbnail`}
-          className="rounded-lg object-cover"
-          index={index}
-          src={link.thumbnailURL}
-        />
-      </div>
-      <div className="flex min-w-0 grow flex-col">
-        <div className="truncate text-left text-lg font-bold">
-          {pathname.startsWith('/search') && highlightKeyword
-            ? link.title.split(new RegExp(`(${highlightKeyword})`, 'gi')).map((part, i) =>
-              part.toLowerCase() === highlightKeyword.toLowerCase() ? (
-                <span key={i} className="text-primary-400">
-                  {part}
-                </span>
-              ) : (
-                <span key={i}>{part}</span>
-              ),
-            )
-            : link.title}
-        </div>
-        <div className="truncate text-left text-gray-800">{link.tags?.reduce((result, tag) => result + ` #${tag}`, '')}</div>
-        <div className="mt-auto flex gap-4 text-gray-700">
-          <div className="flex min-w-0 gap-1">
-            <div className="truncate">{extractDomain(link.url)}</div>|
-            <div className="flex-none">{dateFormatter(link.createdAt, '2-digit')}</div>|
-            <div className="flex-none">{link.readCount ? `${link.readCount}회 읽음` : `읽지 않음`}</div>
-          </div>
-          <FolderLink linkBookName={link.linkBookName} />
-        </div>
-      </div>
-      <div
-        className="mt-auto flex flex-none cursor-default gap-2"
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
+    <div className="flex h-21 w-full flex-1 cursor-pointer justify-between gap-5">
+      <button
+        className="flex w-full flex-1 cursor-pointer justify-between gap-5"
+        data-testid={linkDataTestId}
+        type="button"
+        onClick={handleNavigate}
       >
+        <div className="relative h-21 w-40 flex-none">
+          <ImageWithFallback
+            unoptimized
+            useFill
+            alt={`${link.title}-thumbnail`}
+            className="rounded-lg object-cover"
+            index={index}
+            src={link.thumbnailURL}
+          />
+        </div>
+        <div className="flex min-w-0 grow flex-col">
+          <div className="truncate text-left text-lg font-bold">
+            {pathname.startsWith('/search') && highlightKeyword
+              ? link.title.split(new RegExp(`(${highlightKeyword})`, 'gi')).map((part, i) =>
+                  part.toLowerCase() === highlightKeyword.toLowerCase() ? (
+                    <span key={i} className="text-primary-400">
+                      {part}
+                    </span>
+                  ) : (
+                    <span key={i}>{part}</span>
+                  ),
+                )
+              : link.title}
+          </div>
+          <div className="truncate text-left text-gray-800">
+            {link.tags?.reduce((result, tag) => result + ` #${tag}`, '')}
+          </div>
+          <div className="mt-auto flex gap-4 text-gray-700">
+            <div className="flex min-w-0 gap-1">
+              <div className="truncate">{extractDomain(link.url)}</div>|
+              <div className="flex-none">{dateFormatter(link.createdAt, '2-digit')}</div>|
+              <div className="flex-none">{link.readCount ? `${link.readCount}회 읽음` : `읽지 않음`}</div>
+            </div>
+            <FolderLink linkBookName={link.linkBookName} />
+          </div>
+        </div>
+      </button>
+      <div className="mt-auto flex flex-none gap-2">
         <LinkShareButton link={link} />
         {/* 케밥 클릭 */}
         <button data-testid={kebabDataTestId} type="button" onClick={handleClick}>
           <MoreVerticalIcon aria-hidden="true" className="size-6 text-gray-500" />
         </button>
       </div>
-    </button>
+    </div>
   );
 }
 

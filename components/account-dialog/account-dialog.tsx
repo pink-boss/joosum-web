@@ -34,9 +34,9 @@ export default function AccountDialog() {
   }, [handleClose, openLogout]);
 
   return (
-    <DefaultDialog className="h-[408px] w-[500px] px-5 py-10" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDialog className="h-102 w-125 px-5 py-10" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col items-center gap-5">
-        <div className="flex w-full flex-col gap-[30px] px-6">
+        <div className="flex w-full flex-col gap-7.5 px-6">
           <div className="flex flex-1 justify-between">
             <div className="invisible size-6" />
             <span className="text-2xl font-bold">내 계정</span>
@@ -56,7 +56,7 @@ export default function AccountDialog() {
             </div>
             <span className="truncate text-xl font-bold text-gray-900">{data?.user.email}</span>
           </div>
-          <div className="flex flex-col gap-5 pb-5 pl-[10px]">
+          <div className="flex flex-col gap-5 pb-5 pl-2.5">
             <div className="gap-5">
               <div className={clsx('flex justify-between', 'text-lg text-gray-900')}>
                 <div className="flex items-center gap-5">

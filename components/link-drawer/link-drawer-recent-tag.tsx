@@ -15,7 +15,7 @@ export default function LinkDrawerRecentTag({ totalTags, handleSelectRecentTag, 
       className={clsx(
         'absolute right-0 top-full max-h-64 w-full overflow-y-auto',
         'rounded-lg border bg-white',
-        'pl-[10px] pt-[10px]',
+        'pl-2.5 pt-2.5',
       )}
     >
       <h3 className="my-2 font-semibold">최근 사용한 태그</h3>
@@ -30,7 +30,7 @@ export default function LinkDrawerRecentTag({ totalTags, handleSelectRecentTag, 
           }}
           className={clsx(
             'flex justify-between',
-            'border-b border-gray-300 py-3 pl-[10px] last:border-b-0',
+            'border-b border-gray-300 py-3 pl-2.5 last:border-b-0',
             'cursor-pointer hover:bg-gray-200',
           )}
         >

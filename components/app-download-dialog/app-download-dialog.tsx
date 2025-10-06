@@ -17,7 +17,7 @@ export default function AppDownloadDialog() {
   }, [open]);
 
   return (
-    <DefaultDialog className="w-[500px] px-11 py-10" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDialog className="w-125 px-11 py-10" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col items-center gap-6">
         <h2 className="text-2xl font-bold text-gray-900">주섬 앱 다운로드</h2>
 

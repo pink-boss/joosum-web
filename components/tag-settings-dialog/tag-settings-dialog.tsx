@@ -25,7 +25,7 @@ export default function TagSettingsDialog() {
   }, [open]);
 
   return (
-    <DefaultDialog className="w-[500px] px-11 py-10" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDialog className="w-125 px-11 py-10" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col gap-5">
         <div className="flex w-full flex-col">
           <div className="flex flex-1 justify-between">
@@ -60,7 +60,7 @@ export default function TagSettingsDialog() {
 function TagList({ tagList }: { tagList?: TagListType }) {
   return (
     <div>
-      <div className="py-[10px] pl-[10px] text-lg font-bold text-black">태그 목록</div>
+      <div className="py-2.5 pl-2.5 text-lg font-bold text-black">태그 목록</div>
       {tagList?.length ? (
         <div className="mini-scroll h-60 w-full overflow-scroll px-5">
           {tagList.map((tag, index) => (
@@ -68,7 +68,7 @@ function TagList({ tagList }: { tagList?: TagListType }) {
           ))}
         </div>
       ) : (
-        <div className={clsx('h-[138px] pt-[18.5px]', 'text-center text-lg font-semibold text-gray-500')}>
+        <div className={clsx('h-34.5 pt-[18.5px]', 'text-center text-lg font-semibold text-gray-500')}>
           아직 등록된 태그가 없어요.
         </div>
       )}

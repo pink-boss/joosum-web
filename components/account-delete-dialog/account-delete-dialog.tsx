@@ -34,7 +34,7 @@ export default function AccountDeleteDialog() {
   }, [handleClose, openAccount]);
 
   return (
-    <DefaultDialog className="w-[528px] px-5 py-10" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDialog className="w-132 px-5 py-10" open={isOpen} onCloseCallback={handleClose}>
       <form className="flex flex-col items-center gap-5 text-center" onSubmit={handleDeleteAccount}>
         <div className="flex w-full flex-col px-6">
           <div className="flex flex-1 justify-between">
@@ -50,7 +50,7 @@ export default function AccountDeleteDialog() {
             <div className={clsx('rounded-2xl bg-gray-200 text-gray-900', 'mt-4 px-[79.5px] py-3')}>
               저장된 링크 / 폴더와 태그 / 계정 정보
             </div>
-            <div className="p-[10px] pt-5 text-gray-700">
+            <div className="p-2.5 pt-5 text-gray-700">
               <p>
                 같은 계정으로 <span className="font-bold text-paperabovebg">재가입은 탈퇴 후 30일이 지나야 가능</span>
                 합니다.
@@ -66,8 +66,8 @@ export default function AccountDeleteDialog() {
           <div className="w-full border-t border-gray-500" />
         </div>
         <div className="flex flex-col gap-5">
-          <div className="p-[10px] text-2xl font-semibold text-gray-900">정말 계정을 탈퇴 하시겠어요?</div>
-          <div className="flex items-center gap-[20px]">
+          <div className="p-2.5 text-2xl font-semibold text-gray-900">정말 계정을 탈퇴 하시겠어요?</div>
+          <div className="flex items-center gap-5">
             <input
               required
               className="size-6"

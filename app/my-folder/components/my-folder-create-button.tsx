@@ -21,7 +21,7 @@ export default function MyFolderCreateButton() {
 
   return (
     <button
-      className="flex rounded bg-primary-500 py-[6px] pl-2 pr-3 font-semibold text-white"
+      className="flex rounded bg-primary-500 py-1.5 pl-2 pr-3 font-semibold text-white"
       data-testid="addFolder_myFolder"
       type="button"
       onClick={handleClick}

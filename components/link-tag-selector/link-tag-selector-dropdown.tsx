@@ -75,7 +75,7 @@ export default function LinkTagSelectorDropdown({ selected, isOpen, setIsOpen, c
       onClick={handleClick}
       className={clsx(
         'flex items-center justify-between gap-0.5 px-3 text-sm text-gray-700',
-        'h-[46px] w-full rounded-lg border border-gray-500',
+        'h-11.5 w-full rounded-lg border border-gray-500',
         className && className,
       )}
     >

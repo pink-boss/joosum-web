@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 import { useSearchBarStore, useSearchLinkFilterStore, useSearchLinkSortStore } from '@/libs/zustand/store';
 
-import { SearchIcon } from '@/assets/icons';
+import { CloseFillIcon, SearchIcon } from '@/assets/icons';
 
 interface Props {
   inputDelay?: number;
@@ -63,9 +63,9 @@ export default function SearchInput({ inputDelay = 1000 }: Props) {
   }, [pathname, resetFolderId, setInputValue, setTitle]);
 
   return (
-    <div className={clsx('relative inline-block w-full', 'max-w-[360px] lg:max-w-[540px] pc:max-w-[720px]')}>
+    <div className={clsx('relative inline-block w-full', 'max-w-90 lg:max-w-135 pc:max-w-180')}>
       <input
-        className={clsx('h-[48px] w-full rounded-lg border pl-3 pr-20', 'focus:bg-primary-100')}
+        className={clsx('h-12 w-full rounded-lg border pl-3 pr-20', 'focus:bg-primary-100')}
         placeholder="링크 제목으로 검색해보세요."
         type="text"
         value={inputValue}
@@ -74,20 +74,12 @@ export default function SearchInput({ inputDelay = 1000 }: Props) {
       />
       <div className={clsx('absolute right-3 top-1/2 -translate-y-1/2', 'flex items-center justify-center gap-2 p-2')}>
         {inputValue && (
-          <button
-            type="button"
-            onClick={() => setInputValue('')}
-            className={clsx(
-              'size-5 rounded-full',
-              'bg-gray-500 text-lg text-white',
-              'flex items-center justify-center',
-            )}
-          >
-            &times;
+          <button type="button" onClick={() => setInputValue('')}>
+            <CloseFillIcon className="size-5 text-gray-500" />
           </button>
         )}
         <button className="cursor-pointer" type="button" onClick={() => handleChangeSearchState(inputValue)}>
-          <SearchIcon aria-hidden="true" className="size-6 text-gray-50" />
+          <SearchIcon aria-hidden="true" className="size-6 text-gray-500" />
         </button>
       </div>
     </div>

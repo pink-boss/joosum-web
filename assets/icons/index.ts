@@ -4,6 +4,7 @@ export { default as BasicBellLargeIcon } from './icon-basic-bell-large.svg';
 export { default as BasicBellIcon } from './icon-basic-bell.svg';
 export { default as BasicCheckIcon } from './icon-basic-check.svg';
 export { default as BookOpenIcon } from './icon-book-open.svg';
+export { default as CheckboxCheckmarkIcon } from './icon-checkbox-checkmark.svg';
 export { default as CheckboxCircleIcon } from './icon-checkbox-circle.svg';
 export { default as CheckmarkIcon } from './icon-checkmark.svg';
 export { default as ChevronDownIcon } from './icon-chevron-down.svg';

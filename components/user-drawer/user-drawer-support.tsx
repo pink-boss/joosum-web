@@ -10,7 +10,7 @@ interface Props extends Pick<Account, 'email'> {}
 
 export default function UserDrawerSupport({ email }: Props) {
   return (
-    <div className={clsx('flex flex-col gap-[10px] px-10 py-5', 'font-semibold')}>
+    <div className={clsx('flex flex-col gap-2.5 px-10 py-5', 'font-semibold')}>
       <NewTabLink
         className="font-extrabold"
         dataTestId="privacyPolicy_myPage"

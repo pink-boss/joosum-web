@@ -62,7 +62,7 @@ export default function LinkFilter(props: Props) {
       {/* 기간 필터 */}
       <DatePicker dataTestId={dateDataTestId} dateRange={dateRange} setDateRange={setDateRange} />
       {/* 태그 필터 */}
-      <LinkTagSelector className="w-[305px]" dataTestId={tagDataTestId} setTags={setTags} tags={tags} />
+      <LinkTagSelector className="w-76.25" dataTestId={tagDataTestId} setTags={setTags} tags={tags} />
       {/* 초기화 */}
       {visibleReset ? <ResetButton onClick={handleResetParams} /> : undefined}
     </div>

@@ -27,7 +27,7 @@ export default function NotificationListDropdown() {
       {isOpen && (
         <div
           className={clsx(
-            'absolute left-8 z-20 w-[390px] rounded-lg border border-gray-200 bg-white shadow-xl',
+            'absolute left-8 z-20 w-97.5 rounded-lg border border-gray-200 bg-white shadow-xl',
             'flex flex-col',
           )}
         >

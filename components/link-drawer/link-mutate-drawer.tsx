@@ -67,7 +67,7 @@ export default function LinkMutateDrawer() {
           }
         />
         <div className="flex flex-col gap-6 px-10">
-          <div className="relative h-[260px] w-[414px] flex-none">
+          <div className="relative h-65 w-103.5 flex-none">
             <ImageWithFallback
               unoptimized
               useFill

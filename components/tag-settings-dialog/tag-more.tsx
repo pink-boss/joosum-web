@@ -49,8 +49,8 @@ export default function TagMore({ label }: Props) {
         <div
           ref={dropdownRef}
           className={clsx(
-            'absolute right-0 z-10 mt-1 flex w-40 flex-col',
-            'gap-[20px] rounded-lg border border-gray-200 bg-white p-6 shadow-lg',
+            'fixed right-16 z-10 mt-1 flex w-40 flex-col',
+            'gap-5 rounded-lg border border-gray-200 bg-white p-6 shadow-lg',
           )}
         >
           <TagUpdaterInput defaultValue={label} onSuccess={() => setIsOpen(false)} />
@@ -70,7 +70,7 @@ function TagUpdaterInput({ defaultValue, onSuccess }: { defaultValue: Tag; onSuc
     <input
       autoFocus
       ref={inputRef}
-      className="w-full bg-gray-200 px-2 py-[9px] text-gray-700"
+      className="w-full bg-gray-200 px-2 py-2.25 text-gray-700"
       defaultValue={defaultValue}
       disabled={loading}
       onKeyUp={(e) => handleInput(e, defaultValue)}

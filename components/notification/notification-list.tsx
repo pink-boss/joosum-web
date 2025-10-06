@@ -61,7 +61,7 @@ export default function NotificationList({ setHasNotification }: Props) {
 
   return allNotifications.length > 0 ? (
     <div className="flex flex-col">
-      <div className="h-[420px] overflow-y-scroll">
+      <div className="h-105 overflow-y-scroll">
         {allNotifications.map((notification: Notification) => (
           // 알림 상세
           <button
@@ -78,7 +78,7 @@ export default function NotificationList({ setHasNotification }: Props) {
             ) : (
               <BookOpenIcon aria-hidden="true" className="size-6 flex-none text-[#14181F]" />
             )}
-            <div className="">
+            <div>
               <div className="text-lg font-bold">
                 {notification.type === 'folder' ? '분류되지' : '읽지'} 않은 링크가 있어요
               </div>
@@ -110,7 +110,7 @@ export default function NotificationList({ setHasNotification }: Props) {
     </div>
   ) : (
     <div className="mb-24 mt-10 flex h-full flex-col items-center justify-center gap-5">
-      <BasicBellLargeIcon aria-hidden="true" className="size-[60px] text-gray-600" height={60} width={60} />
+      <BasicBellLargeIcon aria-hidden="true" className="size-15 text-gray-600" height={60} width={60} />
       <div className="text-center text-gray-600">
         <p>확인 가능한 알림이 없어요.</p>
         <p>받은 알림은 최대 30일까지 저장돼요.</p>

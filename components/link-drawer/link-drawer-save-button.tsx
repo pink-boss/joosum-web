@@ -21,10 +21,10 @@ export default function LinkDrawerSaveButton({ dataTestId }: Props) {
       type="button"
       onClick={handleClick}
       className={clsx(
-        'h-[48px] w-auto rounded-xl bg-black font-bold text-white',
-        'min-w-[120px] px-4 text-sm',
-        'sm:min-w-[160px] sm:text-lg',
-        'lg:min-w-[200px] lg:text-xl',
+        'h-12 w-auto rounded-xl bg-black font-bold text-white',
+        'min-w-30 px-4 text-sm',
+        'sm:min-w-40 sm:text-lg',
+        'lg:min-w-50 lg:text-xl',
       )}
     >
       <span className="inline">링크 저장</span>

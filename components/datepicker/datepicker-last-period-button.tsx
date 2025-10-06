@@ -25,7 +25,7 @@ export default function DatePickerLastPeriodButton({ period, setTmpSelectedDate,
 
   return (
     <button
-      className="w-[127px] flex-1 rounded border border-gray-300 px-2 py-1 text-xs"
+      className="w-31.75 flex-1 rounded border border-gray-300 px-2 py-1 text-xs"
       type="button"
       onClick={handleClick}
     >

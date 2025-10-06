@@ -1,8 +1,17 @@
-import type { Config } from 'tailwindcss';
+/** @type {import('tailwindcss').Config} */
 
 import scrollbar from 'tailwind-scrollbar';
 
-const config: Config = {
+const px0_100 = { ...Array.from(Array(101)).map((_, i) => `${i}px`) };
+const zIndex0_9999 = { ...Array.from(Array(10000)).map((_, i) => `${i}`) };
+
+const pxToRem = (px, base = 16) => `${px / base}rem`;
+const rem1000 = Array.from({ length: 1001 }, (_, px) => px).reduce((acc, px) => {
+  acc[px / 4] = pxToRem(px);
+  return acc;
+}, {});
+
+const config = {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -38,14 +47,7 @@ const config: Config = {
           700: '#6c6c6c',
           800: '#2f2f2f',
           900: '#1d1d1d',
-          // slate: '#909090',
-          // ink: '#2f2f2f',
-          // black: '#1d1d1d',
-          // silver: '#bbbbbb',
           graphite: '#444444',
-          // vapor: '#ebeced',
-          // ghost: '#f3f4f5',
-          // dim: '#6c6c6c',
         },
         paperabovebg: '#5242bf',
         error: '#e34c4b',
@@ -53,8 +55,44 @@ const config: Config = {
       fontFamily: {
         pretendard: ['var(--font-pretendard)'],
       },
+      fontSize: {
+        ...rem1000,
+      },
+      spacing: {
+        ...rem1000,
+      },
+      minHeight: {
+        ...rem1000,
+        inherit: 'inherit',
+      },
+      minWidth: {
+        ...rem1000,
+        inherit: 'inherit',
+      },
+      maxWidth: {
+        ...rem1000,
+        320: pxToRem(1280),
+      },
+      maxHeight: {
+        ...rem1000,
+      },
+      lineHeight: {
+        ...rem1000,
+      },
+      zIndex: {
+        ...zIndex0_9999,
+        10000: '10000',
+        1000000: '1000000',
+      },
+      borderRadius: {
+        ...rem1000,
+      },
+      borderWidth: {
+        ...px0_100,
+      },
     },
   },
   plugins: [scrollbar],
 };
+
 export default config;

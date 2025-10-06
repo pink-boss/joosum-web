@@ -18,7 +18,7 @@ export default async function Login() {
           <p>SNS 로그인으로 빠르게 시작해보세요.</p>
         </div>
       </div>
-      <div className="flex w-[335px] flex-col gap-4">
+      <div className="flex w-83.75 flex-col gap-4">
         <LoginApple previousLoginProvider={previousLoginProvider} />
         <LoginGoogle previousLoginProvider={previousLoginProvider} />
       </div>

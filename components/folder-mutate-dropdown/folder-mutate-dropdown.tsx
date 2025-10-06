@@ -70,11 +70,11 @@ export default function FolderMutateDropdown({ folder, type, isLayout = false, d
       >
         <MoreVerticalIcon
           aria-hidden="true"
-          className={clsx('size-[26px] text-black', isLayout && 'size-6 text-gray-500')}
+          className={clsx('size-6.5 text-black', isLayout && 'size-6 text-gray-500')}
         />
       </button>
       {isOpen && (
-        <div className="fixed z-20 mt-1 flex w-[110px] flex-col rounded-lg border border-gray-200 bg-white py-4 shadow-xl">
+        <div className="fixed z-20 mt-1 flex w-27.5 flex-col rounded-lg border border-gray-200 bg-white py-4 shadow-xl">
           <DropdownItem dataTestId={`edit_setting_${type}`} title="폴더 수정" onClick={handleModify} />
           <DropdownItem dataTestId={`delete_setting_${type}`} title="폴더 삭제" onClick={handleDelete} />
         </div>

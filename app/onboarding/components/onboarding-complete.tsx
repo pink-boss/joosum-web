@@ -8,7 +8,7 @@ interface Props {
 
 export default function OnboardingComplete({ onGoHome }: Props) {
   return (
-    <main className="mx-auto flex size-full max-w-[1280px] flex-col justify-center px-20">
+    <main className="mx-auto flex size-full max-w-320 flex-col justify-center px-20">
       <div className="flex min-h-screen items-center justify-center">
         <div className="flex flex-col items-center text-center">
           {/* 텍스트 섹션 */}
@@ -21,7 +21,7 @@ export default function OnboardingComplete({ onGoHome }: Props) {
           </div>
           {/* 시작하기 버튼 */}
           <button
-            className="w-[335px] rounded-lg bg-primary-500 py-4 text-lg font-semibold text-white transition-colors hover:bg-primary-600"
+            className="w-83.75 rounded-lg bg-primary-500 py-4 text-lg font-semibold text-white transition-colors hover:bg-primary-600"
             data-testid="start_signAdditional"
             type="button"
             onClick={onGoHome}
