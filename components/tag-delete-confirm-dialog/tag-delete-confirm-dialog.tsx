@@ -40,7 +40,7 @@ export default function TagDeleteConfirmDialog() {
       }}
     >
       <span className="text-2xl font-bold">삭제 하시겠습니까?</span>
-      <div className="mt-4 text-gray-ink">
+      <div className="mt-4 text-gray-800">
         <p>기존 게시글에 추가된 태그도 삭제되고,</p>
         <p>다시 복구할 수 없습니다.</p>
       </div>

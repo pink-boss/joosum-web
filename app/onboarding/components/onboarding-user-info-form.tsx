@@ -45,7 +45,7 @@ export default function OnboardingUserInfoForm(props: Props) {
           <br />
           성별과 연령을 입력해주세요
         </h1>
-        <p className="text-base leading-[19px] text-gray-ink">
+        <p className="text-base leading-[19px] text-gray-800">
           입력한 성별/연령 정보는 주섬 앱 개선을 위해서만 <br />
           사용되며 다른 용도로 사용되지 않아요.
         </p>
@@ -55,7 +55,7 @@ export default function OnboardingUserInfoForm(props: Props) {
         <div className="w-[335px]">
           {/* 성별 선택 */}
           <section className="mb-8">
-            <h2 className="mb-4 text-lg font-semibold text-gray-black">성별을 선택해주세요</h2>
+            <h2 className="mb-4 text-lg font-semibold text-gray-900">성별을 선택해주세요</h2>
             <div className="flex gap-2">
               <button
                 data-testid="selectGender_signAdditional"
@@ -63,7 +63,7 @@ export default function OnboardingUserInfoForm(props: Props) {
                 onClick={() => handleGenderSelect('male')}
                 className={clsx(
                   'flex h-12 w-[104px] items-center justify-center rounded-lg font-semibold',
-                  selectedGender === 'male' ? 'bg-primary-500 text-white' : 'bg-gray-vapor text-gray-dim',
+                  selectedGender === 'male' ? 'bg-primary-500 text-white' : 'bg-gray-300 text-gray-700',
                 )}
               >
                 남자
@@ -74,7 +74,7 @@ export default function OnboardingUserInfoForm(props: Props) {
                 onClick={() => handleGenderSelect('female')}
                 className={clsx(
                   'flex h-12 w-[104px] items-center justify-center rounded-lg font-semibold',
-                  selectedGender === 'female' ? 'bg-primary-500 text-white' : 'bg-gray-vapor text-gray-dim',
+                  selectedGender === 'female' ? 'bg-primary-500 text-white' : 'bg-gray-300 text-gray-700',
                 )}
               >
                 여자
@@ -85,7 +85,7 @@ export default function OnboardingUserInfoForm(props: Props) {
                 onClick={() => handleGenderSelect('other')}
                 className={clsx(
                   'flex h-12 w-[104px] items-center justify-center rounded-lg font-semibold',
-                  selectedGender === 'other' ? 'bg-primary-500 text-white' : 'bg-gray-vapor text-gray-dim',
+                  selectedGender === 'other' ? 'bg-primary-500 text-white' : 'bg-gray-300 text-gray-700',
                 )}
               >
                 기타
@@ -94,10 +94,10 @@ export default function OnboardingUserInfoForm(props: Props) {
           </section>
           {/* 출생연도 선택 */}
           <section className="mb-8">
-            <h2 className="mb-4 text-lg font-semibold text-gray-black">출생연도를 선택해주세요</h2>
+            <h2 className="mb-4 text-lg font-semibold text-gray-900">출생연도를 선택해주세요</h2>
             <div className="relative">
               <select
-                className="h-12 w-full appearance-none rounded-lg bg-gray-ghost px-3 font-semibold text-gray-black focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="h-12 w-full appearance-none rounded-lg bg-gray-200 px-3 font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 data-testid="selectBirthyear_signAdditional"
                 value={selectedYear}
                 onChange={(e) => handleYearSelect(e.target.value)}
@@ -148,7 +148,7 @@ export default function OnboardingUserInfoForm(props: Props) {
               onClick={onSkip}
               className={clsx(
                 'text-base',
-                isLoading ? 'cursor-not-allowed text-gray-400' : 'text-gray-ink hover:text-gray-black',
+                isLoading ? 'cursor-not-allowed text-gray-400' : 'text-gray-800 hover:text-gray-900',
               )}
             >
               {isLoading ? '처리중...' : '건너뛰기'}

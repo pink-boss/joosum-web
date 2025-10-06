@@ -46,7 +46,7 @@ function Tab({ isSelected, title, onClick }: { isSelected: boolean; onClick: () 
         'h-9 flex-none rounded-md px-4 py-1.5',
         'whitespace-nowrap font-semibold',
         isSelected && 'bg-primary-400 text-white hover:bg-primary-500',
-        !isSelected && 'bg-gray-vapor text-gray-slate hover:bg-gray-ghost',
+        !isSelected && 'bg-gray-300 text-gray-600 hover:bg-gray-200',
       )}
     >
       {title}

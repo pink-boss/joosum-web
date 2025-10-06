@@ -50,7 +50,7 @@ export default function DatePickerDate(props: Props) {
         <div
           className={clsx(
             'absolute inset-0 left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2',
-            'h-full bg-primary-lavender',
+            'h-full bg-primary-200',
             isSelectedDate ? 'w-[19.25px]' : 'w-[38.5px]',
             isSameDate(startDate, dateObj) && 'translate-x-0',
             isSameDate(endDate, dateObj) && '-translate-x-full',
@@ -71,8 +71,8 @@ export default function DatePickerDate(props: Props) {
         onClick={handleClick}
         className={clsx(
           'relative size-[30px] text-sm font-semibold',
-          monthType === 'this' ? 'text-gray-ink' : 'text-gray-silver',
-          greaterThanToday && 'text-gray-silver',
+          monthType === 'this' ? 'text-gray-800' : 'text-gray-500',
+          greaterThanToday && 'text-gray-500',
           isSelectedDate && 'text-white',
         )}
       >

@@ -62,7 +62,7 @@ export default function LinkSaveDrawer({ _defaultValues }: Props) {
     <DefaultDrawer dataTestId="saveLink" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-1 flex-col gap-10">
         <LinkDrawerHeader
-          center={<div className="font-semibold text-gray-black">링크 저장</div>}
+          center={<div className="font-semibold text-gray-900">링크 저장</div>}
           dataTestId="close_saveLink"
           right={<div />}
           onClose={handleClose}
@@ -125,7 +125,7 @@ export default function LinkSaveDrawer({ _defaultValues }: Props) {
               className={clsx(
                 'h-[56px] w-[220.5px] rounded-lg font-bold text-white',
                 'flex items-center justify-center gap-2',
-                saveLinkMutation.isPending ? 'cursor-not-allowed bg-gray-vapor' : 'bg-primary-500',
+                saveLinkMutation.isPending ? 'cursor-not-allowed bg-gray-300' : 'bg-primary-500',
               )}
             >
               저장

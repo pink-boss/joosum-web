@@ -30,11 +30,11 @@ export default function LinkDrawerRecentTag({ totalTags, handleSelectRecentTag, 
           }}
           className={clsx(
             'flex justify-between',
-            'border-b border-gray-vapor py-3 pl-[10px] last:border-b-0',
-            'cursor-pointer hover:bg-gray-ghost',
+            'border-b border-gray-300 py-3 pl-[10px] last:border-b-0',
+            'cursor-pointer hover:bg-gray-200',
           )}
         >
-          <div className="text-gray-dim">{tag}</div>
+          <div className="text-gray-700">{tag}</div>
         </div>
       ))}
     </div>

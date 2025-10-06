@@ -38,7 +38,7 @@ export default function TagSettingsDialog() {
         </div>
         <input
           ref={inputRef}
-          className="h-12 w-full rounded-lg border border-gray-ghost bg-gray-ghost pl-3"
+          className="h-12 w-full rounded-lg border border-gray-200 bg-gray-200 pl-3"
           placeholder="태그를 생성하여 목록에 추가해보세요."
           onKeyUp={handleInput}
         />
@@ -68,7 +68,7 @@ function TagList({ tagList }: { tagList?: TagListType }) {
           ))}
         </div>
       ) : (
-        <div className={clsx('h-[138px] pt-[18.5px]', 'text-center text-lg font-semibold text-gray-silver')}>
+        <div className={clsx('h-[138px] pt-[18.5px]', 'text-center text-lg font-semibold text-gray-500')}>
           아직 등록된 태그가 없어요.
         </div>
       )}
@@ -78,8 +78,8 @@ function TagList({ tagList }: { tagList?: TagListType }) {
 
 function TagCard({ tag }: { tag: Tag }) {
   return (
-    <div className="flex justify-between border-b border-gray-vapor py-3">
-      <div className="text-lg text-gray-dim">{tag}</div>
+    <div className="flex justify-between border-b border-gray-300 py-3">
+      <div className="text-lg text-gray-700">{tag}</div>
       <TagMore label={tag} />
     </div>
   );

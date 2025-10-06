@@ -1,5 +1,6 @@
 export { default as AppleIcon } from './icon-apple.svg';
 export { default as ArrowTopRightIcon } from './icon-arrow-top-right.svg';
+export { default as BasicBellLargeIcon } from './icon-basic-bell-large.svg';
 export { default as BasicBellIcon } from './icon-basic-bell.svg';
 export { default as BasicCheckIcon } from './icon-basic-check.svg';
 export { default as BookOpenIcon } from './icon-book-open.svg';
@@ -7,6 +8,7 @@ export { default as CheckboxCircleIcon } from './icon-checkbox-circle.svg';
 export { default as CheckmarkIcon } from './icon-checkmark.svg';
 export { default as ChevronDownIcon } from './icon-chevron-down.svg';
 export { default as ChevronLeftIcon } from './icon-chevron-left.svg';
+export { default as ChevronRightLargeIcon } from './icon-chevron-right-large.svg';
 export { default as ChevronRightSmallIcon } from './icon-chevron-right-small.svg';
 export { default as ChevronRightIcon } from './icon-chevron-right.svg';
 export { default as CloseDialogIcon } from './icon-close-dialog.svg';

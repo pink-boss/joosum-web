@@ -112,7 +112,7 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
   );
 
   return (
-    <div className={clsx('flex flex-col gap-2', 'text-gray-black')}>
+    <div className={clsx('flex flex-col gap-2', 'text-gray-900')}>
       <div className="flex justify-between px-2">
         <label className="text-lg font-semibold" htmlFor="tag-input">
           태그
@@ -124,14 +124,14 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
           className={clsx(
             'flex justify-between p-3',
             'rounded-lg border',
-            isActive ? 'border-primary-500 bg-primary-100' : 'border-gray-ghost bg-gray-ghost',
+            isActive ? 'border-primary-500 bg-primary-100' : 'border-gray-200 bg-gray-200',
           )}
         >
           <div className={clsx('flex flex-wrap items-center gap-2')}>
             {tags?.map((tag, index) => (
               <div
                 key={index}
-                className="flex items-center gap-1 rounded-full bg-gray-vapor px-2 py-1 text-xs"
+                className="flex items-center gap-1 rounded-full bg-gray-300 px-2 py-1 text-xs"
                 onClick={handlePreventActive}
               >
                 <span>{tag}</span>

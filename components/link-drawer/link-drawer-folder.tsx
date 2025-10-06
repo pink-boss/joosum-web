@@ -36,7 +36,7 @@ export default function LinkDrawerFolder({
   }, [clearFolder, openMutateFolder, buttonDataTestId]);
 
   return (
-    <div className="flex flex-col gap-2 text-gray-black">
+    <div className="flex flex-col gap-2 text-gray-900">
       <div className="flex justify-between px-2">
         <label className="text-lg font-semibold">폴더</label>
         <button
@@ -51,7 +51,7 @@ export default function LinkDrawerFolder({
         </button>
       </div>
       <FolderDropdown
-        className="border-none bg-gray-ghost"
+        className="border-none bg-gray-200"
         dataTestId={dropdownDataTestId}
         disabled={disabled}
         folderId={folderId}

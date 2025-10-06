@@ -29,7 +29,7 @@ const Dropdown = ({ selected, setSelected, options, dataTestId }: Props) => {
   return (
     <div ref={ref} className="relative h-fit">
       <button
-        className="flex h-[24px] items-center p-1 font-semibold text-gray-dim"
+        className="flex h-[24px] items-center p-1 font-semibold text-gray-700"
         data-testid={dataTestId}
         type="button"
         onClick={handleClick}
@@ -38,7 +38,7 @@ const Dropdown = ({ selected, setSelected, options, dataTestId }: Props) => {
         <ChevronDownIcon aria-hidden="true" className="size-6 text-gray-500" />
       </button>
       {isOpen && (
-        <div className="absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border border-gray-ghost bg-white py-4 shadow-xl">
+        <div className="absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border border-gray-200 bg-white py-4 shadow-xl">
           {options.map((item, index) => (
             <button
               key={index}
@@ -49,7 +49,7 @@ const Dropdown = ({ selected, setSelected, options, dataTestId }: Props) => {
               }}
               className={clsx(
                 'w-full px-5 py-1 text-left leading-5',
-                selected === item.value ? 'font-bold text-gray-black' : 'text-gray-dim',
+                selected === item.value ? 'font-bold text-gray-900' : 'text-gray-700',
               )}
             >
               {item.label}

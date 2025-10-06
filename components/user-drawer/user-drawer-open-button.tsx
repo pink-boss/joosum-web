@@ -23,7 +23,7 @@ export default function UserDrawerOpenButton({ dataTestId }: Props) {
       onClick={handleClick}
     >
       <div className="flex size-12 items-center justify-center rounded-full border-2 border-white">
-        <PersonOutlineIcon aria-hidden="true" className="size-6 text-gray-500" />
+        <PersonOutlineIcon aria-hidden="true" className="size-7 text-gray-500" />
       </div>
     </button>
   );

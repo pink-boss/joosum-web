@@ -62,7 +62,7 @@ export default function LinkMutateDrawer() {
           center={
             <div className="flex items-center gap-1">
               <FolderIcon aria-hidden="true" className="size-5 shrink-0 text-gray-500" />
-              <span className="text-gray-dim">{link.linkBookName}</span>
+              <span className="text-gray-700">{link.linkBookName}</span>
             </div>
           }
         />
@@ -99,7 +99,7 @@ export default function LinkMutateDrawer() {
             }
           />
           <LinkDrawerTag setTags={(tags) => setFormState((prev) => ({ ...prev, tags }))} tags={formState.tags ?? []} />
-          <div className="mt-10 flex gap-1 text-xs text-gray-slate">
+          <div className="mt-10 flex gap-1 text-xs text-gray-600">
             <span>{krDateFormatter(link.createdAt)}에 주섬주섬</span>
             <span>|</span>
             <span>{link.readCount ? `${link.readCount}회 읽음` : `읽지 않음`}</span>

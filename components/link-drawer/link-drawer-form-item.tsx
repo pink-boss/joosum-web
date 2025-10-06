@@ -15,7 +15,7 @@ interface Props {
 
 export default function FormItem({ label, name, inputProps, error }: Props) {
   return (
-    <div className="flex flex-col text-gray-black">
+    <div className="flex flex-col text-gray-900">
       <label className="px-2 text-lg font-semibold" htmlFor={name}>
         {label}
       </label>
@@ -25,8 +25,8 @@ export default function FormItem({ label, name, inputProps, error }: Props) {
         name={name}
         className={clsx(
           'mt-1 h-[48px] w-full p-3',
-          'rounded-lg border border-gray-ghost bg-gray-ghost',
-          inputProps?.disabled && 'text-gray-slate',
+          'rounded-lg border border-gray-200 bg-gray-200',
+          inputProps?.disabled && 'text-gray-600',
         )}
         {...inputProps}
       />

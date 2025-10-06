@@ -65,7 +65,7 @@ export default function FolderReassignDialog() {
       }}
     >
       <div className="flex flex-col gap-4 text-center">
-        <div className="text-center text-gray-ink">
+        <div className="text-center text-gray-800">
           <p>{cachedLinks.size} 개의 링크가</p>
           <p>이동할 폴더를 선택해주세요.</p>
         </div>

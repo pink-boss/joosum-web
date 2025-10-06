@@ -46,11 +46,11 @@ export default function AccountDeleteDialog() {
           </div>
           {/* instruction */}
           <div className="mt-4 text-lg">
-            <div className="font-semibold text-gray-ink">탈퇴 시 아래 데이터가 모두 삭제됩니다.</div>
-            <div className={clsx('rounded-2xl bg-gray-ghost text-gray-black', 'mt-4 px-[79.5px] py-3')}>
+            <div className="font-semibold text-gray-800">탈퇴 시 아래 데이터가 모두 삭제됩니다.</div>
+            <div className={clsx('rounded-2xl bg-gray-200 text-gray-900', 'mt-4 px-[79.5px] py-3')}>
               저장된 링크 / 폴더와 태그 / 계정 정보
             </div>
-            <div className="p-[10px] pt-5 text-gray-dim">
+            <div className="p-[10px] pt-5 text-gray-700">
               <p>
                 같은 계정으로 <span className="font-bold text-paperabovebg">재가입은 탈퇴 후 30일이 지나야 가능</span>
                 합니다.
@@ -63,10 +63,10 @@ export default function AccountDeleteDialog() {
           </div>
         </div>
         <div className="w-full px-6">
-          <div className="w-full border-t border-gray-silver" />
+          <div className="w-full border-t border-gray-500" />
         </div>
         <div className="flex flex-col gap-5">
-          <div className="p-[10px] text-2xl font-semibold text-gray-black">정말 계정을 탈퇴 하시겠어요?</div>
+          <div className="p-[10px] text-2xl font-semibold text-gray-900">정말 계정을 탈퇴 하시겠어요?</div>
           <div className="flex items-center gap-[20px]">
             <input
               required
@@ -77,7 +77,7 @@ export default function AccountDeleteDialog() {
               onInput={(e) => (e.target as HTMLInputElement).setCustomValidity('')}
               onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity('회원 탈퇴를 동의해주세요.')}
             />
-            <label className="text-lg text-gray-black" htmlFor="agreement">
+            <label className="text-lg text-gray-900" htmlFor="agreement">
               위 안내사항을 확인하였으며 이에 동의합니다.
             </label>
           </div>
@@ -87,9 +87,9 @@ export default function AccountDeleteDialog() {
             disabled={deleteAccount.isPending}
             type="submit"
             className={clsx(
-              'flex-1 rounded-lg bg-gray-silver px-10 py-4',
+              'flex-1 rounded-lg bg-gray-500 px-10 py-4',
               'flex items-center justify-center gap-2 font-bold text-white',
-              deleteAccount.isPending ? 'cursor-not-allowed bg-gray-vapor' : '',
+              deleteAccount.isPending ? 'cursor-not-allowed bg-gray-300' : '',
             )}
           >
             <span>탈퇴하기</span>

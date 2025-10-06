@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { useGetNotifications, useUpdateNotification } from '@/services/notification';
 
-import { BasicBellIcon, BookOpenIcon, FileFolderIcon } from '@/assets/icons';
+import { BasicBellLargeIcon, BookOpenIcon, FileFolderIcon } from '@/assets/icons';
 
 import { Notification, TQueryNotifications } from '@/types/notification-list.types';
 
@@ -45,7 +45,7 @@ export default function NotificationList({ setHasNotification }: Props) {
   if (isLoading) {
     return (
       <div className="mb-24 mt-10 flex h-full flex-col items-center justify-center gap-5">
-        <div className="text-gray-slate">로딩 중...</div>
+        <div className="text-gray-600">로딩 중...</div>
       </div>
     );
   }
@@ -54,7 +54,7 @@ export default function NotificationList({ setHasNotification }: Props) {
   if (isError) {
     return (
       <div className="mb-24 mt-10 flex h-full flex-col items-center justify-center gap-5">
-        <div className="text-gray-slate">알림을 불러오는 중 오류가 발생했습니다.</div>
+        <div className="text-gray-600">알림을 불러오는 중 오류가 발생했습니다.</div>
       </div>
     );
   }
@@ -82,11 +82,11 @@ export default function NotificationList({ setHasNotification }: Props) {
               <div className="text-lg font-bold">
                 {notification.type === 'folder' ? '분류되지' : '읽지'} 않은 링크가 있어요
               </div>
-              <div className="mt-1 text-gray-black">
+              <div className="mt-1 text-gray-900">
                 <p>{notification.title}</p>
                 <p>{notification.body}</p>
               </div>
-              <span className="mt-2 text-sm text-gray-slate">{notification.createdAt}</span>
+              <span className="mt-2 text-sm text-gray-600">{notification.createdAt}</span>
             </div>
           </button>
         ))}
@@ -95,7 +95,7 @@ export default function NotificationList({ setHasNotification }: Props) {
         <div className="mx-auto my-5">
           {/* 알림 더보기 */}
           <button
-            className="rounded-lg border border-gray-silver px-11 py-2 text-sm font-bold text-gray-dim disabled:opacity-50"
+            className="rounded-lg border border-gray-500 px-11 py-2 text-sm font-bold text-gray-700 disabled:opacity-50"
             data-testid="more_notification"
             disabled={isFetchingNextPage}
             type="button"
@@ -105,13 +105,13 @@ export default function NotificationList({ setHasNotification }: Props) {
           </button>
         </div>
       ) : (
-        <div className="mx-auto my-5 text-sm text-gray-slate">모든 알림을 불러왔습니다.</div>
+        <div className="mx-auto my-5 text-sm text-gray-600">모든 알림을 불러왔습니다.</div>
       )}
     </div>
   ) : (
     <div className="mb-24 mt-10 flex h-full flex-col items-center justify-center gap-5">
-      <BasicBellIcon aria-hidden="true" className="size-[60px] text-gray-600" />
-      <div className="text-center text-gray-slate">
+      <BasicBellLargeIcon aria-hidden="true" className="size-[60px] text-gray-600" height={60} width={60} />
+      <div className="text-center text-gray-600">
         <p>확인 가능한 알림이 없어요.</p>
         <p>받은 알림은 최대 30일까지 저장돼요.</p>
       </div>

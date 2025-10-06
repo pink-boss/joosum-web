@@ -16,8 +16,8 @@ export default function LinkListToolbarButton({ children, isPrimary = false, onC
       type="button"
       onClick={onClick}
       className={clsx(
-        'rounded border border-gray-vapor px-9 py-1.5 text-xs',
-        isPrimary ? 'bg-gray-black text-white' : 'bg-white text-black',
+        'rounded border border-gray-300 px-9 py-1.5 text-xs',
+        isPrimary ? 'bg-gray-900 text-white' : 'bg-white text-black',
       )}
     >
       {children}

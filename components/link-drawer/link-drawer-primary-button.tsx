@@ -36,7 +36,7 @@ function PrimaryUIButton({ loading, dataTestId, ...props }: Props) {
       className={clsx(
         'h-[56px] w-[220.5px] rounded-lg font-bold text-white',
         'flex items-center justify-center gap-2',
-        loading ? 'cursor-not-allowed bg-gray-vapor' : 'bg-primary-500',
+        loading ? 'cursor-not-allowed bg-gray-300' : 'bg-primary-500',
       )}
     />
   );

@@ -11,7 +11,7 @@ export default function LinkEmpty({ unread }: Props) {
     <div
       className={clsx(
         'flex flex-1 flex-col items-center justify-center gap-[14.4px]',
-        'text-center text-lg text-gray-dim',
+        'text-center text-lg text-gray-700',
       )}
     >
       {!unread ? (

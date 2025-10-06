@@ -19,9 +19,9 @@ export default function AppDownloadDialog() {
   return (
     <DefaultDialog className="w-[500px] px-11 py-10" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col items-center gap-6">
-        <h2 className="text-2xl font-bold text-gray-black">주섬 앱 다운로드</h2>
+        <h2 className="text-2xl font-bold text-gray-900">주섬 앱 다운로드</h2>
 
-        <div className="text-center text-gray-ink">QR코드를 스캔하면 앱 설치화면으로 이동합니다.</div>
+        <div className="text-center text-gray-800">QR코드를 스캔하면 앱 설치화면으로 이동합니다.</div>
 
         <div className="flex gap-6">
           <div className="flex flex-col items-center gap-2">
@@ -39,7 +39,7 @@ export default function AppDownloadDialog() {
           </div> */}
         </div>
 
-        <p className="text-center text-sm text-gray-dim">
+        <p className="text-center text-sm text-gray-700">
           <span>주섬 앱 다운로드 받고, 어디서든 내가 저장해둔</span>
           <span>컨텐츠를 열어보세요!</span>
         </p>
@@ -49,8 +49,8 @@ export default function AppDownloadDialog() {
           <button
             onClick={handleClose}
             className={clsx(
-              'bg-gray-silver font-bold text-white',
-              'h-14 w-full rounded-lg transition-colors hover:bg-gray-slate',
+              'bg-gray-500 font-bold text-white',
+              'h-14 w-full rounded-lg transition-colors hover:bg-gray-600',
             )}
           >
             닫기

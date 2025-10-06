@@ -23,7 +23,7 @@ export default function MyFolder({ folder }: Props) {
             </div>
           )}
         </Folder>
-        <div className="text-gray-dim">{folder.linkCount}개</div>
+        <div className="text-gray-700">{folder.linkCount}개</div>
       </div>
     </FolderLink>
   );

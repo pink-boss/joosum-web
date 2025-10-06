@@ -50,11 +50,11 @@ export default function TagMore({ label }: Props) {
           ref={dropdownRef}
           className={clsx(
             'absolute right-0 z-10 mt-1 flex w-40 flex-col',
-            'gap-[20px] rounded-lg border border-gray-ghost bg-white p-6 shadow-lg',
+            'gap-[20px] rounded-lg border border-gray-200 bg-white p-6 shadow-lg',
           )}
         >
           <TagUpdaterInput defaultValue={label} onSuccess={() => setIsOpen(false)} />
-          <button className="w-full pl-1 text-start font-semibold text-gray-black" type="button" onClick={handleDelete}>
+          <button className="w-full pl-1 text-start font-semibold text-gray-900" type="button" onClick={handleDelete}>
             태그 삭제
           </button>
         </div>
@@ -70,7 +70,7 @@ function TagUpdaterInput({ defaultValue, onSuccess }: { defaultValue: Tag; onSuc
     <input
       autoFocus
       ref={inputRef}
-      className="w-full bg-gray-ghost px-2 py-[9px] text-gray-dim"
+      className="w-full bg-gray-200 px-2 py-[9px] text-gray-700"
       defaultValue={defaultValue}
       disabled={loading}
       onKeyUp={(e) => handleInput(e, defaultValue)}

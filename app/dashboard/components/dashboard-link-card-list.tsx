@@ -66,7 +66,7 @@ export default function DashboardLinkCardList() {
   return (
     <div className="flex h-full flex-1 flex-col gap-8 overflow-hidden">
       <div className="flex items-center justify-between">
-        <form className="flex gap-6 text-gray-dim" data-testid="tab_home" onChange={handleFilter}>
+        <form className="flex gap-6 text-gray-700" data-testid="tab_home" onChange={handleFilter}>
           <div className="flex gap-2">
             <input
               defaultChecked
@@ -84,7 +84,7 @@ export default function DashboardLinkCardList() {
           </div>
         </form>
         <NextLink data-testid="viewAll_home" href="/link-book" onClick={handleClick}>
-          <div className="flex gap-1 pl-5">
+          <div className="flex items-center gap-1 pl-5">
             <span className="text-lg font-semibold">전체보기</span>
             <ChevronRightSmallIcon aria-hidden="true" className="size-6 text-black" />
           </div>

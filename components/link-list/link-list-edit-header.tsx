@@ -13,7 +13,7 @@ export default function LinkListEditHeader({ totalCount, cachedLinks, onAllCheck
   const hasAllChecked = useMemo(() => totalCount === cachedLinks.size, [totalCount, cachedLinks.size]);
 
   return (
-    <div className="flex items-center gap-3 text-lg text-gray-ink">
+    <div className="flex items-center gap-3 text-lg text-gray-800">
       {/* 모두 선택 */}
       <div className="flex items-center gap-2 font-semibold">
         <Checkbox checked={hasAllChecked} dataTestId={dataTestId} id="allCheckbox" onChange={onAllCheckLinks} />

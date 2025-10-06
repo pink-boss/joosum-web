@@ -54,7 +54,7 @@ export default function FolderMutateDialog() {
       submitLoading={mutation.isPending || !formState.title}
       onCloseCallback={handleClose}
       closeProps={{
-        className: 'w-[220.5px] h-[56px] bg-gray-silver',
+        className: 'w-[220.5px] h-[56px] bg-gray-500',
         children: '닫기',
         onClick: handleClose,
       }}

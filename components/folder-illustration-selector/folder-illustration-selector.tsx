@@ -27,7 +27,7 @@ export default function FolderIllustrationSelector(props: Props) {
 
   return (
     <button
-      className={clsx('relative size-20 rounded-lg bg-gray-vapor')}
+      className={clsx('relative size-20 rounded-lg bg-gray-300')}
       data-testid="select_folderIllust_addFolder"
       type="button"
       onClick={handleClick}
@@ -37,7 +37,7 @@ export default function FolderIllustrationSelector(props: Props) {
         {illustration ? (
           <Image alt={illustration} height={54.34} src={`/link-book/${illustration}.png`} width={54.34} />
         ) : (
-          <div className="text-sm text-gray-dim">선택 안함</div>
+          <div className="text-sm text-gray-700">선택 안함</div>
         )}
       </div>
     </button>

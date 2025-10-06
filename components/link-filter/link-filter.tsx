@@ -55,7 +55,7 @@ export default function LinkFilter(props: Props) {
           type="radio"
           onClick={handleClickUnread}
         />
-        <label className="text-lg font-semibold text-gray-dim" htmlFor="unread-radio">
+        <label className="text-lg font-semibold text-gray-700" htmlFor="unread-radio">
           읽지 않음
         </label>
       </div>

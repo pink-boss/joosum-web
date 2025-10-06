@@ -42,14 +42,14 @@ export default function useEditorTabs({ localState, setLocalState }: Props) {
         <FormItem label="폴더명">
           <input
             autoFocus
-            className="rounded-lg border border-gray-ghost bg-gray-ghost p-3"
+            className="rounded-lg border border-gray-200 bg-gray-200 p-3"
             maxLength={MAX_TITLE_LENGTH}
             name="title"
             placeholder="폴더명을 입력해주세요."
             value={localState.title}
             onChange={handleInputChange}
           />
-          <div className="ml-auto mt-1.5 text-gray-silver">
+          <div className="ml-auto mt-1.5 text-gray-500">
             {localState.title?.length ?? 0}/{MAX_TITLE_LENGTH}
           </div>
         </FormItem>
@@ -122,7 +122,7 @@ type FormItemInputProps = {
 function FormItem({ children, label }: FormItemInputProps) {
   return (
     <div className="flex flex-col gap-2">
-      <label className="px-1 font-semibold text-gray-black">{label}</label>
+      <label className="px-1 font-semibold text-gray-900">{label}</label>
       {children}
     </div>
   );

@@ -23,11 +23,11 @@ export default function NotificationListDropdown() {
   }, []);
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative size-6">
       {isOpen && (
         <div
           className={clsx(
-            'absolute left-8 z-20 w-[390px] rounded-lg border border-gray-ghost bg-white shadow-xl',
+            'absolute left-8 z-20 w-[390px] rounded-lg border border-gray-200 bg-white shadow-xl',
             'flex flex-col',
           )}
         >

@@ -30,12 +30,12 @@ export default function UserDrawer() {
         <button className="px-5 py-1" type="button" onClick={handleClose}>
           <DoubleRightIcon aria-hidden="true" className="size-6 text-gray-900" />
         </button>
-        <div className={clsx('flex flex-col gap-5', 'text-lg text-gray-dim')}>
+        <div className={clsx('flex flex-col gap-5', 'text-lg text-gray-700')}>
           <UserDrawerAccount email={data?.user.email ?? ''} />
           <UserDrawerSetting />
-          <div className={clsx('border-t border-gray-silver')} />
+          <div className={clsx('border-t border-gray-500')} />
           <UserDrawerSupport email={data?.user.email ?? ''} />
-          <div className={clsx('border-t border-gray-silver')} />
+          <div className={clsx('border-t border-gray-500')} />
           <UserDrawerLogout />
         </div>
       </div>

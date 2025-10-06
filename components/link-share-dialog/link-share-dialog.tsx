@@ -89,17 +89,17 @@ export default function LinkShareDialog() {
           <div className="flex gap-10">
             <button className="flex flex-col items-center gap-1" type="button" onClick={handleCopyLink}>
               <Image alt="" height={60} src="/images/share-link.png" width={60} />
-              <span className="text-sm text-gray-black">링크 복사</span>
+              <span className="text-sm text-gray-900">링크 복사</span>
             </button>
             <button className="flex flex-col items-center gap-1" type="button" onClick={handleShareToKakao}>
               <Image alt="" height={60} src="/images/share-kakao-talk.png" width={60} />
-              <span className="text-sm text-gray-black">카카오톡</span>
+              <span className="text-sm text-gray-900">카카오톡</span>
             </button>
           </div>
         </div>
         <div className="mt-3 w-full">
           <button
-            className="h-[56px] w-full rounded-lg bg-gray-silver font-bold text-white"
+            className="h-[56px] w-full rounded-lg bg-gray-500 font-bold text-white"
             type="button"
             onClick={handleClose}
           >

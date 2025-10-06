@@ -61,17 +61,17 @@ export default function NotificationSettingDialog() {
         <div className="flex w-full items-center justify-between">
           <div className="flex flex-col gap-1">
             <div className="text-lg font-semibold">읽지 않은 링크</div>
-            <div className="text-sm text-gray-dim">&apos;읽지 않음&apos; 상태의 링크 알림</div>
+            <div className="text-sm text-gray-700">&apos;읽지 않음&apos; 상태의 링크 알림</div>
           </div>
           <Toggle dataTestId="unread_settingNotification_myPage" isOn={!!isReadAgree} onUpdate={handleReadAgree} />
         </div>
         <div className="w-full">
-          <div className="w-full border-t border-gray-silver" />
+          <div className="w-full border-t border-gray-500" />
         </div>
         <div className="flex w-full items-center justify-between">
           <div className="flex flex-col gap-1">
             <div className="text-lg font-semibold">분류되지 않은 링크</div>
-            <div className="text-sm text-gray-dim">&apos;기본&apos; 폴더에 분류된 링크 알림</div>
+            <div className="text-sm text-gray-700">&apos;기본&apos; 폴더에 분류된 링크 알림</div>
           </div>
           <Toggle
             dataTestId="unclassified_settingNotification_myPage"

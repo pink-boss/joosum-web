@@ -23,7 +23,7 @@ export default function DatePickerChangeMonth({ renderMonth, setRenderMonth }: P
       <button type="button" onClick={() => handleClick('prev')}>
         <ChevronLeftIcon aria-hidden="true" className="size-6 text-gray-500" />
       </button>
-      <span className="font-bold text-gray-black">
+      <span className="font-bold text-gray-900">
         {renderMonth.getFullYear()}년 {renderMonth.getMonth() + 1}월
       </span>
       <button type="button" onClick={() => handleClick('next')}>

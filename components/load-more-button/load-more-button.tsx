@@ -55,7 +55,7 @@ export default function LoadMoreButton(props: Props) {
         type="button"
         onClick={onClick}
       >
-        <span className="text-lg font-bold text-gray-dim">
+        <span className="text-lg font-bold text-gray-700">
           {textPrefix && `${textPrefix} `}
           링크 {displayCount}
           {textSuffix}

@@ -13,7 +13,7 @@ export default function Checkbox({ dataTestId, ...props }: Props) {
       data-testid={dataTestId}
       type="checkbox"
       className={clsx(
-        'size-5 flex-none rounded border border-gray-silver',
+        'size-5 flex-none rounded border border-gray-500',
         'relative appearance-none checked:after:absolute',
         "checked:bg-primary-500 checked:after:content-['']",
         'checked:after:left-1/2 checked:after:top-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2',

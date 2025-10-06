@@ -82,16 +82,16 @@ export default function DashboardLinkCard({ link, index }: Props) {
         />
       </div>
       <div className="flex flex-col gap-2">
-        <div className="w-[374px] truncate text-lg font-bold">{link.title}</div>
+        <div className="w-[374px] truncate text-left text-lg font-bold">{link.title}</div>
         <div className="flex flex-wrap gap-2">
           {visibleTags.map((tag, index) => (
-            <div key={index} className="whitespace-nowrap rounded-[50px] bg-gray-vapor px-3 py-1">
+            <div key={index} className="whitespace-nowrap rounded-[50px] bg-gray-300 px-3 py-1">
               {tag}
             </div>
           ))}
-          {hiddenCount > 0 && <div className="rounded-[50px] bg-gray-vapor px-3 py-1">+{hiddenCount}</div>}
+          {hiddenCount > 0 && <div className="rounded-[50px] bg-gray-300 px-3 py-1">+{hiddenCount}</div>}
         </div>
-        <div className="text-sm text-gray-slate">{`${krDateFormatter(link.createdAt)}에 주섬주섬`}</div>
+        <div className="text-left text-sm text-gray-600">{`${krDateFormatter(link.createdAt)}에 주섬주섬`}</div>
       </div>
     </button>
   );

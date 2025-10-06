@@ -19,7 +19,7 @@ export default function FolderMutateDialogEditor({ setFormState, ...formState }:
 
   return (
     <div className="mb-5 flex w-full flex-col items-center">
-      <div className={clsx('min-h-[256px] w-full flex-1 bg-gray-vapor', 'flex items-center justify-center')}>
+      <div className={clsx('min-h-[256px] w-full flex-1 bg-gray-300', 'flex items-center justify-center')}>
         <Folder isPreview {...formState} />
       </div>
       <div className="flex w-full flex-col gap-3">
@@ -33,7 +33,7 @@ export default function FolderMutateDialogEditor({ setFormState, ...formState }:
                 onClick={() => setSelectedTab(tab.title)}
                 className={clsx(
                   'min-w-[68px] cursor-pointer px-2 py-1 text-lg',
-                  isSelected ? 'border-b-2 border-primary-500 font-bold text-primary-500' : 'text-gray-slate',
+                  isSelected ? 'border-b-2 border-primary-500 font-bold text-primary-500' : 'text-gray-600',
                 )}
                 data-testid={
                   tab.title === '폴더명'

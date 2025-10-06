@@ -49,14 +49,14 @@ export default function Menu() {
       <Link data-testid="home_gnb_common" href="/dashboard" onClick={handleClose}>
         <div className="flex items-center gap-4 px-10 py-3">
           <HomeIcon aria-hidden="true" className="size-6 shrink-0 text-gray-700" />
-          <span className="text-lg font-bold text-gray-ink">홈</span>
+          <span className="text-lg font-bold text-gray-800">홈</span>
         </div>
       </Link>
       {/* 내 폴더 */}
       <Link data-testid="myFolder_gnb_common" href="/my-folder">
         <div className="flex cursor-pointer items-center gap-4 px-10 py-3">
           <FolderIcon aria-hidden="true" className="size-6 shrink-0 text-gray-500" />
-          <span className="text-lg font-bold text-gray-ink">내 폴더</span>
+          <span className="text-lg font-bold text-gray-800">내 폴더</span>
           <button className="ml-auto" type="button" onClick={handleOpen}>
             <ChevronDownIcon
               aria-hidden="true"
@@ -93,7 +93,7 @@ export default function Menu() {
       )}
       {/* 폴더 만들기 */}
       <button
-        className="flex cursor-pointer items-center justify-center gap-1 bg-white py-3"
+        className="flex w-full cursor-pointer items-center justify-center gap-1 bg-white py-3"
         data-testid="addFolder_gnb_common"
         type="button"
         onClick={handleCreate}

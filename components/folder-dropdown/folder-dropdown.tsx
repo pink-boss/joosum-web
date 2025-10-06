@@ -39,9 +39,9 @@ export default function FolderDropdown(props: Props) {
 
     return folders
       ? folders.map((folder) => ({
-          label: folder.title,
-          value: folder.linkBookId,
-        }))
+        label: folder.title,
+        value: folder.linkBookId,
+      }))
       : [];
   }, [data?.linkBooks, fromFolderId]);
 
@@ -64,8 +64,8 @@ export default function FolderDropdown(props: Props) {
           onClickCallback?.();
         }}
         className={clsx(
-          'flex items-center justify-between gap-0.5 px-3 text-start text-sm text-gray-dim',
-          'h-[46px] w-full rounded-lg border border-gray-silver',
+          'flex items-center justify-between gap-0.5 px-3 text-start text-sm text-gray-700',
+          'h-[46px] w-full rounded-lg border border-gray-500',
           className && className,
         )}
       >
@@ -76,7 +76,7 @@ export default function FolderDropdown(props: Props) {
         <div
           className={clsx(
             'absolute z-10 mt-1 max-h-[214px] w-full overflow-y-auto',
-            'rounded-lg border border-gray-ghost bg-white p-6 shadow-lg',
+            'rounded-lg border border-gray-200 bg-white p-6 shadow-lg',
           )}
         >
           <div className="mini-scroll h-full">

@@ -30,7 +30,7 @@ export default function OnboardingAgreementCheckbox(props: Props) {
           aria-hidden="true"
           className={clsx('size-6', isChecked ? 'text-primary-500' : 'text-gray-500')}
         />
-        <span className="text-base text-gray-dim">{label}</span>
+        <span className="text-base text-gray-700">{label}</span>
       </button>
       {link && (
         <Link

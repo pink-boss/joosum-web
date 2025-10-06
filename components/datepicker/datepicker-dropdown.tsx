@@ -26,8 +26,8 @@ export default function DatePickerDropdown({ selected, isOpen, setIsOpen, dataTe
       type="button"
       onClick={handleClick}
       className={clsx(
-        'flex items-center px-3 text-sm text-gray-dim',
-        'h-[46px] w-full rounded-lg border border-gray-silver',
+        'flex items-center px-3 text-sm text-gray-700',
+        'h-[46px] w-full rounded-lg border border-gray-500',
       )}
     >
       {selected.length ? (

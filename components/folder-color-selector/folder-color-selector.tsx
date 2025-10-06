@@ -45,7 +45,7 @@ export default function FolderColorSelector({ color, previewColor, setPreviewCol
       >
         <BasicCheckIcon
           aria-hidden="true"
-          className={clsx('size-[23.51px] text-white', isBrightColor && 'text-black')}
+          className={clsx('size-[23.51px] ', isBrightColor ? 'text-black' : 'text-white')}
         />
       </div>
     </button>

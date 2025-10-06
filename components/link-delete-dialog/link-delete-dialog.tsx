@@ -45,7 +45,7 @@ export default function LinkDeleteDialog() {
       }}
     >
       <div className="flex flex-col gap-4 text-center">
-        <div className="text-center text-gray-ink">
+        <div className="text-center text-gray-800">
           <p>{cachedLinks.size} 개의 링크를</p>
           <p>삭제하겠습니까?</p>
         </div>

@@ -7,7 +7,7 @@ interface Props {
 export default function ResetButton({ onClick }: Props) {
   return (
     <button
-      className="flex w-16 shrink-0 items-center gap-1 text-sm font-semibold text-gray-dim"
+      className="flex w-16 shrink-0 items-center gap-1 text-sm font-semibold text-gray-700"
       type="button"
       onClick={onClick}
     >

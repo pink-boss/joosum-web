@@ -45,7 +45,7 @@ export default function DatePicker({ open, dateRange = [], setDateRange, dataTes
         <div
           className={clsx(
             'absolute z-10 mt-1 flex max-w-min flex-col',
-            'gap-[20px] rounded-lg border border-gray-ghost bg-white p-6 shadow-lg',
+            'gap-[20px] rounded-lg border border-gray-200 bg-white p-6 shadow-lg',
           )}
         >
           <div className="flex flex-col gap-[20px]">

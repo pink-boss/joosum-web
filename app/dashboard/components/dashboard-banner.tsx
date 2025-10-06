@@ -27,12 +27,12 @@ export default function DashboardBanner() {
     <Link data-testid="banner_home" href={currentBanner.clickURL} target="_blank">
       <div
         className={clsx(
-          'flex items-center rounded-xl bg-primary-lavender',
+          'flex items-center rounded-xl bg-primary-200',
           'justify-between gap-4 px-10',
           'pc:justify-center pc:gap-40 pc:px-10',
         )}
       >
-        <div className="text-xl text-gray-ink pc:text-2xl">
+        <div className="text-xl text-gray-800 pc:text-2xl">
           <div key={activeIndex} className="animate-fade-in-up">
             <p>{currentBanner.title}</p>
             <p className="flex items-center">

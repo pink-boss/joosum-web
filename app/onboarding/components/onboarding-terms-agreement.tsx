@@ -43,7 +43,7 @@ export default function OnboardingTermsAgreement(props: Props) {
           <br />
           이용약관 동의
         </h1>
-        <p className="text-base leading-[19px] text-gray-ink">서비스 이용을 위해 약관 및 정보제공에 동의해주세요.</p>
+        <p className="text-base leading-[19px] text-gray-800">서비스 이용을 위해 약관 및 정보제공에 동의해주세요.</p>
       </div>
       {/* 약관 동의 섹션 */}
       <div className="flex flex-col items-center" data-testid="agreeTermsOfService">
@@ -51,7 +51,7 @@ export default function OnboardingTermsAgreement(props: Props) {
           {/* 전체 동의 */}
           <div className="mb-6">
             <button
-              className="flex h-12 w-full cursor-pointer items-center rounded-lg bg-gray-ghost px-4"
+              className="flex h-12 w-full cursor-pointer items-center rounded-lg bg-gray-200 px-4"
               data-testid="checkAll_agreeTermsOfService"
               type="button"
               onClick={onAllAgreement}
@@ -61,7 +61,7 @@ export default function OnboardingTermsAgreement(props: Props) {
                   aria-hidden="true"
                   className={clsx('size-6', agreements.all ? 'text-primary-500' : 'text-white')}
                 />
-                <span className="text-base font-bold text-gray-black">전체 동의</span>
+                <span className="text-base font-bold text-gray-900">전체 동의</span>
               </div>
             </button>
           </div>

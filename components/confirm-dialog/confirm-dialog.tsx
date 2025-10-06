@@ -54,7 +54,7 @@ function CloseButton({ loading, children, className, dataTestId, ...props }: Loa
       type="button"
       className={clsx(
         'flex h-[56px] w-[164.89px] items-center justify-center gap-2 rounded-lg font-bold text-white',
-        loading ? 'cursor-not-allowed bg-gray-vapor' : 'bg-gray-silver',
+        loading ? 'cursor-not-allowed bg-gray-300' : 'bg-gray-500',
         className,
       )}
     >
@@ -73,7 +73,7 @@ function SubmitButton({ loading, children, className, dataTestId, ...props }: Lo
       type="button"
       className={clsx(
         'flex h-[56px] w-[164.89px] items-center justify-center gap-2 rounded-lg font-bold',
-        loading || props.disabled ? 'cursor-not-allowed bg-gray-vapor text-gray-silver' : 'bg-primary-500 text-white',
+        loading || props.disabled ? 'cursor-not-allowed bg-gray-300 text-gray-500' : 'bg-primary-500 text-white',
         className,
       )}
     >

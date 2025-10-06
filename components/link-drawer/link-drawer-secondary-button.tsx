@@ -21,7 +21,7 @@ export default function LinkDrawerSecondaryButton({ loading, onClick, children, 
       className={clsx(
         'h-[56px] w-[220.5px] rounded-lg font-bold text-white',
         'flex items-center justify-center gap-2',
-        loading ? 'cursor-not-allowed bg-gray-vapor' : 'bg-gray-silver',
+        loading ? 'cursor-not-allowed bg-gray-300' : 'bg-gray-500',
       )}
     >
       <span>{children}</span>
