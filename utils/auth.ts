@@ -63,16 +63,21 @@ export const storeAuthTokenForOnboarding = async (idToken: string, social: 'appl
 };
 
 export const storeAccessToken = async (accessToken: string) => {
-  const cookieStore = await cookies();
-  cookieStore.set({
-    name: 'accessToken',
-    value: accessToken,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    path: '/',
-    maxAge: 60 * 60 * 365 * 10, // 10년
-  });
+  try {
+    const cookieStore = await cookies();
+    cookieStore.set({
+      name: 'accessToken',
+      value: accessToken,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 365 * 10, // 10년
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Failed to store access token');
+  }
 };
 
 export const storePreviousLoginProvider = async (provider: PreviousLoginProvider) => {
