@@ -36,15 +36,6 @@ export async function POST(request: NextRequest) {
       }),
     });
 
-    // TODO: 삭제 응답 상태 확인
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Server API error:', response.status, errorText);
-      return new Response(`Server Error: ${response.status}\n${errorText}`, {
-        status: 500,
-      });
-    }
-
     // 기존 사용자 - 로그인 처리
     const data = await response.json();
 
@@ -58,7 +49,6 @@ export async function POST(request: NextRequest) {
     return redirect(getClientUri() + '/');
   } catch (e) {
     console.log(e);
-    return new Response('Server Error' + JSON.stringify(e), { status: 500 });
-    // return redirect('/login');
+    return redirect('/login');
   }
 }
