@@ -162,7 +162,7 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
           </div>
           {input && (
             <button
-              className='ml-auto w-14.5 font-semibold text-primary-400'
+              className="ml-auto w-14.5 font-semibold text-primary-400"
               data-testid="add_tag"
               type="button"
               onClick={(e) => {

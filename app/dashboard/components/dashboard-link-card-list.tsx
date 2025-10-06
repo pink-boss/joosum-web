@@ -91,8 +91,8 @@ export default function DashboardLinkCardList() {
         </NextLink>
       </div>
       {data.length ? (
-        <div ref={scrollContainerRef} className="flex flex-col items-start gap-8 overflow-auto">
-          <div className="flex flex-wrap justify-center gap-x-5.5 gap-y-5">
+        <div ref={scrollContainerRef} className="flex w-full flex-col items-start gap-8 overflow-auto">
+          <div className="flex w-full flex-wrap items-center justify-start gap-x-5.5 gap-y-5">
             {currentItems.map((link, index) => (
               <DashboardLinkCard key={index} index={index} link={link} />
             ))}

@@ -11,10 +11,13 @@ import { DefaultDialog } from '@/components/default-dialog';
 import { useDialogStore } from '@/libs/zustand/store';
 import { toast } from '@/utils/toast';
 
+// TODO: console.log 제거
 export default function LinkShareDialog() {
   const { key, isShareLinkOpen: isOpen, openShareLink: open } = useDialogStore();
 
-  const link = useGetLinkCache(key);
+  console.log('key', key);
+  const link = useGetLinkCache({ currentLinkId: key });
+  console.log('link', link);
 
   // 카카오 SDK 초기화
   useEffect(() => {
