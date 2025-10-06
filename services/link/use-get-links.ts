@@ -129,7 +129,11 @@ export default function useGetLinks({
       // 검색인 경우 폴더 선택 여부 지원
       // 폴더 id가 전체일 경우 true return
       const folderFlag =
-        type === 'search' && searchKeyword ? (folderId !== 'all' ? linkLinkBookId === folderId : true) : true;
+        type === 'search' && searchKeyword
+          ? folderId && folderId !== 'all'
+            ? linkLinkBookId === folderId
+            : true
+          : true;
 
       const result = unreadFlag && datePickerFlag && tagFlag && folderFlag;
 
