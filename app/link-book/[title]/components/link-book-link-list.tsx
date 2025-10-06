@@ -16,10 +16,6 @@ interface Props {
 export default function LinkBookLinkList({ defaultEditMode = false, linkFilter, folderId }: Props) {
   const linkSort = useFolderLinkSortStore();
 
-  console.log('link-book-link-list folderId', folderId);
-  console.log('link-book-link-list linkSort', linkSort);
-  console.log('link-book-link-list linkFilter', linkFilter);
-
   const links = useGetFolderLinks({
     linkSort,
     linkFilter,

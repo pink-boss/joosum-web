@@ -44,8 +44,6 @@ export default function useGetLinks({ linkSort, linkFilter, type, folderId }: Pr
 
   const { isSuccess: isCompleteQueryLinkBook } = useGetFolders('created_at'); // linkBook 쿼리가 먼저 실행되는걸 방지
 
-  console.log('useGetLinks isCompleteQueryLinkBook', isCompleteQueryLinkBook);
-
   const queryOptions = useMemo<
     Record<string, unknown> & {
       pathname: string;
@@ -54,13 +52,9 @@ export default function useGetLinks({ linkSort, linkFilter, type, folderId }: Pr
     }
   >(() => {
     const queryKey = getLinkListQueryKey(folderId, searchKeyword);
-    console.log('useGetLinks queryKey', queryKey);
-    console.log('useGetLinks searchKeyword', searchKeyword);
-    console.log('useGetLinks folderId', folderId);
+
     let pathname: string;
     let queryString: string;
-
-    console.log('useGetLinks type', type);
 
     switch (type) {
       case 'all':

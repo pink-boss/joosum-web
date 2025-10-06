@@ -10,22 +10,17 @@ interface Props {
   currentLinkId?: string;
 }
 
-// TODO: console.log 제거
 export default function useGetLinkCache({ currentLinkId }: Props) {
   const queryClient = useQueryClient();
 
   const folder = useGetFolderFromTitle();
-  console.log('folder', folder);
   const queryKey = getLinkListQueryKey(folder?.linkBookId);
-  console.log('queryKey', queryKey);
 
   const { data } = useQuery<Link | undefined>({
     queryKey: ['link', 'current'],
     enabled: !!currentLinkId,
     queryFn: () => {
-      console.log('queryFn');
       const linkList = queryClient.getQueryData<Link[]>(queryKey) ?? [];
-      console.log('linkList', linkList);
       return linkList.find((link) => link.linkId === currentLinkId);
     },
     staleTime: Infinity,
