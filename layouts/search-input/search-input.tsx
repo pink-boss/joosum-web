@@ -35,6 +35,8 @@ export default function SearchInput({ inputDelay = 1000 }: Props) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.code === 'Enter') {
+        e.preventDefault();
+        e.stopPropagation();
         handleChangeSearchState(e.currentTarget.value);
       }
     },
