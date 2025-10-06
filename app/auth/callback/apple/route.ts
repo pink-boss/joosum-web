@@ -46,11 +46,10 @@ export async function POST(request: NextRequest) {
 
     await storePreviousLoginProvider('apple');
 
-    alert('apple login success');
-
     return redirect(getClientUri() + '/');
   } catch (e) {
     console.log(e);
-    return redirect('/login');
+    return new Response('Server Error' + JSON.stringify(e), { status: 500 });
+    // return redirect('/login');
   }
 }
