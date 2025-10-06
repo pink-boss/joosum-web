@@ -36,8 +36,6 @@ export default function LinkList({ defaultEditMode = false, type, linkSort, link
   const [editMode, setEditMode] = useState(defaultEditMode);
 
   const { data, isPending } = queryResult;
-  console.log('link list data', data);
-  console.log('link list is pending', isPending);
 
   const { currentItems, hasNextPage, loadNextPage, totalItems } = usePaginationWithDeps({
     items: data,

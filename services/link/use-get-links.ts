@@ -1,6 +1,6 @@
 import { ApiError } from 'next/dist/server/api-utils';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -45,12 +45,11 @@ export default function useGetLinks({
   type,
   folderId,
 }: Props): TLinkQueryResult {
-  console.log('🔍 useGetLinks 호출됨:', { field, sort, order, dateRange, unread, tags, type, folderId });
-
   const { title: searchKeyword } = useSearchBarStore();
-  console.log('🔍 searchKeyword:', searchKeyword);
 
   const { isSuccess: isCompleteQueryLinkBook } = useGetFolders({ sort: 'created_at' }); // linkBook 쿼리가 먼저 실행되는걸 방지
+
+  const prevField = useRef(field);
 
   const queryOptions = useMemo<
     Record<string, unknown> & {
@@ -79,7 +78,6 @@ export default function useGetLinks({
         break;
     }
 
-    console.log('🔍 queryOptions 생성됨:', { pathname, queryString, queryKey });
     return { pathname, queryString, queryKey };
   }, [type, folderId, sort, order, searchKeyword]);
 
@@ -97,42 +95,27 @@ export default function useGetLinks({
       })
         .then((res) => res.json())
         .then((data: ApiError | Link[]) => {
-          console.log('🔍 API 응답 데이터:', data);
           if (isApiError(data)) {
-            console.log('🔍 API 에러 발생:', data.error);
             toast({ status: 'fail', message: data.error });
             return [];
           }
 
           // 정렬 로직
           if (field === 'mostViewd') {
-            console.log('🔍 mostViewed 정렬 적용');
             return [...(data as Link[])].sort((prev, next) => next.readCount - prev.readCount);
           } else if (field === 'relevance' && type === 'search') {
-            console.log('🔍 relevance 정렬 적용');
             return sortByKeywordPosition(data as Link[], searchKeyword);
           }
 
-          console.log('🔍 기본 정렬 적용');
+          prevField.current = field;
           return data as Link[];
         }),
   });
 
   const linkList = useMemo(() => {
     if (isPending || !data || data.length === 0) {
-      console.log('🔍 필터링 건너뜀 - 데이터 없음');
       return [];
     }
-
-    console.log('🔍 필터링 시작 - 원본 데이터 개수:', data.length);
-    console.log('🔍 필터링 조건:', {
-      type,
-      searchKeyword,
-      folderId,
-      unread,
-      dateRange,
-      tags,
-    });
 
     const filteredList = data.filter(({ readCount, createdAt, tags: linkTags, linkBookId: linkLinkBookId }) => {
       const unreadFlag = unread ? !readCount : true;
@@ -144,35 +127,21 @@ export default function useGetLinks({
       const tagFlag = tags.length && linkTags ? tags.some((tag) => linkTags.includes(tag)) : true;
 
       // 검색인 경우 폴더 선택 여부 지원
-      const folderFlag = type === 'search' && searchKeyword ? (folderId ? linkLinkBookId === folderId : true) : true;
+      // 폴더 id가 전체일 경우 true return
+      const folderFlag =
+        type === 'search' && searchKeyword ? (folderId !== 'all' ? linkLinkBookId === folderId : true) : true;
 
       const result = unreadFlag && datePickerFlag && tagFlag && folderFlag;
 
-      if (type === 'search') {
-        console.log('🔍 링크 필터링 결과:', {
-          linkId: linkLinkBookId,
-          linkBookId: linkLinkBookId,
-          folderId,
-          unreadFlag,
-          datePickerFlag,
-          tagFlag,
-          folderFlag,
-          result,
-        });
-      }
-
       return result;
     });
-
-    console.log('🔍 필터링 완료 - 결과 데이터 개수:', filteredList.length);
 
     return filteredList;
   }, [isPending, data, dateRange, unread, tags, folderId, searchKeyword, type]);
 
   useEffect(() => {
     // 로딩 중이 아니고 데이터가 있고 정렬 필드가 있으면 refetch 실행
-    if (!isPending && data && data.length > 0 && field) {
-      console.log('🔍 정렬 필드 변경으로 refetch 실행:', field);
+    if (!isPending && data && data.length > 0 && prevField.current !== field) {
       refetch();
     }
   }, [refetch, field, isPending, data]);

@@ -21,8 +21,6 @@ export default function SearchLinkList({ defaultEditMode = false, linkFilter }: 
     folderId,
   });
 
-  console.log('search link list', links);
-
   return (
     <LinkList
       defaultEditMode={defaultEditMode}
