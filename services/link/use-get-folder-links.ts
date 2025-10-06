@@ -21,5 +21,7 @@ export default function useGetFolderLinks({ linkSort, linkFilter, folderId }: Pr
     [linkSort, linkFilter, folderId],
   );
 
+  console.log('useGetFolderLinks queryOptions', queryOptions);
+
   return useGetLinks(queryOptions);
 }

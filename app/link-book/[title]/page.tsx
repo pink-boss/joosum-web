@@ -10,12 +10,14 @@ import { useFolderLinkFilterStore, useSearchBarStore } from '@/libs/zustand/stor
 
 import { LinkBookLinkList } from './components';
 
+// TODO: console.log 제거
 // LNB에 있는 내 폴더 > 하위 폴더 클릭시 노출되는 화면
 export default function LinkBookDetail() {
   const linkFilter = useFolderLinkFilterStore();
   const { title } = useSearchBarStore();
 
   const folder = useGetFolderFromTitle();
+  console.log('link-book page folder', folder);
 
   return !title ? (
     <div className="flex min-h-0 w-full flex-1 flex-col gap-6.25 px-10 pb-8">
