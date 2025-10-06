@@ -46,6 +46,8 @@ export async function POST(request: NextRequest) {
 
     await storePreviousLoginProvider('apple');
 
+    alert('apple login success');
+
     return redirect(getClientUri() + '/');
   } catch (e) {
     console.log(e);
