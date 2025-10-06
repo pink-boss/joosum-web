@@ -3,7 +3,11 @@ import type { Config } from 'tailwindcss';
 import scrollbar from 'tailwind-scrollbar';
 
 const config: Config = {
-  content: ['./components/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}'],
+  content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './layouts/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
   theme: {
     screens: {
       tablet: '822px',
