@@ -27,7 +27,7 @@ interface Props {
 export default function LinkSaveDrawer({ _defaultValues }: Props) {
   const { link, isLinkDrawerOpen: isOpen, openLinkDrawer: open, mode } = useDrawerStore();
 
-  const { data } = useGetFolders('created_at');
+  const { data } = useGetFolders({ sort: 'created_at' });
 
   const titleRef = useRef<HTMLInputElement>(null);
   const [formState, setFormState] = useState<SaveFormState>(_defaultValues ?? LINK_DRAWER_DEFAULT_VALUES);

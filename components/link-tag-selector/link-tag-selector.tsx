@@ -10,6 +10,7 @@ import Checkbox from '@/components/checkbox';
 import ResetButton from '@/components/reset-button';
 
 import { useClickAway } from '@/hooks/utils';
+import { useCheckLink } from '@/hooks/zustand';
 import { FolderLinkFilterState } from '@/libs/zustand/store';
 import { removeItem } from '@/utils/array';
 
@@ -24,12 +25,15 @@ interface Props extends Pick<FolderLinkFilterState, 'setTags' | 'tags'> {
 
 export default function LinkTagSelector({ className, selectBoxClassName, tags, setTags, dataTestId }: Props) {
   const { totalTags } = useGetLinkFilterTags();
+  const { clearLinks } = useCheckLink();
 
   const ref = useClickAway({ onClose: () => setIsOpen(false) });
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleCheckTag = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
+      // NOTES: 태그 선택 시 link list에 선택되어 있던 값 (cachedLinks) 초기화 해줘야 함
+      clearLinks();
       const targetTag = e.target.value;
       if (tags.length && tags.includes(targetTag)) {
         setTags(removeItem(tags, targetTag));
@@ -37,7 +41,7 @@ export default function LinkTagSelector({ className, selectBoxClassName, tags, s
         setTags([...tags, targetTag]);
       }
     },
-    [tags, setTags],
+    [tags, setTags, clearLinks],
   );
 
   const handleReset = useCallback(() => {

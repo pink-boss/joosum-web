@@ -21,7 +21,7 @@ export default function Menu() {
   const { openSideMenu, setOpenSideMenu } = useLayoutStore();
   const { openMutateFolder } = useDialogStore();
 
-  const { isPending, data } = useGetFolders('created_at');
+  const { isPending, data } = useGetFolders({ sort: 'created_at' });
 
   const { clearFolder } = useSelectFolder({});
 

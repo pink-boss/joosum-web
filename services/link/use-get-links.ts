@@ -40,9 +40,12 @@ type SearchLinksProps = BaseInputProps & {
 type Props = AllLinksProps | LinkBookLinksProps | SearchLinksProps;
 
 export default function useGetLinks({ linkSort, linkFilter, type, folderId }: Props): TLinkQueryResult {
-  const { title: searchKeyword } = useSearchBarStore();
+  console.log('🔍 useGetLinks 호출됨:', { linkSort, linkFilter, type, folderId });
 
-  const { isSuccess: isCompleteQueryLinkBook } = useGetFolders('created_at'); // linkBook 쿼리가 먼저 실행되는걸 방지
+  const { title: searchKeyword } = useSearchBarStore();
+  console.log('🔍 searchKeyword:', searchKeyword);
+
+  const { isSuccess: isCompleteQueryLinkBook } = useGetFolders({ sort: 'created_at' }); // linkBook 쿼리가 먼저 실행되는걸 방지
 
   const queryOptions = useMemo<
     Record<string, unknown> & {
@@ -71,6 +74,7 @@ export default function useGetLinks({ linkSort, linkFilter, type, folderId }: Pr
         break;
     }
 
+    console.log('🔍 queryOptions 생성됨:', { pathname, queryString, queryKey });
     return { pathname, queryString, queryKey };
   }, [type, folderId, linkSort.sort, linkSort.order, searchKeyword]);
 
@@ -87,23 +91,29 @@ export default function useGetLinks({ linkSort, linkFilter, type, folderId }: Pr
       })
         .then((res) => res.json())
         .then((data: ApiError | Link[]) => {
+          console.log('🔍 API 응답 데이터:', data);
           if (isApiError(data)) {
+            console.log('🔍 API 에러 발생:', data.error);
             toast({ status: 'fail', message: data.error });
             return [];
           }
 
           // 정렬 로직
           if (linkSort.field === 'mostViewd') {
+            console.log('🔍 mostViewed 정렬 적용');
             return [...(data as Link[])].sort((prev, next) => next.readCount - prev.readCount);
           } else if (linkSort.field === 'relevance' && type === 'search') {
+            console.log('🔍 relevance 정렬 적용');
             return sortByKeywordPosition(data as Link[], searchKeyword);
           }
 
+          console.log('🔍 기본 정렬 적용');
           return data as Link[];
         }),
   });
 
   const linkList = useMemo(() => {
+    console.log('🔍 필터링 시작 - 원본 데이터 개수:', data?.length);
     return data?.filter(({ readCount, createdAt, tags: linkTags, linkBookId: linkLinkBookId }) => {
       const unreadFlag = linkFilter.unread ? !readCount : true;
 
@@ -121,8 +131,11 @@ export default function useGetLinks({ linkSort, linkFilter, type, folderId }: Pr
     });
   }, [data, linkFilter.dateRange, linkFilter.unread, linkFilter.tags, folderId, searchKeyword, type]);
 
+  console.log('🔍 필터링 완료 - 결과 데이터 개수:', linkList?.length);
+
   useEffect(() => {
     if (linkSort.field) {
+      console.log('🔍 정렬 필드 변경으로 refetch 실행:', linkSort.field);
       refetch();
     }
   }, [refetch, linkSort.field]);

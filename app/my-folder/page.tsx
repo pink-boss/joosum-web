@@ -14,7 +14,7 @@ import { MyFolderCreateButton, MyFolderFolders } from './components';
 export default function MyFolder() {
   const { sort, setSort } = useFolderSortStore();
 
-  const { isPending, data } = useGetFolders(sort);
+  const { isPending, data } = useGetFolders({ sort });
 
   return (
     <div className="flex w-full flex-1 flex-col gap-8 overflow-hidden px-10 pb-8">

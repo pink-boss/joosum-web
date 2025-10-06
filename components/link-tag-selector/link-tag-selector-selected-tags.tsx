@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { FolderLinkFilterState } from '@/libs/zustand/store';
 import { removeItem } from '@/utils/array';
 
@@ -18,16 +20,19 @@ export default function LinkTagSelectorSelectedTags({ tags, setTags }: Props) {
 }
 
 function TagBadge({ tags, setTags }: { setTags: (tags: string[]) => void; tags: string[] }) {
-  const handleRemoveTag = (targetTag: string) => {
-    setTags(removeItem(tags, targetTag));
-  };
+  const handleRemoveTag = useCallback(
+    (targetTag: string) => {
+      setTags(removeItem(tags, targetTag));
+    },
+    [setTags, tags],
+  );
 
   return tags.length ? (
     <div className="flex flex-wrap gap-2">
       {tags.map((tag) => (
         <div key={`selected-tag-${tag}`} className="flex items-center gap-1 rounded-12.5 bg-gray-300 px-2 py-1">
-          <span>{tag}</span>
-          <button onClick={() => handleRemoveTag(tag)}>
+          <span className="text-xs font-normal leading-5 tracking-[-0.2px] text-black">{tag}</span>
+          <button className="flex-none" type="button" onClick={() => handleRemoveTag(tag)}>
             <CloseFillIcon className="size-4 text-gray-500" />
           </button>
         </div>

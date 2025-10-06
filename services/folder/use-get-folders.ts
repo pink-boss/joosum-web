@@ -4,7 +4,11 @@ import { FolderSort } from '@/libs/zustand/store';
 
 import { TQueryFolders } from '@/types/folder.types';
 
-export default function useGetFolders(sort: FolderSort) {
+interface Props {
+  sort: FolderSort;
+}
+
+export default function useGetFolders({ sort }: Props) {
   return useQuery<TQueryFolders>({
     queryKey: ['linkBookList', sort],
     queryFn: () =>

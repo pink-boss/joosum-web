@@ -15,7 +15,7 @@ interface Props {
   dataTestId?: string;
 }
 
-const Dropdown = ({ selected, setSelected, options, dataTestId }: Props) => {
+export default function Dropdown({ selected, setSelected, options, dataTestId }: Props) {
   const ref = useClickAway({ onClose: () => setIsOpen(false) });
 
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +59,4 @@ const Dropdown = ({ selected, setSelected, options, dataTestId }: Props) => {
       )}
     </div>
   );
-};
-
-export default Dropdown;
+}

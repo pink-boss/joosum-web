@@ -10,7 +10,10 @@ interface Props {
 }
 
 export default function LinkListEditHeader({ totalCount, cachedLinks, onAllCheckLinks, dataTestId }: Props) {
-  const hasAllChecked = useMemo(() => totalCount === cachedLinks.size, [totalCount, cachedLinks.size]);
+  const hasAllChecked = useMemo(
+    () => (totalCount > 0 ? totalCount === cachedLinks.size : false),
+    [totalCount, cachedLinks.size],
+  );
 
   return (
     <div className="flex items-center gap-3 text-lg text-gray-800">

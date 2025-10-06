@@ -5,7 +5,11 @@ import { toast } from '@/utils/toast';
 
 import { Notification } from '@/types/notification-list.types';
 
-export default function useUpdateNotification(onSuccess?: () => void) {
+interface Props {
+  onSuccess?: () => void;
+}
+
+export default function useUpdateNotification({ onSuccess }: Props) {
   const queryClient = useQueryClient();
 
   return useMutation<undefined, Error, Notification['notificationId']>({
@@ -16,7 +20,9 @@ export default function useUpdateNotification(onSuccess?: () => void) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
-      onSuccess?.();
+      if (onSuccess) {
+        onSuccess();
+      }
     },
     onError: (error) => {
       console.log(error);

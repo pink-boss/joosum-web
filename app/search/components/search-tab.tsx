@@ -10,7 +10,7 @@ export default function SearchTab() {
   const linkSort = useSearchLinkSortStore();
   const { folderId: selected, setFolderId: setSelected } = useSearchLinkFilterStore();
 
-  const { data } = useGetFolders(linkSort.sort);
+  const { data } = useGetFolders({ sort: linkSort.sort });
 
   const handleClick = useCallback(
     (folderId: string) => {

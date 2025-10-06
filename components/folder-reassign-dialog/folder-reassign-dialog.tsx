@@ -16,7 +16,7 @@ export default function FolderReassignDialog() {
   const { isReassignFolderOpen: isOpen, openReassignFolder: open, linkDataTestId } = useDialogStore();
   const { folderId: searchFolderId } = useSearchLinkFilterStore();
 
-  const { data: folders } = useGetFolders('created_at');
+  const { data: folders } = useGetFolders({ sort: 'created_at' });
   const { cachedLinks, clearLinks } = useCheckLink();
   const fromFolder = useGetFolderFromTitle();
 

@@ -27,7 +27,7 @@ interface Props {
 export default function FolderDropdown(props: Props) {
   const { open, folderId, setFolderId, fromFolderId, className, disabled, onClickCallback, dataTestId } = props;
 
-  const { data } = useGetFolders('created_at');
+  const { data } = useGetFolders({ sort: 'created_at' });
 
   const ref = useClickAway({ onClose: () => setIsOpen(false) });
   const [isOpen, setIsOpen] = useState(open);

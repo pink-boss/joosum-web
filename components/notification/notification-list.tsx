@@ -15,7 +15,7 @@ interface Props {
 export default function NotificationList({ setHasNotification }: Props) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } = useGetNotifications();
 
-  const updateRead = useUpdateNotification();
+  const updateRead = useUpdateNotification({});
 
   const handleUpdateRead = useCallback(
     (notificationId: Notification['notificationId']) => {
