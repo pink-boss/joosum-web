@@ -81,13 +81,18 @@ export const storeAccessToken = async (accessToken: string) => {
 };
 
 export const storePreviousLoginProvider = async (provider: PreviousLoginProvider) => {
-  if (provider) {
-    const cookieStore = await cookies();
-    cookieStore.set({
-      name: 'previousLoginProvider',
-      value: provider,
-      maxAge: 60 * 60 * 365 * 100, // 100년
-    });
+  try {
+    if (provider) {
+      const cookieStore = await cookies();
+      cookieStore.set({
+        name: 'previousLoginProvider',
+        value: provider,
+        maxAge: 60 * 60 * 365 * 100, // 100년
+      });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Failed to store previous login provider');
   }
 };
 

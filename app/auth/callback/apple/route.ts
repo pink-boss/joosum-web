@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       const errorText = await response.text();
       console.error('Server API error:', response.status, errorText);
       return new Response(`Server Error: ${response.status}\n${errorText}`, {
-        status: response.status,
+        status: 500,
       });
     }
 
@@ -58,6 +58,7 @@ export async function POST(request: NextRequest) {
     return redirect(getClientUri() + '/');
   } catch (e) {
     console.log(e);
-    return redirect('/login');
+    return new Response('Server Error' + JSON.stringify(e), { status: 500 });
+    // return redirect('/login');
   }
 }
