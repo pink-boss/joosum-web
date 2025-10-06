@@ -113,8 +113,22 @@ export default function useGetLinks({ linkSort, linkFilter, type, folderId }: Pr
   });
 
   const linkList = useMemo(() => {
+    if (!data || data.length === 0) {
+      console.log('🔍 필터링 건너뜀 - 데이터 없음');
+      return [];
+    }
+
     console.log('🔍 필터링 시작 - 원본 데이터 개수:', data?.length);
-    return data?.filter(({ readCount, createdAt, tags: linkTags, linkBookId: linkLinkBookId }) => {
+    console.log('🔍 필터링 조건:', {
+      type,
+      searchKeyword,
+      folderId,
+      unread: linkFilter.unread,
+      dateRange: linkFilter.dateRange,
+      tags: linkFilter.tags,
+    });
+
+    return data.filter(({ readCount, createdAt, tags: linkTags, linkBookId: linkLinkBookId }) => {
       const unreadFlag = linkFilter.unread ? !readCount : true;
 
       const datePickerFlag = linkFilter.dateRange.length
@@ -127,7 +141,22 @@ export default function useGetLinks({ linkSort, linkFilter, type, folderId }: Pr
       // 검색인 경우 폴더 선택 여부 지원
       const folderFlag = type === 'search' && searchKeyword ? (folderId ? linkLinkBookId === folderId : true) : true;
 
-      return unreadFlag && datePickerFlag && tagFlag && folderFlag;
+      const result = unreadFlag && datePickerFlag && tagFlag && folderFlag;
+
+      if (type === 'search') {
+        console.log('🔍 링크 필터링 결과:', {
+          linkId: linkLinkBookId,
+          linkBookId: linkLinkBookId,
+          folderId,
+          unreadFlag,
+          datePickerFlag,
+          tagFlag,
+          folderFlag,
+          result,
+        });
+      }
+
+      return result;
     });
   }, [data, linkFilter.dateRange, linkFilter.unread, linkFilter.tags, folderId, searchKeyword, type]);
 
