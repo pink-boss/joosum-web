@@ -107,7 +107,7 @@ npm start
 
 ### 전역 상태(Zustand)
 
-- 디렉터리: `store/**`
+- 디렉터리: `libs/zustand/**`
 - 다이얼로그/드로어 열림 상태, 검색/필터, 정렬 상태 등을 모듈별 스토어로 관리
 
 ### UI/스타일
@@ -133,18 +133,24 @@ app/                  # 페이지 UI
   dashboard/*         # 대시보드 UI
   link-book/*         # 링크 UI
   my-folder/*         # 폴더 UI
-components/
-  dialog/*            # 모달 컴포넌트
-  drawer/*            # 우측 drawer 컴포넌트
-  layout/*            # 좌측 사이드바, 상단 검색 바 컴포넌트
-  notification/*      # 사용자 알림, 토스트 알림 컴포넌트
+components/           # UI 컴포넌트
   ...
+constants/            # 상수 정의
 hooks/                # 커스텀 훅
-store/                # 전역 상태 관리
-  link-filter/        # 검색 필터
-  link-sort/          # 검색 정렬
+  utils/*             # 훅 유틸리티
+  zustand/*           # Zustand 관련 훅
+layouts/              # 레이아웃 컴포넌트
+  ...
+libs/                 # 라이브러리 설정
+  tanstack-query/*    # React Query 설정
+  zustand/*           # Zustand 스토어
+services/             # API 훅
+  ...
 types/                # 타입 정의
-utils/                # 유틸(인증, 에러, 경로, 정렬 등)
+utils/                # 유틸리티 함수
+  ...
+assets/               # 정적 에셋
+  icons/              # 아이콘 SVG 파일들
 stories/              # Storybook 스토리/목 데이터
 public/               # 정적 리소스, MSW 워커
 middleware.ts         # 경로 가드
@@ -174,7 +180,7 @@ middleware.ts         # 경로 가드
 
 ---
 
-## 베포 전략
+## 배포 전략
 
 - main 원격 브런치에 코드를 푸쉬하면 서버로 자동 배포. 만약 배포에 실패하면 저장소에서 failed jobs만 재실행.
 - 용량이 크기 때문에 volume 관련 에러가 날시에 vm docker image 삭제
