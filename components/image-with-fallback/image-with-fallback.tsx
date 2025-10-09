@@ -13,9 +13,11 @@ interface Props extends Pick<ImageProps, 'unoptimized'> {
   src?: null | string;
   useFill?: boolean;
   width?: number;
+  dataTestId?: string;
 }
 
 export default function ImageWithFallback({
+  dataTestId,
   src,
   alt,
   useFill = false,
@@ -40,6 +42,7 @@ export default function ImageWithFallback({
         alt={alt}
         blurDataURL={noImagePlaceholder}
         className={`object-cover ${className}`}
+        data-testid={dataTestId}
         fill={true}
         placeholder="blur"
         priority={priority}
@@ -57,6 +60,7 @@ export default function ImageWithFallback({
       alt={alt}
       blurDataURL={noImagePlaceholder}
       className={`${className}`}
+      data-testid={dataTestId}
       height={height || 900}
       placeholder="blur"
       priority={priority}

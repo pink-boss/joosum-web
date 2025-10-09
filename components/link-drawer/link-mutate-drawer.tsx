@@ -22,7 +22,7 @@ import LinkDrawerSecondaryButton from './link-drawer-secondary-button';
 import LinkDrawerTag from './link-drawer-tag';
 import LinkDrawerTitleInput from './link-drawer-title-input';
 
-// 링크 수정 화면
+// 링크 상세/수정 화면
 export default function LinkMutateDrawer() {
   const { link, isLinkDrawerOpen: isOpen, openLinkDrawer: open, mode } = useDrawerStore();
 
@@ -57,7 +57,8 @@ export default function LinkMutateDrawer() {
     <DefaultDrawer open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-1 flex-col gap-10">
         <LinkDrawerHeader
-          right={<LinkShareButton link={link} />}
+          dataTestId="close_detail_link_linkList"
+          right={<LinkShareButton dataTestId="share_detail_link_linkList" link={link} />}
           onClose={handleClose}
           center={
             <div className="flex items-center gap-1">
@@ -73,6 +74,7 @@ export default function LinkMutateDrawer() {
               useFill
               alt="thumbnail"
               className="rounded-lg object-scale-down"
+              dataTestId="thumbnail_detail_link_linkList"
               index={link.index ?? 0}
               src={link.thumbnailURL}
             />
@@ -107,10 +109,19 @@ export default function LinkMutateDrawer() {
         </div>
       </div>
       <div className="mt-auto flex justify-center gap-3 px-10">
-        <LinkDrawerSecondaryButton loading={isDeletePending} onClick={handleDelete}>
+        <LinkDrawerSecondaryButton
+          dataTestId="delete_detail_link_linkList"
+          loading={isDeletePending}
+          onClick={handleDelete}
+        >
           삭제
         </LinkDrawerSecondaryButton>
-        <LinkDrawerPrimaryButton loading={isUpdatePending} title={formState.title} onClick={handleSubmit}>
+        <LinkDrawerPrimaryButton
+          dataTestId="edit_detail_link_linkList"
+          loading={isUpdatePending}
+          title={formState.title}
+          onClick={handleSubmit}
+        >
           수정
         </LinkDrawerPrimaryButton>
       </div>

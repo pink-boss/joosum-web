@@ -130,7 +130,7 @@ export default function LinkList({ defaultEditMode = false, type, linkSort, link
                 {/* 검색결과 링크 클릭, 케밥 클릭 */}
                 <LinkListLinkCard
                   index={index}
-                  kebabDataTestId={`kebab_${type}`}
+                  kebabDataTestId={`kebab_${type} ${type === 'linkList' ? 'detail_link_linkList' : ''}`}
                   link={link}
                   linkDataTestId={`link_${type}`}
                   type={type}
