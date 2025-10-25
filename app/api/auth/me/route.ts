@@ -1,4 +1,5 @@
 import { serverApi } from '@/utils/api';
+import { logout } from '@/utils/auth';
 
 export async function GET() {
   return serverApi({
@@ -6,10 +7,16 @@ export async function GET() {
   });
 }
 
-// TODO: access token 제거되는지 확인
 export async function DELETE() {
-  return serverApi({
+  const response = await serverApi({
     path: 'api/auth/me',
     method: 'DELETE',
   });
+
+  // 유저 삭제 성공시 access token 삭제
+  if (response.ok) {
+    await logout();
+  }
+
+  return response;
 }

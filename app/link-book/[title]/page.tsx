@@ -24,6 +24,7 @@ export default function LinkBookDetail() {
         {...linkFilter}
         dateDataTestId="dateFilter_linkList"
         defaultValues={LINK_FILTER_DEFAULT_VALUES}
+        tagDataTestId="tagFilter_linkList"
         unreadDataTestId="unreadFilter_linkList"
       />
       <LinkBookLinkList folderId={folder?.linkBookId} linkFilter={linkFilter} />

@@ -35,7 +35,7 @@ export default function FolderIllustrationSelector(props: Props) {
       {isSelected && <div className="absolute size-full rounded-lg bg-primary-500 opacity-20"></div>}
       <div className={clsx('flex size-full items-center justify-center rounded-lg border')}>
         {illustration ? (
-          <Image alt={illustration} height={54.34} src={`/link-book/${illustration}.png`} width={54.34} />
+          <Image alt={illustration} height={54.34} src={`/images/${illustration}.png`} width={54.34} />
         ) : (
           <div className="text-sm text-gray-700">선택 안함</div>
         )}

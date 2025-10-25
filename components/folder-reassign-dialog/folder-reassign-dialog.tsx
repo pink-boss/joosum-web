@@ -51,11 +51,11 @@ export default function FolderReassignDialog() {
   return (
     <ConfirmDialog
       // 폴더 이동 > 모달 취소
-      cancelDataTestId={linkDataTestId === 'searchResult' ? 'cancel_moveFolder_editOn_searchResult' : ''}
+      cancelDataTestId={`cancel_moveFolder_editOn_${linkDataTestId}`}
       closeProps={{ children: '취소', onClick: handleClose }}
       open={isOpen}
       // 폴더 이동 > 모달 확인
-      submitDataTestId={linkDataTestId === 'searchResult' ? 'confirm_moveFolder_editOn_searchResult' : ''}
+      submitDataTestId={`confirm_moveFolder_editOn_${linkDataTestId}`}
       submitLoading={mutation.isPending}
       onCloseCallback={handleClose}
       submitProps={{

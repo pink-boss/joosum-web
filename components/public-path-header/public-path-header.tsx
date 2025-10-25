@@ -9,7 +9,7 @@ export default function PublicPathHeader() {
           <div className="relative">
             <Image priority alt="Joosum Logo" height={32} src="/images/header-logo.png" width={32} />
           </div>
-          <Image priority alt="Joosum" height={41} src="/images/header-text.png" width={118} />
+          <Image priority alt="Joosum" height={41} src="/images/header-logo-text.png" width={118} />
         </Link>
       </div>
     </header>

@@ -5,7 +5,6 @@ import { toast } from '@/utils/toast';
 
 import { UpdateFormResult, UpdateFormState } from '@/types/notification-settings.types';
 
-// TODO: 알림 기본 설정 변경 요청
 export default function useUpdateNotificationSetting() {
   const queryClient = useQueryClient();
 

@@ -32,11 +32,11 @@ export default function LinkDeleteDialog() {
   return (
     <ConfirmDialog
       // 링크 삭제 > 모달 취소
-      cancelDataTestId={linkDataTestId === 'searchResult' ? 'cancel_deleteLink_editOn_searchResult' : ''}
+      cancelDataTestId={`cancel_deleteLink_editOn_${linkDataTestId}`}
       closeProps={{ children: '취소', onClick: handleClose }}
       open={isOpen}
       // 링크 삭제 > 모달 삭제
-      submitDataTestId={linkDataTestId === 'searchResult' ? 'delete_deleteLink_editOn_searchResult' : ''}
+      submitDataTestId={`delete_deleteLink_editOn_${linkDataTestId}`}
       submitLoading={mutation.isPending}
       onCloseCallback={handleClose}
       submitProps={{

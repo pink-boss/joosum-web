@@ -50,8 +50,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(getClientUri() + '/onboarding');
     }
 
-    // TODO: 구글 웹 회원가입도 idtoken 제대로 처리되는지 확인 요청
-    // TODO: { code: 'INTERNAL_SERVER_ERROR', message: '이메일을 가져오는 중 오류가 발생했습니다' }
     // 기존 사용자 - 로그인 처리
     // 서버에 로그인 요청 보내기
     const response = await fetch(`${getServerApiUri()}/api/auth/google/web`, {

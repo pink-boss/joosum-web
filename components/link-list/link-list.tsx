@@ -68,13 +68,13 @@ export default function LinkList({ defaultEditMode = false, type, linkSort, link
 
   const handleDeleteLinks = useCallback(() => {
     if (cachedLinks.size) {
-      openDeleteLink(true, `deleteLink_editOn_${type}`);
+      openDeleteLink(true, type);
     }
   }, [cachedLinks.size, openDeleteLink, type]);
 
   const handleChangeFolder = useCallback(() => {
     if (cachedLinks.size) {
-      openReassignFolder(true, `moveFolder_editOn_${type}`);
+      openReassignFolder(true, type);
     }
   }, [cachedLinks.size, openReassignFolder, type]);
 
@@ -130,7 +130,7 @@ export default function LinkList({ defaultEditMode = false, type, linkSort, link
                 {/* 검색결과 링크 클릭, 케밥 클릭 */}
                 <LinkListLinkCard
                   index={index}
-                  kebabDataTestId={`kebab_${type} ${type === 'linkList' ? 'detail_link_linkList' : ''}`}
+                  kebabDataTestId={`kebab_${type}`}
                   link={link}
                   linkDataTestId={`link_${type}`}
                   type={type}

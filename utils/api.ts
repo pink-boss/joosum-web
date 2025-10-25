@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+import { logout } from './auth';
 import { trimTrailingSlash } from './env-uri';
 
 interface FetchParams {
@@ -40,6 +41,12 @@ export const serverApi = async ({ path, method, queryString, body, Authorization
     }
 
     const data = await response.json();
+
+    // 특정 에러 메시지시 access token 삭제 (공통 처리)
+    if (data?.error === 'failed to find the email that Signed up') {
+      await logout();
+      return NextResponse.json({ error: '잘못된 요청입니다.' });
+    }
 
     return NextResponse.json(data);
   } catch (error) {
