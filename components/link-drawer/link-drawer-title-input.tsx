@@ -49,6 +49,12 @@ export default function LinkDrawerTitleInput({ value, setValue, disabled, inputR
         required: true,
         maxLength: 60,
         onChange: handleChangeValue,
+        onInput: (e) => {
+          // 한글 초과 입력 처리
+          if (e.currentTarget.value.length > 60) {
+            e.currentTarget.value = e.currentTarget.value.slice(0, 60);
+          }
+        },
         // onKeyDown: handlePressEnterKey,
         disabled: disabled,
       }}

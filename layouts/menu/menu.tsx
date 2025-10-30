@@ -2,8 +2,6 @@ import Link from 'next/link';
 
 import { MouseEvent, useCallback } from 'react';
 
-import clsx from 'clsx';
-
 import { useGetFolders, useSelectFolder } from '@/services/folder';
 
 import FolderLink from '@/components/folder-link';
@@ -11,6 +9,7 @@ import FolderMutateDropdown from '@/components/folder-mutate-dropdown';
 import Loader from '@/components/loader';
 
 import { useDialogStore, useLayoutStore } from '@/libs/zustand/store';
+import { clsx } from '@/utils/clsx';
 
 import { ChevronDownIcon, FolderIcon, HomeIcon, PlusIcon } from '@/assets/icons';
 
@@ -49,14 +48,14 @@ export default function Menu() {
       <Link data-testid="home_gnb_common" href="/dashboard" onClick={handleClose}>
         <div className="flex items-center gap-4 px-10 py-3">
           <HomeIcon aria-hidden="true" className="size-6 shrink-0 text-gray-700" />
-          <span className="text-lg font-bold text-gray-800">홈</span>
+          <span className="text-18-26 font-bold tracking-[-0.2px] text-gray-800">홈</span>
         </div>
       </Link>
       {/* 내 폴더 */}
       <Link data-testid="myFolder_gnb_common" href="/my-folder">
-        <div className="flex cursor-pointer items-center gap-4 px-10 py-3">
+        <div className="flex items-center gap-4 px-10 py-3">
           <FolderIcon aria-hidden="true" className="size-6 shrink-0 text-gray-500" />
-          <span className="text-lg font-bold text-gray-800">내 폴더</span>
+          <span className="text-18-26 font-bold tracking-[-0.2px] text-gray-800">내 폴더</span>
           <button className="ml-auto" type="button" onClick={handleOpen}>
             <ChevronDownIcon
               aria-hidden="true"
@@ -75,14 +74,16 @@ export default function Menu() {
         >
           {/* 폴더 > 전체 */}
           <Link data-testid="folder_gnb_common" href="/link-book">
-            <div className={clsx('h-12 py-3 pl-12 pr-5', 'flex items-center gap-2')}>
+            <div className="flex h-12 items-center gap-2 py-3 pl-12 pr-5">
               <div
-                className={clsx('size-5 rounded-full border border-white')}
+                className="size-5 rounded-full border border-white"
                 style={{
                   backgroundColor: data?.linkBooks?.[0]?.backgroundColor,
                 }}
               />
-              <div className="w-36 truncate font-semibold text-gray-graphite">전체</div>
+              <span className="block w-36 truncate text-16-24 font-semibold tracking-[-0.2px] text-gray-graphite">
+                전체
+              </span>
             </div>
           </Link>
           {/* 폴더 > 유저가 생성한 폴더 */}
@@ -93,13 +94,13 @@ export default function Menu() {
       )}
       {/* 폴더 만들기 */}
       <button
-        className="flex w-full cursor-pointer items-center justify-center gap-1 bg-white py-3"
+        className="flex w-full items-center justify-center gap-1 bg-white py-3"
         data-testid="addFolder_gnb_common"
         type="button"
         onClick={handleCreate}
       >
         <PlusIcon aria-hidden="true" className="size-7 text-gray-500" />
-        <span className="text-left font-semibold text-gray-graphite">폴더 만들기</span>
+        <span className="text-left text-16-24 font-semibold tracking-[-0.2px] text-gray-graphite">폴더 만들기</span>
       </button>
     </div>
   );
@@ -108,19 +109,17 @@ export default function Menu() {
 function MenuItem({ folder }: { folder: Folder }) {
   return (
     <FolderLink data-testid="folder_gnb_common" folder={folder}>
-      <div className={clsx('h-12 py-3 pl-12 pr-5')}>
+      <div className="h-12 py-3 pl-12 pr-5">
         <div className="relative flex items-center gap-2">
           <div
-            className={clsx('size-5 rounded-full border border-white')}
+            className="size-5 rounded-full border border-white"
             style={{ backgroundColor: folder.backgroundColor }}
           />
-          <div className="w-36 truncate font-semibold text-gray-graphite">{folder.title}</div>
+          <span className="block w-36 truncate text-16-24 font-semibold tracking-[-0.2px] text-gray-graphite">
+            {folder.title}
+          </span>
           {/* 폴더 수정/삭제 드롭다운 */}
-          {folder.isDefault !== 'y' && (
-            <div className="absolute right-0" onClick={(e) => e.stopPropagation()}>
-              <FolderMutateDropdown isLayout folder={folder} type="menu" />
-            </div>
-          )}
+          {folder.isDefault !== 'y' && <FolderMutateDropdown isLayout folder={folder} type="menu" />}
         </div>
       </div>
     </FolderLink>

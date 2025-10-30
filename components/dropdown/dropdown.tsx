@@ -1,10 +1,10 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import clsx from 'clsx';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
-import { useClickAway } from '@/hooks/utils';
+import { clsx } from '@/utils/clsx';
 
 import { ChevronDownIcon } from '@/assets/icons';
 
@@ -16,47 +16,41 @@ interface Props {
 }
 
 export default function Dropdown({ selected, setSelected, options, dataTestId }: Props) {
-  const ref = useClickAway({ onClose: () => setIsOpen(false) });
-
   const [isOpen, setIsOpen] = useState(false);
-
-  const handleClick = useCallback(() => {
-    setIsOpen((prev) => !prev);
-  }, [setIsOpen]);
 
   const selectedOption = useMemo(() => options.find(({ value }) => selected === value), [options, selected]);
 
   return (
-    <div ref={ref} className="relative h-fit">
-      <button
-        className="flex h-6 items-center p-1 font-semibold text-gray-700"
-        data-testid={dataTestId}
-        type="button"
-        onClick={handleClick}
-      >
-        <span>{selectedOption?.label}</span>
-        <ChevronDownIcon aria-hidden="true" className="size-6 text-gray-500" />
-      </button>
-      {isOpen && (
-        <div className="absolute right-0 z-10 mt-1 flex min-w-32 flex-col rounded-lg border border-gray-200 bg-white py-4 shadow-xl">
+    <DropdownMenu.Root modal={true} onOpenChange={setIsOpen}>
+      <DropdownMenu.Trigger asChild>
+        <button className="flex h-6 items-center p-1 font-normal text-gray-800" data-testid={dataTestId} type="button">
+          <span>{selectedOption?.label}</span>
+          <ChevronDownIcon
+            aria-hidden="true"
+            className={clsx('size-6 text-gray-500 transition-transform duration-200', isOpen && 'rotate-180')}
+          />
+        </button>
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Portal>
+        <DropdownMenu.Content
+          align="end"
+          className="flex min-w-22 flex-col space-y-2 rounded-lg border border-gray-200 bg-white py-5 shadow-2-16-19-0"
+          sideOffset={4}
+        >
           {options.map((item, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => {
-                setSelected(item.value);
-                setIsOpen(false);
-              }}
-              className={clsx(
-                'w-full px-5 py-1 text-left leading-5',
-                selected === item.value ? 'font-bold text-gray-900' : 'text-gray-700',
-              )}
-            >
-              {item.label}
-            </button>
+            <DropdownMenu.Item key={index} className="w-full px-5" onSelect={() => setSelected(item.value)}>
+              <span
+                className={clsx(
+                  'whitespace-nowrap text-left text-14-22 font-normal',
+                  selected === item.value ? 'font-bold text-gray-800' : 'text-gray-700',
+                )}
+              >
+                {item.label}
+              </span>
+            </DropdownMenu.Item>
           ))}
-        </div>
-      )}
-    </div>
+        </DropdownMenu.Content>
+      </DropdownMenu.Portal>
+    </DropdownMenu.Root>
   );
 }

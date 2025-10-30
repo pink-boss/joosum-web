@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useCallback } from 'react';
+import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useCallback, useState } from 'react';
 
 import { useGetLinkThumbnail } from '@/services/link';
 
@@ -19,7 +19,8 @@ interface Props {
 
 export default function LinkDrawerLinkInput({ value, titleInput, setFormState, disabled, onClickCallback }: Props) {
   const queryThumbnail = useGetLinkThumbnail();
-  // const [isError, setIsError] = useState(false);
+
+  const [isError, setIsError] = useState(false);
 
   const handleValidURL = useCallback(
     async (input: HTMLInputElement) => {
@@ -48,10 +49,10 @@ export default function LinkDrawerLinkInput({ value, titleInput, setFormState, d
           url: result?.url,
         }));
 
-        // setIsError(false);
+        setIsError(false);
         if (titleInput) titleInput.focus();
       } else {
-        // setIsError(true);
+        setIsError(true);
       }
     },
     [queryThumbnail, setFormState, titleInput],
@@ -80,6 +81,7 @@ export default function LinkDrawerLinkInput({ value, titleInput, setFormState, d
 
   return (
     <LinkDrawerFormItem
+      error={{ status: isError, message: '유효한 링크를 입력해주세요.' }}
       label="링크"
       name="url"
       inputProps={{
@@ -93,7 +95,6 @@ export default function LinkDrawerLinkInput({ value, titleInput, setFormState, d
         onChange: handleChangeValue,
         onClick: onClickCallback,
       }}
-      // error={{ status: isError, message: "유효한 링크를 입력해주세요." }}
     />
   );
 }

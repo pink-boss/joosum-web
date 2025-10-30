@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import clsx from 'clsx';
+import { clsx } from '@/utils/clsx';
 
 import { CheckmarkIcon, ChevronRightIcon } from '@/assets/icons';
 
@@ -20,17 +20,12 @@ export default function OnboardingAgreementCheckbox(props: Props) {
 
   return (
     <div className="flex items-center justify-between">
-      <button
-        className="flex cursor-pointer items-center gap-2"
-        data-testid={dataTestId}
-        type="button"
-        onClick={onCheck}
-      >
+      <button className="flex items-center gap-2" data-testid={dataTestId} type="button" onClick={onCheck}>
         <CheckmarkIcon
           aria-hidden="true"
           className={clsx('size-6', isChecked ? 'text-primary-500' : 'text-gray-500')}
         />
-        <span className="text-base text-gray-700">{label}</span>
+        <span className="text-16-19 font-normal text-gray-700">{label}</span>
       </button>
       {link && (
         <Link

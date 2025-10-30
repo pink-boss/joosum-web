@@ -5,8 +5,6 @@ import Link from 'next/link';
 
 import { useEffect, useMemo, useState } from 'react';
 
-import clsx from 'clsx';
-
 import { RightIcon } from '@/assets/icons';
 
 import { DASHBOARD_BANNER_DATA } from './constants';
@@ -25,20 +23,14 @@ export default function DashboardBanner() {
 
   return (
     <Link data-testid="banner_home" href={currentBanner.clickURL} target="_blank">
-      <div
-        className={clsx(
-          'flex items-center rounded-xl bg-primary-200',
-          'justify-between gap-4 px-10',
-          'pc:justify-center pc:gap-40 pc:px-10',
-        )}
-      >
-        <div className="text-xl text-gray-800 pc:text-2xl">
+      <div className="flex items-center justify-between gap-4 rounded-xl bg-primary-200 px-10 pc:justify-center pc:gap-40 pc:px-10">
+        <div>
           <div key={activeIndex} className="animate-fade-in-up">
-            <p>{currentBanner.title}</p>
-            <p className="flex items-center">
-              <span className="font-bold">{currentBanner.subtitle}</span>
+            <h2 className="text-20-28 font-normal text-gray-800 pc:text-24-32">{currentBanner.title}</h2>
+            <div className="flex items-center">
+              <h3 className="text-20-28 font-bold text-gray-800 pc:text-24-32">{currentBanner.subtitle}</h3>
               <RightIcon aria-hidden="true" className="ml-1 text-gray-800 pc:ml-2" height={30.71} width={30.71} />
-            </p>
+            </div>
           </div>
         </div>
         <Image priority alt="banner" height={129} src={currentBanner.imageURL} width={193} />

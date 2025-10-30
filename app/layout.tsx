@@ -3,9 +3,10 @@ import localFont from 'next/font/local';
 
 import { ReactNode } from 'react';
 
-import clsx from 'clsx';
-
+import StructuredData from '@/components/structured-data';
 import { ClientLayout } from '@/layouts/layout';
+
+import { clsx } from '@/utils/clsx';
 
 import './globals.css';
 
@@ -89,6 +90,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
+        <StructuredData />
         <script
           async
           src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"

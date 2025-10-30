@@ -49,8 +49,8 @@ export default function DashboardLinkCardList() {
     scrollTargetRef: scrollContainerRef,
   });
 
-  const handleFilter = useCallback((e: ChangeEvent<HTMLFormElement>) => {
-    setFilter(e.target.value);
+  const handleFilter = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setFilter(e.currentTarget.value as 'latest' | 'unread');
   }, []);
 
   const handleClick = useCallback(() => {
@@ -66,33 +66,50 @@ export default function DashboardLinkCardList() {
   return (
     <div className="flex h-full flex-1 flex-col gap-8 overflow-hidden">
       <div className="flex items-center justify-between">
-        <form className="flex gap-6 text-gray-700" data-testid="tab_home" onChange={handleFilter}>
-          <div className="flex gap-2">
+        <div className="flex items-center gap-6" data-testid="tab_home">
+          <label className="flex items-center gap-2" htmlFor="filter-latest">
             <input
               defaultChecked
-              className="size-6 accent-primary-500"
+              className="peer sr-only"
               id="filter-latest"
               name="filter"
               type="radio"
               value="latest"
+              onChange={handleFilter}
             />
-            <label htmlFor="filter-latest">최근 저장</label>
-          </div>
-          <div className="flex gap-2">
-            <input className="size-6 accent-primary-500" id="filter-unread" name="filter" type="radio" value="unread" />
-            <label htmlFor="filter-unread">읽지 않음</label>
-          </div>
-        </form>
+            <div className="hidden size-6 items-center justify-center rounded-full border-2 border-gray-500 peer-checked:flex">
+              <div className="size-3 rounded-full bg-primary-500" />
+            </div>
+            <div className="block size-6 items-center justify-center rounded-full border-2 border-gray-500 peer-checked:hidden" />
+            <span className="text-18-26 font-semibold tracking-[-0.2px] text-gray-700">최근 저장</span>
+          </label>
+          <label className="flex items-center gap-2" htmlFor="filter-unread">
+            <input
+              className="peer sr-only"
+              id="filter-unread"
+              name="filter"
+              type="radio"
+              value="unread"
+              onChange={handleFilter}
+            />
+            <div className="hidden size-6 items-center justify-center rounded-full border-2 border-gray-500 peer-checked:flex">
+              <div className="size-3 rounded-full bg-primary-500" />
+            </div>
+            <div className="block size-6 items-center justify-center rounded-full border-2 border-gray-500 peer-checked:hidden" />
+            <span className="text-18-26 font-semibold tracking-[-0.2px] text-gray-700">읽지 않음</span>
+          </label>
+        </div>
         <NextLink data-testid="viewAll_home" href="/link-book" onClick={handleClick}>
           <div className="flex items-center gap-1 pl-5">
-            <span className="text-lg font-semibold">전체보기</span>
+            <span className="text-18-26 font-semibold tracking-[-0.2px]">전체보기</span>
             <ChevronRightSmallIcon aria-hidden="true" className="size-6 text-black" />
           </div>
         </NextLink>
       </div>
       {data.length ? (
         <div ref={scrollContainerRef} className="flex w-full flex-col items-start gap-8 overflow-auto">
-          <div className="flex w-full flex-wrap items-center justify-start gap-x-5.5 gap-y-5">
+          {/* TC로 올라왔던 이슈 */}
+          <div className="flex w-full flex-wrap items-center justify-center gap-x-5.5 gap-y-5">
             {currentItems.map((link, index) => (
               <DashboardLinkCard key={index} index={index} link={link} />
             ))}

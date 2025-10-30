@@ -2,8 +2,6 @@ import Image from 'next/image';
 
 import { useCallback, useMemo } from 'react';
 
-import clsx from 'clsx';
-
 interface Props {
   illustration?: null | string;
   illustrationIndex: number;
@@ -27,17 +25,17 @@ export default function FolderIllustrationSelector(props: Props) {
 
   return (
     <button
-      className={clsx('relative size-20 rounded-lg bg-gray-300')}
+      className="relative size-20 rounded-lg bg-gray-300"
       data-testid="select_folderIllust_addFolder"
       type="button"
       onClick={handleClick}
     >
-      {isSelected && <div className="absolute size-full rounded-lg bg-primary-500 opacity-20"></div>}
-      <div className={clsx('flex size-full items-center justify-center rounded-lg border')}>
+      {isSelected && <div className="absolute size-full rounded-lg bg-primary-500/20" />}
+      <div className="flex size-full items-center justify-center rounded-lg border">
         {illustration ? (
           <Image alt={illustration} height={54.34} src={`/images/${illustration}.png`} width={54.34} />
         ) : (
-          <div className="text-sm text-gray-700">선택 안함</div>
+          <span className="text-14-22 font-normal tracking-[-0.2px] text-gray-700">선택 안함</span>
         )}
       </div>
     </button>

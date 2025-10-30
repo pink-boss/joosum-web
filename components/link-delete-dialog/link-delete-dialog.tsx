@@ -2,6 +2,8 @@
 
 import { useCallback } from 'react';
 
+import * as Dialog from '@radix-ui/react-dialog';
+
 import { useDeleteLink } from '@/services/link';
 
 import ConfirmDialog from '@/components/confirm-dialog';
@@ -45,11 +47,12 @@ export default function LinkDeleteDialog() {
       }}
     >
       <div className="flex flex-col gap-4 text-center">
-        <div className="text-center text-gray-800">
-          <p>{cachedLinks.size} 개의 링크를</p>
-          <p>삭제하겠습니까?</p>
-        </div>
-        <div>삭제된 링크는 복구되지 않습니다.</div>
+        <Dialog.Title className="text-center text-gray-800">
+          {cachedLinks.size} 개의 링크를
+          <br />
+          삭제하겠습니까?
+        </Dialog.Title>
+        <Dialog.Description>삭제된 링크는 복구되지 않습니다.</Dialog.Description>
       </div>
     </ConfirmDialog>
   );

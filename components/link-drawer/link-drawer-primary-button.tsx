@@ -1,6 +1,4 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
-
-import clsx from 'clsx';
+import { ReactNode } from 'react';
 
 import ButtonLoading from '@/components/button-loading';
 
@@ -14,30 +12,15 @@ interface Props {
 
 export default function LinkDrawerPrimaryButton({ title, loading, onClick, children, dataTestId }: Props) {
   return (
-    <PrimaryUIButton dataTestId={dataTestId} disabled={loading || !title} loading={loading || !title} onClick={onClick}>
-      <span>{children}</span>
-      <ButtonLoading loading={loading} />
-    </PrimaryUIButton>
-  );
-}
-
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  loading: boolean;
-  title?: string;
-  dataTestId?: string;
-}
-
-function PrimaryUIButton({ loading, dataTestId, ...props }: Props) {
-  return (
     <button
-      {...props}
+      className="flex h-14 w-[220.5px] items-center justify-center gap-2 rounded-lg bg-primary-500 text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
       data-testid={dataTestId}
+      disabled={loading || !title}
       type="button"
-      className={clsx(
-        'h-14 w-[220.5px] rounded-lg font-bold text-white',
-        'flex items-center justify-center gap-2',
-        loading ? 'cursor-not-allowed bg-gray-300' : 'bg-primary-500',
-      )}
-    />
+      onClick={onClick}
+    >
+      <span className="text-16-24 font-bold tracking-[-0.2px] text-inherit">{children}</span>
+      <ButtonLoading loading={loading} />
+    </button>
   );
 }

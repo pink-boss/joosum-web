@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 
-import clsx from 'clsx';
+import { clsx } from '@/utils/clsx';
 
 import { CheckboxCircleIcon } from '@/assets/icons';
 
@@ -36,22 +36,21 @@ export default function OnboardingTermsAgreement(props: Props) {
       className="mx-auto flex size-full max-w-320 flex-col justify-center gap-8 px-20"
       data-testid="agreeTermsOfService"
     >
-      {/* 제목 섹션 */}
       <div className="text-center">
-        <h1 className="mb-4 text-2xl font-bold leading-8 text-black">
+        <h1 className="mb-4 text-24-32 font-bold text-black">
           서비스 이용을 위한
           <br />
           이용약관 동의
         </h1>
-        <p className="text-base leading-4.75 text-gray-800">서비스 이용을 위해 약관 및 정보제공에 동의해주세요.</p>
+        <span className="text-16-19 font-normal text-gray-800">
+          서비스 이용을 위해 약관 및 정보제공에 동의해주세요.
+        </span>
       </div>
-      {/* 약관 동의 섹션 */}
       <div className="flex flex-col items-center" data-testid="agreeTermsOfService">
         <div className="w-83.75">
-          {/* 전체 동의 */}
           <div className="mb-6">
             <button
-              className="flex h-12 w-full cursor-pointer items-center rounded-lg bg-gray-200 px-4"
+              className="flex h-12 w-full items-center rounded-lg bg-gray-200 px-4"
               data-testid="checkAll_agreeTermsOfService"
               type="button"
               onClick={onAllAgreement}
@@ -61,13 +60,11 @@ export default function OnboardingTermsAgreement(props: Props) {
                   aria-hidden="true"
                   className={clsx('size-6', agreements.all ? 'text-primary-500' : 'text-white')}
                 />
-                <span className="text-base font-bold text-gray-900">전체 동의</span>
+                <span className="text-16-19 font-bold text-gray-900">전체 동의</span>
               </div>
             </button>
           </div>
-          {/* 개별 약관 */}
           <div className="mb-9 space-y-4 pl-4">
-            {/* 서비스 이용약관 */}
             <AgreementCheckbox
               dataTestId="checkTermsOfService_agreeTermsOfService"
               isChecked={agreements.terms}
@@ -76,7 +73,6 @@ export default function OnboardingTermsAgreement(props: Props) {
               linkDataTestId="termsOfService_agreeTermsOfService"
               onCheck={handleCheckTerms}
             />
-            {/* 개인정보 수집 및 이용 동의 */}
             <AgreementCheckbox
               dataTestId="checkPrivacyPolicy_agreeTermsOfService"
               isChecked={agreements.privacy}
@@ -86,19 +82,13 @@ export default function OnboardingTermsAgreement(props: Props) {
               onCheck={handleCheckPrivacy}
             />
           </div>
-          {/* 시작하기 버튼 */}
           <button
+            className="flex h-14 w-full items-center justify-center gap-2 rounded-lg bg-primary-500 text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
             data-testid="signUp_agreeTermsOfService"
             disabled={!isStartButtonEnabled}
             onClick={onStart}
-            className={clsx(
-              'flex h-14 w-full items-center justify-center gap-2 rounded-lg text-lg font-semibold transition-all',
-              isStartButtonEnabled
-                ? 'cursor-pointer bg-primary-500 text-white hover:bg-primary-600'
-                : 'cursor-not-allowed bg-gray-200 text-gray-400',
-            )}
           >
-            동의하고 시작하기
+            <span className="text-18-26 font-semibold tracking-[-0.2px] text-inherit">동의하고 시작하기</span>
           </button>
         </div>
       </div>

@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
 
+import * as Dialog from '@radix-ui/react-dialog';
+
 import { useDeleteTagsSetting } from '@/services/tag';
 
 import ConfirmDialog from '@/components/confirm-dialog';
@@ -39,11 +41,12 @@ export default function TagDeleteConfirmDialog() {
         onClick: handleDelete,
       }}
     >
-      <span className="text-2xl font-bold">삭제 하시겠습니까?</span>
-      <div className="mt-4 text-gray-800">
-        <p>기존 게시글에 추가된 태그도 삭제되고,</p>
-        <p>다시 복구할 수 없습니다.</p>
-      </div>
+      <Dialog.Title className="text-24-32 font-bold text-black">삭제 하시겠습니까?</Dialog.Title>
+      <Dialog.Description className="text-center text-16-19 font-normal text-gray-800">
+        기존 게시글에 추가된 태그도 삭제되고,
+        <br />
+        다시 복구할 수 없습니다.
+      </Dialog.Description>
     </ConfirmDialog>
   );
 }

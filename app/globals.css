@@ -156,3 +156,23 @@ body {
     transform: translateY(0);
   }
 }
+
+* {
+  @apply outline-none outline-0 ring-0 focus:outline-none focus:outline-0 focus:ring-0 focus-visible:outline-none focus-visible:outline-0 focus-visible:ring-0;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+input,
+label,
+button,
+a,
+div[role='menuitem'] {
+  @apply cursor-pointer;
+}
+
+span {
+  @apply block;
+}

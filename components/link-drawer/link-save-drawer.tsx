@@ -1,6 +1,6 @@
-import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import clsx from 'clsx';
+import * as Dialog from '@radix-ui/react-dialog';
 
 import { useGetFolders } from '@/services/folder';
 import { useSaveLink } from '@/services/link';
@@ -15,6 +15,7 @@ import { LINK_DRAWER_DEFAULT_VALUES } from './constants';
 import LinkDrawerFolder from './link-drawer-folder';
 import LinkDrawerHeader from './link-drawer-header';
 import LinkDrawerLinkInput from './link-drawer-link-input';
+import LinkDrawerPrimaryButton from './link-drawer-primary-button';
 import LinkDrawerSecondaryButton from './link-drawer-secondary-button';
 import LinkDrawerTag from './link-drawer-tag';
 import LinkDrawerTitleInput from './link-drawer-title-input';
@@ -38,13 +39,7 @@ export default function LinkSaveDrawer({ _defaultValues }: Props) {
 
   const saveLinkMutation = useSaveLink({ onClose: handleClose });
 
-  const handleSubmit = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      saveLinkMutation.mutate(formState);
-    },
-    [saveLinkMutation, formState],
-  );
+  const handleSubmit = useCallback(() => saveLinkMutation.mutate(formState), [saveLinkMutation, formState]);
 
   const defaultFolderId = useMemo(() => data?.linkBooks?.[0]?.linkBookId, [data?.linkBooks]);
 
@@ -62,12 +57,14 @@ export default function LinkSaveDrawer({ _defaultValues }: Props) {
     <DefaultDrawer dataTestId="saveLink" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-1 flex-col gap-10">
         <LinkDrawerHeader
-          center={<div className="font-semibold text-gray-900">링크 저장</div>}
           dataTestId="close_saveLink"
           right={<div />}
           onClose={handleClose}
+          center={
+            <Dialog.Title className="text-16-24 font-semibold tracking-[-0.2px] text-gray-900">링크 저장</Dialog.Title>
+          }
         />
-        <form className="flex flex-1 flex-col gap-6 px-10" onSubmit={handleSubmit}>
+        <div className="flex flex-1 flex-col gap-6 px-10">
           <LinkDrawerLinkInput setFormState={setFormState} titleInput={titleRef.current} value={formState.url} />
           <input
             hidden
@@ -118,20 +115,16 @@ export default function LinkSaveDrawer({ _defaultValues }: Props) {
             >
               취소
             </LinkDrawerSecondaryButton>
-            <button
+            <LinkDrawerPrimaryButton
               data-testid="save_saveLink"
-              disabled={!formState.title}
-              type="submit"
-              className={clsx(
-                'h-14 w-[220.5px] rounded-lg font-bold text-white',
-                'flex items-center justify-center gap-2',
-                saveLinkMutation.isPending ? 'cursor-not-allowed bg-gray-300' : 'bg-primary-500',
-              )}
+              loading={saveLinkMutation.isPending}
+              title={formState.title}
+              onClick={handleSubmit}
             >
               저장
-            </button>
+            </LinkDrawerPrimaryButton>
           </div>
-        </form>
+        </div>
       </div>
     </DefaultDrawer>
   );

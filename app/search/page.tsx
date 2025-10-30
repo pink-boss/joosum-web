@@ -14,7 +14,9 @@ export default function Search() {
 
   return (
     <div className="flex min-h-0 w-full flex-1 flex-col gap-6.25 px-10" data-testid="searchResult">
-      <div className="text-8 font-extrabold leading-10 text-gray-800">{title ? `'${title}' ` : undefined}검색 결과</div>
+      <h2 className="text-[32px] font-extrabold leading-[40px] text-gray-800">
+        {title ? `'${title}' ` : undefined}검색 결과
+      </h2>
       {/* 탭 */}
       <SearchTab />
       {/*  읽지 않음, 기간 필터, 태그 필터 */}

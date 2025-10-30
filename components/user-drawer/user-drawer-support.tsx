@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import clsx from 'clsx';
+import { clsx } from '@/utils/clsx';
 
 import { ArrowTopRightIcon } from '@/assets/icons';
 
@@ -10,7 +10,7 @@ interface Props extends Pick<Account, 'email'> {}
 
 export default function UserDrawerSupport({ email }: Props) {
   return (
-    <div className={clsx('flex flex-col gap-2.5 px-10 py-5', 'font-semibold')}>
+    <div className="flex flex-col gap-5 px-10 py-5">
       <NewTabLink
         className="font-extrabold"
         dataTestId="privacyPolicy_myPage"
@@ -45,13 +45,15 @@ function NewTabLink({
 }) {
   return (
     <Link
-      className="flex justify-between"
+      className="flex items-center justify-between"
       data-testid={dataTestId}
       href={href}
       rel="noopener noreferrer"
       target="_blank"
     >
-      <span className={className}>{title}</span>
+      <span className={clsx('text-18-24 font-semibold tracking-[-0.2px] text-gray-700', className && className)}>
+        {title}
+      </span>
       <ArrowTopRightIcon aria-hidden="true" className="size-6 text-gray-500" />
     </Link>
   );

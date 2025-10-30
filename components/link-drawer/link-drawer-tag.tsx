@@ -9,10 +9,9 @@ import {
   useState,
 } from 'react';
 
-import clsx from 'clsx';
-
 import { useGetLinkFilterTags, useUpsertTagsSetting } from '@/services/tag';
 
+import { clsx } from '@/utils/clsx';
 import { isValidName } from '@/utils/regexp';
 import { toast } from '@/utils/toast';
 
@@ -34,7 +33,7 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
   const recentTagsRef = useRef<HTMLDivElement>(null);
 
   const [isActive, setIsActive] = useState(false);
-  const [input, setInput] = useState<string>('');
+  const [input, setInput] = useState('');
   const [isComposing, setIsComposing] = useState(false);
 
   const handleSubmit = useCallback(() => {
@@ -112,29 +111,28 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
   );
 
   return (
-    <div className={clsx('flex flex-col gap-2', 'text-gray-900')}>
-      <div className="flex justify-between px-2">
-        <label className="text-lg font-semibold" htmlFor="tag-input">
+    <div className="flex flex-col gap-3">
+      <div className="flex justify-between px-1">
+        <label className="text-18-26 font-semibold tracking-[-0.2px] text-black" htmlFor="tag-input">
           태그
         </label>
-        <span className="text-sm">{tags?.length ?? 0}/10</span>
+        <span className="text-14-22 font-normal tracking-[-0.2px] text-gray-900">{tags?.length ?? 0}/10</span>
       </div>
       <TagWrapper disabled={disabled} inputRef={inputRef} setIsActive={setIsActive}>
         <div
           className={clsx(
-            'flex justify-between p-3',
-            'rounded-lg border',
+            'flex justify-between rounded-lg border p-2.75',
             isActive ? 'border-primary-500 bg-primary-100' : 'border-gray-200 bg-gray-200',
           )}
         >
-          <div className={clsx('flex flex-wrap items-center gap-2')}>
+          <div className="flex flex-wrap items-center gap-2">
             {tags?.map((tag, index) => (
               <div
                 key={index}
-                className="flex items-center gap-1 rounded-full bg-gray-300 px-2 py-1 text-xs"
+                className="flex items-center gap-1 rounded-full bg-gray-300 px-2 py-1"
                 onClick={handlePreventActive}
               >
-                <span>{tag}</span>
+                <span className="text-12-20 font-normal tracking-[-0.2px] text-black">{tag}</span>
                 <button data-testid="delete_tag" type="button" onClick={() => handleRemoveTag(index)}>
                   <CloseFillIcon aria-hidden="true" className="size-4 text-gray-500" />
                 </button>
@@ -142,7 +140,6 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
             ))}
             <input
               ref={inputRef}
-              className="min-w-30 flex-1 bg-transparent p-1 outline-none"
               disabled={disabled}
               id="tag-input"
               maxLength={10}
@@ -157,12 +154,22 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
               onCompositionEnd={() => setIsComposing(false)}
               onCompositionStart={() => setIsComposing(true)}
               onFocus={() => setIsActive(true)}
+              onInput={(e) => {
+                // 한글 초과 입력 처리
+                if (e.currentTarget.value.length > 10) {
+                  e.currentTarget.value = e.currentTarget.value.slice(0, 10);
+                }
+              }}
               onKeyDown={handleTypeInput}
+              className={clsx(
+                'min-w-30 flex-1 bg-transparent text-16-24 font-normal tracking-[-0.2px] text-gray-900 placeholder:text-gray-600',
+                isActive && 'font-semibold placeholder:font-normal placeholder:text-gray-900',
+              )}
             />
           </div>
           {input && (
             <button
-              className="ml-auto w-14.5 font-semibold tracking-[-0.2px] text-primary-400"
+              className="ml-auto w-14.5"
               data-testid="add_tag"
               type="button"
               onClick={(e) => {
@@ -170,7 +177,7 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
                 handleSubmit();
               }}
             >
-              생성하기
+              <span className="text-16-24 font-semibold tracking-[-0.2px] text-primary-400">생성하기</span>
             </button>
           )}
         </div>

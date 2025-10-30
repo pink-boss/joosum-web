@@ -13,18 +13,20 @@ export default function MobileRestriction() {
       </Head>
       <div className="mobile-restriction-fade-in flex min-h-screen w-full flex-col items-center justify-center gap-10 bg-gray-200">
         <div className="mobile-restriction-zoom-in">
-          <Image priority alt="Screen Safer" height={240} src="/images/screen-safer.png" width={240} />
+          <Image priority alt="" height={240} src="/images/screen-safer.png" width={240} />
         </div>
-        <div className="mobile-restriction-slide-in-2 text-center text-2xl font-semibold text-gray-800">
-          <p>주섬 웹서비스는 현재</p>
-          <p>PC 환경에서만 지원하고 있어요.</p>
-        </div>
-        <div className="mobile-restriction-slide-in-3 text-center text-gray-graphite">
-          <p>쾌적한 사용을 위해 최소 822px 이상의</p>
-          <p>해상도에서 이용해주세요.</p>
-        </div>
+        <span className="mobile-restriction-slide-in-2 text-center text-24-32 font-bold text-black">
+          주섬 웹서비스는 현재
+          <br />
+          PC 환경에서만 지원하고 있어요.
+        </span>
+        <span className="mobile-restriction-slide-in-3 text-center text-16-24 font-normal text-gray-800">
+          쾌적한 사용을 위해 최소 822px 이상의
+          <br />
+          해상도에서 이용해주세요.
+        </span>
         <div className="mobile-restriction-slide-in-4 w-full space-y-4">
-          <p className="text-center text-sm font-medium text-gray-800">모바일에서는 앱을 이용해주세요</p>
+          <span className="text-center text-14-22 font-normal text-gray-800">모바일에서는 앱을 이용해주세요</span>
           <div className="flex justify-center gap-4">
             <IOSDownload />
             <AndroidDownload />

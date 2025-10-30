@@ -2,10 +2,10 @@
 
 import { ReactNode, useCallback } from 'react';
 
-import clsx from 'clsx';
-import { createPortal } from 'react-dom';
+import * as Dialog from '@radix-ui/react-dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
+import { clsx } from '@/utils/clsx';
 
 export interface DefaultDialogProps {
   children: ReactNode;
@@ -43,30 +43,21 @@ export default function DefaultDialog({ open, children, className, onCloseCallba
     openMutateFolder,
   ]);
 
-  if (!open) return null;
-
-  const modal = (
-    <>
-      <div aria-hidden="true" className="absolute inset-0 bg-black/50" role="presentation" onClick={onClose} />
-      <div
-        aria-modal
-        aria-labelledby="dialog"
-        data-testid={testId}
-        role="dialog"
-        onClick={(e) => e.stopPropagation()}
-        className={clsx(
-          'absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2',
-          'rounded-2xl bg-white p-10 shadow-xl',
-          className && className,
-        )}
-      >
-        {children}
-      </div>
-    </>
+  return (
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 bg-black/50" />
+        <Dialog.Content
+          aria-describedby={undefined}
+          data-testid={testId}
+          className={clsx(
+            'fixed left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-10 shadow-modal',
+            className && className,
+          )}
+        >
+          {children}
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
-
-  const modalRoot = document.getElementById('modal-root');
-  if (!modalRoot) return null;
-
-  return createPortal(modal, modalRoot);
 }

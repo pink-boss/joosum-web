@@ -1,10 +1,9 @@
 import { useCallback, useMemo } from 'react';
 
-import clsx from 'clsx';
-
 import { useGetFolders } from '@/services/folder';
 
 import { useSearchLinkFilterStore, useSearchLinkSortStore } from '@/libs/zustand/store';
+import { clsx } from '@/utils/clsx';
 
 export default function SearchTab() {
   const linkSort = useSearchLinkSortStore();
@@ -43,8 +42,7 @@ function Tab({ isSelected, title, onClick }: { isSelected: boolean; onClick: () 
       type="button"
       onClick={onClick}
       className={clsx(
-        'h-9 flex-none rounded-md px-4 py-1.5',
-        'whitespace-nowrap font-semibold',
+        'h-9 flex-none whitespace-nowrap rounded-md px-4 py-1.5 font-semibold',
         isSelected && 'bg-primary-400 text-white hover:bg-primary-500',
         !isSelected && 'bg-gray-300 text-gray-600 hover:bg-gray-200',
       )}

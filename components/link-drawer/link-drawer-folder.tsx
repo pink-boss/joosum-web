@@ -36,22 +36,21 @@ export default function LinkDrawerFolder({
   }, [clearFolder, openMutateFolder, buttonDataTestId]);
 
   return (
-    <div className="flex flex-col gap-2 text-gray-900">
-      <div className="flex justify-between px-2">
-        <label className="text-lg font-semibold">폴더</label>
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center justify-between">
+        <label className="px-1 text-18-26 font-semibold tracking-[-0.2px] text-black">폴더</label>
         <button
-          className="flex items-center font-semibold text-primary-500"
+          className="flex items-center"
           data-testid={buttonDataTestId}
           disabled={disabled}
           type="button"
           onClick={handleClick}
         >
           <PlusIcon aria-hidden="true" className="size-6 text-gray-500" />
-          새폴더
+          <span className="text-16-24 font-semibold tracking-[-0.2px] text-primary-500">새폴더</span>
         </button>
       </div>
       <FolderDropdown
-        className="border-none bg-gray-200"
         dataTestId={dropdownDataTestId}
         disabled={disabled}
         folderId={folderId}

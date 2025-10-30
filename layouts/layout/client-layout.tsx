@@ -5,8 +5,6 @@ import { usePathname } from 'next/navigation';
 
 import { ReactNode, Suspense } from 'react';
 
-import clsx from 'clsx';
-
 import { DynamicDialogs } from '@/components/dynamic-dialogs';
 import { DynamicDrawers } from '@/components/dynamic-drawers';
 import Loader from '@/components/loader';
@@ -17,6 +15,7 @@ import Gnb from '@/layouts/gnb';
 import Lnb from '@/layouts/lnb';
 
 import TanstackQueryProviders from '@/libs/tanstack-query/providers';
+import { clsx } from '@/utils/clsx';
 import { publicOnlyPaths } from '@/utils/path';
 
 export default function ClientLayout({ children }: Readonly<{ children: ReactNode }>) {
@@ -42,8 +41,6 @@ export default function ClientLayout({ children }: Readonly<{ children: ReactNod
                   <Suspense fallback={<Loader />}>
                     <main className="relative flex w-full flex-1">{children}</main>
                   </Suspense>
-                  <div id="drawer-root" />
-                  <div id="modal-root" />
                   <DynamicDrawers />
                   <DynamicDialogs />
                 </Component>
@@ -66,9 +63,7 @@ function Component({
   return (
     <div
       className={clsx(
-        'h-screen flex-1 overflow-x-hidden',
-        'flex flex-col items-center',
-        'bg-white text-black',
+        'flex h-screen flex-1 flex-col items-center overflow-x-hidden bg-white text-black',
         className && className,
       )}
     >

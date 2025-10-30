@@ -39,13 +39,13 @@ export default function LoginApple({ previousLoginProvider }: Props) {
   return (
     <LoginTooltip isPreviousProvider={previousLoginProvider === 'apple'}>
       <button
-        className="flex h-14 items-center justify-center gap-2 rounded-lg bg-black px-4 py-3 text-white hover:bg-gray-800 active:bg-black"
+        className="flex h-14 items-center justify-center gap-2 rounded-lg bg-black px-4 py-3.75"
         data-testid="appleLogin_login"
         type="button"
         onClick={handleClick}
       >
-        <AppleIcon aria-hidden="true" height={24} width={24} />
-        <span className="font-medium">Apple ID로 시작하기</span>
+        <AppleIcon aria-hidden="true" className="size-6" />
+        <span className="text-18-26 font-semibold tracking-[-0.2px] text-white">Apple ID로 시작하기</span>
       </button>
     </LoginTooltip>
   );

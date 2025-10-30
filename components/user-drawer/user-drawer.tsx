@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import clsx from 'clsx';
+import * as Dialog from '@radix-ui/react-dialog';
 
 import { useGetAccount } from '@/services/auth';
 
@@ -27,15 +27,16 @@ export default function UserDrawer() {
   return (
     <DefaultDrawer dataTestId="myPage" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col gap-10">
-        <button className="px-5 py-1" type="button" onClick={handleClose}>
+        <button className="px-5 py-2.5" type="button" onClick={handleClose}>
           <DoubleRightIcon aria-hidden="true" className="size-6 text-gray-900" />
         </button>
-        <div className={clsx('flex flex-col gap-5', 'text-lg text-gray-700')}>
+        <Dialog.Title className="sr-only">내 정보</Dialog.Title>
+        <div className="flex flex-col">
           <UserDrawerAccount email={data?.user.email ?? ''} />
           <UserDrawerSetting />
-          <div className={clsx('border-t border-gray-500')} />
+          <hr className="my-2.5 w-full border-gray-300" />
           <UserDrawerSupport email={data?.user.email ?? ''} />
-          <div className={clsx('border-t border-gray-500')} />
+          <hr className="my-2.5 w-full border-gray-300" />
           <UserDrawerLogout />
         </div>
       </div>

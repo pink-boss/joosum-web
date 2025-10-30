@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import * as Dialog from '@radix-ui/react-dialog';
+
 import { useDeleteDrawerLink, useUpdateLink } from '@/services/link';
 
 import DefaultDrawer from '@/components/default-drawer';
@@ -39,7 +41,7 @@ export default function LinkMutateDrawer() {
     linkId: link?.linkId || '',
   });
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(() => {
     updateMutate(formState as Required<CreateFormState>);
   }, [updateMutate, formState]);
 
@@ -61,10 +63,10 @@ export default function LinkMutateDrawer() {
           right={<LinkShareButton dataTestId="share_detail_link_linkList" link={link} />}
           onClose={handleClose}
           center={
-            <div className="flex items-center gap-1">
+            <Dialog.Title className="flex items-center gap-1">
               <FolderIcon aria-hidden="true" className="size-5 shrink-0 text-gray-500" />
               <span className="text-gray-700">{link.linkBookName}</span>
-            </div>
+            </Dialog.Title>
           }
         />
         <div className="flex flex-col gap-6 px-10">
@@ -101,10 +103,14 @@ export default function LinkMutateDrawer() {
             }
           />
           <LinkDrawerTag setTags={(tags) => setFormState((prev) => ({ ...prev, tags }))} tags={formState.tags ?? []} />
-          <div className="mt-10 flex gap-1 text-xs text-gray-600">
-            <span>{krDateFormatter(link.createdAt)}에 주섬주섬</span>
-            <span>|</span>
-            <span>{link.readCount ? `${link.readCount}회 읽음` : `읽지 않음`}</span>
+          <div className="mt-10 flex gap-1">
+            <span className="text-12-14 font-normal tracking-[-0.2px] text-gray-600">
+              {krDateFormatter(link.createdAt)}에 주섬주섬
+            </span>
+            <span className="text-12-14 font-normal tracking-[-0.2px] text-gray-600">|</span>
+            <span className="text-12-14 font-normal tracking-[-0.2px] text-gray-600">
+              {link.readCount ? `${link.readCount}회 읽음` : `읽지 않음`}
+            </span>
           </div>
         </div>
       </div>

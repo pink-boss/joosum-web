@@ -1,10 +1,9 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import clsx from 'clsx';
-
 import Folder from '@/components/folder';
 
 import { useEditorTabs } from '@/hooks/utils';
+import { clsx } from '@/utils/clsx';
 
 import { CreateFormState } from '@/types/folder.types';
 
@@ -19,7 +18,7 @@ export default function FolderMutateDialogEditor({ setFormState, ...formState }:
 
   return (
     <div className="mb-5 flex w-full flex-col items-center">
-      <div className={clsx('min-h-64 w-full flex-1 bg-gray-300', 'flex items-center justify-center')}>
+      <div className="flex min-h-64 w-full flex-1 items-center justify-center bg-gray-300">
         <Folder isPreview {...formState} />
       </div>
       <div className="flex w-full flex-col gap-3">
@@ -32,8 +31,8 @@ export default function FolderMutateDialogEditor({ setFormState, ...formState }:
                 type="button"
                 onClick={() => setSelectedTab(tab.title)}
                 className={clsx(
-                  'min-w-17 cursor-pointer px-2 py-1 text-lg',
-                  isSelected ? 'border-b-2 border-primary-500 font-bold text-primary-500' : 'text-gray-600',
+                  'min-w-17 px-2 py-1',
+                  isSelected ? 'border-b-2 border-primary-500 font-bold text-primary-500' : 'font-normal text-gray-600',
                 )}
                 data-testid={
                   tab.title === '폴더명'
@@ -43,7 +42,7 @@ export default function FolderMutateDialogEditor({ setFormState, ...formState }:
                       : 'folderIllust_addFolder'
                 }
               >
-                {tab.title}
+                <span className="text-18-26 tracking-[-0.2px] text-inherit">{tab.title}</span>
               </button>
             );
           })}

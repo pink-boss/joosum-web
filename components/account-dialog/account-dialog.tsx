@@ -2,13 +2,14 @@ import Image from 'next/image';
 
 import { useCallback } from 'react';
 
-import clsx from 'clsx';
+import * as Dialog from '@radix-ui/react-dialog';
 
 import { useGetAccount } from '@/services/auth';
 
 import { DefaultDialog } from '@/components/default-dialog';
 
 import { useDialogStore } from '@/libs/zustand/store';
+import { clsx } from '@/utils/clsx';
 import { formatNumber } from '@/utils/number';
 
 import { CloseDialogIcon, FolderIcon, HyperlinkOutlineIcon } from '@/assets/icons';
@@ -39,65 +40,60 @@ export default function AccountDialog() {
         <div className="flex w-full flex-col gap-7.5 px-6">
           <div className="flex flex-1 justify-between">
             <div className="invisible size-6" />
-            <span className="text-2xl font-bold">내 계정</span>
+            <Dialog.Title className="text-24-32 font-bold">내 계정</Dialog.Title>
             <button data-testid="close_myAccount_myPage" type="button" onClick={handleClose}>
               <CloseDialogIcon aria-hidden="true" className="size-6 text-gray-900" />
             </button>
           </div>
-          <div className="ml-0.5 flex items-center gap-5">
+          <div className="flex items-center gap-5 pl-0.5">
             <div
               className={clsx(
-                'size-10 rounded-full border border-gray-500',
-                'flex items-center justify-center',
+                'flex size-10 items-center justify-center rounded-full border border-gray-500',
                 data?.user.social === 'apple' && 'bg-black',
               )}
             >
               <Image alt="social" height={24} src={`/images/logo-${data?.user.social}.png`} width={24} />
             </div>
-            <span className="truncate text-xl font-bold text-gray-900">{data?.user.email}</span>
+            <span className="truncate text-20-24 font-bold tracking-[-0.2px] text-gray-900">{data?.user.email}</span>
           </div>
           <div className="flex flex-col gap-5 pb-5 pl-2.5">
-            <div className="gap-5">
-              <div className={clsx('flex justify-between', 'text-lg text-gray-900')}>
-                <div className="flex items-center gap-5">
-                  <HyperlinkOutlineIcon aria-hidden="true" className="size-6 text-gray-700" />
-                  <span className="font-bold">링크</span>
-                </div>
-                <span className="">{formatNumber(data?.totalLinkCount || 0)}개</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-5">
+                <HyperlinkOutlineIcon aria-hidden="true" className="size-6 text-gray-700" />
+                <span className="text-18-21 font-bold tracking-[-0.2px] text-gray-900">링크</span>
               </div>
+              <span className="text-18-21 font-normal tracking-[-0.2px] text-gray-900">
+                {formatNumber(data?.totalLinkCount || 0)}개
+              </span>
             </div>
-            <div className="gap-5">
-              <div className={clsx('flex justify-between', 'text-lg text-gray-900')}>
-                <div className="flex items-center gap-5">
-                  <FolderIcon aria-hidden="true" className="size-6 text-gray-700" />
-                  <span className="font-bold">폴더</span>
-                </div>
-                <span className="">{formatNumber(data?.totalFolderCount || 0)}개</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-5">
+                <FolderIcon aria-hidden="true" className="size-6 text-gray-700" />
+                <span className="text-18-21 font-bold tracking-[-0.2px] text-gray-900">폴더</span>
               </div>
+              <span className="text-18-21 font-normal tracking-[-0.2px] text-gray-900">
+                {formatNumber(data?.totalFolderCount || 0)}개
+              </span>
             </div>
           </div>
         </div>
-        <div className="w-full px-6">
-          <div className="w-full border-t border-gray-500" />
-        </div>
-        <div className="flex w-full justify-between px-6 pt-3">
-          <div className="mt-4">
-            <button
-              className="text-lg text-gray-600 underline underline-offset-4"
-              data-testid="deleteAccount_myAccount_myPage"
-              type="button"
-              onClick={handleDeleteAccount}
-            >
-              회원탈퇴
-            </button>
-          </div>
+        <hr className="mx-11 w-[calc(100%-44px)] border-gray-500" />
+        <div className="mt-3 flex w-full items-end justify-between px-6">
           <button
-            className={clsx('rounded-lg bg-gray-500 px-10 py-4', 'font-bold text-white')}
+            className="text-gray-600 underline underline-offset-4"
+            data-testid="deleteAccount_myAccount_myPage"
+            type="button"
+            onClick={handleDeleteAccount}
+          >
+            <span className="text-18-22 font-normal tracking-[-0.2px] text-inherit">회원탈퇴</span>
+          </button>
+          <button
+            className="rounded-lg bg-gray-500 px-10 py-4 transition-colors hover:bg-gray-600"
             data-testid="logout_myAccount_myPage"
             type="button"
             onClick={handleLogout}
           >
-            로그아웃
+            <span className="text-16-24 font-bold tracking-[-0.2px] text-white">로그아웃</span>
           </button>
         </div>
       </div>

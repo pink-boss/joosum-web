@@ -1,7 +1,5 @@
 import { useCallback } from 'react';
 
-import clsx from 'clsx';
-
 import { useDialogStore } from '@/libs/zustand/store';
 
 import { ChevronRightIcon } from '@/assets/icons';
@@ -18,12 +16,12 @@ export default function UserDrawerAccount({ email }: Props) {
   }, [openAccountDialog]);
 
   return (
-    <div>
-      <div className={clsx('bg-gray-200 px-10 py-2.5', 'font-bold')}>내 계정</div>
+    <div className="mb-2.5">
+      <span className="bg-gray-200 px-10 py-3 text-18-24 font-bold tracking-[-0.2px] text-gray-700">내 계정</span>
       <div className="flex flex-col gap-2.5 px-10 py-5">
-        <div className="font-semibold">내 계정</div>
+        <span className="text-18-24 font-semibold tracking-[-0.2px] text-gray-700">내 계정</span>
         <button className="flex justify-between" data-testid="myAccount_myPage" type="button" onClick={handleOpen}>
-          <span className="font-bold text-gray-900">{email || ' '}</span>
+          <span className="text-18-24 font-bold tracking-[-0.2px] text-gray-900">{email || ' '}</span>
           <ChevronRightIcon aria-hidden="true" className="size-6 text-gray-500" />
         </button>
       </div>

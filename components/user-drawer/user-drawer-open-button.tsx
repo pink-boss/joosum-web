@@ -1,7 +1,5 @@
 import { useCallback } from 'react';
 
-import clsx from 'clsx';
-
 import { useDrawerStore } from '@/libs/zustand/store';
 
 import { PersonOutlineIcon } from '@/assets/icons';
@@ -17,7 +15,7 @@ export default function UserDrawerOpenButton({ dataTestId }: Props) {
 
   return (
     <button
-      className={clsx('flex cursor-pointer items-center justify-center', 'transition-opacity hover:opacity-80')}
+      className="flex items-center justify-center transition-opacity hover:opacity-80"
       data-testid={dataTestId}
       type="button"
       onClick={handleClick}

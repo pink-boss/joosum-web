@@ -46,17 +46,21 @@ export default function LinkFilter(props: Props) {
     <div className="flex items-center gap-6">
       <div className="flex shrink-0 items-center gap-2">
         {/* 읽지 않음 */}
-        <input
-          readOnly
-          checked={unread}
-          className="size-6 accent-primary-500"
-          data-testid={unreadDataTestId}
-          id="unread-radio"
-          type="radio"
-          onClick={handleClickUnread}
-        />
-        <label className="text-lg font-semibold text-gray-700" htmlFor="unread-radio">
-          읽지 않음
+        <label className="flex items-center gap-2" htmlFor="unread-radio">
+          <input
+            readOnly
+            checked={unread}
+            className="peer sr-only"
+            data-testid={unreadDataTestId}
+            id="unread-radio"
+            type="radio"
+            onClick={handleClickUnread}
+          />
+          <div className="hidden size-6 items-center justify-center rounded-full border-2 border-gray-500 peer-checked:flex">
+            <div className="size-3 rounded-full bg-primary-500" />
+          </div>
+          <div className="block size-6 items-center justify-center rounded-full border-2 border-gray-500 peer-checked:hidden" />
+          <span className="text-18-26 font-semibold tracking-[-0.2px] text-gray-700">읽지 않음</span>
         </label>
       </div>
       {/* 기간 필터 */}

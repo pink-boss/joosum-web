@@ -1,7 +1,5 @@
 import { useCallback } from 'react';
 
-import clsx from 'clsx';
-
 import { useDrawerStore } from '@/libs/zustand/store';
 
 interface Props {
@@ -17,17 +15,12 @@ export default function LinkDrawerSaveButton({ dataTestId }: Props) {
 
   return (
     <button
+      className="h-12 w-auto min-w-30 rounded-xl bg-black px-4 lg:min-w-50"
       data-testid={dataTestId}
       type="button"
       onClick={handleClick}
-      className={clsx(
-        'h-12 w-auto rounded-xl bg-black font-bold text-white',
-        'min-w-30 px-4 text-sm',
-        'sm:min-w-40 sm:text-lg',
-        'lg:min-w-50 lg:text-xl',
-      )}
     >
-      <span className="inline">링크 저장</span>
+      <span className="text-20-24 font-bold tracking-[-0.2px] text-white">링크 저장</span>
     </button>
   );
 }

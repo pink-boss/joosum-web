@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { useCallback } from 'react';
 
-import { NotificationListDropdown } from '@/components/notification';
+import { NotificationListPopover } from '@/components/notification';
 import Menu from '@/layouts/menu';
 
 import { useDialogStore } from '@/libs/zustand/store';
@@ -25,19 +25,17 @@ export default function Lnb() {
     <div className="flex flex-col justify-between bg-gray-300 py-11">
       <div className="flex flex-1 flex-col gap-6">
         <div className="flex items-center justify-between px-10 py-1">
-          {/* 로고 */}
-          <Link className="cursor-pointer" data-testid="logo_gnb_common" href="/dashboard" onClick={handleClose}>
-            <Image alt="joosum" className="py-3" height={18} src="/images/joosum-text.png" width={88} />
-          </Link>
-          {/* 알림 */}
-          <NotificationListDropdown />
+          <h1>
+            <Link data-testid="logo_gnb_common" href="/dashboard" onClick={handleClose}>
+              <Image alt="joosum" className="py-3" height={18} src="/images/joosum-text.png" width={88} />
+            </Link>
+          </h1>
+          <NotificationListPopover />
         </div>
-        {/* 폴더 리스트 + 폴더 만들기 */}
         <Menu />
       </div>
-      {/* 앱 다운로드 */}
       <button
-        className="ml-5.5 flex w-59 cursor-pointer items-center px-4 py-3"
+        className="ml-5.5 flex w-59 items-center px-4 py-3"
         data-testid="downloadApp_gnb_common"
         type="button"
         onClick={handleAppDownload}

@@ -19,7 +19,7 @@ export default function LinkBookDetail() {
 
   return !title ? (
     <div className="flex min-h-0 w-full flex-1 flex-col gap-6.25 px-10 pb-8">
-      <div className="text-8 font-extrabold leading-10 text-gray-800">{folder ? folder.title : '전체'}</div>
+      <h2 className="text-[32px] font-extrabold leading-[40px] text-gray-800">{folder ? folder.title : '전체'}</h2>
       <LinkFilter
         {...linkFilter}
         dateDataTestId="dateFilter_linkList"

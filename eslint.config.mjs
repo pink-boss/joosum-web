@@ -11,13 +11,7 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends(
-    'next/core-web-vitals',
-    'next/typescript',
-    'plugin:storybook/recommended',
-    'plugin:tailwindcss/recommended',
-    'prettier',
-  ),
+  ...compat.extends('next/core-web-vitals', 'next/typescript', 'plugin:storybook/recommended', 'prettier'),
   {
     plugins: {
       perfectionist,

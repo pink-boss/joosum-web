@@ -2,7 +2,7 @@
 
 import { InputHTMLAttributes, useId } from 'react';
 
-import clsx from 'clsx';
+import { clsx } from '@/utils/clsx';
 
 import { CheckboxCheckmarkIcon } from '@/assets/icons';
 
@@ -10,14 +10,14 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   dataTestId?: string;
 }
 
-export default function Checkbox({ dataTestId, ...props }: Props) {
+export default function Checkbox({ dataTestId, className, ...props }: Props) {
   const inputId = useId();
 
   return props.id ? (
     <>
       <input
         {...props}
-        className={clsx('peer sr-only', props.className && props.className)}
+        className={clsx('peer sr-only', className && className)}
         data-testid={dataTestId}
         id={props.id}
         type="checkbox"
@@ -31,7 +31,7 @@ export default function Checkbox({ dataTestId, ...props }: Props) {
     <label htmlFor={inputId}>
       <input
         {...props}
-        className={clsx('peer sr-only', props.className && props.className)}
+        className={clsx('peer sr-only', className && className)}
         data-testid={dataTestId}
         id={inputId}
         type="checkbox"

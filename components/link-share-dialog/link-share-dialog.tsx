@@ -4,6 +4,8 @@ import Image from 'next/image';
 
 import { useCallback, useEffect } from 'react';
 
+import * as Dialog from '@radix-ui/react-dialog';
+
 import { useGetLinkCache } from '@/services/link';
 
 import { DefaultDialog } from '@/components/default-dialog';
@@ -43,15 +45,6 @@ export default function LinkShareDialog() {
   }, [link?.url]);
 
   const handleShareToKakao = useCallback(async () => {
-    // window.Kakao.Share.createDefaultButton({
-    //   container: "#kakaotalk-share-btn",
-    //   objectType: "text",
-    //   text: "기본 템플릿으로 제공하는 텍스트 템플릿은 텍스트를 최대 200자까지 표시할 수 있습니다. 텍스트 템플릿은 텍스트 영역과 하나의 기본 버튼을 가집니다. 임의의 버튼을 설정할 수도 있습니다. 여러 장의 이미지, 프로필 정보 등 보다 확장된 형태의 카카오톡 공유는 다른 템플릿을 이용해 보낼 수 있습니다.",
-    //   link: {
-    //     mobileWebUrl: "https://developers.kakao.com",
-    //     webUrl: "https://developers.kakao.com",
-    //   },
-    // });
     if (!link?.url) {
       toast({ status: 'fail', message: '공유할 링크가 없습니다.' });
       return;
@@ -62,7 +55,7 @@ export default function LinkShareDialog() {
       content: {
         title: link.title || '주섬에서 발견한 링크',
         description: '흥미로운 링크를 공유합니다.',
-        imageUrl: link.thumbnailURL || 'https://joosum.app/logo.png',
+        imageUrl: link.thumbnailURL || 'https://joosum.app/opengraph-image',
         link: {
           mobileWebUrl: link.url,
           webUrl: link.url,
@@ -84,25 +77,25 @@ export default function LinkShareDialog() {
     <DefaultDialog className="w-[421.78px]" open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col items-center gap-5">
         <div className="flex flex-col items-center gap-4">
-          <span className="text-2xl font-bold">공유하기</span>
+          <Dialog.Title className="text-24-32 font-bold text-black">공유하기</Dialog.Title>
           <div className="flex gap-10">
             <button className="flex flex-col items-center gap-1" type="button" onClick={handleCopyLink}>
               <Image alt="" height={60} src="/images/share-link.png" width={60} />
-              <span className="text-sm text-gray-900">링크 복사</span>
+              <span className="text-14-22 font-normal tracking-[-0.2px] text-gray-900">링크 복사</span>
             </button>
             <button className="flex flex-col items-center gap-1" type="button" onClick={handleShareToKakao}>
               <Image alt="" height={60} src="/images/share-kakao-talk.png" width={60} />
-              <span className="text-sm text-gray-900">카카오톡</span>
+              <span className="text-14-22 font-normal tracking-[-0.2px] text-gray-900">카카오톡</span>
             </button>
           </div>
         </div>
         <div className="mt-3 w-full">
           <button
-            className="h-[56px] w-full rounded-lg bg-gray-500 font-bold text-white"
+            className="h-14 w-full rounded-lg bg-gray-500 transition-colors hover:bg-gray-600"
             type="button"
             onClick={handleClose}
           >
-            취소
+            <span className="text-16-24 font-bold tracking-[-0.2px] text-white">취소</span>
           </button>
         </div>
       </div>

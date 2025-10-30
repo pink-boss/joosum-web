@@ -48,6 +48,12 @@ export default function useEditorTabs({ localState, setLocalState }: Props) {
             placeholder="폴더명을 입력해주세요."
             value={localState.title}
             onChange={handleInputChange}
+            onInput={(e) => {
+              // 한글 초과 입력 처리
+              if (e.currentTarget.value.length > MAX_TITLE_LENGTH) {
+                e.currentTarget.value = e.currentTarget.value.slice(0, MAX_TITLE_LENGTH);
+              }
+            }}
           />
           <div className="ml-auto mt-1.5 text-gray-500">
             {localState.title?.length ?? 0}/{MAX_TITLE_LENGTH}

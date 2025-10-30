@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import clsx from 'clsx';
+import * as Dialog from '@radix-ui/react-dialog';
 
 import { useMutateFolder, useSelectFolder } from '@/services/folder';
 
@@ -51,21 +51,23 @@ export default function FolderMutateDialog() {
       className="w-198"
       open={isOpen}
       submitDataTestId={folderDataTestId === 'addFolder' ? 'save_folderTitle_addFolder' : 'confirm_addFolder_saveLink'}
-      submitLoading={mutation.isPending || !formState.title}
+      submitLoading={mutation.isPending}
       onCloseCallback={handleClose}
       closeProps={{
-        className: 'w-[220.5px] h-14 bg-gray-500',
+        className: 'w-[220.5px] h-14',
         children: '닫기',
         onClick: handleClose,
       }}
       submitProps={{
-        className: clsx(['h-14 w-[220.5px]']),
+        className: 'h-14 w-[220.5px]',
         children: folder ? '완료' : '생성',
         onClick: handleSubmit,
         disabled: !formState.title,
       }}
     >
-      <div className="my-5 text-center text-2xl font-bold">폴더 {folder ? '수정' : '생성'}</div>
+      <Dialog.Title className="my-5 text-center text-24-32 font-bold text-black">
+        폴더 {folder ? '수정' : '생성'}
+      </Dialog.Title>
       <FolderMutateDialogEditor {...formState} setFormState={setFormState} />
     </ConfirmDialog>
   );

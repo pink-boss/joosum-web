@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
 
+import * as Dialog from '@radix-ui/react-dialog';
+
 import { useLogout } from '@/services/auth';
 
 import ConfirmDialog from '@/components/confirm-dialog';
@@ -33,7 +35,7 @@ export default function LogoutDialog() {
         onClick: handleLogout,
       }}
     >
-      <span className="text-2xl font-bold">로그아웃 하시겠습니까?</span>
+      <Dialog.Title className="text-24-32 font-bold text-black">로그아웃 하시겠습니까?</Dialog.Title>
     </ConfirmDialog>
   );
 }

@@ -2,6 +2,8 @@
 
 import { useCallback } from 'react';
 
+import * as Dialog from '@radix-ui/react-dialog';
+
 import { useDeleteFolder, useSelectFolder } from '@/services/folder';
 
 import ConfirmDialog from '@/components/confirm-dialog';
@@ -35,12 +37,14 @@ export default function FolderDeleteDialog() {
         onClick: handleSubmit,
       }}
     >
-      <div className="text-center text-gray-800">
-        <p>폴더 내의 모든 링크가 삭제됩니다.</p>
-        <p>
-          <span className="text-lg font-bold text-primary-400">{folder?.title}</span> 폴더를 삭제하시겠습니까?
-        </p>
-      </div>
+      <Dialog.Title className="text-center text-24-32 font-bold text-gray-800">
+        <span className="inline-block text-24-32 font-bold text-primary-400">{folder?.title}</span> 폴더를
+        <br />
+        삭제하시겠습니까?
+      </Dialog.Title>
+      <Dialog.Description className="text-center text-16-19 font-normal text-gray-800">
+        폴더 내의 모든 링크가 삭제됩니다.
+      </Dialog.Description>
     </ConfirmDialog>
   );
 }

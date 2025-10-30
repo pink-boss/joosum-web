@@ -1,12 +1,11 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import clsx from 'clsx';
+import * as Popover from '@radix-ui/react-popover';
 
 import { useUpsertTags } from '@/services/tag';
 
-import { useClickAway } from '@/hooks/utils';
 import { useSubDialogStore } from '@/libs/zustand/store';
 
 import { MoreVerticalIcon } from '@/assets/icons';
@@ -18,48 +17,36 @@ interface Props {
 }
 
 export default function TagMore({ label }: Props) {
-  const ref = useClickAway({ onClose: () => setIsOpen(false) });
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
   const { openDeleteTagConfirm } = useSubDialogStore();
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleDelete = useCallback(() => {
     useSubDialogStore.setState({ key: label });
     openDeleteTagConfirm(true);
   }, [label, openDeleteTagConfirm]);
 
-  const handleClick = useCallback(() => {
-    setIsOpen((state) => !state);
-  }, []);
-
-  useEffect(() => {
-    if (isOpen && dropdownRef.current) {
-      dropdownRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }
-  }, [isOpen]);
-
   return (
-    <div ref={ref} className={clsx('relative')}>
-      <button className="rounded-full" data-testid="kebab_settingTag_myPage" type="button" onClick={handleClick}>
-        <MoreVerticalIcon aria-hidden="true" className="size-6 text-gray-500" />
-      </button>
-      {isOpen && (
-        <div
-          ref={dropdownRef}
-          className={clsx(
-            'fixed right-16 z-10 mt-1 flex w-40 flex-col',
-            'gap-5 rounded-lg border border-gray-200 bg-white p-6 shadow-lg',
-          )}
+    <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+      <Popover.Trigger asChild>
+        <button className="rounded-full" data-testid="kebab_settingTag_myPage" type="button">
+          <MoreVerticalIcon aria-hidden="true" className="size-6 text-gray-500" />
+        </button>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          align="end"
+          className="flex w-40 flex-col gap-5 rounded-lg border border-gray-200 bg-white p-6 shadow-2-16-19-0"
+          sideOffset={4}
+          style={{ zIndex: 9999 }}
         >
           <TagUpdaterInput defaultValue={label} onSuccess={() => setIsOpen(false)} />
-          <button className="w-full pl-1 text-start font-semibold text-gray-900" type="button" onClick={handleDelete}>
-            태그 삭제
+          <button className="w-full pl-1" type="button" onClick={handleDelete}>
+            <span className="text-start text-16-24 font-semibold tracking-[-0.2px] text-gray-900">태그 삭제</span>
           </button>
-        </div>
-      )}
-    </div>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }
 
@@ -70,7 +57,7 @@ function TagUpdaterInput({ defaultValue, onSuccess }: { defaultValue: Tag; onSuc
     <input
       autoFocus
       ref={inputRef}
-      className="w-full bg-gray-200 px-2 py-2.25 text-gray-700"
+      className="h-12 w-full rounded-lg border border-gray-200 bg-gray-200 p-2.75 text-16-24 font-normal tracking-[-0.2px] text-gray-900 placeholder:text-gray-600 focus:border-primary-500 focus:bg-primary-100 focus:font-semibold focus:placeholder:font-normal focus:placeholder:text-gray-900"
       defaultValue={defaultValue}
       disabled={loading}
       onKeyUp={(e) => handleInput(e, defaultValue)}

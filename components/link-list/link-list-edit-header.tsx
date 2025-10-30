@@ -16,15 +16,18 @@ export default function LinkListEditHeader({ totalCount, cachedLinks, onAllCheck
   );
 
   return (
-    <div className="flex items-center gap-3 text-lg text-gray-800">
+    <div className="flex items-center gap-3">
       {/* 모두 선택 */}
-      <div className="flex items-center gap-2 font-semibold">
+      <label
+        className="flex items-center gap-2 text-18-26 font-semibold tracking-[-0.2px] text-gray-800"
+        htmlFor="allCheckbox"
+      >
         <Checkbox checked={hasAllChecked} dataTestId={dataTestId} id="allCheckbox" onChange={onAllCheckLinks} />
-        <label htmlFor="allCheckbox">모두 선택</label>
-      </div>
-      <div>
+        모두 선택
+      </label>
+      <span className="text-18-26 font-normal tracking-[-0.2px] text-gray-800">
         {cachedLinks.size}/{totalCount}개
-      </div>
+      </span>
     </div>
   );
 }

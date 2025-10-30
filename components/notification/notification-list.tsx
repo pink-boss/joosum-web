@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
-import clsx from 'clsx';
-
 import { useGetNotifications, useUpdateNotification } from '@/services/notification';
+
+import { clsx } from '@/utils/clsx';
 
 import { BasicBellLargeIcon, BookOpenIcon, FileFolderIcon } from '@/assets/icons';
 
@@ -45,7 +45,7 @@ export default function NotificationList({ setHasNotification }: Props) {
   if (isLoading) {
     return (
       <div className="mb-24 mt-10 flex h-full flex-col items-center justify-center gap-5">
-        <div className="text-gray-600">로딩 중...</div>
+        <span className="text-16-19 font-normal text-gray-600">로딩 중...</span>
       </div>
     );
   }
@@ -54,24 +54,22 @@ export default function NotificationList({ setHasNotification }: Props) {
   if (isError) {
     return (
       <div className="mb-24 mt-10 flex h-full flex-col items-center justify-center gap-5">
-        <div className="text-gray-600">알림을 불러오는 중 오류가 발생했습니다.</div>
+        <span className="text-16-19 font-normal text-gray-600">알림을 불러오는 중 오류가 발생했습니다.</span>
       </div>
     );
   }
 
   return allNotifications.length > 0 ? (
     <div className="flex flex-col">
-      <div className="h-105 overflow-y-scroll">
+      <div className="mini-scroll h-105 overflow-y-scroll">
         {allNotifications.map((notification: Notification) => (
           // 알림 상세
           <button
             key={notification.notificationId}
-            className={clsx('flex gap-3.5 py-5 pl-5 pr-4', notification.isRead && 'cursor-pointer bg-primary-100')}
+            className={clsx('flex gap-3.5 py-5 pl-5 pr-4', notification.isRead && 'bg-primary-100')}
             data-testid="detail_notification"
             type="button"
-            onClick={() => {
-              handleUpdateRead(notification.notificationId);
-            }}
+            onClick={() => handleUpdateRead(notification.notificationId)}
           >
             {notification.type === 'folder' ? (
               <FileFolderIcon aria-hidden="true" className="size-6 flex-none text-[#14181F]" />
@@ -79,14 +77,16 @@ export default function NotificationList({ setHasNotification }: Props) {
               <BookOpenIcon aria-hidden="true" className="size-6 flex-none text-[#14181F]" />
             )}
             <div>
-              <div className="text-lg font-bold">
+              <span className="text-18-24 font-bold tracking-[-0.2px] text-black">
                 {notification.type === 'folder' ? '분류되지' : '읽지'} 않은 링크가 있어요
+              </span>
+              <div className="mt-1">
+                <span className="text-16-22 font-normal tracking-[-0.2px] text-gray-900">{notification.title}</span>
+                <span className="text-16-22 font-normal tracking-[-0.2px] text-gray-900">{notification.body}</span>
               </div>
-              <div className="mt-1 text-gray-900">
-                <p>{notification.title}</p>
-                <p>{notification.body}</p>
-              </div>
-              <span className="mt-2 text-sm text-gray-600">{notification.createdAt}</span>
+              <span className="mt-2 text-14-22 font-normal tracking-[-0.2px] text-gray-600">
+                {notification.createdAt}
+              </span>
             </div>
           </button>
         ))}
@@ -95,26 +95,29 @@ export default function NotificationList({ setHasNotification }: Props) {
         <div className="mx-auto my-5">
           {/* 알림 더보기 */}
           <button
-            className="rounded-lg border border-gray-500 px-11 py-2 text-sm font-bold text-gray-700 disabled:opacity-50"
+            className="rounded-lg border border-gray-500 px-11 py-2 disabled:opacity-50"
             data-testid="more_notification"
             disabled={isFetchingNextPage}
             type="button"
             onClick={handleLoadMore}
           >
-            {isFetchingNextPage ? '로딩 중...' : '더보기'}
+            <span className="text-14-22 font-bold tracking-[-0.2px] text-gray-700">
+              {isFetchingNextPage ? '로딩 중...' : '더보기'}
+            </span>
           </button>
         </div>
       ) : (
-        <div className="mx-auto my-5 text-sm text-gray-600">모든 알림을 불러왔습니다.</div>
+        <span className="mx-auto my-5 text-16-19 font-normal text-gray-600">모든 알림을 불러왔습니다.</span>
       )}
     </div>
   ) : (
     <div className="mb-24 mt-10 flex h-full flex-col items-center justify-center gap-5">
       <BasicBellLargeIcon aria-hidden="true" className="size-15 text-gray-600" height={60} width={60} />
-      <div className="text-center text-gray-600">
-        <p>확인 가능한 알림이 없어요.</p>
-        <p>받은 알림은 최대 30일까지 저장돼요.</p>
-      </div>
+      <span className="text-center text-16-19 font-normal text-gray-600">
+        확인 가능한 알림이 없어요.
+        <br />
+        받은 알림은 최대 30일까지 저장돼요.
+      </span>
     </div>
   );
 }

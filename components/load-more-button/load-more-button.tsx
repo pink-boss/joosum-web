@@ -1,6 +1,6 @@
 import { ReactNode, useMemo } from 'react';
 
-import clsx from 'clsx';
+import { clsx } from '@/utils/clsx';
 
 import { ChevronRightIcon } from '@/assets/icons';
 
@@ -21,7 +21,7 @@ interface Props {
   icon?: ReactNode;
 }
 
-const BASE_CLASSNAME = 'flex cursor-pointer';
+const BASE_CLASSNAME = 'flex';
 
 const VARIANT_CLASSNAME = {
   card: 'self-center rounded-lg py-4',
@@ -55,7 +55,7 @@ export default function LoadMoreButton(props: Props) {
         type="button"
         onClick={onClick}
       >
-        <span className="text-lg font-bold text-gray-700">
+        <span className="text-18-26 font-bold tracking-[-0.2px] text-gray-700">
           {textPrefix && `${textPrefix} `}
           링크 {displayCount}
           {textSuffix}

@@ -83,7 +83,7 @@ export default function LinkList({ defaultEditMode = false, type, linkSort, link
       <div className="flex items-center">
         {!editMode ? (
           <>
-            <div className="text-lg font-semibold text-gray-800">{totalItems}개 주섬</div>
+            <span className="text-18-26 font-semibold tracking-[-0.2px] text-gray-800">{totalItems}개 주섬</span>
             {/* 정렬, 편집 */}
             <ViewToolbar
               editDataTestId={`editOn_${type}`}

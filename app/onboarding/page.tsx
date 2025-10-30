@@ -15,8 +15,8 @@ export default function OnboardingPage() {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedGender, setSelectedGender] = useState<string>('');
-  const [selectedYear, setSelectedYear] = useState<string>(`${TODAY.getFullYear() - 24}년`);
+  const [selectedGender, setSelectedGender] = useState('');
+  const [selectedYear, setSelectedYear] = useState(`${TODAY.getFullYear() - 24}년`);
   const [agreements, setAgreements] = useState({
     all: false,
     terms: false,

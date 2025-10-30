@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import clsx from 'clsx';
-
+import { clsx } from '@/utils/clsx';
 import { isAfter, isBefore, isBetween, isSameDate } from '@/utils/date';
 
 import { DateRange, RenderDateType } from '@/types/date.types';
@@ -49,8 +48,7 @@ export default function DatePickerDate(props: Props) {
       {!tmpSelectedDate && isDateInRange && (
         <div
           className={clsx(
-            'absolute inset-0 left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2',
-            'h-full bg-primary-200',
+            'pointer-events-none absolute inset-0 left-1/2 top-1/2 z-1 h-full -translate-x-1/2 -translate-y-1/2 bg-primary-200',
             isSelectedDate ? 'w-[19.25px]' : 'w-[38.5px]',
             isSameDate(startDate, dateObj) && 'translate-x-0',
             isSameDate(endDate, dateObj) && '-translate-x-full',
@@ -58,22 +56,15 @@ export default function DatePickerDate(props: Props) {
           )}
         />
       )}
-      {isSelectedDate && (
-        <div
-          className={clsx(
-            'absolute inset-0 left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2',
-            'size-7.5 rounded-full bg-paperabovebg',
-          )}
-        />
-      )}
       <button
         disabled={disabled}
+        type="button"
         onClick={handleClick}
         className={clsx(
-          'relative size-7.5 text-sm font-semibold',
-          monthType === 'this' ? 'text-gray-800' : 'text-gray-500',
-          greaterThanToday && 'text-gray-500',
-          isSelectedDate && 'text-white',
+          'relative z-1 size-7.5 text-14-22 font-semibold tracking-[-0.2px]',
+          monthType === 'this' ? 'text-gray-800' : 'font-normal text-gray-500',
+          greaterThanToday && 'font-normal text-gray-500',
+          isSelectedDate && 'size-7.5 rounded-full bg-paperabovebg text-white',
         )}
       >
         {date}

@@ -2,10 +2,10 @@
 
 import { ReactNode, useCallback } from 'react';
 
-import clsx from 'clsx';
-import { createPortal } from 'react-dom';
+import * as Dialog from '@radix-ui/react-dialog';
 
 import { useDrawerStore } from '@/libs/zustand/store';
+import { clsx } from '@/utils/clsx';
 
 interface Props {
   children: ReactNode;
@@ -24,35 +24,21 @@ export default function DefaultDrawer({ open, children, className, onCloseCallba
     if (isUserDrawerOpen) openUserDrawer(false);
   }, [isLinkDrawerOpen, isUserDrawerOpen, onCloseCallback, openLinkDrawer, openUserDrawer]);
 
-  if (!open) return null;
-
-  const drawer = (
-    <>
-      <div aria-hidden="true" className="absolute inset-0 bg-black/50" role="presentation" onClick={handleClose} />
-      <div
-        aria-modal
-        aria-keyshortcuts="Escape"
-        aria-labelledby="drawer"
-        data-testid={dataTestId}
-        role="dialog"
-        onClick={(e) => e.stopPropagation()}
-        className={clsx(
-          'fixed right-0 top-0 z-20 h-full w-123.5',
-          'border border-gray-200',
-          'bg-white pb-20 pt-5',
-          'flex flex-col gap-10',
-          'overflow-y-auto',
-          className && className,
-        )}
-      >
-        {children}
-      </div>
-    </>
+  return (
+    <Dialog.Root open={open} onOpenChange={handleClose}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 bg-black/50" />
+        <Dialog.Content
+          aria-describedby={undefined}
+          data-testid={dataTestId}
+          className={clsx(
+            'fixed right-0 top-0 z-20 flex h-full w-123.5 flex-col gap-10 overflow-y-auto border border-gray-200 bg-white pb-20 pt-5',
+            className && className,
+          )}
+        >
+          {children}
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
-
-  const drawerRoot = document.getElementById('drawer-root');
-
-  if (!drawerRoot) return null;
-
-  return createPortal(drawer, drawerRoot);
 }

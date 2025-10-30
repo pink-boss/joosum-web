@@ -34,13 +34,13 @@ export default function DashboardLinkCard({ link, index }: Props) {
       const tempElement = document.createElement('div');
       tempElement.style.position = 'absolute';
       tempElement.style.visibility = 'hidden';
-      tempElement.style.padding = '4px 12px'; // px-3 py-1과 동일
+      tempElement.style.padding = '4px 12px';
       tempElement.style.whiteSpace = 'nowrap';
       document.body.appendChild(tempElement);
 
       for (let i = 0; i < link.tags?.length; i++) {
         const tag = link.tags[i];
-        tempElement.textContent = tag;
+        tempElement.textContent = `#${tag}`;
         const tagWidth = tempElement.offsetWidth + 8; // 간격 8px 추가
 
         if (currentWidth + tagWidth > WIDTH && i > 0) {
@@ -65,12 +65,7 @@ export default function DashboardLinkCard({ link, index }: Props) {
   }, [link.tags]);
 
   return (
-    <button
-      className="flex flex-none cursor-pointer flex-col gap-4 pb-4"
-      data-testid="card_home"
-      type="button"
-      onClick={handleClick}
-    >
+    <button className="flex flex-none flex-col gap-4 pb-4" data-testid="card_home" type="button" onClick={handleClick}>
       <div className="relative h-46 w-93.5 flex-none">
         <ImageWithFallback
           unoptimized
@@ -82,16 +77,23 @@ export default function DashboardLinkCard({ link, index }: Props) {
         />
       </div>
       <div className="flex flex-col gap-2">
-        <div className="w-93.5 truncate text-left text-lg font-bold">{link.title}</div>
-        <div className="flex flex-wrap gap-2">
+        <span className="w-93.5 truncate text-left text-18-26 font-bold tracking-[-0.2px]">{link.title}</span>
+        <div className="flex flex-wrap items-center gap-2">
           {visibleTags.map((tag, index) => (
-            <div key={index} className="whitespace-nowrap rounded-12.5 bg-gray-300 px-3 py-1">
-              {tag}
-            </div>
+            <span
+              key={index}
+              className="whitespace-nowrap rounded-12.5 bg-gray-300 px-3 py-1 text-14-22 font-normal tracking-[-0.2px] text-black"
+            >
+              #{tag}
+            </span>
           ))}
-          {hiddenCount > 0 && <div className="rounded-12.5 bg-gray-300 px-3 py-1">+{hiddenCount}</div>}
+          {hiddenCount > 0 && (
+            <div className="rounded-12.5 bg-gray-300 px-3 py-1 text-14-22 font-normal tracking-[-0.2px] text-black">
+              +{hiddenCount}
+            </div>
+          )}
         </div>
-        <div className="text-left text-sm text-gray-600">{`${krDateFormatter(link.createdAt)}에 주섬주섬`}</div>
+        <span className="text-left text-14-22 font-normal tracking-[-0.2px] text-gray-600">{`${krDateFormatter(link.createdAt)}에 주섬주섬`}</span>
       </div>
     </button>
   );

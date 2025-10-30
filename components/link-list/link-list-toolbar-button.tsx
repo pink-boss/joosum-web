@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import clsx from 'clsx';
+import { clsx } from '@/utils/clsx';
 
 interface Props {
   children: ReactNode;
@@ -16,11 +16,11 @@ export default function LinkListToolbarButton({ children, isPrimary = false, onC
       type="button"
       onClick={onClick}
       className={clsx(
-        'rounded border border-gray-300 px-9 py-1.5 text-xs',
+        'rounded border border-gray-300 px-9 py-1.5',
         isPrimary ? 'bg-gray-900 text-white' : 'bg-white text-black',
       )}
     >
-      {children}
+      <span className="text-12-20 font-normal tracking-[-0.2px] text-inherit">{children}</span>
     </button>
   );
 }

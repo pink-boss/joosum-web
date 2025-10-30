@@ -38,13 +38,13 @@ export default function LoginGoogle({ previousLoginProvider }: Props) {
   return (
     <LoginTooltip isPreviousProvider={previousLoginProvider === 'google'}>
       <button
-        className="flex h-14 w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-3 text-black hover:bg-gray-50 active:bg-gray-100"
+        className="flex h-14 w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-3.75"
         data-testid="googleLogin_login"
         type="button"
         onClick={handleClick}
       >
-        <GoogleIcon aria-hidden="true" height={24} width={24} />
-        <span className="font-medium">Google 계정으로 시작하기</span>
+        <GoogleIcon aria-hidden="true" className="size-6" />
+        <span className="text-18-26 font-semibold tracking-[-0.2px] text-black/[54%]">Google 계정으로 시작하기</span>
       </button>
     </LoginTooltip>
   );

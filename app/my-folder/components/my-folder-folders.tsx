@@ -9,7 +9,7 @@ interface Props {
 
 export default function MyFolderFolders({ folders, totalLinkCount }: Props) {
   return (
-    <div className="flex flex-1 flex-wrap content-start gap-x-6 gap-y-8 overflow-auto">
+    <div className="flex flex-1 flex-wrap content-start items-start gap-x-[23.26px] gap-y-8 overflow-auto">
       <MyFolder
         folder={{
           backgroundColor: '#6D6D6F',

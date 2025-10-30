@@ -42,9 +42,9 @@ export default function LinkListLinkCard({ link, index, linkDataTestId, kebabDat
 
   return (
     // 링크 클릭
-    <div className="flex h-21 w-full flex-1 cursor-pointer justify-between gap-5">
+    <div className="flex h-21 w-full flex-1 justify-between gap-5">
       <button
-        className="flex w-full flex-1 cursor-pointer justify-between gap-5"
+        className="flex w-full flex-1 justify-between gap-5"
         data-testid={linkDataTestId}
         type="button"
         onClick={handleNavigate}
@@ -60,7 +60,7 @@ export default function LinkListLinkCard({ link, index, linkDataTestId, kebabDat
           />
         </div>
         <div className="flex min-w-0 grow flex-col">
-          <div className="truncate text-left text-lg font-bold">
+          <span className="truncate text-left text-18-26 font-bold tracking-[-0.2px] text-black">
             {pathname.startsWith('/search') && highlightKeyword
               ? link.title.split(new RegExp(`(${highlightKeyword})`, 'gi')).map((part, i) =>
                   part.toLowerCase() === highlightKeyword.toLowerCase() ? (
@@ -72,15 +72,23 @@ export default function LinkListLinkCard({ link, index, linkDataTestId, kebabDat
                   ),
                 )
               : link.title}
-          </div>
-          <div className="truncate text-left text-gray-800">
+          </span>
+          <span className="truncate text-left text-14-22 font-normal tracking-[-0.2px] text-gray-800">
             {link.tags?.reduce((result, tag) => result + ` #${tag}`, '')}
-          </div>
-          <div className="mt-auto flex gap-4 text-gray-700">
+          </span>
+          <div className="mt-auto flex gap-4">
             <div className="flex min-w-0 gap-1">
-              <div className="truncate">{extractDomain(link.url)}</div>|
-              <div className="flex-none">{dateFormatter(link.createdAt, '2-digit')}</div>|
-              <div className="flex-none">{link.readCount ? `${link.readCount}회 읽음` : `읽지 않음`}</div>
+              <span className="truncate text-14-22 font-normal tracking-[-0.2px] text-gray-700">
+                {extractDomain(link.url)}
+              </span>
+              <span className="text-14-22 font-normal tracking-[-0.2px] text-gray-700">|</span>
+              <span className="flex-none text-14-22 font-normal tracking-[-0.2px] text-gray-700">
+                {dateFormatter(link.createdAt, '2-digit')}
+              </span>
+              <span className="text-14-22 font-normal tracking-[-0.2px] text-gray-700">|</span>
+              <span className="flex-none text-14-22 font-normal tracking-[-0.2px] text-gray-700">
+                {link.readCount ? `${link.readCount}회 읽음` : `읽지 않음`}
+              </span>
             </div>
             <FolderLink linkBookName={link.linkBookName} />
           </div>
@@ -100,12 +108,12 @@ export default function LinkListLinkCard({ link, index, linkDataTestId, kebabDat
 function FolderLink({ linkBookName }: { linkBookName: string }) {
   return (
     <NextLink
-      className="flex flex-none items-center gap-1 text-sm"
+      className="flex flex-none items-center gap-1"
       href={`/link-book/${linkBookName}`}
       onClick={(e) => e.stopPropagation()}
     >
       <FolderIcon aria-hidden="true" className="size-4 shrink-0 text-gray-500" />
-      {linkBookName}
+      <span className="text-14-22 font-normal tracking-[-0.2px] text-gray-700">{linkBookName}</span>
     </NextLink>
   );
 }

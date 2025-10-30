@@ -1,6 +1,8 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
 
+import * as Dialog from '@radix-ui/react-dialog';
+
 import { useGetFolderFromTitle, useGetFolders, useReassignFolder } from '@/services/folder';
 
 import ConfirmDialog from '@/components/confirm-dialog';
@@ -33,7 +35,7 @@ export default function FolderReassignDialog() {
 
   const mutation = useReassignFolder({ onSuccess: handleSuccess });
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(() => {
     if (toFolderId && cachedLinks.size) {
       mutation.mutate({
         toLinkBookId: toFolderId,
@@ -65,10 +67,11 @@ export default function FolderReassignDialog() {
       }}
     >
       <div className="flex flex-col gap-4 text-center">
-        <div className="text-center text-gray-800">
-          <p>{cachedLinks.size} 개의 링크가</p>
-          <p>이동할 폴더를 선택해주세요.</p>
-        </div>
+        <Dialog.Title className="text-center text-gray-800">
+          {cachedLinks.size} 개의 링크가
+          <br />
+          이동할 폴더를 선택해주세요.
+        </Dialog.Title>
         <FolderDropdown
           className="w-76.25"
           folderId={toFolderId}
