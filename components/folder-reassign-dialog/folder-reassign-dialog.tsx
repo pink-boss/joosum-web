@@ -15,7 +15,7 @@ import { Folder } from '@/types/folder.types';
 
 // 폴더 이동 모달
 export default function FolderReassignDialog() {
-  const { isReassignFolderOpen: isOpen, openReassignFolder: open, linkDataTestId } = useDialogStore();
+  const { isReassignFolderOpen: isOpen, openReassignFolder: open, folderDataTestId } = useDialogStore();
   const { folderId: searchFolderId } = useSearchLinkFilterStore();
 
   const { data: folders } = useGetFolders({ sort: 'created_at' });
@@ -53,11 +53,11 @@ export default function FolderReassignDialog() {
   return (
     <ConfirmDialog
       // 폴더 이동 > 모달 취소
-      cancelDataTestId={`cancel_moveFolder_editOn_${linkDataTestId}`}
+      cancelDataTestId={`cancel_moveFolder_editOn_${folderDataTestId}`}
       closeProps={{ children: '취소', onClick: handleClose }}
       open={isOpen}
       // 폴더 이동 > 모달 확인
-      submitDataTestId={`confirm_moveFolder_editOn_${linkDataTestId}`}
+      submitDataTestId={`confirm_moveFolder_editOn_${folderDataTestId}`}
       submitLoading={mutation.isPending}
       onCloseCallback={handleClose}
       submitProps={{

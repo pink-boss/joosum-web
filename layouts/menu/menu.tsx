@@ -59,7 +59,7 @@ export default function Menu() {
           <button className="ml-auto" type="button" onClick={handleOpen}>
             <ChevronDownIcon
               aria-hidden="true"
-              className={clsx('size-6 text-gray-600 transition-transform duration-300', !openSideMenu && 'rotate-180')}
+              className={clsx('size-6 text-gray-600 transition-transform duration-300', openSideMenu && 'rotate-180')}
             />
           </button>
         </div>

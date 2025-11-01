@@ -55,7 +55,7 @@ export default function LinkShareDialog() {
       content: {
         title: link.title || '주섬에서 발견한 링크',
         description: '흥미로운 링크를 공유합니다.',
-        imageUrl: link.thumbnailURL || 'https://joosum.app/opengraph-image',
+        imageUrl: link.thumbnailURL || 'https://app.joosum.com/images/opengraph-image.png',
         link: {
           mobileWebUrl: link.url,
           webUrl: link.url,

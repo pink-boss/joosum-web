@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/opengraph-image',
+        url: '/images/opengraph-image.png',
         width: 1200,
         height: 630,
         alt: '주섬 - 간편한 링크 아카이빙 서비스',
@@ -67,19 +67,18 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '주섬 - 간편한 링크 아카이빙 서비스',
     description: '웹에서 발견한 유용한 링크들을 간편하게 저장하고 정리하세요.',
-    images: ['/opengraph-image'],
+    images: ['/images/opengraph-image.png'],
   },
-  // TODO:
-  // robots: {
-  //   index: true,
-  //   follow: true,
-  //   googleBot: {
-  //     index: true,
-  //     follow: true,
-  //     'max-image-preview': 'large',
-  //     'max-snippet': -1,
-  //   },
-  // },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({
