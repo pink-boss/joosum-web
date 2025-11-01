@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { getClientUri } from '@/utils/env-uri';
 
@@ -22,6 +22,10 @@ interface Props {
 
 export default function LoginGoogle({ previousLoginProvider }: Props) {
   const router = useRouter();
+
+  useEffect(() => {
+    console.log('NODE_ENV:', process.env.NODE_ENV);
+  }, []);
 
   const handleClick = useCallback(() => {
     const authUrl =
