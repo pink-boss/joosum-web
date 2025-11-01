@@ -17,10 +17,6 @@ jobs:
         id: date
         run: echo "date=$(date +'%y%m%d')" >> $GITHUB_OUTPUT
 
-      - name: Create .env
-        run: |
-          echo "${{ secrets.ENV }}" > ./.env
-
       - name: Docker Buildx 설정
         uses: docker/setup-buildx-action@v2
 
@@ -60,9 +56,11 @@ jobs:
           username: root
           password: ${{ secrets.VM_PASSWORD }}
           script: |
+            echo "${{ secrets.ENV }}" > .env
             docker pull joosum.kr.ncr.ntruss.com/joosum-frontend:${{ steps.date.outputs.date }}
             docker stop frontend || true
             docker rm -f frontend 2>/dev/null || true
             docker run --rm -d -p 3000:3000 \
+              --env-file .env \
               --log-opt max-size=10k --log-opt max-file=3 \
               --name frontend joosum.kr.ncr.ntruss.com/joosum-frontend:${{ steps.date.outputs.date }}
