@@ -1,4 +1,4 @@
-## Joosum Web
+# Joosum Web
 
 ## CLI
 
