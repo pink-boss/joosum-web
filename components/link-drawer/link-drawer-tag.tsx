@@ -31,10 +31,12 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
 
   const inputRef = useRef<HTMLInputElement>(null);
   const recentTagsRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const [isActive, setIsActive] = useState(false);
   const [input, setInput] = useState('');
   const [isComposing, setIsComposing] = useState(false);
+  const [topOffset, setTopOffset] = useState<number | undefined>(undefined);
 
   const handleSubmit = useCallback(() => {
     const trimmedInput = input.trim();
@@ -110,6 +112,15 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
     [setTags, tags, setInput, setIsActive],
   );
 
+  useEffect(() => {
+    if (isActive && inputRef.current && wrapperRef.current) {
+      const inputRect = inputRef.current.getBoundingClientRect();
+      const wrapperRect = wrapperRef.current.getBoundingClientRect();
+      const top = Math.max(inputRect.bottom - wrapperRect.top + 12, 52); // 4px offset
+      setTopOffset(top);
+    }
+  }, [isActive, tags, input]);
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex justify-between px-1">
@@ -118,7 +129,7 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
         </label>
         <span className="text-14-22 font-normal tracking-[-0.2px] text-gray-900">{tags?.length ?? 0}/10</span>
       </div>
-      <TagWrapper disabled={disabled} inputRef={inputRef} setIsActive={setIsActive}>
+      <TagWrapper disabled={disabled} inputRef={inputRef} setIsActive={setIsActive} wrapperRef={wrapperRef}>
         <div
           className={clsx(
             'flex justify-between rounded-lg border p-2.75',
@@ -181,10 +192,11 @@ export default function LinkDrawerTag({ tags, setTags, disabled = false }: Props
             </button>
           )}
         </div>
-        {isActive && (
+        {isActive && topOffset !== undefined && (
           <LinkDrawerRecentTag
             handleSelectRecentTag={handleSelectRecentTag}
             recentTagsRef={recentTagsRef}
+            top={topOffset}
             totalTags={totalTags}
           />
         )}
@@ -198,13 +210,14 @@ function TagWrapper({
   disabled,
   setIsActive,
   inputRef,
+  wrapperRef,
 }: {
   children: ReactNode;
   disabled?: boolean;
   inputRef: RefObject<HTMLInputElement>;
   setIsActive: (isActive: boolean) => void;
+  wrapperRef: RefObject<HTMLDivElement>;
 }) {
-  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const handleClick = useCallback(() => {
     if (!disabled) {
@@ -223,7 +236,7 @@ function TagWrapper({
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [setIsActive]);
+  }, [setIsActive, wrapperRef]);
 
   return (
     <div ref={wrapperRef} className="relative" onClick={handleClick}>

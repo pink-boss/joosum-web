@@ -4,13 +4,15 @@ interface Props {
   handleSelectRecentTag: (tag: string) => void;
   recentTagsRef: RefObject<HTMLDivElement>;
   totalTags: string[];
+  top: number;
 }
 
-export default function LinkDrawerRecentTag({ totalTags, handleSelectRecentTag, recentTagsRef }: Props) {
+export default function LinkDrawerRecentTag({ totalTags, handleSelectRecentTag, recentTagsRef, top }: Props) {
   return (
     <div
       ref={recentTagsRef}
-      className="mini-scroll absolute right-0 top-13 max-h-64 w-full overflow-y-auto rounded-lg border bg-white px-6 pb-6"
+      className="mini-scroll absolute right-0 max-h-64 w-full overflow-y-auto rounded-lg border bg-white px-6 pb-6"
+      style={{ top: `${top}px` }}
     >
       <span className="sticky inset-x-0 top-0 z-1 bg-white pb-5 pt-6 text-16-24 font-bold tracking-[-0.2px] text-gray-900">
         최근 사용한 태그
