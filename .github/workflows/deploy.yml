@@ -68,3 +68,4 @@ jobs:
               --env-file .env \
               --log-opt max-size=10k --log-opt max-file=3 \
               --name frontend joosum.kr.ncr.ntruss.com/joosum-frontend:${{ steps.date.outputs.date }}
+            docker image prune -f >/dev/null || true
