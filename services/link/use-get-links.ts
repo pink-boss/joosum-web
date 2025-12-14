@@ -58,7 +58,7 @@ export default function useGetLinks({
       queryString: string;
     }
   >(() => {
-    const queryKey = getLinkListQueryKey(folderId, searchKeyword);
+    const queryKey = getLinkListQueryKey(folderId, type === 'search' ? searchKeyword : undefined);
 
     let pathname: string;
     let queryString: string;

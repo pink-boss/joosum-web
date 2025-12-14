@@ -109,7 +109,7 @@ export default function DashboardLinkCardList() {
       {data.length ? (
         <div ref={scrollContainerRef} className="flex w-full flex-col items-start gap-8 overflow-auto">
           {/* TC로 올라왔던 이슈 */}
-          <div className="flex w-full flex-wrap items-center justify-center gap-x-5.5 gap-y-5">
+          <div className="flex w-full flex-wrap items-start justify-center gap-x-5.5 gap-y-5">
             {currentItems.map((link, index) => (
               <DashboardLinkCard key={index} index={index} link={link} />
             ))}

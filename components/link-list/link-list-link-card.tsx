@@ -63,14 +63,14 @@ export default function LinkListLinkCard({ link, index, linkDataTestId, kebabDat
           <span className="truncate text-left text-18-26 font-bold tracking-[-0.2px] text-black">
             {pathname.startsWith('/search') && highlightKeyword
               ? link.title.split(new RegExp(`(${highlightKeyword})`, 'gi')).map((part, i) =>
-                  part.toLowerCase() === highlightKeyword.toLowerCase() ? (
-                    <span key={i} className="text-primary-400">
-                      {part}
-                    </span>
-                  ) : (
-                    <span key={i}>{part}</span>
-                  ),
-                )
+                part.toLowerCase() === highlightKeyword.toLowerCase() ? (
+                  <span key={i} className="text-primary-400 inline">
+                    {part}
+                  </span>
+                ) : (
+                  <span key={i} className="inline">{part}</span>
+                ),
+              )
               : link.title}
           </span>
           <span className="truncate text-left text-14-22 font-normal tracking-[-0.2px] text-gray-800">
