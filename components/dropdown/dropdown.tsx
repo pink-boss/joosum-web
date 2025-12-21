@@ -21,7 +21,7 @@ export default function Dropdown({ selected, setSelected, options, dataTestId }:
   const selectedOption = useMemo(() => options.find(({ value }) => selected === value), [options, selected]);
 
   return (
-    <DropdownMenu.Root modal={true} onOpenChange={setIsOpen}>
+    <DropdownMenu.Root modal={false} onOpenChange={setIsOpen}>
       <DropdownMenu.Trigger asChild>
         <button className="flex h-6 items-center p-1 font-normal text-gray-800" data-testid={dataTestId} type="button">
           <span>{selectedOption?.label}</span>

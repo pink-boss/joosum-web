@@ -57,7 +57,7 @@ export default function FolderDropdown(props: Props) {
   );
 
   return (
-    <DropdownMenu.Root modal={true} onOpenChange={setIsOpen}>
+    <DropdownMenu.Root modal={false} onOpenChange={setIsOpen}>
       <DropdownMenu.Trigger asChild>
         <button
           data-testid={dataTestId}

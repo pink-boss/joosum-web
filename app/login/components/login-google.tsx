@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useCallback, } from 'react';
+import { useCallback } from 'react';
 
 import { getClientUri } from '@/utils/env-uri';
 

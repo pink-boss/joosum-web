@@ -218,7 +218,6 @@ function TagWrapper({
   setIsActive: (isActive: boolean) => void;
   wrapperRef: RefObject<HTMLDivElement>;
 }) {
-
   const handleClick = useCallback(() => {
     if (!disabled) {
       setIsActive(true);
