@@ -10,7 +10,7 @@ export default async function Login() {
   const previousLoginProvider = cookieStore.get('previousLoginProvider')?.value as PreviousLoginProvider;
 
   return (
-    <div className="flex flex-col gap-3" data-testid="login">
+    <div className="flex flex-col gap-3">
       <div className="flex flex-col gap-4 pb-5 text-center">
         <h1 className="text-24-32 font-bold text-black">주섬 시작하기</h1>
         <span className="text-16-19 font-normal text-gray-800">

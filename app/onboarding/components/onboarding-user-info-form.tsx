@@ -34,7 +34,7 @@ export default function OnboardingUserInfoForm(props: Props) {
   );
 
   return (
-    <main className="mx-auto flex size-full max-w-320 flex-col justify-center gap-8 px-20" data-testid="signAdditional">
+    <main className="mx-auto flex size-full max-w-320 flex-col justify-center gap-8 px-20">
       <div className="text-center">
         <h1 className="mb-4 text-24-32 font-bold text-black">
           만나서 반가워요!

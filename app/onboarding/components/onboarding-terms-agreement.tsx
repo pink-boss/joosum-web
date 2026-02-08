@@ -32,10 +32,7 @@ export default function OnboardingTermsAgreement(props: Props) {
   }, [onIndividualAgreement]);
 
   return (
-    <main
-      className="mx-auto flex size-full max-w-320 flex-col justify-center gap-8 px-20"
-      data-testid="agreeTermsOfService"
-    >
+    <main className="mx-auto flex size-full max-w-320 flex-col justify-center gap-8 px-20">
       <div className="text-center">
         <h1 className="mb-4 text-24-32 font-bold text-black">
           서비스 이용을 위한
@@ -46,7 +43,7 @@ export default function OnboardingTermsAgreement(props: Props) {
           서비스 이용을 위해 약관 및 정보제공에 동의해주세요.
         </span>
       </div>
-      <div className="flex flex-col items-center" data-testid="agreeTermsOfService">
+      <div className="flex flex-col items-center">
         <div className="w-83.75">
           <div className="mb-6">
             <button

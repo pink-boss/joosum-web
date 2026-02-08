@@ -25,7 +25,7 @@ export default function UserDrawer() {
   }, [open]);
 
   return (
-    <DefaultDrawer dataTestId="myPage" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDrawer open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-col gap-10">
         <button className="px-5 py-2.5" type="button" onClick={handleClose}>
           <DoubleRightIcon aria-hidden="true" className="size-6 text-gray-900" />

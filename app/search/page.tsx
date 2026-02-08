@@ -13,7 +13,7 @@ export default function Search() {
   const linkFilter = useSearchLinkFilterStore();
 
   return (
-    <div className="flex min-h-0 w-full flex-1 flex-col gap-6.25 px-10" data-testid="searchResult">
+    <div className="flex min-h-0 w-full flex-1 flex-col gap-6.25 px-10">
       <h2 className="text-32-40 font-extrabold text-gray-800">{title ? `'${title}' ` : ''}검색 결과</h2>
       {/* 탭 */}
       <SearchTab />

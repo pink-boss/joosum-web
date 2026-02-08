@@ -66,7 +66,7 @@ export default function DashboardLinkCardList() {
   return (
     <div className="flex h-full flex-1 flex-col gap-8 overflow-hidden">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-6" data-testid="tab_home">
+        <div className="flex items-center gap-6">
           <label className="flex items-center gap-2" htmlFor="filter-latest">
             <input
               defaultChecked

@@ -15,7 +15,7 @@ export interface DefaultDialogProps {
   testId?: string;
 }
 
-export default function DefaultDialog({ open, children, className, onCloseCallback, testId }: DefaultDialogProps) {
+export default function DefaultDialog({ open, children, className, onCloseCallback }: DefaultDialogProps) {
   const {
     // folder
     isMutateFolderOpen,
@@ -49,7 +49,6 @@ export default function DefaultDialog({ open, children, className, onCloseCallba
         <Dialog.Overlay className="fixed inset-0 bg-black/50" />
         <Dialog.Content
           aria-describedby={undefined}
-          data-testid={testId}
           className={clsx(
             'fixed left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-10 shadow-modal',
             className && className,

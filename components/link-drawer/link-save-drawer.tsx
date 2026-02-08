@@ -54,7 +54,7 @@ export default function LinkSaveDrawer({ _defaultValues }: Props) {
   if (mode !== 'save') return null;
 
   return (
-    <DefaultDrawer dataTestId="saveLink" open={isOpen} onCloseCallback={handleClose}>
+    <DefaultDrawer open={isOpen} onCloseCallback={handleClose}>
       <div className="flex flex-1 flex-col gap-10">
         <LinkDrawerHeader
           dataTestId="close_saveLink"

@@ -108,7 +108,7 @@ export default function Menu() {
 
 function MenuItem({ folder }: { folder: Folder }) {
   return (
-    <FolderLink data-testid="folder_gnb_common" folder={folder}>
+    <FolderLink dataTestId="folder_gnb_common" folder={folder}>
       <div className="h-12 py-3 pl-12 pr-5">
         <div className="relative flex items-center gap-2">
           <div

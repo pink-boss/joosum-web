@@ -15,7 +15,7 @@ interface Props {
   dataTestId?: string;
 }
 
-export default function DefaultDrawer({ open, children, className, onCloseCallback, dataTestId }: Props) {
+export default function DefaultDrawer({ open, children, className, onCloseCallback }: Props) {
   const { isLinkDrawerOpen, openLinkDrawer, isUserDrawerOpen, openUserDrawer } = useDrawerStore();
 
   const handleClose = useCallback(() => {
@@ -30,7 +30,6 @@ export default function DefaultDrawer({ open, children, className, onCloseCallba
         <Dialog.Overlay className="fixed inset-0 bg-black/50" />
         <Dialog.Content
           aria-describedby={undefined}
-          data-testid={dataTestId}
           className={clsx(
             'fixed right-0 top-0 z-20 flex h-full w-123.5 flex-col gap-10 overflow-y-auto border border-gray-200 bg-white pb-20 pt-5',
             className && className,

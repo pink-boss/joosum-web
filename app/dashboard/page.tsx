@@ -11,7 +11,7 @@ export default function Dashboard() {
   // });
 
   return (
-    <div className="flex min-h-0 w-full flex-1 flex-col gap-12 px-10 pb-8" data-testid="home">
+    <div className="flex min-h-0 w-full flex-1 flex-col gap-12 px-10 pb-8">
       <DashboardBanner />
       <DashboardLinkCardList />
     </div>
