@@ -116,7 +116,7 @@ export default function LinkSaveDrawer({ _defaultValues }: Props) {
               취소
             </LinkDrawerSecondaryButton>
             <LinkDrawerPrimaryButton
-              data-testid="save_saveLink"
+              dataTestId="save_saveLink"
               loading={saveLinkMutation.isPending}
               title={formState.title}
               onClick={handleSubmit}
