@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-import { defaultPath, protectedPaths, publicOnlyPaths } from './utils/path';
+import { defaultPath, protectedPaths, publicOnlyPaths, serviceClosedPath } from './utils/path';
+import { isServiceShutdown } from './utils/service-shutdown';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -10,6 +11,18 @@ export async function middleware(request: NextRequest) {
   const ignorePaths = ['/api', '/_next', '/static', '/images', '/favicon.ico'];
   if (ignorePaths.some((path) => pathname.startsWith(path))) {
     return NextResponse.next();
+  }
+
+  if (isServiceShutdown()) {
+    if (pathname !== serviceClosedPath) {
+      return NextResponse.redirect(new URL(serviceClosedPath, request.url));
+    }
+
+    return NextResponse.next();
+  }
+
+  if (pathname === serviceClosedPath) {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   // 기본 경로는 home

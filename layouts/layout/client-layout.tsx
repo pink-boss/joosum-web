@@ -11,20 +11,34 @@ import Loader from '@/components/loader';
 import { NotificationToastProvider } from '@/components/notification';
 import PublicPathHeader from '@/components/public-path-header';
 import ScreenSizeWrapper from '@/components/screen-size-wrapper';
+import ServiceShutdownNoticeDialog from '@/components/service-shutdown-notice-dialog';
 import Gnb from '@/layouts/gnb';
 import Lnb from '@/layouts/lnb';
 
 import TanstackQueryProviders from '@/libs/tanstack-query/providers';
 import { clsx } from '@/utils/clsx';
-import { publicOnlyPaths } from '@/utils/path';
+import { publicOnlyPaths, serviceClosedPath } from '@/utils/path';
 
 export default function ClientLayout({ children }: Readonly<{ children: ReactNode }>) {
   const pathname = usePathname();
+  const isServiceClosedPath = pathname.startsWith(serviceClosedPath);
   const isPublicOnlyPath = publicOnlyPaths.some((path) => pathname.startsWith(path));
+
+  if (isServiceClosedPath) {
+    return (
+      <>
+        <GoogleTagManager gtmId="GTM-K4FXLG7Z" />
+        <Component>
+          <Suspense fallback={<Loader />}>{children}</Suspense>
+        </Component>
+      </>
+    );
+  }
 
   return (
     <>
       <GoogleTagManager gtmId="GTM-K4FXLG7Z" />
+      <ServiceShutdownNoticeDialog />
       <ScreenSizeWrapper>
         {isPublicOnlyPath ? (
           <Component className="justify-center">

@@ -1,4 +1,4 @@
-import { expect, waitFor } from '@storybook/test';
+import { expect, waitFor } from 'storybook/test';
 
 export const verifyTagsAPI = async (capturedRequest: null | Request, pathname: string, method: string, body?: any) => {
   const error = new Error(`API 요청 에러: ${pathname}`);

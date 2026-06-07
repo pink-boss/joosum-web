@@ -1,6 +1,6 @@
 import '../app/globals.css';
 
-import type { Preview } from '@storybook/react';
+import type { Preview } from '@storybook/nextjs';
 
 // import { QueryClientProvider } from '@tanstack/react-query';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
